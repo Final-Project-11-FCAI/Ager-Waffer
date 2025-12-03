@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 double defaultMargin = 24.0;
 double defaultRadius = 10.0;
 
+const Color kPrimaryColor = Color(0xff00334E);
+const Color kLightPrimaryColor = Color(0xff145374);
+
 const Color kLightBlackColor = const Color(0xFF000D1B);
 const Color kroseColor = const Color(0xFF62BAA1);
 const Color kBlueAccentColor = const Color(0xFF009AB9);
@@ -64,7 +67,6 @@ const Color kTransparentColor = Colors.transparent;
 const Color kAvailableColor = const Color(0xFFE7F0FD);
 const Color kUnavailableColor = const Color(0xffEBECF1);
 const Color kYellowColor = const Color(0xFFF39204);
-const Color kPrimaryColor = const Color(0xFFF39204);
 const Color kGreenLight = const Color(0xFFE8F5E9);
 
 TextStyle blackTextStyle = GoogleFonts.poppins(
