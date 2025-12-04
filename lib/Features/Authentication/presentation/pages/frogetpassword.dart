@@ -1,37 +1,13 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/frogetpassword.dart';
 import 'package:ager_waffer/Features/Authentication/presentation/pages/register_screen.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/emailwidget.dart';
 import 'package:ager_waffer/Features/Authentication/presentation/widgets/logoastext.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/passwordwidget.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logoicons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class Frogetpassword extends StatelessWidget {
+  const Frogetpassword({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,49 +26,81 @@ class _LoginScreenState extends State<LoginScreen>
             color: kWhiteColor,
             borderRadius: BorderRadius.circular(16),
           ),
+          padding: EdgeInsets.all(16),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20),
-                Emailwidget(),
-                PasswordWidget(),
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return Frogetpassword();
-                            },
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'هل نسيت كلمة المرور؟',
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(right: 16),
+                  child: Text(
+                    'كلمة المرور الجديدة',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: kPrimaryColor,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      fillColor: Colors.grey,
+                      hint: Text(
+                        'كلمة المرور',
+                        style: TextStyle(color: Colors.grey[400]),
+                      ),
+                      label: Text('كلمة المرور'),
+                      suffixIcon: Icon(Icons.lock_outline),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      floatingLabelStyle: TextStyle(color: Colors.blue[200]),
+                      contentPadding: EdgeInsets.all(24),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(22),
+                        borderSide: BorderSide(color: Colors.blue),
                       ),
                     ),
-                    Spacer(flex: 1),
-
-                    Text(
-                      "تذكرني",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 50),
+            
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(right: 16),
+                  child: Text(
+                    'تأكيد كلمة المرور',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: kPrimaryColor,
                     ),
-                    Checkbox(
-                      activeColor: kPrimaryColor,
-                      value: isChecked,
-                      onChanged: (newValue) {
-                        setState(() {
-                          isChecked = newValue!;
-                        });
-                      },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      fillColor: Colors.grey,
+                      hint: Text(
+                        'كلمة المرور',
+                        style: TextStyle(color: Colors.grey[400]),
+                      ),
+                      label: Text('كلمة المرور'),
+                      suffixIcon: Icon(Icons.lock_outline),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      floatingLabelStyle: TextStyle(color: Colors.blue[200]),
+                      contentPadding: EdgeInsets.all(24),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(22),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
                     ),
-                  ],
+                  ),
                 ),
                 SizedBox(height: 50),
                 Container(
@@ -105,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen>
                       backgroundColor: kPrimaryColor,
                     ),
                     child: Text(
-                      'تسجيل الدخول',
+                      'تحديث كلمة المرور',
                       style: TextStyle(
                         color: kWhiteColor,
                         fontWeight: FontWeight.bold,
