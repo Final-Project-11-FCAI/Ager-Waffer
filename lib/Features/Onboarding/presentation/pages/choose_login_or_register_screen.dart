@@ -13,6 +13,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
 
   final PageController _controller = PageController();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
