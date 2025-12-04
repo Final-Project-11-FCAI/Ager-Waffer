@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PasswordWidget extends StatelessWidget {
-  const PasswordWidget({
+class Emailwidget extends StatelessWidget {
+  const Emailwidget({
     super.key,
   });
 
@@ -13,13 +13,12 @@ class PasswordWidget extends StatelessWidget {
         decoration: InputDecoration(
     
           hint: Text(
-            'كلمة المرور',
+            'البريد الالكتروني',
             style: TextStyle(color: Colors.grey[400]),
           ),
-          label: Text('كلمة المرور'),
+          label: Text('البريد الالكتروني'),
           
-          suffixIcon: Icon(Icons.lock_outline),
-          prefixIcon: Icon(Icons.remove_red_eye_outlined),
+          suffixIcon: Icon(Icons.email_outlined),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(22),
           ),
