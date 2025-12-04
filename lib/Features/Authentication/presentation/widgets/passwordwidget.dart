@@ -11,17 +11,18 @@ class PasswordWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: TextField(
         decoration: InputDecoration(
-    
+          fillColor: Colors.grey,
           hint: Text(
             'كلمة المرور',
             style: TextStyle(color: Colors.grey[400]),
           ),
           label: Text('كلمة المرور'),
-          
           suffixIcon: Icon(Icons.lock_outline),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(22),
+            
           ),
+          floatingLabelStyle: TextStyle(color: Colors.blue[200]),
           contentPadding: EdgeInsets.all(24),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(22),
