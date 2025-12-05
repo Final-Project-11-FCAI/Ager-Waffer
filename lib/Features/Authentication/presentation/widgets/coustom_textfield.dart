@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 
-class Emailwidget extends StatelessWidget {
-  const Emailwidget({super.key});
-
+class CoustomTextfield extends StatelessWidget {
+  const CoustomTextfield({
+    super.key,
+    required this.icon,
+    required this.hint,
+    required this.label,
+  });
+  final Icon icon;
+  final String hint;
+  final String label;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: TextField(
         decoration: InputDecoration(
-          hint: Text(
-            'البريد الالكتروني',
-            style: TextStyle(color: Colors.grey[400]),
-          ),
-          label: Text('البريد الالكتروني'),
+          hint: Text(hint, style: TextStyle(color: Colors.grey[400])),
+          label: Text(label),
 
-          suffixIcon: Icon(Icons.email_outlined),
+          prefixIcon: icon,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(22),
           ),
