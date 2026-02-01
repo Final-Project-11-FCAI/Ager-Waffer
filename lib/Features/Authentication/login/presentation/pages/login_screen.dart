@@ -1,14 +1,34 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/register_screen.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/coustom_textfield.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/logoastext.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/coustom_textfield.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logoicons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class Frogetpassword extends StatelessWidget {
-  const Frogetpassword({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +36,7 @@ class Frogetpassword extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 90,
         backgroundColor: kPrimaryColor,
-        title: Container(alignment: Alignment.centerLeft,child: Logoastext(),),
+        title: Container(alignment: Alignment.centerLeft, child: LogoAsText()),
       ),
       body: Container(
         height: double.infinity,
@@ -24,45 +44,46 @@ class Frogetpassword extends StatelessWidget {
           color: kWhiteColor,
           borderRadius: BorderRadius.circular(16),
         ),
-        padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(right: 16),
-                child: Text(
-                  'كلمة المرور الجديدة',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: kPrimaryColor,
-                  ),
-                ),
+              SizedBox(height: 20),
+              CoustomTextField(
+                icon: Icon(Icons.email_outlined),
+                hint: 'البريد الالكتروني',
+                label: 'البريد الالكتروني',
               ),
-              CoustomTextfield(
+              CoustomTextField(
                 icon: Icon(Icons.lock_outline),
                 hint: 'كلمة المرور',
                 label: 'كلمة المرور',
               ),
-              SizedBox(height: 50),
-
-              Container(
-                alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(right: 16),
-                child: Text(
-                  'تأكيد كلمة المرور',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: kPrimaryColor,
+              Row(
+                children: [
+                  Checkbox(
+                    activeColor: kPrimaryColor,
+                    value: isChecked,
+                    onChanged: (newValue) {
+                      setState(() {
+                        isChecked = newValue!;
+                      });
+                    },
                   ),
-                ),
-              ),
-              CoustomTextfield(
-                icon: Icon(Icons.lock_outline),
-                hint: 'كلمة المرور',
-                label: 'كلمة المرور',
+                  Text("تذكرني", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Spacer(flex: 1),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, 'FrogetPassword');
+                    },
+                    child: Text(
+                      'هل نسيت كلمة المرور؟',
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 50),
               Container(
@@ -75,7 +96,7 @@ class Frogetpassword extends StatelessWidget {
                     backgroundColor: kPrimaryColor,
                   ),
                   child: Text(
-                    'تحديث كلمة المرور',
+                    'تسجيل الدخول',
                     style: TextStyle(
                       color: kWhiteColor,
                       fontWeight: FontWeight.bold,
@@ -140,13 +161,9 @@ class Frogetpassword extends StatelessWidget {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.push(
+                          Navigator.pushReplacementNamed(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return RegisterScreen();
-                              },
-                            ),
+                            'RegisterScreen',
                           );
                         },
                     ),

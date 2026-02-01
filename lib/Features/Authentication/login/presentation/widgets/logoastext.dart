@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Logoastext extends StatelessWidget {
-  const Logoastext({super.key});
+class LogoAsText extends StatelessWidget {
+  const LogoAsText({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/frogetpassword.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/login_screen.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/register_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/frogetpassword.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:ager_waffer/firebase_options.dart';
 import 'package:country_picker/country_picker.dart';
@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
         'LoginScreen': (context) => LoginScreen(),
         'RegisterScreen': (context) => RegisterScreen(),
-        'FrogetPassword': (context) => Frogetpassword(),
+        'FrogetPassword': (context) => FrogetPassword(),
 
       },
     );

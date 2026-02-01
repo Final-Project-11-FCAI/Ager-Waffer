@@ -1,90 +1,33 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/coustom_textfield.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/logoastext.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/coustom_textfield.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logoicons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      appBar: AppBar(
-        toolbarHeight: 90,
+    return  Scaffold(
         backgroundColor: kPrimaryColor,
-        title: Container(alignment: Alignment.centerLeft, child: Logoastext()),
-      ),
-      body: Container(
-        height: double.infinity,
-        decoration: BoxDecoration(
-          color: kWhiteColor,
-          borderRadius: BorderRadius.circular(16),
+        appBar: AppBar(
+          toolbarHeight: 90,
+          backgroundColor: kPrimaryColor,
+          title: Container(alignment: Alignment.centerLeft,child: LogoAsText(),),
         ),
-        child: SingleChildScrollView(
+        body: Container(
+          decoration: BoxDecoration(
+            color: kWhiteColor,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              SizedBox(height: 20),
-              CoustomTextfield(
-                icon: Icon(Icons.email_outlined),
-                hint: 'البريد الالكتروني',
-                label: 'البريد الالكتروني',
-              ),
-              CoustomTextfield(
-                icon: Icon(Icons.lock_outline),
-                hint: 'كلمة المرور',
-                label: 'كلمة المرور',
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                    activeColor: kPrimaryColor,
-                    value: isChecked,
-                    onChanged: (newValue) {
-                      setState(() {
-                        isChecked = newValue!;
-                      });
-                    },
-                  ),
-                  Text("تذكرني", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Spacer(flex: 1),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, 'FrogetPassword');
-                    },
-                    child: Text(
-                      'هل نسيت كلمة المرور؟',
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              CoustomTextField(icon: Icon(Icons.account_circle_outlined), hint: "الاسم", label: "الاسم"),
+              CoustomTextField(icon: Icon(Icons.email_outlined), hint: 'البريد الالكتروني', label: 'البريد الالكتروني'),
+              CoustomTextField(icon: Icon(Icons.lock_outline), hint: 'كلمة المرور', label: 'كلمة المرور'),
               SizedBox(height: 50),
               Container(
                 padding: EdgeInsets.all(16),
@@ -96,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen>
                     backgroundColor: kPrimaryColor,
                   ),
                   child: Text(
-                    'تسجيل الدخول',
+                    'إنشاء حساب',
                     style: TextStyle(
                       color: kWhiteColor,
                       fontWeight: FontWeight.bold,
@@ -153,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen>
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "  ليس لديك حساب ؟",
+                      text: "  لديك حساب بالفعل ؟",
                       style: TextStyle(
                         color: Color(0xff5588A3),
                         fontSize: 16,
@@ -161,14 +104,14 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.pushReplacementNamed(
+                         Navigator.pushReplacementNamed(
                             context,
-                            'RegisterScreen',
+                            'LoginScreen',
                           );
                         },
                     ),
                     TextSpan(
-                      text: " أنشيء حسابًا الأن",
+                      text: " تسجيل الدخول",
                       style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 16,
@@ -181,7 +124,6 @@ class _LoginScreenState extends State<LoginScreen>
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

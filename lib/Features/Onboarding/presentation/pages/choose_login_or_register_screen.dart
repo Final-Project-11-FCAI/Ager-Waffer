@@ -1,8 +1,8 @@
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/login_screen.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/register_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';

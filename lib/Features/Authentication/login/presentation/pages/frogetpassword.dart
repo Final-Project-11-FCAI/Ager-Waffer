@@ -1,33 +1,69 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/coustom_textfield.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/logoastext.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/coustom_textfield.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logoicons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+class FrogetPassword extends StatelessWidget {
+  const FrogetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
+      backgroundColor: kPrimaryColor,
+      appBar: AppBar(
+        toolbarHeight: 90,
         backgroundColor: kPrimaryColor,
-        appBar: AppBar(
-          toolbarHeight: 90,
-          backgroundColor: kPrimaryColor,
-          title: Container(alignment: Alignment.centerLeft,child: Logoastext(),),
+        title: Container(alignment: Alignment.centerLeft,child: LogoAsText(),),
+      ),
+      body: Container(
+        height: double.infinity,
+        decoration: BoxDecoration(
+          color: kWhiteColor,
+          borderRadius: BorderRadius.circular(16),
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            color: kWhiteColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
+        child: SingleChildScrollView(
           child: Column(
             children: [
-              CoustomTextfield(icon: Icon(Icons.account_circle_outlined), hint: "الاسم", label: "الاسم"),
-              CoustomTextfield(icon: Icon(Icons.email_outlined), hint: 'البريد الالكتروني', label: 'البريد الالكتروني'),
-              CoustomTextfield(icon: Icon(Icons.lock_outline), hint: 'كلمة المرور', label: 'كلمة المرور'),
+              Container(
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  'كلمة المرور الجديدة',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+              CoustomTextField(
+                icon: Icon(Icons.lock_outline),
+                hint: 'كلمة المرور',
+                label: 'كلمة المرور',
+              ),
+              SizedBox(height: 50),
+
+              Container(
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  'تأكيد كلمة المرور',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+              CoustomTextField(
+                icon: Icon(Icons.lock_outline),
+                hint: 'كلمة المرور',
+                label: 'كلمة المرور',
+              ),
               SizedBox(height: 50),
               Container(
                 padding: EdgeInsets.all(16),
@@ -39,7 +75,7 @@ class RegisterScreen extends StatelessWidget {
                     backgroundColor: kPrimaryColor,
                   ),
                   child: Text(
-                    'إنشاء حساب',
+                    'تحديث كلمة المرور',
                     style: TextStyle(
                       color: kWhiteColor,
                       fontWeight: FontWeight.bold,
@@ -96,7 +132,7 @@ class RegisterScreen extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "  لديك حساب بالفعل ؟",
+                      text: "  ليس لديك حساب ؟",
                       style: TextStyle(
                         color: Color(0xff5588A3),
                         fontSize: 16,
@@ -104,14 +140,18 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                         Navigator.pushReplacementNamed(
+                          Navigator.push(
                             context,
-                            'LoginScreen',
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return RegisterScreen();
+                              },
+                            ),
                           );
                         },
                     ),
                     TextSpan(
-                      text: " تسجيل الدخول",
+                      text: " أنشيء حسابًا الأن",
                       style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 16,
@@ -124,6 +164,7 @@ class RegisterScreen extends StatelessWidget {
             ],
           ),
         ),
-      );
+      ),
+    );
   }
 }
