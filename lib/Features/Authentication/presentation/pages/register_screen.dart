@@ -1,9 +1,6 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/pages/login_screen.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/emailwidget.dart';
+import 'package:ager_waffer/Features/Authentication/presentation/widgets/coustom_textfield.dart';
 import 'package:ager_waffer/Features/Authentication/presentation/widgets/logoastext.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/namewidget.dart';
-import 'package:ager_waffer/Features/Authentication/presentation/widgets/passwordwidget.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logoicons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +10,12 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-
-      home: Scaffold(
+    return  Scaffold(
         backgroundColor: kPrimaryColor,
         appBar: AppBar(
           toolbarHeight: 90,
           backgroundColor: kPrimaryColor,
-          title: Logoastext(),
+          title: Container(alignment: Alignment.centerLeft,child: Logoastext(),),
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -31,9 +25,9 @@ class RegisterScreen extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              NameWidget(),
-              Emailwidget(),
-              PasswordWidget(),
+              CoustomTextfield(icon: Icon(Icons.account_circle_outlined), hint: "الاسم", label: "الاسم"),
+              CoustomTextfield(icon: Icon(Icons.email_outlined), hint: 'البريد الالكتروني', label: 'البريد الالكتروني'),
+              CoustomTextfield(icon: Icon(Icons.lock_outline), hint: 'كلمة المرور', label: 'كلمة المرور'),
               SizedBox(height: 50),
               Container(
                 padding: EdgeInsets.all(16),
@@ -110,13 +104,9 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.push(
+                         Navigator.pushReplacementNamed(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return LoginScreen();
-                              },
-                            ),
+                            'LoginScreen',
                           );
                         },
                     ),
@@ -134,7 +124,6 @@ class RegisterScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
