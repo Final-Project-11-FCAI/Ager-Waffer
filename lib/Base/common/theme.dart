@@ -6,6 +6,11 @@ double defaultRadius = 10.0;
 
 const Color kPrimaryColor = Color(0xff00334E);
 const Color kLightPrimaryColor = Color(0xff145374);
+const Color kWhiteColor = const Color(0xffFFFFFF);
+
+
+
+
 
 const Color kLightBlackColor = const Color(0xFF000D1B);
 const Color kroseColor = const Color(0xFF62BAA1);
@@ -47,7 +52,6 @@ const Color kTextColor = const Color(0xFF6C757D);
 const Color kButtonColor = const Color(0xFF007BFF);
 const Color kMoreWhiteColor = const Color(0xffF8F9FA);
 const Color kBlackColor = const Color(0xFF2A2A2A);
-const Color kWhiteColor = const Color(0xffFFFFFF);
 const Color kMoreBlueColor = const Color(0xff0061CA);
 const Color kNavyBlueColor = const Color(0xFF343A40);
 const Color kDividerColor = const Color(0xFFEDEAEA);
