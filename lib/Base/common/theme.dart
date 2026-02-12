@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 double defaultMargin = 24.0;
@@ -7,10 +8,51 @@ double defaultRadius = 10.0;
 const Color kPrimaryColor = Color(0xff00334E);
 const Color kLightPrimaryColor = Color(0xff145374);
 const Color kWhiteColor = const Color(0xffFFFFFF);
+const Color kGreyColor = const Color(0xff81868D);
+const Color kBoldGreyColor = const Color(0xff00334EBD);
 
 
+TextStyle font15BlackRegular = GoogleFonts.notoSansArabic(
+  fontSize: 15.sp,
+  color: kBlackColor,
+  fontWeight: regular,
+);
+TextStyle font14GreyRegular = GoogleFonts.notoSansArabic(
+  fontSize: 14.sp,
+  color: kGreyColor,
+  fontWeight: regular,
+);
+TextStyle font20BoldGreyRegular = GoogleFonts.notoSansArabic(
+  fontSize: 20.sp,
+  color: kBoldGreyColor,
+  fontWeight: regular,
+);
+
+TextStyle font24LightPrimarySemiBold = GoogleFonts.notoSansArabic(
+  fontSize: 24.sp,
+  color: kLightPrimaryColor,
+  fontWeight: semiBold,
+);
+TextStyle font24PrimarySemiBold = GoogleFonts.notoSansArabic(
+  fontSize: 24.sp,
+  color: kPrimaryColor,
+  fontWeight: semiBold,
+);
+
+TextStyle font20PrimaryMedium = GoogleFonts.notoSansArabic(
+  fontSize: 20.sp,
+  color: kPrimaryColor,
+  fontWeight: medium,
+);
 
 
+FontWeight light = FontWeight.w300;
+FontWeight regular = FontWeight.w400;
+FontWeight medium = FontWeight.w500;
+FontWeight semiBold = FontWeight.w600;
+FontWeight bold = FontWeight.w700;
+FontWeight extraBold = FontWeight.w800;
+FontWeight black = FontWeight.w900;
 
 const Color kLightBlackColor = const Color(0xFF000D1B);
 const Color kroseColor = const Color(0xFF62BAA1);
@@ -35,7 +77,6 @@ const Color kSelectedTimeColor = const Color(0xFFC6C6C6);
 const Color korangeCarColor = const Color(0xFFFF5C00);
 const Color kburgundyCarColor = const Color(0xFF6D0115);
 const Color kBoldRoseColor = const Color(0xFF28846E);
-const Color kGreyColor = const Color(0xff9698A9);
 const Color kYellowCanaryColor = const Color(0xffFFCD1A);
 const Color kContainerColor = const Color(0xffDDF5EA);
 const Color kPickImageColor = const Color(0xff666666);
@@ -101,13 +142,6 @@ BottomNavigationBarThemeData bottomNavigationBarTheme =
   type: BottomNavigationBarType.fixed,
 );
 
-FontWeight light = FontWeight.w300;
-FontWeight regular = FontWeight.w400;
-FontWeight medium = FontWeight.w500;
-FontWeight semiBold = FontWeight.w600;
-FontWeight bold = FontWeight.w700;
-FontWeight extraBold = FontWeight.w800;
-FontWeight black = FontWeight.w900;
 
 ColorScheme kColorScheme = ColorScheme(
   primary: kPrimaryColor,

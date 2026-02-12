@@ -51,20 +51,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       children: [
                         TextSpan(
                           text: onboardingDate[index].title,
-                          style: GoogleFonts.notoSansArabic(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: kLightPrimaryColor,
-                          ),
+                          style: font24LightPrimarySemiBold,
                         ),
                         _currentPage == 0
                             ? TextSpan(
                                 text: 'أجر و وفر',
-                                style: GoogleFonts.notoSansArabic(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: kPrimaryColor,
-                                ),
+                                style: font24PrimarySemiBold,
                               )
                             : const TextSpan(),
                       ],

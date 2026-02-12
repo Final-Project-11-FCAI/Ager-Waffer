@@ -1,6 +1,8 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/coustom_textfield.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logoicons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +93,13 @@ class _LoginScreenState extends State<LoginScreen>
                 width: double.infinity,
                 height: 80,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/home',
+                          (route) => false,
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
                   ),
