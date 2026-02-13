@@ -8,6 +8,7 @@ double defaultRadius = 10.0;
 const Color kPrimaryColor = Color(0xff00334E);
 const Color kLightPrimaryColor = Color(0xff145374);
 const Color kWhiteColor = const Color(0xffFFFFFF);
+const Color kBlackColor = const Color(0xFF2A2A2A);
 const Color kGreyColor = const Color(0xff81868D);
 const Color kBoldGreyColor = const Color(0xff00334EBD);
 
@@ -21,6 +22,11 @@ TextStyle font14GreyRegular = GoogleFonts.notoSansArabic(
   fontSize: 14.sp,
   color: kGreyColor,
   fontWeight: regular,
+);
+TextStyle font14BlackBold = GoogleFonts.notoSansArabic(
+  fontSize: 14.sp,
+  color: kBlackColor,
+  fontWeight: bold,
 );
 TextStyle font20BoldGreyRegular = GoogleFonts.notoSansArabic(
   fontSize: 20.sp,
@@ -43,6 +49,11 @@ TextStyle font20PrimaryMedium = GoogleFonts.notoSansArabic(
   fontSize: 20.sp,
   color: kPrimaryColor,
   fontWeight: medium,
+);
+TextStyle font16BlackSemiBold = GoogleFonts.notoSansArabic(
+  fontSize: 16.sp,
+  color: kBlackColor,
+  fontWeight: semiBold,
 );
 
 
@@ -92,7 +103,6 @@ const Color kBlueColor = const Color(0xff0056B3);
 const Color kTextColor = const Color(0xFF6C757D);
 const Color kButtonColor = const Color(0xFF007BFF);
 const Color kMoreWhiteColor = const Color(0xffF8F9FA);
-const Color kBlackColor = const Color(0xFF2A2A2A);
 const Color kMoreBlueColor = const Color(0xff0061CA);
 const Color kNavyBlueColor = const Color(0xFF343A40);
 const Color kDividerColor = const Color(0xFFEDEAEA);
