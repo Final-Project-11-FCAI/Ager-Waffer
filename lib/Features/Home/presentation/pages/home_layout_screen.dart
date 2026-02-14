@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/profile_screen.dart';
@@ -9,7 +10,7 @@ class HomeLayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> screens = const [
+    final List<Widget> screens = [
       HomeScreen(),
       ProfileScreen(),
     ];
@@ -22,6 +23,7 @@ class HomeLayoutScreen extends StatelessWidget {
             children: screens,
           ),
           bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: kWhiteColor,
             currentIndex: currentIndex,
             onTap: (index) {
               context.read<BottomNavCubit>().changeIndex(index);
