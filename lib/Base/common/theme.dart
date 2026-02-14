@@ -12,6 +12,7 @@ const Color kBlackColor = const Color(0xFF2A2A2A);
 const Color kGreyColor = const Color(0xff81868D);
 const Color kBoldGreyColor = const Color(0xff00334EBD);
 const Color kRedColor = Colors.red;
+const Color kMoreGreyColor = const Color(0xff6F7384);
 
 
 TextStyle font15BlackRegular = GoogleFonts.notoSansArabic(
