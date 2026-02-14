@@ -11,6 +11,7 @@ const Color kWhiteColor = const Color(0xffFFFFFF);
 const Color kBlackColor = const Color(0xFF2A2A2A);
 const Color kGreyColor = const Color(0xff81868D);
 const Color kBoldGreyColor = const Color(0xff00334EBD);
+const Color kRedColor = Colors.red;
 
 
 TextStyle font15BlackRegular = GoogleFonts.notoSansArabic(
@@ -117,7 +118,6 @@ const Color kTimeNotificationColor = const Color(0xFF7B7B7B);
 const Color kSemiGreyColor = const Color(0xffC1C1C1);
 const Color kSomeGreyColor = const Color(0xffA4A0A0);
 const Color kCardColor = const Color(0xffF1F1F6);
-const Color kRedColor = const Color(0xFFFC1414);
 const Color kTransparentColor = Colors.transparent;
 const Color kAvailableColor = const Color(0xFFE7F0FD);
 const Color kUnavailableColor = const Color(0xffEBECF1);

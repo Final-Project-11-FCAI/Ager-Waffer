@@ -1,11 +1,11 @@
-class ProductModel {
+class ProductEntity {
   final String title;
   final String subtitle;
   final String price;
   final String image;
   final double rating;
 
-  ProductModel({
+  ProductEntity({
     required this.title,
     required this.subtitle,
     required this.price,
