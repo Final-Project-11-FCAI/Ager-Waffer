@@ -12,10 +12,10 @@ class HomeLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> screens = [
 
-      ProfileScreen(),
-      ProfileScreen(),
+      Scaffold(),
+      Scaffold(),
       HomeScreen(),
-      ProfileScreen(),
+      Scaffold(),
       ProfileScreen(),
     ];
     return BlocBuilder<BottomNavCubit, int>(

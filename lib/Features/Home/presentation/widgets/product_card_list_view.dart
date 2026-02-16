@@ -82,7 +82,6 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         widget.product.price,
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 11,
-                          fontWeight: bold,
                         ),
                       ),
                     ],
