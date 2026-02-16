@@ -8,6 +8,7 @@ class ButtonApp extends StatefulWidget {
     super.key,
     this.currentPage,
     this.controller,
+    this.isLanguageScreen = false,
     required this.onPressed,
     required this.text,
     required this.color,
@@ -19,6 +20,7 @@ class ButtonApp extends StatefulWidget {
   final Function () onPressed;
   final String text;
   final Color color;
+  final bool isLanguageScreen;
 
   @override
   State<ButtonApp> createState() => _ButtonAppState();
@@ -71,7 +73,7 @@ class _ButtonAppState extends State<ButtonApp> with SingleTickerProviderStateMix
           child: ElevatedButton(
             onPressed: widget.onPressed,
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: Shared.height * 0.015),
+              padding: EdgeInsets.symmetric(vertical: widget.isLanguageScreen ? Shared.height * 0.02 : Shared.height * 0.015),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(Shared.width * 0.07),
                 side: BorderSide(color: kPrimaryColor, width: 1),

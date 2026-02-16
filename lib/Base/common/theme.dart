@@ -7,6 +7,7 @@ double defaultRadius = 10.0;
 
 const Color kPrimaryColor = Color(0xff00334E);
 const Color kLightPrimaryColor = Color(0xff145374);
+const Color kMoreLightPrimaryColor = Color(0xff1D5687);
 const Color kWhiteColor = const Color(0xffFFFFFF);
 const Color kBlackColor = const Color(0xFF2A2A2A);
 const Color kGreyColor = const Color(0xff81868D);

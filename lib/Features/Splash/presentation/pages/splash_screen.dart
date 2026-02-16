@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Onboarding/presentation/pages/language_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const OnboardingScreen(),
+          builder: (context) => const LanguageScreen(),
         ),
       );
     });

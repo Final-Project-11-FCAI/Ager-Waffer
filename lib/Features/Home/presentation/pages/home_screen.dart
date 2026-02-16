@@ -8,10 +8,8 @@ import 'package:ager_waffer/Features/Home/presentation/widgets/custom_home_app_b
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:scroll_date_picker/scroll_date_picker.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -29,6 +27,13 @@ class HomeScreen extends StatelessWidget {
       subtitle: "استعمال خفيف",
       price: "30 جنيه/اليوم",
       image: "assets/images/Backpack.png",
+      rating: 3.5,
+    ),
+    ProductEntity(
+      title: "مشاية أطفال",
+      subtitle: "بحالة جيدة",
+      price: "30 جنيه/اليوم",
+      image: "assets/images/baby_walker.png",
       rating: 3.5,
     ),
   ];
