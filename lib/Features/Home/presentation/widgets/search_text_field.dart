@@ -11,7 +11,7 @@ class SearchTextField extends StatelessWidget {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.sp),
-          borderSide: BorderSide(color: kPrimaryColor.withOpacity(0.2)),
+          borderSide: BorderSide(color: kPrimaryColor.withOpacity(0.1)),
         ),
         prefixIcon: Icon(Icons.search, color: kLightPrimaryColor),
         hintText: 'ابحث عن منتج للايجار...',
