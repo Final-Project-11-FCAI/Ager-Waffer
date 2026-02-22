@@ -12,11 +12,8 @@ class UploadProductImagesContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return DottedBorder(
       borderType: BorderType.RRect,
-      // Important for rounded
       radius: const Radius.circular(25),
-      // Rounded corner
       dashPattern: const [6, 8],
-      // dot spacing
       strokeWidth: 1.4,
       color: kLightPrimaryColor,
       child: Container(
