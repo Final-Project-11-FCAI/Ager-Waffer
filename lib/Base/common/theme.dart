@@ -12,8 +12,11 @@ const Color kWhiteColor = const Color(0xffFFFFFF);
 const Color kBlackColor = const Color(0xFF2A2A2A);
 const Color kOpacityWhiteColor = const Color(0xFFF4FDFA);
 const Color kMoreRedColor = const Color(0xFFD80C0C);
+const Color kProductDataContainerColor = const Color(0xFFECEDF3);
+const Color kBorderColor = const Color(0xFF6E7A8799);
 
 const Color kBlueColor = const Color(0xFFF0C79D9);
+const Color kSomeBlackColor = const Color(0xFF1A1A1A);
 
 const Color kSomeGreyColor = const Color(0xFFD7E2E8);
 const Color kGreyColor = const Color(0xff81868D);
@@ -43,6 +46,11 @@ TextStyle font20BoldGreyRegular = GoogleFonts.notoSansArabic(
   color: kBoldGreyColor,
   fontWeight: regular,
 );
+TextStyle font15SomeBlackColorMedium = GoogleFonts.notoSansArabic(
+  fontSize: 15.sp,
+  color: kSomeBlackColor,
+  fontWeight: medium,
+);
 
 TextStyle font24LightPrimarySemiBold = GoogleFonts.notoSansArabic(
   fontSize: 24.sp,
@@ -64,6 +72,11 @@ TextStyle font16BlackSemiBold = GoogleFonts.notoSansArabic(
   fontSize: 16.sp,
   color: kBlackColor,
   fontWeight: semiBold,
+);
+TextStyle font13kLightPrimaryColorMedium = GoogleFonts.notoSansArabic(
+  fontSize: 13.sp,
+  color: kLightPrimaryColor,
+  fontWeight: medium,
 );
 
 
@@ -89,7 +102,6 @@ const Color kSomeRedColor = const Color(0xFFE57373);
 const Color kblueCarColor = const Color(0xFF1D00CF);
 const Color kDarkBlueColor = const Color(0xFF0A0067);
 const Color kgreyCarColor = const Color(0xFFC4C4C4);
-const Color kBorderColor = const Color(0xFFA5A5A5);
 const Color kSomeNavyBlackColor = const Color(0xFF201C2C);
 const Color kNavyBlackColor = const Color(0xFF354259);
 const Color kyellowCarColor = const Color(0xFFFFE500);

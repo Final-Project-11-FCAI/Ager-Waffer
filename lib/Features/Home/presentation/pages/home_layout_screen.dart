@@ -11,10 +11,9 @@ class HomeLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-
-      Scaffold(),
-      Scaffold(),
+      // Scaffold(),
       HomeScreen(),
+      Scaffold(),
       Scaffold(),
       ProfileScreen(),
     ];
@@ -51,9 +50,14 @@ class HomeLayoutScreen extends StatelessWidget {
                 selectedLabelStyle: font14BlackBold.copyWith(color: kPrimaryColor,fontSize: 12),
                 unselectedLabelStyle: font15BlackRegular.copyWith(color: kMoreGreyColor,fontSize: 12),
                 items: [
+                  // BottomNavigationBarItem(
+                  //   icon: Image.asset('assets/images/nimbus_list.png', color: currentIndex == 0 ? kPrimaryColor : kMoreGreyColor,),
+                  //   label: "القائمة",
+                  //   backgroundColor: kWhiteColor,
+                  // ),
                   BottomNavigationBarItem(
-                    icon: Image.asset('assets/images/nimbus_list.png', color: currentIndex == 0 ? kPrimaryColor : kMoreGreyColor,),
-                    label: "القائمة",
+                    icon: Image.asset('assets/images/home.png', color: currentIndex == 0 ? kPrimaryColor : kMoreGreyColor,),
+                    label: "الرئيسية",
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
@@ -62,17 +66,12 @@ class HomeLayoutScreen extends StatelessWidget {
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
-                    icon: Image.asset('assets/images/home.png', color: currentIndex == 2 ? kPrimaryColor : kMoreGreyColor,),
-                    label: "الرئيسية",
-                    backgroundColor: kWhiteColor,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset('assets/images/shopping-cart.png', color: currentIndex == 3 ? kPrimaryColor : kMoreGreyColor,),
+                    icon: Image.asset('assets/images/shopping-cart.png', color: currentIndex == 2 ? kPrimaryColor : kMoreGreyColor,),
                     label: "مستأجراتي",
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
-                    icon: Image.asset('assets/images/profile.png', color: currentIndex == 4 ? kPrimaryColor : kMoreGreyColor,),
+                    icon: Image.asset('assets/images/profile.png', color: currentIndex == 3 ? kPrimaryColor : kMoreGreyColor,),
                     label: "حسابي",
                     backgroundColor: kWhiteColor,
                   ),

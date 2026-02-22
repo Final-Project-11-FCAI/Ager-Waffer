@@ -1,6 +1,8 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Profile/presentation/pages/add_product_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/my_products_item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,6 +37,16 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
+      floatingActionButton: CircleAvatar(
+        radius: 25.r,
+        child: FloatingActionButton(
+          tooltip: 'إضافة منتج',
+        onPressed: (){
+            customAnimatedPushNavigation(context, AddProductScreen());
+        },
+            elevation: 3.sp,
+          backgroundColor: kPrimaryColor,
+          child: Icon(Icons.add, color: kWhiteColor,))),
       body: Stack(
         children: [
           Padding(
@@ -71,26 +83,26 @@ class ProfileScreen extends StatelessWidget {
                           Icon(Icons.star, size: 17.sp, color: Colors.amber),
                         ],
                       ),
-                      Container(
-                        height: Shared.height * 0.075.sp,
-                        width: Shared.width * 0.75.sp,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: kOpacityWhiteColor,
-                          borderRadius: BorderRadius.circular(20.r),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(5.0.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              editOrAddProductButton(title: 'تعديل', onTap: () {},),
-                              editOrAddProductButton(title: 'إضافة منتج', onTap: () {})
-                            ],
-                          ),
-                        ),
-                      ),
-                      Gap(14.h),
+                      // Container(
+                      //   height: Shared.height * 0.075.sp,
+                      //   width: Shared.width * 0.75.sp,
+                      //   alignment: Alignment.center,
+                      //   decoration: BoxDecoration(
+                      //     color: kOpacityWhiteColor,
+                      //     borderRadius: BorderRadius.circular(20.r),
+                      //   ),
+                      //   child: Padding(
+                      //     padding: EdgeInsets.all(5.0.h),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         editOrAddProductButton(title: 'تعديل', onTap: () {},),
+                      //         editOrAddProductButton(title: 'إضافة منتج', onTap: () {})
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      // Gap(14.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -99,7 +111,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Gap(5.h),
                       SizedBox(
-                        height: Shared.height * 0.55.h,
+                        height: Shared.height * 0.62.h,
                         child: ListView.builder(
                           padding: EdgeInsets.zero,
                           itemCount: products.length,
