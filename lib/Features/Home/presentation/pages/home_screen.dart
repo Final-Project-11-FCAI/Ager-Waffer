@@ -2,7 +2,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/category_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
-import 'package:ager_waffer/Features/Home/presentation/widgets/bset_rating_container.dart';
+import 'package:ager_waffer/Features/Home/presentation/widgets/carousel_slider_container.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/category_item_list_view.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/custom_home_app_bar.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
@@ -63,6 +63,7 @@ class HomeScreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        drawer: Drawer(),
         backgroundColor: kWhiteColor,
         appBar: CustomHomeAppBar(),
         body: SingleChildScrollView(
@@ -71,16 +72,18 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SearchTextField(),
-                Gap(14.h),
-              BestRatingContainer(),
+                // SearchTextField(),
+                // Gap(14.h),
+              SizedBox(
+                  height: Shared.height * 0.25.h,
+                  child: CarouselSliderContainer()),
                 Gap(14.h),
                 Text('الفئات',
                   style: font14BlackBold,
                 ),
                 Gap(10.h),
                 SizedBox(
-                  height: Shared.height * 0.055,
+                  height: Shared.height * 0.17.h,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
