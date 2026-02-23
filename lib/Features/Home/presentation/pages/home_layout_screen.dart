@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/pages/favorite_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/profile_screen.dart';
@@ -11,9 +12,8 @@ class HomeLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      // Scaffold(),
       HomeScreen(),
-      Scaffold(),
+      FavoriteScreen(),
       Scaffold(),
       ProfileScreen(),
     ];
@@ -50,11 +50,6 @@ class HomeLayoutScreen extends StatelessWidget {
                 selectedLabelStyle: font14BlackBold.copyWith(color: kPrimaryColor,fontSize: 12),
                 unselectedLabelStyle: font15BlackRegular.copyWith(color: kMoreGreyColor,fontSize: 12),
                 items: [
-                  // BottomNavigationBarItem(
-                  //   icon: Image.asset('assets/images/nimbus_list.png', color: currentIndex == 0 ? kPrimaryColor : kMoreGreyColor,),
-                  //   label: "القائمة",
-                  //   backgroundColor: kWhiteColor,
-                  // ),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/home.png', color: currentIndex == 0 ? kPrimaryColor : kMoreGreyColor,),
                     label: "الرئيسية",
