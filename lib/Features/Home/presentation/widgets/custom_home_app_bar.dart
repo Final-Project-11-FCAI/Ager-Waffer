@@ -42,7 +42,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onTap: (){
                     customAnimatedPushNavigation(context, SearchScreen());
                   },
-                  child: Icon(Icons.search, size: 26.sp,)),
+                  child: Image.asset('assets/images/search_icon.png', width: 19.sp,)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
                 child: Image.asset('assets/images/notification_icon.png', width: Shared.width * 0.06.w,),

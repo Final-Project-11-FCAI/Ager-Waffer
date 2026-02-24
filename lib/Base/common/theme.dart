@@ -18,6 +18,8 @@ const Color kNotAvailableColor = const Color(0xFF97979773);
 const Color kPartGreyColor = const Color(0xFF7F7878);
 const Color kProductDataContainerColor = const Color(0xFFECEDF3);
 const Color kBorderColor = const Color(0xFF6E7A8799);
+const Color kSmallContainerColor = const Color(0xFFF4F5FD);
+const Color kInactiveSwitchColor = const Color(0xFF78788052);
 const Color kGreenColor = const Color(0xFF319F43);
 const Color kLightGreenColor = const Color(0xFFB4E8BC);
 
