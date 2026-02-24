@@ -14,6 +14,8 @@ const Color kOpacityWhiteColor = const Color(0xFFF4FDFA);
 const Color kMoreRedColor = const Color(0xFFD80C0C);
 const Color kProductDataContainerColor = const Color(0xFFECEDF3);
 const Color kBorderColor = const Color(0xFF6E7A8799);
+const Color kSmallContainerColor = const Color(0xFFF4F5FD);
+const Color kInactiveSwitchColor = const Color(0xFF78788052);
 
 const Color kBlueColor = const Color(0xFFF0C79D9);
 const Color kSomeBlackColor = const Color(0xFF1A1A1A);
