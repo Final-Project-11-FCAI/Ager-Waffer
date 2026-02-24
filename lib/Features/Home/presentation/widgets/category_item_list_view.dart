@@ -24,8 +24,7 @@ class CategoryItemListView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/Google.png', width: 50.w, height: 40.h,),
-              Gap(5.h),
+              Image.asset(category.image, scale: 1,),
               Text(
                 category.title,
                 textAlign: TextAlign.center,

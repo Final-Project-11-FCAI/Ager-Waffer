@@ -40,18 +40,27 @@ class HomeScreen extends StatelessWidget {
 
   final List<CategoryEntity> categories = [
     CategoryEntity(
+      image: 'assets/images/electronics.png',
       title: "إلكترونيات",
     ),
     CategoryEntity(
+      image: 'assets/images/home_supplies.png',
       title: "مستلزمات المنزل",
     ),
     CategoryEntity(
+      image: 'assets/images/travel_supplies.png',
+      title: "مستلزمات السفر",
+    ),
+    CategoryEntity(
+      image: 'assets/images/books.png',
       title: "كتب",
     ),
     CategoryEntity(
+      image: 'assets/images/children_items.png',
       title: "أغراض أطفال",
     ),
     CategoryEntity(
+      image: 'assets/images/others.png',
       title: "أخري",
     ),
   ];
@@ -72,8 +81,6 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // SearchTextField(),
-                // Gap(14.h),
               SizedBox(
                   height: Shared.height * 0.25.h,
                   child: CarouselSliderContainer()),
@@ -83,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Gap(10.h),
                 SizedBox(
-                  height: Shared.height * 0.17.h,
+                  height: Shared.height * 0.2.h,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,

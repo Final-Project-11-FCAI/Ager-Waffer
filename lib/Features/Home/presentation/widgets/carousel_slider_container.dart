@@ -15,20 +15,25 @@ class CarouselSliderContainer extends StatelessWidget {
       child: CarouselSlider(
         enableAutoSlider: true,
         unlimitedMode: true,
-        slideIndicator: CircularSlideIndicator(),
+        slideIndicator: CircularSlideIndicator(indicatorRadius: 0,),
         children: [
-          Image.network(
-            'https://picsum.photos/400',
+          Image.asset(
+           'assets/images/slider_image3.png',
             fit: BoxFit.cover,
             width: double.infinity,
           ),
-          Image.network(
-            'https://picsum.photos/401',
+          Image.asset(
+           'assets/images/slider_image4.png',
             fit: BoxFit.cover,
             width: double.infinity,
           ),
-          Image.network(
-            'https://picsum.photos/402',
+          Image.asset(
+            'assets/images/slider_image2.png',
+            fit: BoxFit.cover,
+            width: double.infinity,
+          ),
+          Image.asset(
+            'assets/images/slider_image1.png',
             fit: BoxFit.cover,
             width: double.infinity,
           ),
