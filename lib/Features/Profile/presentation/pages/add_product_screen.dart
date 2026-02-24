@@ -10,6 +10,7 @@ class AddProductScreen extends StatelessWidget {
   AddProductScreen({super.key});
 
   List<String> categoryOptions = ['مستلزمات سفر', 'إلكترونيات', 'مستلزمات المنزل', 'كتب', 'اخري'];
+  List<String> governmentOptions = ['الإسكندرية', 'الإسماعيلية', 'الأقصر', 'البحر الأحمر'];
   List<String> productStatesOptions = ['بحالة ممتازة', 'إستعمال خفيف'];
 
   @override
@@ -58,6 +59,17 @@ class AddProductScreen extends StatelessWidget {
                   ProductDataContainer(hintText: 'حالة المنتج', isOptions: true,
                     options: productStatesOptions,
                     optionsLength: productStatesOptions.length,
+                  ),
+                  Gap(20.h),
+
+                  Gap(20.h),
+                  ProductDataContainer(hintText: 'سعر الإيجار (جنيه/يوم)',),
+                  Gap(20.h),
+                  ProductDataContainer(hintText: 'قيمة التأمين',),
+                  Gap(20.h),
+                  ProductDataContainer(hintText: 'المحافظة', isOptions: true,
+                    options: governmentOptions,
+                    optionsLength: governmentOptions.length,
                   ),
                 ],
               ),
