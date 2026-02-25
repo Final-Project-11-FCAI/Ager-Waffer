@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/pages/favorite_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
+import 'package:ager_waffer/Features/Orders/presentation/pages/my_orders_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ class HomeLayoutScreen extends StatelessWidget {
     final List<Widget> screens = [
       HomeScreen(),
       FavoriteScreen(),
-      Scaffold(),
+      MyOrdersScreen(),
       ProfileScreen(),
     ];
     return BlocBuilder<BottomNavCubit, int>(
