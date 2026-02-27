@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ButtonApp extends StatefulWidget {
@@ -8,6 +9,7 @@ class ButtonApp extends StatefulWidget {
     super.key,
     this.currentPage,
     this.controller,
+    this.borderRadius,
     this.isLanguageScreen = false,
     required this.onPressed,
     required this.text,
@@ -21,6 +23,7 @@ class ButtonApp extends StatefulWidget {
   final String text;
   final Color color;
   final bool isLanguageScreen;
+  final double? borderRadius;
 
   @override
   State<ButtonApp> createState() => _ButtonAppState();
@@ -73,9 +76,9 @@ class _ButtonAppState extends State<ButtonApp> with SingleTickerProviderStateMix
           child: ElevatedButton(
             onPressed: widget.onPressed,
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: widget.isLanguageScreen ? Shared.height * 0.02 : Shared.height * 0.015),
+              padding: EdgeInsets.symmetric(vertical: widget.isLanguageScreen ? Shared.height * 0.024.h : Shared.height * 0.02.h),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Shared.width * 0.07),
+                borderRadius: BorderRadius.circular(widget.borderRadius ?? Shared.width * 0.07.w),
                 side: BorderSide(color: kPrimaryColor, width: 1),
               ),
               backgroundColor: widget.color,
@@ -83,9 +86,9 @@ class _ButtonAppState extends State<ButtonApp> with SingleTickerProviderStateMix
             child: Text(
               widget.text,
               style: GoogleFonts.notoSansArabic(
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
-                color: widget.color == kPrimaryColor ? kWhiteColor : kPrimaryColor,
+                color: widget.color == kPrimaryColor || widget.color == kDoneColor ? kWhiteColor : kPrimaryColor,
               ),
             ),
           ),

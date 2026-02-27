@@ -11,6 +11,7 @@ const Color kMoreLightPrimaryColor = Color(0xff1D5687);
 const Color kWhiteColor = const Color(0xffFFFFFF);
 const Color kBlackColor = const Color(0xFF2A2A2A);
 const Color kOpacityWhiteColor = const Color(0xFFF4FDFA);
+const Color kDoneColor = const Color(0xFF2F3A5A);
 const Color kFavoriteColor = const Color(0xFFE9F1F4);
 const Color kMoreRedColor = const Color(0xFFD80C0C);
 const Color kLightRedColor = const Color(0xFFE33629);
@@ -24,6 +25,7 @@ const Color kSmallContainerColor = const Color(0xFFF4F5FD);
 const Color kInactiveSwitchColor = const Color(0xFF78788052);
 const Color kGreenColor = const Color(0xFF319F43);
 const Color kLightGreenColor = const Color(0xFFB4E8BC);
+const Color kBorderAuthColor = const Color(0xFF5588A3);
 
 const Color kBlueColor = const Color(0xFFF0C79D9);
 const Color kSomeBlackColor = const Color(0xFF1A1A1A);
