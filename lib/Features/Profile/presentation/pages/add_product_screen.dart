@@ -22,6 +22,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   bool isAvailable = true;
   bool acceptNegotiation = false;
+  String rentalType = "يومي";
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +75,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   Gap(30.h),
                   Text('نوع الإيجار', style: font16BlackSemiBold.copyWith(color: kSomeBlackColor),),
                   Gap(10.h),
-                  RentalTypeContainer(),
+                  RentalTypeContainer(
+                    onChanged: (value) {
+                      setState(() {
+                        rentalType = value;
+                      });
+                    },
+                  ),
                   Gap(20.h),
-                  ProductDataContainer(hintText: 'سعر الإيجار (جنيه/يوم)',),
+                  ProductDataContainer(hintText: 'سعر الإيجار (جنيه/${rentalType.substring(0, rentalType.length - 1)})',),
                   Gap(20.h),
                   ProductDataContainer(hintText: 'قيمة التأمين',),
                   Gap(20.h),

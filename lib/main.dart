@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
@@ -133,7 +133,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
         'LoginScreen': (context) => LoginScreen(),
         'RegisterScreen': (context) => RegisterScreen(),
-        'FrogetPassword': (context) => ForgetPassword(),
+        'FrogetPassword': (context) => ForgetPasswordScreen(),
         '/home': (context) => BlocProvider(
                               create: (_) => BottomNavCubit(),
                               child: const HomeLayoutScreen()),

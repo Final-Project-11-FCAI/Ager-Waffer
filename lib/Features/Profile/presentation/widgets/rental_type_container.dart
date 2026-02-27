@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RentalTypeContainer extends StatefulWidget {
-  const RentalTypeContainer({super.key});
+  const RentalTypeContainer({super.key, required this.onChanged});
+  final ValueChanged<String> onChanged;
 
   @override
   State<RentalTypeContainer> createState() => _RentalTypeContainerState();
@@ -36,6 +37,7 @@ class _RentalTypeContainerState extends State<RentalTypeContainer> {
                 setState(() {
                   selectedIndex = index;
                 });
+                widget.onChanged(items[index]);
               },
               child: Padding(
                 padding: EdgeInsets.all(6.0.w),
