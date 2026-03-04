@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -25,9 +26,13 @@ class _ProductCardListViewState extends State<ProductCardListView> {
       decoration: BoxDecoration(
         color: kWhiteColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Color.fromRGBO(110, 122, 135, 1)),
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 4)),
+        border: Border.all(color: const Color.fromRGBO(110, 122, 135, 1)),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: Offset(0, 4),
+          ),
         ],
       ),
       child: Row(
@@ -80,16 +85,14 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                       Text(widget.product.title, style: font16BlackSemiBold),
                       Text(
                         widget.product.price,
-                        style: font16BlackSemiBold.copyWith(
-                          fontSize: 11,
-                        ),
+                        style: font16BlackSemiBold.copyWith(fontSize: 11),
                       ),
                     ],
                   ),
                   Text(
                     widget.product.subtitle,
                     style: font16BlackSemiBold.copyWith(
-                      color: Color.fromRGBO(85, 85, 85, 0.61),
+                      color: const Color.fromRGBO(85, 85, 85, 0.61),
                     ),
                   ),
                   Gap(5.h),
@@ -99,7 +102,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         "${widget.product.rating}",
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 10,
-                          color: Color.fromRGBO(151, 151, 151, 1),
+                          color: const Color.fromRGBO(151, 151, 151, 1),
                         ),
                       ),
                       Gap(5.w),
@@ -128,7 +131,14 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                             borderRadius: BorderRadius.circular(14.sp),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  ProductDetailsScreen(product: widget.product),
+                            ),
+                          );
+                        },
                         child: Text(
                           "عرض",
                           style: font16BlackSemiBold.copyWith(
