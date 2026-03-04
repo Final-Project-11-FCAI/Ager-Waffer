@@ -46,66 +46,68 @@ class ProductDetailsScreen extends StatelessWidget {
         elevation: 0,
         foregroundColor: kWhiteColor,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhiteColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.r),
-                  topRight: Radius.circular(25.r),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: kWhiteColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.r),
+                    topRight: Radius.circular(25.r),
+                  ),
                 ),
-              ),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: ProductImages(product: product,),
-                    ),
-                    Gap(20.h),
-                    ProductData(product: product),
-                    Gap(10.h),
-                   Padding(
-                     padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.08.w, vertical: Shared.height * 0.02.h),
-                     child: Divider(color: kBlackColor, thickness: 1.h,),
-                   ),
-                    Gap(10.h),
-                    ContactOwnerContainer(),
-                    Gap(24.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "التقييمات",
-                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
-                        ),
-                      ],
-                    ),
-                    Gap(5.h),
-                    ListView.builder(
-                      itemCount: reviews.length,
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.h),
-                        child: ReviewItem(
-                          review: reviews[index],
-                        ),
-                      );
-                    },
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: ProductImages(product: product,),
+                      ),
+                      Gap(20.h),
+                      ProductData(product: product),
+                      Gap(10.h),
+                     Padding(
+                       padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.08.w, vertical: Shared.height * 0.02.h),
+                       child: Divider(color: kBlackColor, thickness: 1.h,),
+                     ),
+                      Gap(10.h),
+                      ContactOwnerContainer(),
+                      Gap(24.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "التقييمات",
+                            style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                          ),
+                        ],
+                      ),
+                      Gap(5.h),
+                      ListView.builder(
+                        itemCount: reviews.length,
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.h),
+                          child: ReviewItem(
+                            review: reviews[index],
+                          ),
+                        );
+                      },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          RentAndFavoriteButton()
-        ],
+            RentAndFavoriteButton()
+          ],
+        ),
       ),
     );
   }
