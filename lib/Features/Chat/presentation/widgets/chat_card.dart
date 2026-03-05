@@ -1,0 +1,204 @@
+// import 'package:chat_material3/models/message_model.dart';
+// import 'package:chat_material3/models/room_models.dart';
+// import 'package:chat_material3/models/user_model.dart';
+// import 'package:chat_material3/screens/chat/chat_screen.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:intl/intl.dart';
+//
+// class ChatCard extends StatelessWidget {
+//   final ChatRoom item;
+//
+//    ChatCard({
+//     super.key,
+//     required this.item,
+//   });
+//   ChatUser? chatUser ;
+//   @override
+//   Widget build(BuildContext context) {
+//     String userId = item.members!
+//         .where((element) => element != FirebaseAuth.instance.currentUser!.uid)
+//         .first;
+//     return StreamBuilder(
+//         stream: FirebaseFirestore.instance
+//             .collection('users')
+//             .doc(userId)
+//             .snapshots(),
+//         builder: (context, snapshot) {
+//           if (snapshot.hasData) {
+//             var data = snapshot.data!.data();
+//             if(data != null)
+//              chatUser = ChatUser.fromJson(snapshot.data!.data()!);
+//             else{
+//               chatUser = null;
+//             }
+//
+//             return chatUser != null ? SingleChildScrollView(
+//               child: Card(
+//                 child: ListTile(
+//                     onTap: () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                             builder: (context) => ChatScreen(
+//                               roomId: item.id!,
+//                               chatUser: chatUser!,
+//                             ),
+//                           ),
+//                         );
+//                     },
+//                     leading: CircleAvatar(),
+//                     title: Text(
+//                       chatUser?.name! ?? '',
+//                       // overflow: TextOverflow.ellipsis,
+//                     ),
+//                     subtitle: Text(item.lastMessage! == ""
+//                         ? chatUser!.about!
+//                         : item.lastMessage!,
+//                     maxLines: 1,
+//                       overflow: TextOverflow.ellipsis,
+//                     ),
+//                   trailing: StreamBuilder(
+//                       stream: FirebaseFirestore.instance
+//                           .collection('rooms')
+//                           .doc(item.id)
+//                           .collection('messages')
+//                           .snapshots(),
+//                       builder: (context, snapshot) {
+//                         final unReadList = snapshot.data?.docs
+//                             .map((e) => Message.fromJson(e.data()))
+//                             .where((element) => element.read == "")
+//                             .where((element) =>
+//                                 element.fromId !=
+//                                 FirebaseAuth.instance.currentUser!.uid) ?? [];
+//                         return unReadList.length != 0
+//                             ? Badge(
+//                                 padding: EdgeInsets.symmetric(horizontal: 12),
+//                                 label: Text(unReadList.length.toString()),
+//                                 largeSize: 30,
+//                               )
+//                             : Text(
+//                           DateFormat.yMMMEd().format(
+//                             DateTime.parse(item.lastMessageTime.toString()),
+//                           ),
+//                         );
+//                         // Text(DateFormat.yMMMEd()
+//                         //     .format(DateTime.fromMillisecondsSinceEpoch(
+//                         //             int.parse(item.lastMessageTime.toString()))).toString());
+//                       },
+//                     )
+//                 ),
+//               ),
+//             ) : Container();
+//           } else {
+//             return Container();
+//           }
+//         });
+//   }
+// }
+
+import 'package:ager_waffer/Features/Chat/data/models/message_model.dart';
+import 'package:ager_waffer/Features/Chat/data/models/room_models.dart';
+import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
+import 'package:ager_waffer/Features/Chat/presentation/pages/chat_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class ChatCard extends StatelessWidget {
+  final ChatRoom item;
+
+  const ChatCard({
+    super.key,
+    required this.item,
+  });
+
+  DateTime getDateTime(dynamic timestamp) {
+    print("timestamp : ${timestamp.runtimeType} , $timestamp");
+    if (timestamp is Timestamp) {
+      return timestamp.toDate();
+    } else if (timestamp is int) {
+      return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    } else if (timestamp is String) {
+      return DateTime.parse(timestamp);
+    }
+    return DateTime.now();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String userId = item.members!
+        .where((element) => element != FirebaseAuth.instance.currentUser!.uid)
+        .first;
+
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data?.data() != null) {
+          ChatUser chatUser = ChatUser.fromJson(snapshot.data!.data()!);
+
+          return Card(
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatScreen(
+                      roomId: item.id!,
+                      chatUser: chatUser,
+                    ),
+                  ),
+                );
+              },
+              leading: chatUser.image == '' ? CircleAvatar(
+                child: Text(chatUser.name!.characters.first),
+              ) 
+                  : CircleAvatar(
+                backgroundImage: NetworkImage(chatUser.image!),
+              ),
+              title: Text(
+                chatUser.name ?? '',
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                item.lastMessage?.isEmpty ?? true ? chatUser.about! : item.lastMessage!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('rooms')
+                    .doc(item.id)
+                    .collection('messages')
+                    .snapshots(),
+                builder: (context, messageSnapshot) {
+                  if (messageSnapshot.hasData) {
+                    print('item.lastMessageTime : ${item.lastMessageTime}');
+                    final unReadList = messageSnapshot.data!.docs
+                        .map((e) => Message.fromJson(e.data()))
+                        .where((msg) => msg.read == null && msg.fromId != FirebaseAuth.instance.currentUser!.uid)
+                        .toList();
+
+                    return unReadList.isNotEmpty
+                        ? Badge(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      label: Text(unReadList.length.toString()),
+                      largeSize: 30,
+                    )
+                        : Text(
+                      DateFormat('hh:mm a').format(getDateTime(item.lastMessageTime)),   //item.lastMessageTime
+                    );
+                  }
+                  return SizedBox();
+                },
+              ),
+            ),
+          );
+        }
+        return SizedBox(); // Return an empty widget if snapshot doesn't have data
+      },
+    );
+  }
+}
