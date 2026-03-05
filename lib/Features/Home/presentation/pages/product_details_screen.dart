@@ -27,13 +27,13 @@ class ProductDetailsScreen extends StatelessWidget {
       name: "ندي يونس",
       comment: "العربة نظيفة وسهلة الاستخدام، أنصح بها جداً للأمهات.",
       date: "منذ أسبوع",
-      rating: 5,
+      rating: 5.0,
     ),
     ReviewEntity(
       name: "مني علي",
       comment: "تجربة جيدة بشكل عام، فقط حجم العربة أكبر مما توقعت.",
       date: "منذ أسبوعين",
-      rating: 4,
+      rating: 4.0,
     ),
   ];
 
