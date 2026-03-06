@@ -57,7 +57,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                     children: [
                       Text(widget.product.title, style: font14BlackBold.copyWith(fontSize: 12.sp)),
                       Text(
-                        widget.product.price,
+                        "${widget.product.price}",
                         style: font16BlackSemiBold.copyWith(fontSize: 11,),
                       ),
                     ],

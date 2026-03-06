@@ -82,7 +82,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                     children: [
                       Text(widget.product.title, style: font16BlackSemiBold),
                       Text(
-                        widget.product.price,
+                        "${widget.product.price} ج/اليوم",
                         style: font16BlackSemiBold.copyWith(fontSize: 11),
                       ),
                     ],

@@ -2,19 +2,22 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key, required this.product});
-final ProductEntity product ;
+  final ProductEntity product;
   @override
   State<RequestScreen> createState() => _RequestScreenState();
 }
+
 class _RequestScreenState extends State<RequestScreen> {
   DateTime? startDate;
   DateTime? endDate;
 
-  int dailyPrice = 50 ;
+  int dailyPrice = 50;
 
   bool agree = false;
 
@@ -25,7 +28,7 @@ class _RequestScreenState extends State<RequestScreen> {
     return 0;
   }
 
-  int get totalPrice => totalDays * dailyPrice;
+  int get totalPrice => totalDays * widget.product.price;
 
   Future<void> _selectDate(bool isStart) async {
     final picked = await showDatePicker(
@@ -106,7 +109,7 @@ class _RequestScreenState extends State<RequestScreen> {
                               ),
 
                               Text(
-                                widget.product.price,
+                                "${widget.product.price}ج/اليوم",
                                 style: font16BlackSemiBold.copyWith(
                                   fontSize: 13,
                                 ),
@@ -118,6 +121,29 @@ class _RequestScreenState extends State<RequestScreen> {
                             style: font16BlackSemiBold.copyWith(
                               color: kBlueColor,
                             ),
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Text(
+                                "${widget.product.rating}",
+                                style: font16BlackSemiBold.copyWith(
+                                  fontSize: 10,
+                                  color: Color.fromRGBO(151, 151, 151, 1),
+                                ),
+                              ),
+                              Gap(5.w),
+                              ...List.generate(
+                                5,
+                                (index) => Icon(
+                                  Icons.star,
+                                  size: 14.sp,
+                                  color: index < widget.product.rating.floor()
+                                      ? Colors.amber
+                                      : Colors.grey.shade300,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -241,7 +267,7 @@ class _RequestScreenState extends State<RequestScreen> {
                           ),
                         ),
                         Text(
-                          "$dailyPrice جنيه",
+                          "${widget.product.price}ج/اليوم",
                           style: font15SomeBlackColorMedium.copyWith(
                             fontSize: 13,
                             color: kBlackColor,
@@ -401,7 +427,7 @@ class _RequestScreenState extends State<RequestScreen> {
     );
   }
 
-  Widget buildDateBox( DateTime? date, VoidCallback onTap) {
+  Widget buildDateBox(DateTime? date, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
 
@@ -424,7 +450,6 @@ class _RequestScreenState extends State<RequestScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-
                 const SizedBox(height: 4),
 
                 Text(formatDate(date), style: const TextStyle(fontSize: 14)),
