@@ -1,14 +1,17 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/request_rscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ProductCardListView extends StatefulWidget {
   final ProductEntity product;
 
-  ProductCardListView({super.key, required this.product});
+  const ProductCardListView({super.key, required this.product});
 
   @override
   State<ProductCardListView> createState() => _ProductCardListViewState();
@@ -80,9 +83,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                       Text(widget.product.title, style: font16BlackSemiBold),
                       Text(
                         widget.product.price,
-                        style: font16BlackSemiBold.copyWith(
-                          fontSize: 11,
-                        ),
+                        style: font16BlackSemiBold.copyWith(fontSize: 11),
                       ),
                     ],
                   ),
@@ -128,7 +129,12 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                             borderRadius: BorderRadius.circular(14.sp),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          customAnimatedPushNavigation(
+                            context,
+                            RequestScreen(product: widget.product),
+                          );
+                        },
                         child: Text(
                           "عرض",
                           style: font16BlackSemiBold.copyWith(

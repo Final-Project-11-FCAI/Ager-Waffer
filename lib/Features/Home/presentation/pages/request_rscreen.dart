@@ -1,20 +1,20 @@
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class RequestScreen extends StatefulWidget {
-  const RequestScreen({super.key});
-
+  const RequestScreen({super.key, required this.product});
+final ProductEntity product ;
   @override
   State<RequestScreen> createState() => _RequestScreenState();
 }
-
 class _RequestScreenState extends State<RequestScreen> {
   DateTime? startDate;
   DateTime? endDate;
 
-  int dailyPrice = 50;
+  int dailyPrice = 50 ;
 
   bool agree = false;
 
@@ -87,7 +87,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
                 child: Row(
                   children: [
-                    Image.asset("assets/images/baby_walker.png", width: 90),
+                    Image.asset(widget.product.image, width: 90),
 
                     const SizedBox(width: 12),
 
@@ -101,12 +101,12 @@ class _RequestScreenState extends State<RequestScreen> {
 
                             children: [
                               Text(
-                                "عربة أطفال - خفيفة",
+                                widget.product.title,
                                 style: font16BlackSemiBold,
                               ),
 
                               Text(
-                                "50 جنيه / اليوم",
+                                widget.product.price,
                                 style: font16BlackSemiBold.copyWith(
                                   fontSize: 13,
                                 ),
@@ -114,7 +114,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             ],
                           ),
                           Text(
-                            "جديد",
+                            widget.product.subtitle,
                             style: font16BlackSemiBold.copyWith(
                               color: kBlueColor,
                             ),

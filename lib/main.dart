@@ -129,7 +129,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         DefaultCupertinoLocalizations.delegate,
         CountryLocalizations.delegate,
       ],
-      home: const RequestScreen(),
+      home: const SplashScreen(),
       routes: {
         'LoginScreen': (context) => LoginScreen(),
         'RegisterScreen': (context) => RegisterScreen(),
@@ -138,7 +138,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           create: (_) => BottomNavCubit(),
           child: const HomeLayoutScreen(),
         ),
-        'RequestScreen': (context) => RequestScreen(),
       },
     );
   }
