@@ -7,11 +7,12 @@ class PasswordTextField extends StatefulWidget {
   const PasswordTextField({
     super.key,
     required this.icon,
-    required this.label,
+    required this.label, required this.passwordController,
   });
 
   final Icon icon;
   final String label;
+  final TextEditingController passwordController;
 
   @override
   State<PasswordTextField> createState() => _PasswordTextFieldState();
@@ -23,6 +24,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.passwordController,
+      validator: (value) => value!.isEmpty ? "Requird" : null,
       textInputAction: TextInputAction.done,
       keyboardType: TextInputType.visiblePassword,
       obscureText: isHidden,

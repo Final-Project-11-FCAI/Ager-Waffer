@@ -13,6 +13,7 @@ class FireData {
 
   Future createRoom(String email) async {
     if (myUid == null) return;
+
     QuerySnapshot userEmail = await firestore
         .collection('users')
         .where('email', isEqualTo: email)
@@ -20,29 +21,62 @@ class FireData {
 
     if (userEmail.docs.isNotEmpty) {
       String userId = userEmail.docs.first.id;
-      List<String> members = [myUid!, userId]..sort((a, b) => a.compareTo(b));
 
-      QuerySnapshot roomExist = await firestore
-          .collection('rooms')
-          .where('members', isEqualTo: members)
-          .get();
+      List<String> members = [myUid!, userId]..sort();
 
-      if (roomExist.docs.isEmpty) {
+      String roomId = members.join("_");
+
+      DocumentSnapshot room =
+      await firestore.collection('rooms').doc(roomId).get();
+
+      if (!room.exists) {
         ChatRoom chatRoom = ChatRoom(
-          id: members.toString(),
-          createdAt: DateTime.now().toString(),
-          lastMessageTime: DateTime.now().toString(),
-          lastMessage: '',
+          id: roomId,
           members: members,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          lastMessage: '',
+          lastMessageTime: DateTime.now().millisecondsSinceEpoch,
         );
 
         await firestore
             .collection('rooms')
-            .doc(members.toString())
+            .doc(roomId)
             .set(chatRoom.toJson());
       }
     }
   }
+  // Future createRoom(String email) async {
+  //   if (myUid == null) return;
+  //   QuerySnapshot userEmail = await firestore
+  //       .collection('users')
+  //       .where('email', isEqualTo: email)
+  //       .get();
+  //
+  //   if (userEmail.docs.isNotEmpty) {
+  //     String userId = userEmail.docs.first.id;
+  //     List<String> members = [myUid!, userId]..sort((a, b) => a.compareTo(b));
+  //
+  //     QuerySnapshot roomExist = await firestore
+  //         .collection('rooms')
+  //         .where('members', isEqualTo: members)
+  //         .get();
+  //
+  //     if (roomExist.docs.isEmpty) {
+  //       ChatRoom chatRoom = ChatRoom(
+  //         id: members.toString(),
+  //         createdAt: DateTime.now().toString(),
+  //         lastMessageTime: DateTime.now().toString(),
+  //         lastMessage: '',
+  //         members: members,
+  //       );
+  //
+  //       await firestore
+  //           .collection('rooms')
+  //           .doc(members.toString())
+  //           .set(chatRoom.toJson());
+  //     }
+  //   }
+  // }
 
   Future sendGMessage(String msg, String groupId, {String? type}) async {
     if (myUid == null) return;
@@ -65,7 +99,7 @@ class FireData {
 
     await firestore.collection('groups').doc(groupId).update({
       'last_message': type ?? msg,
-      'last_message_time ': DateTime.now().millisecondsSinceEpoch.toString(),
+      'last_message_time': DateTime.now().millisecondsSinceEpoch.toString(),
     });
   }
 
@@ -98,7 +132,7 @@ class FireData {
 
     await firestore.collection('rooms').doc(roomId).update({
       'last_message': type ?? msg,
-      'last_message_time ': DateTime.now().millisecondsSinceEpoch.toString(),
+      'last_message_time': DateTime.now().millisecondsSinceEpoch.toString(),
     });
   }
 
@@ -108,7 +142,7 @@ class FireData {
         .doc(roomId)
         .collection('messages')
         .doc(msgId)
-        .update({'read': DateTime.now()..millisecondsSinceEpoch.toString()});
+        .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
   }
 
   deleteMsg(String roomId, List<String> msgs) async {

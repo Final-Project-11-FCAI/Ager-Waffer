@@ -13,7 +13,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
-  const ForgetPasswordScreen({super.key});
+  ForgetPasswordScreen({super.key});
+
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +52,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 ),
                 Gap(10.h),
                 PasswordTextField(
+                  passwordController: passwordController,
                   icon: Icon(Icons.lock_outline),
                   label: 'كلمة المرور',
                 ),
@@ -63,6 +67,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 ),
                 Gap(10.h),
                 PasswordTextField(
+                  passwordController: confirmPasswordController,
                   icon: Icon(Icons.lock_outline),
                   label: 'تأكيد كلمة المرور',
                 ),

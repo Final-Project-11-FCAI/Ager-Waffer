@@ -15,7 +15,7 @@ class ConversationsScreen extends StatefulWidget {
 }
 
 class _ConversationsScreenState extends State<ConversationsScreen> {
-  TextEditingController emailCon = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
 
   @override
@@ -78,7 +78,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                       ],
                     ),
                     CustomField(
-                      controller: emailCon,
+                      controller: emailController,
                       icon: Icons.dashboard_customize_outlined,
                       lable: "Email",
                     ),
@@ -93,11 +93,11 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                             backgroundColor:
                             Theme.of(context).colorScheme.primaryContainer),
                         onPressed: () {
-                          if (emailCon.text.isNotEmpty) {
-                            FireData().createRoom(emailCon.text).then((value) {
-                              print('the room is created');
+                          if (emailController.text.isNotEmpty) {
+                            FireData().createRoom(emailController.text).then((value) {
+                              print("ROOM FUNCTION FINISHED");
                               setState(() {
-                                emailCon.text = '';
+                                emailController.text = '';
                               });
                               Navigator.pop(context);
                             });
@@ -125,25 +125,29 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('rooms')
-                    .where('members',
-                     arrayContains: FirebaseAuth.instance.currentUser!.uid)
-                    //arrayContains: currentUser.uid)
+                    .where('members', arrayContains: currentUser.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<ChatRoom> items = snapshot.data!.docs
-                        .map((e) => ChatRoom.fromJson(e.data()))
-                        .toList()..sort((a, b) => b.lastMessageTime!.compareTo(a.lastMessageTime!),);
-                    return ListView.builder(
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          return ChatCard(item: items[index],);
-                        });
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
                   }
+
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(child: Text("No Chats Yet"));
+                  }
+
+                  List<ChatRoom> items = snapshot.data!.docs
+                      .map((e) => ChatRoom.fromJson(e.data()))
+                      .toList()
+                    ..sort((a, b) => (b.lastMessageTime ?? 0)
+                        .compareTo(a.lastMessageTime ?? 0));
+
+                  return ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      return ChatCard(item: items[index]);
+                    },
+                  );
                 },
               ),
             ),

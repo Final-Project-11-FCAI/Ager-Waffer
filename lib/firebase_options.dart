@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDKBvN03N6dogb65KTcF2Rlb7vOvPfNoak',
-    appId: '1:84733806651:web:57579eb27209fc35ba741e',
-    messagingSenderId: '84733806651',
-    projectId: 'musaed-dev',
-    authDomain: 'musaed-dev.firebaseapp.com',
-    storageBucket: 'musaed-dev.firebasestorage.app',
-    measurementId: 'G-RQLGHG3SBL',
+    apiKey: 'AIzaSyDlVkYOpySTeemrKm55ywbK3pz-GJj6qRM',
+    appId: '1:784984253888:web:36486689b4016890de9425',
+    messagingSenderId: '784984253888',
+    projectId: 'ager-wafer',
+    authDomain: 'ager-wafer.firebaseapp.com',
+    storageBucket: 'ager-wafer.firebasestorage.app',
+    measurementId: 'G-GQX4NM6YDM',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCYYJaiiXBkHPo_8C23Mfb_-iNlsme4mmo',
-    appId: '1:84733806651:android:c1842cc3dc6dfca5ba741e',
-    messagingSenderId: '84733806651',
-    projectId: 'musaed-dev',
-    storageBucket: 'musaed-dev.firebasestorage.app',
+    apiKey: 'AIzaSyBpf3ycfO4IonCYfLg_-5De8zfPAJJ3n2Q',
+    appId: '1:784984253888:android:8affe7b0d07eda68de9425',
+    messagingSenderId: '784984253888',
+    projectId: 'ager-wafer',
+    storageBucket: 'ager-wafer.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB1fj5n0wXR-sOVs5Shdb7lCKtc7S0qB-s',
-    appId: '1:84733806651:ios:c38e23c078ce6fe6ba741e',
-    messagingSenderId: '84733806651',
-    projectId: 'musaed-dev',
-    storageBucket: 'musaed-dev.firebasestorage.app',
-    iosBundleId: 'com.app.musaeidApp',
+    apiKey: 'AIzaSyCOI2J2wfILgwsgbjhvsYt8yzS9zQr475I',
+    appId: '1:784984253888:ios:973093a9715902bfde9425',
+    messagingSenderId: '784984253888',
+    projectId: 'ager-wafer',
+    storageBucket: 'ager-wafer.firebasestorage.app',
+    iosBundleId: 'com.example.agerWaffer',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB1fj5n0wXR-sOVs5Shdb7lCKtc7S0qB-s',
-    appId: '1:84733806651:ios:c38e23c078ce6fe6ba741e',
-    messagingSenderId: '84733806651',
-    projectId: 'musaed-dev',
-    storageBucket: 'musaed-dev.firebasestorage.app',
-    iosBundleId: 'com.app.musaeidApp',
+    apiKey: 'AIzaSyCOI2J2wfILgwsgbjhvsYt8yzS9zQr475I',
+    appId: '1:784984253888:ios:973093a9715902bfde9425',
+    messagingSenderId: '784984253888',
+    projectId: 'ager-wafer',
+    storageBucket: 'ager-wafer.firebasestorage.app',
+    iosBundleId: 'com.example.agerWaffer',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDKBvN03N6dogb65KTcF2Rlb7vOvPfNoak',
-    appId: '1:84733806651:web:adbb46aeeb45f794ba741e',
-    messagingSenderId: '84733806651',
-    projectId: 'musaed-dev',
-    authDomain: 'musaed-dev.firebaseapp.com',
-    storageBucket: 'musaed-dev.firebasestorage.app',
-    measurementId: 'G-LK9JW4KL37',
+    apiKey: 'AIzaSyDlVkYOpySTeemrKm55ywbK3pz-GJj6qRM',
+    appId: '1:784984253888:web:553c4d913c142ee9de9425',
+    messagingSenderId: '784984253888',
+    projectId: 'ager-wafer',
+    authDomain: 'ager-wafer.firebaseapp.com',
+    storageBucket: 'ager-wafer.firebasestorage.app',
+    measurementId: 'G-K6WYP2J5Z2',
   );
 }

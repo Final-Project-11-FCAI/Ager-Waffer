@@ -24,6 +24,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -67,11 +69,13 @@ class _LoginScreenState extends State<LoginScreen>
               child: Column(
                 children: [
                   EmailTextField(
+                    emailController: emailController,
                     icon: Icon(Icons.email_outlined),
                     label: 'البريد الالكتروني',
                   ),
                   Gap(30.h),
                   PasswordTextField(
+                    passwordController: passwordController,
                     icon: Icon(Icons.lock_outline),
                     label: 'كلمة المرور',
                   ),
