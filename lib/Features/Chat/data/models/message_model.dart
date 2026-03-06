@@ -20,16 +20,35 @@ class Message{
   });
 
   factory Message.fromJson(Map<String , dynamic> json){
-    print("json['created_at'] : ${json['created_at']} , ${json['created_at'].runtimeType}" );
-    print("json : $json");
+    DateTime? readTime;
+    final readValue = json['read'];
+
+    if (readValue is Timestamp) {
+      readTime = readValue.toDate();
+    } else if (readValue is int) {
+      readTime = DateTime.fromMillisecondsSinceEpoch(readValue);
+    } else if (readValue is String) {
+      if (RegExp(r'^\d+$').hasMatch(readValue)) {
+        readTime = DateTime.fromMillisecondsSinceEpoch(int.parse(readValue));
+      } else {
+        // Try normal DateTime parse; ignore failures
+        try {
+          readTime = DateTime.parse(readValue);
+        } catch (_) {
+          readTime = null;
+        }
+      }
+    }
+
     return Message(
-        id: json['id'] ?? "",
-        toId: json['to_id'],
-        fromId: json['from_id'],
-        msg: json['msg'],
-        type: json['type'],
-        createdAt: json['created_at'].toString(),
-    read: json['read'] != null ? (json['read'] as Timestamp).toDate() : null);
+      id: json['id'] ?? "",
+      toId: json['to_id'],
+      fromId: json['from_id'],
+      msg: json['msg'],
+      type: json['type'],
+      createdAt: json['created_at']?.toString(),
+      read: readTime,
+    );
   }
 
   Map<String , dynamic> toJson(){

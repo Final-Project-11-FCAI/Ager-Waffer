@@ -1,0 +1,69 @@
+mutation SeedData @transaction @auth(level: USER, insecureReason: "This operation is for seeding data by authenticated users.") {
+  user_insertMany(data: [
+    {
+      id: "b4d7c07b-83c9-4b6a-9f5b-6f8d7c07b83c",
+      username: "chef_anna",
+      email: "anna@example.com",
+      createdAt: "2023-01-01T10:00:00Z",
+      bio: "Passionate about creating delicious and healthy recipes.",
+      profilePictureUrl: "https://example.com/anna.jpg"
+    },
+    {
+      id: "a1e8f2d5-4c0a-4e1b-9f2c-5d6e7f8a9b0c",
+      username: "foodie_fred",
+      email: "fred@example.com",
+      createdAt: "2023-01-02T11:00:00Z",
+      bio: "Loves exploring new culinary experiences and sharing them.",
+      profilePictureUrl: "https://example.com/fred.jpg"
+    }
+  ])
+  recipe_insertMany(data: [
+    {
+      id: "c7d2e0f1-3a4b-4c5d-6e7f-8a9b0c1d2e3f",
+      title: "Spicy Lentil Soup",
+      description: "A hearty and flavorful lentil soup with a kick.",
+      ingredients: ["1 cup red lentils", "4 cups vegetable broth", "1 onion", "2 carrots", "2 celery stalks", "1 jalapeño", "spices"],
+      instructions: ["Sauté vegetables", "Add lentils and broth", "Simmer until tender", "Season to taste"],
+      createdAt: "2023-03-15T14:30:00Z",
+      imageUrl: "https://example.com/lentil_soup.jpg",
+      prepTime: 20,
+      cookTime: 40,
+      servings: 6,
+      author: {id: "b4d7c07b-83c9-4b6a-9f5b-6f8d7c07b83c"}
+    },
+    {
+      id: "f8a9b0c1-d2e3-4f5a-6b7c-8d9e0f1a2b3c",
+      title: "Quick Chicken Stir-Fry",
+      description: "A quick and easy weeknight stir-fry.",
+      ingredients: ["1 lb chicken breast", "2 cups mixed vegetables", "soy sauce", "ginger", "garlic", "rice"],
+      instructions: ["Cook chicken", "Add vegetables", "Stir in sauce", "Serve over rice"],
+      createdAt: "2023-03-16T18:00:00Z",
+      imageUrl: "https://example.com/stir_fry.jpg",
+      prepTime: 15,
+      cookTime: 20,
+      servings: 4,
+      author: {id: "b4d7c07b-83c9-4b6a-9f5b-6f8d7c07b83c"}
+    }
+  ])
+  comment_insertMany(data: [
+    {
+      text: "This soup is amazing!",
+      createdAt: "2023-03-16T09:00:00Z",
+      author: {id: "a1e8f2d5-4c0a-4e1b-9f2c-5d6e7f8a9b0c"},
+      recipe: {id: "c7d2e0f1-3a4b-4c5d-6e7f-8a9b0c1d2e3f"}
+    },
+    {
+      text: "Loved the stir-fry, super easy to make!",
+      createdAt: "2023-03-17T12:00:00Z",
+      author: {id: "a1e8f2d5-4c0a-4e1b-9f2c-5d6e7f8a9b0c"},
+      recipe: {id: "f8a9b0c1-d2e3-4f5a-6b7c-8d9e0f1a2b3c"}
+    }
+  ])
+  favoriteRecipe_insertMany(data: [
+    {
+      createdAt: "2023-03-17T10:00:00Z",
+      user: {id: "a1e8f2d5-4c0a-4e1b-9f2c-5d6e7f8a9b0c"},
+      recipe: {id: "c7d2e0f1-3a4b-4c5d-6e7f-8a9b0c1d2e3f"}
+    }
+  ])
+}

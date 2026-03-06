@@ -4,6 +4,7 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/e
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_auth.dart';
+import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
@@ -18,6 +19,7 @@ import 'package:gap/gap.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
+
   TextEditingController firstNameController = TextEditingController();
   TextEditingController secondNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -36,7 +38,10 @@ class RegisterScreen extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 90,
           backgroundColor: kPrimaryColor,
-          title: Container(alignment: Alignment.centerLeft, child: LogoAsText()),
+          title: Container(
+            alignment: Alignment.centerLeft,
+            child: LogoAsText(),
+          ),
         ),
         body: Container(
           height: double.infinity,
@@ -52,22 +57,23 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               children: [
                 Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Stack(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: kBlackColor,
-                            radius: Shared.width * 0.14.r,
-                          ),
-                          Positioned(
-                              top: Shared.height * 0.105.h,
-                              right: Shared.width * 0.21.w,
-                              child: Image.asset('assets/images/add_icon.png'))
-                        ],
-                      ),
-                    )
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: kBlackColor,
+                          radius: Shared.width * 0.14.r,
+                        ),
+                        Positioned(
+                          top: Shared.height * 0.105.h,
+                          right: Shared.width * 0.21.w,
+                          child: Image.asset('assets/images/add_icon.png'),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 // Gap(10.h),
                 Text(
@@ -109,21 +115,22 @@ class RegisterScreen extends StatelessWidget {
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             try {
-
                               // إنشاء المستخدم في Firebase Auth
-                              UserCredential userCredential =
-                              await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
+                              UserCredential userCredential = await FirebaseAuth
+                                  .instance
+                                  .createUserWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
 
                               User? user = userCredential.user;
 
                               if (user != null) {
-
                                 // تحديث اسم المستخدم
                                 if (firstNameController.text.isNotEmpty) {
-                                  await user.updateDisplayName("${firstNameController.text} ${secondNameController.text}");
+                                  await user.updateDisplayName(
+                                    "${firstNameController.text} ${secondNameController.text}",
+                                  );
                                 }
 
                                 // 🔥 حفظ المستخدم في Firestore
@@ -131,30 +138,37 @@ class RegisterScreen extends StatelessWidget {
                                     .collection('users')
                                     .doc(user.uid)
                                     .set({
-                                  "uid": user.uid,
-                                  "name": "${firstNameController.text} ${secondNameController.text}",
-                                  "email": emailController.text,
-                                  'about' : "Hello",
-                                  'last_message_time': DateTime.now().millisecondsSinceEpoch,
-                                  'image' : '',
-                                  "created_at": DateTime.now().millisecondsSinceEpoch,
-                                  'last_activated' : user.metadata.lastSignInTime!.millisecondsSinceEpoch.toString(),
-                                  'push_token' : '',
-                                  'online' : false,
-                                  'my_users' : [],
-                                });
+                                      "uid": user.uid,
+                                      "name":
+                                          "${firstNameController.text} ${secondNameController.text}",
+                                      "email": emailController.text,
+                                      'about': "Hello",
+                                      'last_message_time':
+                                          DateTime.now().millisecondsSinceEpoch,
+                                      'image': '',
+                                      "created_at":
+                                          DateTime.now().millisecondsSinceEpoch,
+                                      'last_activated': user
+                                          .metadata
+                                          .lastSignInTime!
+                                          .millisecondsSinceEpoch
+                                          .toString(),
+                                      'push_token': '',
+                                      'online': false,
+                                      'my_users': [],
+                                    });
                               }
 
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => BlocProvider(
-                                      create: (_) => BottomNavCubit(),
-                                      child: const HomeLayoutScreen()),
+                                    create: (_) => BottomNavCubit(),
+                                    child: const HomeLayoutScreen(),
+                                  ),
                                 ),
-                                    (route) => false,
+                                (route) => false,
                               );
-
                             } catch (error) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(error.toString())),
@@ -162,30 +176,33 @@ class RegisterScreen extends StatelessWidget {
                             }
                           }
                         },
-
-
-
-                        // onPressed: () async {
-                        //   if (formKey.currentState!.validate()) {
-                        //     await FirebaseAuth.instance
-                        //         .createUserWithEmailAndPassword(
-                        //         email: emailController.text, password: passwordController.text)
-                        //         .then((value) =>
-                        //         Navigator.pushAndRemoveUntil(
-                        //             context,
-                        //             MaterialPageRoute(
-                        //               builder: (context) => HomeLayoutScreen(),
-                        //             ),
-                        //                 (route) => false))
-                        //         .onError((error, stackTrace) =>
-                        //         ScaffoldMessenger.of(context).showSnackBar(
-                        //             SnackBar(
-                        //                 content: Text(error.toString()))));
-                        //   }
-                        // },
                         text: 'إنشاء حساب',
                         color: kPrimaryColor,
                       ),
+                      Gap(10.h),
+                      ButtonApp(
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                  email: emailController.text, password: passwordController.text)
+                                  .then((value) =>
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BlocProvider(
+                                          create: (_) => BottomNavCubit(),
+                                          child: const HomeLayoutScreen(),
+                                        ),
+                                      ),
+                                          (route) => false)).onError(
+                                      (error, stackTrace) =>
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(error.toString()))));
+                            }
+                          },
+                          text: 'تسجيل دخول', color: kPrimaryColor)
                     ],
                   ),
                 ),
@@ -223,7 +240,9 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     LogoIcon(path: 'assets/images/Facebook.png', onTap: () {}),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.02),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Shared.width * 0.02,
+                      ),
                       child: LogoIcon(
                         path: 'assets/images/Apple.png',
                         onTap: () {},

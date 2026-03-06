@@ -26,13 +26,13 @@ class ChatUser{
 factory ChatUser.fromJson(Map<String , dynamic> json){
   return ChatUser(
       id: json['id'] ?? "",
-      name: json['name'],
-      email: json['email'],
-      about: json['about'],
-      image: json['image'],
-      createdAt: json['created_at'],
-      lastActivated: json['last_activated'],
-      pushToken: json['push_token'],
+      name: json['name']?.toString(),
+      email: json['email']?.toString(),
+      about: json['about']?.toString(),
+      image: json['image']?.toString(),
+      createdAt: json['created_at']?.toString(),
+      lastActivated: json['last_activated']?.toString(),
+      pushToken: json['push_token']?.toString(),
       online: json['online'],
       myUsers: json['my_users']
   );

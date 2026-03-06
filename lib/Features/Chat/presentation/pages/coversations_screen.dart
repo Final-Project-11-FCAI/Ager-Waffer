@@ -55,6 +55,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: 'chat_fab',
         onPressed: () {
           showBottomSheet(
             context: context,
@@ -136,11 +137,19 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                     return const Center(child: Text("No Chats Yet"));
                   }
 
-                  List<ChatRoom> items = snapshot.data!.docs
-                      .map((e) => ChatRoom.fromJson(e.data()))
+                  final List<ChatRoom> items = snapshot.data!.docs
+                      .map((e) => ChatRoom.fromJson({
+                            ...e.data(),
+                            'id': e.id, // ensure non-empty id
+                          }))
                       .toList()
-                    ..sort((a, b) => (b.lastMessageTime ?? 0)
-                        .compareTo(a.lastMessageTime ?? 0));
+                      .cast<ChatRoom>();
+
+                  // Sort by lastMessageTime (newest first)
+                  items.sort(
+                    (ChatRoom a, ChatRoom b) =>
+                        (b.lastMessageTime ?? 0).compareTo(a.lastMessageTime ?? 0),
+                  );
 
                   return ListView.builder(
                     itemCount: items.length,

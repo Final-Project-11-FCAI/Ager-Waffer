@@ -129,15 +129,32 @@ class ChatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String userId = item.members!
-        .where((element) => element != FirebaseAuth.instance.currentUser!.uid)
-        .first;
+    final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+
+    if (currentUserId == null || item.members == null || item.members!.isEmpty) {
+      return const SizedBox();
+    }
+
+    final otherMembers = item.members!
+        .where((element) => element != currentUserId)
+        .toList();
+
+    if (otherMembers.isEmpty) {
+      return const SizedBox();
+    }
+
+    final String userId = otherMembers.first;
 
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data?.data() != null) {
-          ChatUser chatUser = ChatUser.fromJson(snapshot.data!.data()!);
+          final raw = snapshot.data!.data()!;
+          // Ensure we always have a valid non-empty id for this user
+          final chatUser = ChatUser.fromJson({
+            ...raw,
+            'id': raw['id'] ?? snapshot.data!.id,
+          });
 
           return Card(
             child: ListTile(
@@ -152,12 +169,17 @@ class ChatCard extends StatelessWidget {
                   ),
                 );
               },
-              leading: chatUser.image == '' ? CircleAvatar(
-                child: Text(chatUser.name!.characters.first),
-              ) 
+              leading: chatUser.image == ''
+                  ? CircleAvatar(
+                      child: Text(
+                        (chatUser.name != null && chatUser.name!.isNotEmpty)
+                            ? chatUser.name!.characters.first
+                            : '?',
+                      ),
+                    )
                   : CircleAvatar(
-                backgroundImage: NetworkImage(chatUser.image!),
-              ),
+                      backgroundImage: NetworkImage(chatUser.image!),
+                    ),
               title: Text(
                 chatUser.name ?? '',
                 overflow: TextOverflow.ellipsis,

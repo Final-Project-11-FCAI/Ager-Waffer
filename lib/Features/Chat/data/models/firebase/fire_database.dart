@@ -137,12 +137,13 @@ class FireData {
   }
 
   Future readMessage(String roomId, String msgId) async {
+    if (roomId.isEmpty || msgId.isEmpty) return;
     await firestore
         .collection('rooms')
         .doc(roomId)
         .collection('messages')
         .doc(msgId)
-        .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
+        .update({'read': DateTime.now()});
   }
 
   deleteMsg(String roomId, List<String> msgs) async {

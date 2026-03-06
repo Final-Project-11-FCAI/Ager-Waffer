@@ -27,8 +27,15 @@ class ChatMessageCard extends StatefulWidget {
 class _ChatMessageCardState extends State<ChatMessageCard> {
   @override
   void initState() {
-    if (widget.messageItem.toId == FirebaseAuth.instance.currentUser!.uid) {
-      FireData().readMessage(widget.roomId, widget.messageItem.id!);
+    final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+    final msgId = widget.messageItem.id;
+
+    if (currentUserId != null &&
+        msgId != null &&
+        msgId.isNotEmpty &&
+        widget.roomId.isNotEmpty &&
+        widget.messageItem.toId == currentUserId) {
+      FireData().readMessage(widget.roomId, msgId);
     }
     super.initState();
   }

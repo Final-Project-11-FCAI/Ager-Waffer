@@ -72,28 +72,34 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String roomId = widget.roomId;
+    final String? userId = widget.chatUser.id;
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.chatUser.name ?? ''),
-            StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('users').doc(widget.chatUser.id).snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data?.data() != null) {
-                  final data = snapshot.data!.data()!;
-                  return Text(
-                    (data['online'] as bool? ?? false)
-                        ? "Online"
-                        : 'Last Seen at ${formatLastSeen(data['last_activated'] ?? widget.chatUser.lastActivated)}',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  );
-                }else{
-                  return Container();
-                }
-              }
-            ),
+            if (userId != null && userId.isNotEmpty)
+              StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(userId)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data?.data() != null) {
+                      final data = snapshot.data!.data()!;
+                      return Text(
+                        (data['online'] as bool? ?? false)
+                            ? "Online"
+                            : 'Last Seen at ${formatLastSeen(data['last_activated'] ?? widget.chatUser.lastActivated)}',
+                        style: Theme.of(context).textTheme.labelLarge,
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  }),
           ],
         ),
         actions: [
@@ -106,7 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       copyMsg.clear();
                     });
                   },
-                  icon: const Icon(Icons.traffic_sharp),
+                  icon: const Icon(Icons.delete),
                 )
               : Container(),
           copyMsg.isNotEmpty
@@ -129,19 +135,25 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             Expanded(
               child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('rooms')
-                      .doc(widget.roomId)
-                      .collection('messages')
-                      .snapshots(),
+                  stream: roomId.isEmpty
+                      ? const Stream.empty()
+                      : FirebaseFirestore.instance
+                          .collection('rooms')
+                          .doc(roomId)
+                          .collection('messages')
+                          .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      List<Message> messageItems = snapshot.data!.docs
+                      final List<Message> messageItems = snapshot.data!.docs
                           .map((e) => Message.fromJson(e.data()))
                           .toList()
-                        ..sort(
-                          (a, b) => b.createdAt!.compareTo(a.createdAt!),
-                        );
+                          .cast<Message>();
+
+                      // Newest messages first
+                      messageItems.sort(
+                        (Message a, Message b) =>
+                            b.createdAt!.compareTo(a.createdAt!),
+                      );
                       return messageItems.isNotEmpty
                           ? ListView.builder(
                               reverse: true,
