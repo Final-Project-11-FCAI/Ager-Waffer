@@ -113,6 +113,7 @@ class RegisterScreen extends StatelessWidget {
                       Gap(30.h),
                       ButtonApp(
                         onPressed: () async {
+                          Shared.showLoadingDialog(context: context);
                           if (formKey.currentState!.validate()) {
                             try {
                               // إنشاء المستخدم في Firebase Auth
@@ -142,7 +143,7 @@ class RegisterScreen extends StatelessWidget {
                                       "name":
                                           "${firstNameController.text} ${secondNameController.text}",
                                       "email": emailController.text,
-                                      'about': "Hello",
+                                      'about': "Hello! I'm ${firstNameController.text}",
                                       'last_message_time':
                                           DateTime.now().millisecondsSinceEpoch,
                                       'image': '',
@@ -175,34 +176,12 @@ class RegisterScreen extends StatelessWidget {
                               );
                             }
                           }
+                          Shared.dismissDialog(context: context);
                         },
                         text: 'إنشاء حساب',
                         color: kPrimaryColor,
                       ),
                       Gap(10.h),
-                      ButtonApp(
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              await FirebaseAuth.instance
-                                  .signInWithEmailAndPassword(
-                                  email: emailController.text, password: passwordController.text)
-                                  .then((value) =>
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BlocProvider(
-                                          create: (_) => BottomNavCubit(),
-                                          child: const HomeLayoutScreen(),
-                                        ),
-                                      ),
-                                          (route) => false)).onError(
-                                      (error, stackTrace) =>
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                              content: Text(error.toString()))));
-                            }
-                          },
-                          text: 'تسجيل دخول', color: kPrimaryColor)
                     ],
                   ),
                 ),

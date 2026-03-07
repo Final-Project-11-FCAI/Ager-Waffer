@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_storage.dart';
 import 'package:ager_waffer/Features/Chat/data/models/message_model.dart';
 import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
 import 'package:ager_waffer/Features/Chat/presentation/widgets/chat_message_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,6 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
       return DateFormat('hh:mm a').format(lastSeen);
     }
   }
+
 
 
   DateTime getDateTime(dynamic timestamp) {
@@ -159,6 +162,12 @@ class _ChatScreenState extends State<ChatScreen> {
                               reverse: true,
                               itemCount: messageItems.length,
                               itemBuilder: (context, index) {
+                                final message = messageItems[index];
+
+                                if (message.read == null &&
+                                    message.fromId != FirebaseAuth.instance.currentUser!.uid) {
+                                  FireData().readMessage(widget.roomId, message.id!);
+                                }
                                 return GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -280,7 +289,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ); // Correctly create the file
                                   }
                                 },
-                                icon: const Icon(Icons.camera),
+                                icon: const Icon(Icons.camera_alt_outlined),
                               ),
                             ],
                           ),
@@ -304,6 +313,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         });
                       }
                     },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(kPrimaryColor),
+                    ),
                     icon: Icon(Icons.send))
               ],
             )

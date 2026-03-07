@@ -98,6 +98,7 @@
 //   }
 // }
 
+import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/message_model.dart';
 import 'package:ager_waffer/Features/Chat/data/models/room_models.dart';
 import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
@@ -202,7 +203,7 @@ class ChatCard extends StatelessWidget {
                         .map((e) => Message.fromJson(e.data()))
                         .where((msg) => msg.read == null && msg.fromId != FirebaseAuth.instance.currentUser!.uid)
                         .toList();
-
+            
                     return unReadList.isNotEmpty
                         ? Badge(
                       padding: EdgeInsets.symmetric(horizontal: 12),

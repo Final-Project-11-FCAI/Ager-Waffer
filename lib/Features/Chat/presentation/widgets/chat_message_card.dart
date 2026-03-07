@@ -61,9 +61,6 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          isMe
-              ? IconButton(onPressed: () {}, icon: Icon(Icons.message_sharp))
-              : SizedBox(),
           Card(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -73,8 +70,8 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
               topRight: Radius.circular(16),
             )),
             color: isMe
-                ? Theme.of(context).colorScheme.background
-                : Theme.of(context).colorScheme.primaryContainer,
+                ? kPrimaryColor
+                : kWhiteColor,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(
@@ -94,7 +91,7 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
                               },
                             ),
                           )
-                        : Text(widget.messageItem.msg!),
+                        : Text(widget.messageItem.msg!,style: TextStyle(color: isMe ? kWhiteColor : kBlackColor),),
                     SizedBox(
                       height: 6,
                     ),
@@ -102,12 +99,13 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         isMe
-                            ? Icon(
-                                Icons.airplane_ticket_rounded,
+                            ?
+                        Icon(
+                                Icons.check_circle_outline,
                                 color: widget.messageItem.read == null
                                     ? Colors.grey
                                     : Colors.blueAccent,
-                                size: 18,
+                                size: 15,
                               )
                             : SizedBox(),
                         SizedBox(
@@ -115,7 +113,7 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
                         ),
                         Text(
                           _formatTimestamp(widget.messageItem.createdAt),
-                          style: Theme.of(context).textTheme.labelSmall,
+                          style: Theme.of(context).textTheme.labelSmall!.copyWith(color: isMe ? kWhiteColor : kBlackColor),
                         ),
                       ],
                     ),

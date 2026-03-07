@@ -143,7 +143,7 @@ class FireData {
         .doc(roomId)
         .collection('messages')
         .doc(msgId)
-        .update({'read': DateTime.now()});
+        .update({'read': DateTime.now().millisecondsSinceEpoch});
   }
 
   deleteMsg(String roomId, List<String> msgs) async {

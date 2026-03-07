@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
 import 'package:ager_waffer/Features/Chat/data/models/room_models.dart';
 import 'package:ager_waffer/Features/Chat/presentation/widgets/chat_card.dart';
@@ -55,6 +56,8 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
+        foregroundColor: kWhiteColor,
         heroTag: 'chat_fab',
         onPressed: () {
           showBottomSheet(
@@ -73,8 +76,14 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                         ),
                         Spacer(),
                         IconButton.filled(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(kPrimaryColor),
+                            foregroundColor:
+                                MaterialStatePropertyAll(kWhiteColor),
+                          ),
                           onPressed: () {},
-                          icon: Icon(Icons.scanner_outlined),
+                          icon: Icon(Icons.scanner),
                         )
                       ],
                     ),
@@ -91,8 +100,9 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                             padding: EdgeInsets.all(16),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
-                            backgroundColor:
-                            Theme.of(context).colorScheme.primaryContainer),
+                            backgroundColor: kPrimaryColor,
+                        foregroundColor: kWhiteColor
+                        ),
                         onPressed: () {
                           if (emailController.text.isNotEmpty) {
                             FireData().createRoom(emailController.text).then((value) {
