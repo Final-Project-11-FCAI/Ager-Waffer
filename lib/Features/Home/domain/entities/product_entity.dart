@@ -1,7 +1,7 @@
 class ProductEntity {
   final String title;
   final String subtitle;
-  final String price;
+  final int price;
   final String image;
   final double rating;
 

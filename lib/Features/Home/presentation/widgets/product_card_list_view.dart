@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/product_details_screen.dart';
@@ -84,7 +85,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                     children: [
                       Text(widget.product.title, style: font16BlackSemiBold),
                       Text(
-                        widget.product.price,
+                        "${widget.product.price} ج/اليوم",
                         style: font16BlackSemiBold.copyWith(fontSize: 11),
                       ),
                     ],
@@ -132,12 +133,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  ProductDetailsScreen(product: widget.product),
-                            ),
-                          );
+                         customAnimatedPushNavigation(context, ProductDetailsScreen(product: widget.product));
                         },
                         child: Text(
                           "عرض",

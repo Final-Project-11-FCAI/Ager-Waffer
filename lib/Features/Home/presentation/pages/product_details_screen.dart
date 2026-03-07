@@ -105,7 +105,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            RentAndFavoriteButton()
+            RentAndFavoriteButton(product: product,)
           ],
         ),
       ),

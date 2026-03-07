@@ -79,7 +79,7 @@ class ProductData extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  product.price,
+                  product.price.toString(),
                   style: font16BlackSemiBold.copyWith(
                     color: kPrimaryColor,
                     fontSize: 14.sp,

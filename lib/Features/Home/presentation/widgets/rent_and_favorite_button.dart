@@ -1,10 +1,14 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class RentAndFavoriteButton extends StatelessWidget {
-  const RentAndFavoriteButton({super.key});
+  const RentAndFavoriteButton({super.key, required this.product});
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,9 @@ class RentAndFavoriteButton extends StatelessWidget {
         children: [
           Expanded(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                customAnimatedPushNavigation(context, RequestScreen(product: product,));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: kPrimaryColor,
                 padding: EdgeInsets.symmetric(vertical: 12.h),
