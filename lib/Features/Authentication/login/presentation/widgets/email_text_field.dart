@@ -8,14 +8,18 @@ class EmailTextField extends StatelessWidget {
     super.key,
     required this.icon,
     required this.label,
-    this.isName = false,
+    this.isName = false, required this.emailController,
   });
   final Icon icon;
   final String label;
   final bool isName;
+  final TextEditingController emailController;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: emailController,
+      validator: (value) => value!.isEmpty ? "Requird" : null,
       keyboardType: isName ? TextInputType.name : TextInputType.emailAddress,
       decoration: InputDecoration(
         label: Text(label),

@@ -3,15 +3,29 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
+import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_auth.dart';
+import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  RegisterScreen({super.key});
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController secondNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +38,10 @@ class RegisterScreen extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 90,
           backgroundColor: kPrimaryColor,
-          title: Container(alignment: Alignment.centerLeft, child: LogoAsText()),
+          title: Container(
+            alignment: Alignment.centerLeft,
+            child: LogoAsText(),
+          ),
         ),
         body: Container(
           height: double.infinity,
@@ -40,22 +57,23 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               children: [
                 Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Stack(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: kBlackColor,
-                            radius: Shared.width * 0.14.r,
-                          ),
-                          Positioned(
-                              top: Shared.height * 0.105.h,
-                              right: Shared.width * 0.21.w,
-                              child: Image.asset('assets/images/add_icon.png'))
-                        ],
-                      ),
-                    )
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: kBlackColor,
+                          radius: Shared.width * 0.14.r,
+                        ),
+                        Positioned(
+                          top: Shared.height * 0.105.h,
+                          right: Shared.width * 0.21.w,
+                          child: Image.asset('assets/images/add_icon.png'),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 // Gap(10.h),
                 Text(
@@ -63,32 +81,109 @@ class RegisterScreen extends StatelessWidget {
                   style: font16BlackSemiBold.copyWith(fontWeight: medium),
                 ),
                 Gap(30.h),
-                EmailTextField(
-                  icon: Icon(Icons.account_circle_outlined),
-                  label: "الاسم الأول",
-                  isName: true,
-                ),
-                Gap(30.h),
-                EmailTextField(
-                  icon: Icon(Icons.account_circle_outlined),
-                  label: "الاسم الثاني",
-                  isName: true,
-                ),
-                Gap(30.h),
-                EmailTextField(
-                  icon: Icon(Icons.email_outlined),
-                  label: 'البريد الالكتروني',
-                ),
-                Gap(30.h),
-                PasswordTextField(
-                  icon: Icon(Icons.lock_outline),
-                  label: 'كلمة المرور',
-                ),
-                Gap(30.h),
-                ButtonApp(
-                  onPressed: () {},
-                  text: 'إنشاء حساب',
-                  color: kPrimaryColor,
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      EmailTextField(
+                        emailController: firstNameController,
+                        icon: Icon(Icons.account_circle_outlined),
+                        label: "الاسم الأول",
+                        isName: true,
+                      ),
+                      Gap(30.h),
+                      EmailTextField(
+                        emailController: secondNameController,
+                        icon: Icon(Icons.account_circle_outlined),
+                        label: "الاسم الثاني",
+                        isName: true,
+                      ),
+                      Gap(30.h),
+                      EmailTextField(
+                        emailController: emailController,
+                        icon: Icon(Icons.email_outlined),
+                        label: 'البريد الالكتروني',
+                      ),
+                      Gap(30.h),
+                      PasswordTextField(
+                        passwordController: passwordController,
+                        icon: Icon(Icons.lock_outline),
+                        label: 'كلمة المرور',
+                      ),
+                      Gap(30.h),
+                      ButtonApp(
+                        onPressed: () async {
+                          Shared.showLoadingDialog(context: context);
+                          if (formKey.currentState!.validate()) {
+                            try {
+                              // إنشاء المستخدم في Firebase Auth
+                              UserCredential userCredential = await FirebaseAuth
+                                  .instance
+                                  .createUserWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
+
+                              User? user = userCredential.user;
+
+                              if (user != null) {
+                                // تحديث اسم المستخدم
+                                if (firstNameController.text.isNotEmpty) {
+                                  await user.updateDisplayName(
+                                    "${firstNameController.text} ${secondNameController.text}",
+                                  );
+                                }
+
+                                // 🔥 حفظ المستخدم في Firestore
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(user.uid)
+                                    .set({
+                                      "uid": user.uid,
+                                      "name":
+                                          "${firstNameController.text} ${secondNameController.text}",
+                                      "email": emailController.text,
+                                      'about': "Hello! I'm ${firstNameController.text}",
+                                      'last_message_time':
+                                          DateTime.now().millisecondsSinceEpoch,
+                                      'image': '',
+                                      "created_at":
+                                          DateTime.now().millisecondsSinceEpoch,
+                                      'last_activated': user
+                                          .metadata
+                                          .lastSignInTime!
+                                          .millisecondsSinceEpoch
+                                          .toString(),
+                                      'push_token': '',
+                                      'online': false,
+                                      'my_users': [],
+                                    });
+                              }
+
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BlocProvider(
+                                    create: (_) => BottomNavCubit(),
+                                    child: const HomeLayoutScreen(),
+                                  ),
+                                ),
+                                (route) => false,
+                              );
+                            } catch (error) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(error.toString())),
+                              );
+                            }
+                          }
+                          Shared.dismissDialog(context: context);
+                        },
+                        text: 'إنشاء حساب',
+                        color: kPrimaryColor,
+                      ),
+                      Gap(10.h),
+                    ],
+                  ),
                 ),
                 Gap(10.h),
                 Row(
@@ -124,7 +219,9 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     LogoIcon(path: 'assets/images/Facebook.png', onTap: () {}),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.02),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Shared.width * 0.02,
+                      ),
                       child: LogoIcon(
                         path: 'assets/images/Apple.png',
                         onTap: () {},

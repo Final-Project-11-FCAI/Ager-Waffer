@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Chat/presentation/pages/coversations_screen.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/pages/favorite_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
@@ -16,6 +17,7 @@ class HomeLayoutScreen extends StatelessWidget {
       HomeScreen(),
       FavoriteScreen(),
       MyOrdersScreen(),
+      ConversationsScreen(),
       ProfileScreen(),
     ];
     return BlocBuilder<BottomNavCubit, int>(
@@ -67,7 +69,12 @@ class HomeLayoutScreen extends StatelessWidget {
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
-                    icon: Image.asset('assets/images/profile.png', color: currentIndex == 3 ? kPrimaryColor : kMoreGreyColor,),
+                    icon: Image.asset('assets/images/shopping-cart.png', color: currentIndex == 3 ? kPrimaryColor : kMoreGreyColor,),
+                    label: "محادثاتي",
+                    backgroundColor: kWhiteColor,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Image.asset('assets/images/profile.png', color: currentIndex == 4 ? kPrimaryColor : kMoreGreyColor,),
                     label: "حسابي",
                     backgroundColor: kWhiteColor,
                   ),

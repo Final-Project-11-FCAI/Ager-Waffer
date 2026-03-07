@@ -1,0 +1,49 @@
+query ListAllRecipes @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public as it only lists recipes without sensitive user data.") {
+  recipes {
+    id
+    title
+    description
+    imageUrl
+    prepTime
+    cookTime
+    servings
+    createdAt
+    author {
+      username
+    }
+  }
+}
+
+query GetUserRecipes($authorId: UUID!) @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users as it filters recipes by a specific author ID.") {
+  recipes(where: {authorId: {eq: $authorId}}) {
+    id
+    title
+    createdAt
+    author {
+      username
+    }
+  }
+}
+
+mutation CreateNewRecipe($title: String!, $description: String!, $ingredients: [String!]!, $instructions: [String!]!, $imageUrl: String, $prepTime: Int, $cookTime: Int, $servings: Int) @auth(level: USER) {
+  recipe_insert(data: {
+    title: $title,
+    description: $description,
+    ingredients: $ingredients,
+    instructions: $instructions,
+    imageUrl: $imageUrl,
+    prepTime: $prepTime,
+    cookTime: $cookTime,
+    servings: $servings,
+    authorId_expr: "auth.uid",
+    createdAt_expr: "request.time"
+  })
+}
+
+mutation AddRecipeToFavorites($recipeId: UUID!) @auth(level: USER) {
+  favoriteRecipe_insert(data: {
+    userId_expr: "auth.uid",
+    recipeId: $recipeId,
+    createdAt_expr: "request.time"
+  })
+}

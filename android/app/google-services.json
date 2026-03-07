@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784984253888",
+    "project_id": "ager-wafer",
+    "storage_bucket": "ager-wafer.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784984253888:android:8affe7b0d07eda68de9425",
+        "android_client_info": {
+          "package_name": "com.example.ager_waffer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpf3ycfO4IonCYfLg_-5De8zfPAJJ3n2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

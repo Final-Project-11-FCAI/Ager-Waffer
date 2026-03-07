@@ -6,11 +6,14 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/pages/for
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -24,6 +27,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -38,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   bool isChecked = false;
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -50,7 +59,10 @@ class _LoginScreenState extends State<LoginScreen>
           toolbarHeight: 90,
           backgroundColor: kPrimaryColor,
           foregroundColor: kWhiteColor,
-          title: Container(alignment: Alignment.centerLeft, child: LogoAsText()),
+          title: Container(
+            alignment: Alignment.centerLeft,
+            child: LogoAsText(),
+          ),
         ),
         body: Container(
           height: double.infinity,
@@ -63,55 +75,98 @@ class _LoginScreenState extends State<LoginScreen>
           ),
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04, vertical: Shared.height * 0.08),
+              padding: EdgeInsets.symmetric(
+                horizontal: Shared.width * 0.04,
+                vertical: Shared.height * 0.08,
+              ),
               child: Column(
                 children: [
-                  EmailTextField(
-                    icon: Icon(Icons.email_outlined),
-                    label: 'البريد الالكتروني',
-                  ),
-                  Gap(30.h),
-                  PasswordTextField(
-                    icon: Icon(Icons.lock_outline),
-                    label: 'كلمة المرور',
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                          builder: (BuildContext context) =>
-                          FractionallySizedBox(
-                          heightFactor: 0.85,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(25.r),
-                              ),
-                              child: ForgetPasswordBottomSheet())));
-                        },
-                        child: Text(
-                          'هل نسيت كلمة المرور؟',
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        EmailTextField(
+                          emailController: emailController,
+                          icon: Icon(Icons.email_outlined),
+                          label: 'البريد الالكتروني',
                         ),
-                      ),
-                    ],
+                        Gap(30.h),
+                        PasswordTextField(
+                          passwordController: passwordController,
+                          icon: Icon(Icons.lock_outline),
+                          label: 'كلمة المرور',
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (BuildContext context) =>
+                                      FractionallySizedBox(
+                                        heightFactor: 0.85,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25.r),
+                                          ),
+                                          child: ForgetPasswordBottomSheet(),
+                                        ),
+                                      ),
+                                );
+                              },
+                              child: Text(
+                                'هل نسيت كلمة المرور؟',
+                                style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Gap(40.h),
+                        ButtonApp(
+                          onPressed: () async {
+                            Shared.showLoadingDialog(context: context);
+                            if (formKey.currentState!.validate()) {
+                              await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  )
+                                  .then(
+                                    (value) => Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BlocProvider(
+                                          create: (_) => BottomNavCubit(),
+                                          child: const HomeLayoutScreen(),
+                                        ),
+                                      ),
+                                      (route) => false,
+                                    ),
+                                  )
+                                  .onError(
+                                    (error, stackTrace) =>
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text('There is a problem with the password or email. Please try again'),
+                                          ),
+                                        ),
+                                  );
+                            }
+                            Shared.dismissDialog(context: context);
+                          },
+                          text: 'تسجيل الدخول',
+                          color: kPrimaryColor,
+                        ),
+                      ],
+                    ),
                   ),
-                  Gap(40.h),
-                  ButtonApp(
-                      onPressed: (){
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/home',
-                              (route) => false,
-                        );
-                      },
-                      text: 'تسجيل الدخول', color: kPrimaryColor),
                   Gap(10.h),
                   Row(
                     children: [
@@ -144,9 +199,14 @@ class _LoginScreenState extends State<LoginScreen>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      LogoIcon(path: 'assets/images/Facebook.png', onTap: () {}),
+                      LogoIcon(
+                        path: 'assets/images/Facebook.png',
+                        onTap: () {},
+                      ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.02),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Shared.width * 0.02,
+                        ),
                         child: LogoIcon(
                           path: 'assets/images/Apple.png',
                           onTap: () {},

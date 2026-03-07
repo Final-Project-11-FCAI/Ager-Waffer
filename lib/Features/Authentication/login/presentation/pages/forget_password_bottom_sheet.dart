@@ -9,7 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class ForgetPasswordBottomSheet extends StatelessWidget {
-  const ForgetPasswordBottomSheet({super.key});
+  ForgetPasswordBottomSheet({super.key});
+
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class ForgetPasswordBottomSheet extends StatelessWidget {
               ),
               Gap(40.h),
               EmailTextField(
+                emailController: emailController,
                 icon: Icon(Icons.email_outlined),
                 label: 'البريد الالكتروني',
               ),
