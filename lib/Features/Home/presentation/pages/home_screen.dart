@@ -5,6 +5,7 @@ import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/carousel_slider_container.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/category_item_list_view.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/custom_home_app_bar.dart';
+import 'package:ager_waffer/Features/Home/presentation/widgets/drawer_details.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,10 @@ class HomeScreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        drawer: Drawer(),
+        drawer: Drawer(
+          width: Shared.width * 0.8,
+          child: DrawerDetails(),
+        ),
         backgroundColor: kWhiteColor,
         appBar: CustomHomeAppBar(),
         body: SingleChildScrollView(

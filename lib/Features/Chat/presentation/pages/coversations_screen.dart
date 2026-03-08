@@ -126,7 +126,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
         child: const Icon(Icons.message_outlined),
       ),
       appBar: AppBar(
-        title: const Text("Chats"),
+        title: const Text("المحادثات"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
