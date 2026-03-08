@@ -147,10 +147,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           ),
         ),
         Gap(8.w),
-        Text(
-          title,
-          style: font15BlackRegular.copyWith(fontWeight: semiBold)
-        ),
+        Text(title, style: font15BlackRegular.copyWith(fontWeight: semiBold)),
       ],
     );
   }
