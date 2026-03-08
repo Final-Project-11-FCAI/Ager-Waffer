@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Favorite/domain/entities/favorite_entity.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/widgets/empty_favorite.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/widgets/favorite_item_gide_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,7 +68,9 @@ class FavoriteScreen extends StatelessWidget {
             horizontal: Shared.width * 0.04.w,
             vertical: Shared.height * 0.025.h,
           ),
-          child: GridView.builder(
+          child:
+          //FavoriteEmpty()
+          GridView.builder(
             itemCount: favorites.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,

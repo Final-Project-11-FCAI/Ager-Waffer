@@ -62,333 +62,338 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
         backgroundColor: kPrimaryColor,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: kWhiteColor),
-      ),
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: kWhiteColor),
+        ),
 
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: kWhiteColor,
-            ),
-            padding: EdgeInsets.all(Shared.width * 0.04.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(Shared.width * 0.04),
-                  decoration: BoxDecoration(
-                    color: kWhiteColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-        
-                  child: Row(
-                    children: [
-                      Image.asset(widget.product.image, width: 90),
-        
-                      const SizedBox(width: 12),
-        
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-        
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        
-                              children: [
-                                Text(
-                                  widget.product.title,
-                                  style: font16BlackSemiBold,
-                                ),
-        
-                                Text(
-                                  "${widget.product.price}ج/اليوم",
-                                  style: font16BlackSemiBold.copyWith(
-                                    fontSize: 13,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: kWhiteColor,
+              ),
+              padding: EdgeInsets.all(Shared.width * 0.04.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(Shared.width * 0.04),
+                    decoration: BoxDecoration(
+                      color: kWhiteColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+
+                    child: Row(
+                      children: [
+                        Image.asset(widget.product.image, width: 90),
+
+                        const SizedBox(width: 12),
+
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                children: [
+                                  Text(
+                                    widget.product.title,
+                                    style: font16BlackSemiBold,
                                   ),
+
+                                  Text(
+                                    "${widget.product.price}ج/اليوم",
+                                    style: font16BlackSemiBold.copyWith(
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                widget.product.subtitle,
+                                style: font16BlackSemiBold.copyWith(
+                                  color: kBlueColor,
                                 ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Text(
+                                    "${widget.product.rating}",
+                                    style: font16BlackSemiBold.copyWith(
+                                      fontSize: 10,
+                                      color: Color.fromRGBO(151, 151, 151, 1),
+                                    ),
+                                  ),
+                                  Gap(5.w),
+                                  ...List.generate(
+                                    5,
+                                        (index) => Icon(
+                                      Icons.star,
+                                      size: 14.sp,
+                                      color: index < widget.product.rating.floor()
+                                          ? Colors.amber
+                                          : Colors.grey.shade300,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: kBlackColor,
+                    indent: 50,
+                    endIndent: 50,
+                    thickness: 1,
+                  ),
+                  Gap(20.h),
+                  Text(
+                    "فترة الإيجار",
+                    style: font16BlackSemiBold.copyWith(fontSize: 16),
+                  ),
+                  Gap(10.h),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      color: Color.fromARGB(255, 240, 240, 240),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(Shared.width * 0.05),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "تاريخ البداية",
+                                style: font15SomeBlackColorMedium.copyWith(
+                                  color: kgreyColor,
+                                ),
+                              ),
+                              Text(
+                                "تاريخ النهاية",
+                                style: font15SomeBlackColorMedium.copyWith(
+                                  color: kgreyColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Gap(10.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: buildDateBox(
+                                  startDate,
+                                      () => _selectDate(true),
+                                ),
+                              ),
+
+                              const SizedBox(width: 10),
+
+                              Expanded(
+                                child: buildDateBox(
+                                  endDate,
+                                      () => _selectDate(false),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Gap(10.h),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8.w),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  color: Colors.blue[50],
+                                ),
+                                child: totalDays > 0 ?
+                                Row(
+                                  children: [
+                                    Image.asset('assets/images/period.png'),
+                                    Gap(5.w),
+                                    Text(
+                                      "المدة: $totalDays أيام",
+                                    ),
+                                  ],
+                                ) : SizedBox.shrink(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Gap(20.h),
+                  Text(
+                    "ملخص السعر",
+                    style: font16BlackSemiBold.copyWith(fontSize: 16),
+                  ),
+                  Gap(10.h),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      color: const Color.fromARGB(255, 240, 240, 240),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(Shared.width * 0.04),
+                      child: Column(
+                        children: [
+                          buildPriceRow(
                             Text(
-                              widget.product.subtitle,
-                              style: font16BlackSemiBold.copyWith(
-                                color: kBlueColor,
+                              "سعر اليوم",
+                              style: font15SomeBlackColorMedium.copyWith(
+                                fontSize: 13,
+                                color: kBlackColor,
                               ),
                             ),
-                            SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Text(
-                                  "${widget.product.rating}",
-                                  style: font16BlackSemiBold.copyWith(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(151, 151, 151, 1),
-                                  ),
-                                ),
-                                Gap(5.w),
-                                ...List.generate(
-                                  5,
-                                      (index) => Icon(
-                                    Icons.star,
-                                    size: 14.sp,
-                                    color: index < widget.product.rating.floor()
-                                        ? Colors.amber
-                                        : Colors.grey.shade300,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              "${widget.product.price}ج/اليوم",
+                              style: font15SomeBlackColorMedium.copyWith(
+                                fontSize: 13,
+                                color: kBlackColor,
+                              ),
                             ),
-                          ],
+                          ),
+                          buildPriceRow(
+                            Text(
+                              "عدد الأيام",
+                              style: font15SomeBlackColorMedium.copyWith(
+                                fontSize: 13,
+                                color: kBlackColor,
+                              ),
+                            ),
+                            Text(
+                              totalDays > 0 ? "$totalDays" : "--",
+                              style: font15SomeBlackColorMedium.copyWith(
+                                fontSize: 13,
+                                color: kBlackColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 4.h),
+                            child: Divider(height: 1, color: kGreyColor, thickness: 1),
+                          ),
+
+                          buildPriceRow(
+                            Text(
+                              "الإجمالي",
+                              style: font14BlackBold.copyWith(fontSize: 13),
+                            ),
+                            Text(
+                              totalDays > 0 ? "$totalPrice جنيه" : "--",
+                              style: font14BlackBold.copyWith(fontSize: 13),
+                            ),
+                            isTotal: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Gap(20.h),
+                  const Text(
+                    "بيانات المستأجر",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Gap(15.h),
+                  buildTextField(
+                    Text("الاسم بالكامل", style: font15BlackRegular),
+                    Icons.person,
+                  ),
+                  Gap(25.h),
+                  buildTextField(
+                    Text("رقم الهاتف", style: font15BlackRegular),
+                    Icons.phone,
+                  ),
+                  Gap(25.h),
+                  buildTextField(
+                    Text("العنوان", style: font15BlackRegular),
+                    Icons.location_on,
+                  ),
+                  Gap(25.h),
+                  buildTextField(
+                    Text("البريد الإلكتروني", style: font15BlackRegular),
+                    Icons.email,
+                  ),
+                  Gap(25.h),
+                  Row(
+                    children: [
+                      Checkbox(
+                        visualDensity: VisualDensity.compact,
+                        value: agree,
+                        onChanged: (value) {
+                          setState(() {
+                            agree = value!;
+                          });
+                        },
+                        activeColor: kPrimaryColor,
+                      ),
+                      Text(
+                        "بإرسال الطلب أنت توافق علي",
+                        style: font15SomeBlackColorMedium.copyWith(fontSize: 14),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'شروط الإيجار',
+                          style: font14BlackBold.copyWith(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                Divider(
-                  height: 1,
-                  color: kBlackColor,
-                  indent: 50,
-                  endIndent: 50,
-                  thickness: 1,
-                ),
-                Gap(20.h),
-                Text(
-                  "فترة الإيجار",
-                  style: font16BlackSemiBold.copyWith(fontSize: 16),
-                ),
-                Gap(10.h),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    color: Color.fromARGB(255, 240, 240, 240),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(Shared.width * 0.05),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              "تاريخ البداية",
-                              style: font15SomeBlackColorMedium.copyWith(
-                                color: kgreyColor,
-                              ),
-                            ),
-                            Text(
-                              "تاريخ النهاية",
-                              style: font15SomeBlackColorMedium.copyWith(
-                                color: kgreyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Gap(10.h),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: buildDateBox(
-                                startDate,
-                                    () => _selectDate(true),
-                              ),
-                            ),
-        
-                            const SizedBox(width: 10),
-        
-                            Expanded(
-                              child: buildDateBox(
-                                endDate,
-                                    () => _selectDate(false),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Gap(10.h),
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.r),
-                                color: Colors.blue[50],
-                              ),
-                              child: totalDays > 0 ?
-                              Row(
-                                children: [
-                                  Image.asset('assets/images/period.png'),
-                                  Gap(5.w),
-                                  Text(
-                                    "المدة: $totalDays أيام",
-                                  ),
-                                ],
-                              ) : SizedBox.shrink(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Gap(20.h),
-                Text(
-                  "ملخص السعر",
-                  style: font16BlackSemiBold.copyWith(fontSize: 16),
-                ),
-                Gap(10.h),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    color: const Color.fromARGB(255, 240, 240, 240),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(Shared.width * 0.04),
-                    child: Column(
-                      children: [
-                        buildPriceRow(
-                          Text(
-                            "سعر اليوم",
-                            style: font15SomeBlackColorMedium.copyWith(
-                              fontSize: 13,
-                              color: kBlackColor,
-                            ),
-                          ),
-                          Text(
-                            "${widget.product.price}ج/اليوم",
-                            style: font15SomeBlackColorMedium.copyWith(
-                              fontSize: 13,
-                              color: kBlackColor,
-                            ),
-                          ),
-                        ),
-                        buildPriceRow(
-                          Text(
-                            "عدد الأيام",
-                            style: font15SomeBlackColorMedium.copyWith(
-                              fontSize: 13,
-                              color: kBlackColor,
-                            ),
-                          ),
-                          Text(
-                            totalDays > 0 ? "$totalDays" : "--",
-                            style: font15SomeBlackColorMedium.copyWith(
-                              fontSize: 13,
-                              color: kBlackColor,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 4.h),
-                          child: Divider(height: 1, color: kGreyColor, thickness: 1),
-                        ),
-        
-                        buildPriceRow(
-                          Text(
-                            "الإجمالي",
-                            style: font14BlackBold.copyWith(fontSize: 13),
-                          ),
-                          Text(
-                            totalDays > 0 ? "$totalPrice جنيه" : "--",
-                            style: font14BlackBold.copyWith(fontSize: 13),
-                          ),
-                          isTotal: true,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Gap(20.h),
-                const Text(
-                  "بيانات المستأجر",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Gap(15.h),
-                buildTextField(
-                  Text("الاسم بالكامل", style: font15BlackRegular),
-                  Icons.person,
-                ),
-                Gap(25.h),
-                buildTextField(
-                  Text("رقم الهاتف", style: font15BlackRegular),
-                  Icons.phone,
-                ),
-                Gap(25.h),
-                buildTextField(
-                  Text("العنوان", style: font15BlackRegular),
-                  Icons.location_on,
-                ),
-                Gap(25.h),
-                buildTextField(
-                  Text("البريد الإلكتروني", style: font15BlackRegular),
-                  Icons.email,
-                ),
-                Gap(25.h),
-                Row(
-                  children: [
-                    Checkbox(
-                      visualDensity: VisualDensity.compact,
-                      value: agree,
-                      onChanged: (value) {
-                        setState(() {
-                          agree = value!;
-                        });
+                  Gap(20.h),
+                  ButtonApp(
+                      onPressed: () {
+                        if (!agree) {
+                          AwesomeDialog(
+                            titleTextStyle: font14BlackBold.copyWith(fontSize: 24),
+                            context: context,
+                            dialogType: DialogType.info,
+                            animType: AnimType.rightSlide,
+                            title: "يجب الموافقة على الشروط",
+                            headerAnimationLoop: false,
+                          ).show();
+                          return;
+                        }
+
+                        if (startDate == null || endDate == null) {
+                          AwesomeDialog(
+                            titleTextStyle: font14BlackBold.copyWith(fontSize: 24),
+                            context: context,
+                            dialogType: DialogType.info,
+                            animType: AnimType.rightSlide,
+                            title: "اختر فترة الإيجار",
+                            headerAnimationLoop: false,
+                          ).show();
+                          return;
+                        }
                       },
-                      activeColor: kPrimaryColor,
-                    ),
-                    Text(
-                      "بإرسال الطلب أنت توافق علي",
-                      style: font15SomeBlackColorMedium.copyWith(fontSize: 14),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'شروط الإيجار',
-                        style: font14BlackBold.copyWith(
-                          color: kPrimaryColor,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Gap(20.h),
-                ButtonApp(
-                    onPressed: () {
-                      if (!agree) {
-                        AwesomeDialog(
-                          titleTextStyle: font14BlackBold.copyWith(fontSize: 24),
-                          context: context,
-                          dialogType: DialogType.info,
-                          animType: AnimType.rightSlide,
-                          title: "يجب الموافقة على الشروط",
-                          headerAnimationLoop: false,
-                        ).show();
-                        return;
-                      }
-        
-                      if (startDate == null || endDate == null) {
-                        AwesomeDialog(
-                          titleTextStyle: font14BlackBold.copyWith(fontSize: 24),
-                          context: context,
-                          dialogType: DialogType.info,
-                          animType: AnimType.rightSlide,
-                          title: "اختر فترة الإيجار",
-                          headerAnimationLoop: false,
-                        ).show();
-                        return;
-                      }
-                    },
-                    text: "تأكيد طلب الإيجار",
-                    color: kPrimaryColor,
-                  borderRadius: Shared.width * 0.04.w,
-                ),
-              ],
+                      text: "تأكيد طلب الإيجار",
+                      color: kPrimaryColor,
+                    borderRadius: Shared.width * 0.04.w,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

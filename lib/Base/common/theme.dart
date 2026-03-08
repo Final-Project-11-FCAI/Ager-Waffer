@@ -16,6 +16,7 @@ const Color kFavoriteColor = const Color(0xFFE9F1F4);
 const Color kMoreRedColor = const Color(0xFFD80C0C);
 const Color kLightRedColor = const Color(0xFFE33629);
 const Color kNotAvailableColor = const Color(0xFF97979773);
+const Color kDrawerColor = const Color(0xFF5588A30D);
 const Color kPartGreyColor = const Color(0xFF7F7878);
 const Color kDarkGreyColor = const Color(0xFF3E4042);
 const Color kTextGreyColor = const Color(0xFF6B7280);

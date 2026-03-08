@@ -3,6 +3,8 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/add_product_screen.dart';
+import 'package:ager_waffer/Features/Profile/presentation/pages/edit_profile_screen.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/my_products_item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,6 +69,7 @@ class ProfileScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
                   child: Column(
                     children: [
+                      Gap(2.h),
                       Text(
                         'Ahmed Ali',
                         style: font24PrimarySemiBold.copyWith(color: kBlackColor),
@@ -83,26 +86,6 @@ class ProfileScreen extends StatelessWidget {
                           Icon(Icons.star, size: 17.sp, color: Colors.amber),
                         ],
                       ),
-                      // Container(
-                      //   height: Shared.height * 0.075.sp,
-                      //   width: Shared.width * 0.75.sp,
-                      //   alignment: Alignment.center,
-                      //   decoration: BoxDecoration(
-                      //     color: kOpacityWhiteColor,
-                      //     borderRadius: BorderRadius.circular(20.r),
-                      //   ),
-                      //   child: Padding(
-                      //     padding: EdgeInsets.all(5.0.h),
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         editOrAddProductButton(title: 'تعديل', onTap: () {},),
-                      //         editOrAddProductButton(title: 'إضافة منتج', onTap: () {})
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      // Gap(14.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -110,8 +93,9 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                       Gap(5.h),
+                      // EmptyProducts(),
                       SizedBox(
-                        height: Shared.height * 0.62.h,
+                        height: Shared.height * 0.61.h,
                         child: ListView.builder(
                           padding: EdgeInsets.zero,
                           itemCount: products.length,
@@ -134,21 +118,17 @@ class ProfileScreen extends StatelessWidget {
             top: Shared.height * 0.032.sp,
             child: Image.asset('assets/images/user_profile_image.png'),
           ),
+          Positioned(
+            right: Shared.width * -0.08.sp,
+            left: Shared.width * 0.28.sp,
+            top: Shared.height * 0.01.sp,
+            child: GestureDetector(
+                onTap: () {
+                  customAnimatedPushNavigation(context, EditProfileScreen());
+                },
+                child: Image.asset('assets/images/edit_profile.png')),
+          ),
         ],
-      ),
-    );
-  }
-
-  GestureDetector editOrAddProductButton({required String? title, required void Function()? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: Shared.width * 0.35.sp,
-        decoration: BoxDecoration(
-          color: kSomeGreyColor,
-          borderRadius: BorderRadius.circular(15.r),
-        ),
-        child: Center(child: Text(title.toString(),style: font16BlackSemiBold.copyWith(fontSize: 14.sp),)),
       ),
     );
   }
