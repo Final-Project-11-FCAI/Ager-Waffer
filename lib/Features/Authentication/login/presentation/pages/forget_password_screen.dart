@@ -75,18 +75,20 @@ class ForgetPasswordScreen extends StatelessWidget {
                 ButtonApp(
                   onPressed: () {
                     showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        enableDrag: false,
-                        isDismissible: false,
-                        builder: (BuildContext context) =>
-                            FractionallySizedBox(
-                                heightFactor: 0.55,
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(25.r),
-                                    ),
-                                    child: ChangePasswordDoneBottomSheet())));
+                      context: context,
+                      isScrollControlled: true,
+                      enableDrag: false,
+                      isDismissible: false,
+                      builder: (BuildContext context) => FractionallySizedBox(
+                        heightFactor: 0.55,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(25.r),
+                          ),
+                          child: ChangePasswordDoneBottomSheet(),
+                        ),
+                      ),
+                    );
                   },
                   text: 'تحديث كلمة المرور',
                   color: kPrimaryColor,

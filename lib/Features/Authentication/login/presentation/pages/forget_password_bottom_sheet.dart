@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/verification_code_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class ForgetPasswordBottomSheet extends StatelessWidget {
               Gap(Shared.height * 0.12.h),
               ButtonApp(onPressed: () {
                 Navigator.pop(context);
-                customAnimatedPushNavigation(context, ForgetPasswordScreen());
+                customAnimatedPushNavigation(context, VerificationCodeScreen());
               },
                 text: 'استمرار', color: kPrimaryColor, borderRadius: Shared.width * 0.04.h,),
               Gap(20.h),
