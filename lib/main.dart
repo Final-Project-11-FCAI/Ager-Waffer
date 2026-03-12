@@ -4,6 +4,7 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/pages/log
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/rental_term_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/request_rscreen.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:ager_waffer/firebase_options.dart';

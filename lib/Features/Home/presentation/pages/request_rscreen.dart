@@ -1,5 +1,7 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/rental_term_screen.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,8 +9,8 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
 class RequestScreen extends StatefulWidget {
-  const RequestScreen({super.key, required this.product});
-  final ProductEntity product;
+  const RequestScreen({super.key,   this.product});
+  final ProductEntity? product;
   @override
   State<RequestScreen> createState() => _RequestScreenState();
 }
@@ -28,7 +30,7 @@ class _RequestScreenState extends State<RequestScreen> {
     return 0;
   }
 
-  int get totalPrice => totalDays * widget.product.price;
+  int get totalPrice => totalDays * widget.product!.price;
 
   Future<void> _selectDate(bool isStart) async {
     final picked = await showDatePicker(
@@ -90,7 +92,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
                 child: Row(
                   children: [
-                    Image.asset(widget.product.image, width: 90),
+                    Image.asset(widget.product!.image, width: 90),
 
                     const SizedBox(width: 12),
 
@@ -104,12 +106,12 @@ class _RequestScreenState extends State<RequestScreen> {
 
                             children: [
                               Text(
-                                widget.product.title,
+                                widget.product!.title,
                                 style: font16BlackSemiBold,
                               ),
 
                               Text(
-                                "${widget.product.price}ج/اليوم",
+                                "${widget.product!.price}ج/اليوم",
                                 style: font16BlackSemiBold.copyWith(
                                   fontSize: 13,
                                 ),
@@ -117,7 +119,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             ],
                           ),
                           Text(
-                            widget.product.subtitle,
+                            widget.product!.subtitle,
                             style: font16BlackSemiBold.copyWith(
                               color: kBlueColor,
                             ),
@@ -126,7 +128,7 @@ class _RequestScreenState extends State<RequestScreen> {
                           Row(
                             children: [
                               Text(
-                                "${widget.product.rating}",
+                                "${widget.product!.rating}",
                                 style: font16BlackSemiBold.copyWith(
                                   fontSize: 10,
                                   color: Color.fromRGBO(151, 151, 151, 1),
@@ -138,7 +140,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                 (index) => Icon(
                                   Icons.star,
                                   size: 14.sp,
-                                  color: index < widget.product.rating.floor()
+                                  color: index < widget.product!.rating.floor()
                                       ? Colors.amber
                                       : Colors.grey.shade300,
                                 ),
@@ -267,7 +269,7 @@ class _RequestScreenState extends State<RequestScreen> {
                           ),
                         ),
                         Text(
-                          "${widget.product.price}ج/اليوم",
+                          "${widget.product!.price}ج/اليوم",
                           style: font15SomeBlackColorMedium.copyWith(
                             fontSize: 13,
                             color: kBlackColor,
@@ -362,7 +364,12 @@ class _RequestScreenState extends State<RequestScreen> {
                     style: font15SomeBlackColorMedium.copyWith(fontSize: 14),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      customAnimatedPushNavigation(
+                            context,
+                            RentalTermsPage(),
+                          );
+                    },
                     child: Text(
                       'شروط الإيجار',
                       style: font14BlackBold.copyWith(
