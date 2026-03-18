@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class FinishedOrders extends StatelessWidget {
-  FinishedOrders({super.key});
+class PreviousOrders extends StatelessWidget {
+  PreviousOrders({super.key});
 
   final List<FinishedOrdersEntity> finishedOrders = [
     FinishedOrdersEntity(
@@ -157,17 +157,18 @@ class FinishedOrders extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       orderButton(
-                        text: 'إعادة التأجير',
-                        icon: 'assets/images/refresh.png',
+                        text: 'تقييم المستأجر',
+                        icon: 'assets/images/star.png',
                         backgroundColor: kLightPrimaryColor,
                         textColor: kWhiteColor,
                         onTap: () {},
                       ),
                       orderButton(
-                        text: 'تقييم المنتج',
+                        text: 'عرض التقييم',
                         icon: 'assets/images/star.png',
                         backgroundColor: kWhiteColor,
                         textColor: kPrimaryColor,
+                        isNotIcon: true,
                         onTap: () {},
                       ),
                     ],
@@ -186,6 +187,7 @@ class FinishedOrders extends StatelessWidget {
     required String icon,
     required Color backgroundColor,
     required Color textColor,
+    bool isNotIcon = false,
     required Function() onTap,
   }) {
     return GestureDetector(
@@ -201,7 +203,7 @@ class FinishedOrders extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(icon, width: 20.w, height: 20.h),
+            isNotIcon ? SizedBox() : Image.asset(icon, width: 20.w, height: 20.h),
             Gap(5),
             Text(
               text,

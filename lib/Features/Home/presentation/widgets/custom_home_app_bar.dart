@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/search_screen.dart';
+import 'package:ager_waffer/Features/Notification/presentation/pages/notifications_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -45,7 +46,11 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Image.asset('assets/images/search_icon.png', width: 19.sp,)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
-                child: Image.asset('assets/images/notification_icon.png', width: Shared.width * 0.06.w,),
+                child: GestureDetector(
+                    onTap: (){
+                      customAnimatedPushNavigation(context, NotificationsScreen());
+                    },
+                    child: Image.asset('assets/images/notification_icon.png', width: Shared.width * 0.06.w,)),
               ),
               GestureDetector(
                   onTap: (){

@@ -1,42 +1,46 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Orders/domain/entities/current_orders_entity.dart';
 import 'package:ager_waffer/Features/Orders/domain/entities/finished_orders_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class FinishedOrders extends StatelessWidget {
-  FinishedOrders({super.key});
+class CurrentOrders extends StatelessWidget {
+  CurrentOrders({super.key});
 
-  final List<FinishedOrdersEntity> finishedOrders = [
-    FinishedOrdersEntity(
+  final List<CurrentOrdersEntity> currentOrders = [
+    CurrentOrdersEntity(
       image: 'assets/images/camera.png',
       title: 'Canon EOS كاميرا',
       owner: 'احمد محمد',
       time: '1 فبراير - 5 فبراير',
       price: '500جنيه',
+      remainder: 'متبقي يومين',
     ),
-    FinishedOrdersEntity(
+    CurrentOrdersEntity(
       image: 'assets/images/stroller.png',
       title: 'عربة أطفال',
       owner: 'ندي خالد',
       time: '5 مارس - 5 يوليو',
       price: '1000جنيه',
+      remainder: 'متبقي 15 يوم',
     ),
-    FinishedOrdersEntity(
+    CurrentOrdersEntity(
       image: 'assets/images/electric_stove.png',
       title: 'بوتجاز كهربائي',
       owner: 'يوسف محمد',
       time: '5 مارس - 5 يوليو',
       price: '200جنيه',
+      remainder: 'متبقي 10 أيام',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: finishedOrders.length,
+      itemCount: currentOrders.length,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
@@ -65,41 +69,55 @@ class FinishedOrders extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(finishedOrders[index].image),
+                      Image.asset(currentOrders[index].image),
                       Gap(20.h),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            finishedOrders[index].title,
+                            currentOrders[index].title,
                             style: font16BlackSemiBold.copyWith(
                               color: kPrimaryColor,
                             ),
                           ),
-                          Gap(2.w),
+                          Gap(2.h),
                           Row(
                             children: [
                               Image.asset('assets/images/owner.png'),
                               Gap(5.w),
                               Text(
-                                "المالك: ${finishedOrders[index].owner}",
+                                "المالك: ${currentOrders[index].owner}",
                                 style: font13kLightPrimaryColorMedium.copyWith(
                                   color: kBlackColor,
                                 ),
                               ),
                             ],
                           ),
-                          Gap(5.w),
+                          Gap(5.h),
                           Row(
                             children: [
                               Image.asset('assets/images/date_determine.png'),
                               Gap(5.w),
                               Text(
-                                finishedOrders[index].time,
+                                currentOrders[index].time,
                                 style: font20PrimaryMedium.copyWith(
                                   fontSize: 12.sp,
                                   color: kTextGreyColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Gap(5.h),
+                          Row(
+                            children: [
+                              Image.asset('assets/images/remainder.png'),
+                              Gap(5.w),
+                              Text(
+                                currentOrders[index].remainder,
+                                style: font20PrimaryMedium.copyWith(
+                                  fontSize: 13.sp,
+                                  color: kOrangeColor,
                                 ),
                               ),
                             ],
@@ -130,7 +148,7 @@ class FinishedOrders extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        finishedOrders[index].price,
+                        currentOrders[index].price,
                         style: font24LightPrimarySemiBold.copyWith(
                           fontSize: 14.sp,
                         ),
@@ -157,15 +175,16 @@ class FinishedOrders extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       orderButton(
-                        text: 'إعادة التأجير',
+                        text: 'عرض التفاصيل',
                         icon: 'assets/images/refresh.png',
                         backgroundColor: kLightPrimaryColor,
                         textColor: kWhiteColor,
+                        isNotIcon: true,
                         onTap: () {},
                       ),
                       orderButton(
-                        text: 'تقييم المنتج',
-                        icon: 'assets/images/star.png',
+                        text: 'مراسلة المالك',
+                        icon: 'assets/images/contact_icon.png',
                         backgroundColor: kWhiteColor,
                         textColor: kPrimaryColor,
                         onTap: () {},
@@ -186,10 +205,11 @@ class FinishedOrders extends StatelessWidget {
     required String icon,
     required Color backgroundColor,
     required Color textColor,
+    bool isNotIcon = false,
     required Function() onTap,
   }) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         width: Shared.width * 0.41.w,
         height: Shared.height * 0.065.h,
@@ -201,7 +221,7 @@ class FinishedOrders extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(icon, width: 20.w, height: 20.h),
+            isNotIcon ? SizedBox() : Image.asset(icon, color: kPrimaryColor, width: 20.w, height: 20.h),
             Gap(5),
             Text(
               text,
