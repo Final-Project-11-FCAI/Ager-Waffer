@@ -1,30 +1,31 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Orders/domain/entities/finished_orders_entity.dart';
+import 'package:ager_waffer/Features/Orders/domain/entities/under_review_orders_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class FinishedOrders extends StatelessWidget {
-  FinishedOrders({super.key});
+class UnderReviewOrders extends StatelessWidget {
+  UnderReviewOrders({super.key});
 
-  final List<FinishedOrdersEntity> finishedOrders = [
-    FinishedOrdersEntity(
+  final List<UnderReviewOrdersEntity> underReviewOrders = [
+    UnderReviewOrdersEntity(
       image: 'assets/images/camera.png',
       title: 'Canon EOS كاميرا',
       owner: 'احمد محمد',
       time: '1 فبراير - 5 فبراير',
       price: '500جنيه',
     ),
-    FinishedOrdersEntity(
+    UnderReviewOrdersEntity(
       image: 'assets/images/stroller.png',
       title: 'عربة أطفال',
       owner: 'ندي خالد',
       time: '5 مارس - 5 يوليو',
       price: '1000جنيه',
     ),
-    FinishedOrdersEntity(
+    UnderReviewOrdersEntity(
       image: 'assets/images/electric_stove.png',
       title: 'بوتجاز كهربائي',
       owner: 'يوسف محمد',
@@ -36,7 +37,7 @@ class FinishedOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: finishedOrders.length,
+      itemCount: underReviewOrders.length,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
@@ -65,14 +66,14 @@ class FinishedOrders extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(finishedOrders[index].image),
+                      Image.asset(underReviewOrders[index].image),
                       Gap(20.h),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            finishedOrders[index].title,
+                            underReviewOrders[index].title,
                             style: font16BlackSemiBold.copyWith(
                               color: kPrimaryColor,
                             ),
@@ -83,7 +84,7 @@ class FinishedOrders extends StatelessWidget {
                               Image.asset('assets/images/owner.png'),
                               Gap(5.w),
                               Text(
-                                "المالك: ${finishedOrders[index].owner}",
+                                "المالك: ${underReviewOrders[index].owner}",
                                 style: font13kLightPrimaryColorMedium.copyWith(
                                   color: kBlackColor,
                                 ),
@@ -96,7 +97,7 @@ class FinishedOrders extends StatelessWidget {
                               Image.asset('assets/images/date_determine.png'),
                               Gap(5.w),
                               Text(
-                                finishedOrders[index].time,
+                                underReviewOrders[index].time,
                                 style: font20PrimaryMedium.copyWith(
                                   fontSize: 12.sp,
                                   color: kTextGreyColor,
@@ -130,7 +131,7 @@ class FinishedOrders extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        finishedOrders[index].price,
+                        underReviewOrders[index].price,
                         style: font24LightPrimarySemiBold.copyWith(
                           fontSize: 14.sp,
                         ),
@@ -153,24 +154,11 @@ class FinishedOrders extends StatelessWidget {
                     horizontal: Shared.width * 0.04.w,
                     vertical: Shared.height * 0.02.h,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      orderButton(
-                        text: 'إعادة التأجير',
-                        icon: 'assets/images/refresh.png',
-                        backgroundColor: kLightPrimaryColor,
-                        textColor: kWhiteColor,
-                        onTap: () {},
-                      ),
-                      orderButton(
-                        text: 'تقييم المنتج',
-                        icon: 'assets/images/star.png',
-                        backgroundColor: kWhiteColor,
-                        textColor: kPrimaryColor,
-                        onTap: () {},
-                      ),
-                    ],
+                  child: orderButton(
+                    text: 'إلغاء الطلب',
+                    backgroundColor: kWhiteColor,
+                    textColor: kPrimaryColor,
+                    onTap: () {},
                   ),
                 ),
               ],
@@ -183,7 +171,6 @@ class FinishedOrders extends StatelessWidget {
 
   GestureDetector orderButton({
     required String text,
-    required String icon,
     required Color backgroundColor,
     required Color textColor,
     required Function() onTap,
@@ -191,26 +178,21 @@ class FinishedOrders extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        width: Shared.width * 0.41.w,
+        width: double.infinity,
         height: Shared.height * 0.065.h,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: kLightPrimaryColor, width: 1.w),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(icon, width: 20.w, height: 20.h),
-            Gap(5),
-            Text(
-              text,
-              style: font13kLightPrimaryColorMedium.copyWith(
-                fontSize: 15.sp,
-                color: textColor,
-              ),
+        child: Center(
+          child: Text(
+            text,
+            style: font13kLightPrimaryColorMedium.copyWith(
+              fontSize: 15.sp,
+              color: textColor,
             ),
-          ],
+          ),
         ),
       ),
     );

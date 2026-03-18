@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class FinishedOrders extends StatelessWidget {
-  FinishedOrders({super.key});
+class IncomingOrders extends StatelessWidget {
+  IncomingOrders({super.key});
 
   final List<FinishedOrdersEntity> finishedOrders = [
     FinishedOrdersEntity(
@@ -157,15 +157,15 @@ class FinishedOrders extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       orderButton(
-                        text: 'إعادة التأجير',
-                        icon: 'assets/images/refresh.png',
+                        text: 'قبول الطلب',
+                        icon: 'assets/images/done.png',
                         backgroundColor: kLightPrimaryColor,
                         textColor: kWhiteColor,
                         onTap: () {},
                       ),
                       orderButton(
-                        text: 'تقييم المنتج',
-                        icon: 'assets/images/star.png',
+                        text: 'رفض',
+                        icon: 'assets/images/delete.png',
                         backgroundColor: kWhiteColor,
                         textColor: kPrimaryColor,
                         onTap: () {},

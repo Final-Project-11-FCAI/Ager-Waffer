@@ -1,5 +1,9 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
+import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -67,16 +71,20 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 drawerItem(
                   title: 'إدارة الطلبات',
                   icon: 'assets/images/management_orders.png',
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    customAnimatedPushNavigation(context, ManageOrdersScreen());
+                  },
                 ),
-                Gap(Shared.height * 0.02.h),
+                Gap(2.h),
                 drawerItem(title: 'اللغة', icon: 'assets/images/language.png'),
-                Gap(Shared.height * 0.02.h),
+                Gap(2.h),
                 drawerItem(
                   title: 'الوضع الداكن',
                   icon: 'assets/images/dark_mode.png',
                   isDarkMode: true,
                 ),
-                Gap(Shared.height * 0.02.h),
+                Gap(2.h),
                 drawerItem(
                   title: 'تواصل معنا',
                   icon: 'assets/images/contact_us.png',
@@ -90,27 +98,47 @@ class _DrawerDetailsState extends State<DrawerDetails> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Shared.height * 0.02.h),
-            child: Row(
-              children: [
-                Icon(Icons.exit_to_app_outlined, color: kMoreRedColor, size: 30.sp),
-                Gap(8.w),
-                Text('تسجيل الخروج', style: font16BlackSemiBold.copyWith(color: kMoreRedColor, fontWeight: bold)),
-              ],
+            child: TextButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (route) => false,
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.exit_to_app_outlined,
+                    color: kMoreRedColor,
+                    size: 30.sp,
+                  ),
+                  Gap(8.w),
+                  Text(
+                    'تسجيل الخروج',
+                    style: font16BlackSemiBold.copyWith(
+                      color: kMoreRedColor,
+                      fontWeight: bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  GestureDetector drawerItem({
+  TextButton drawerItem({
     required String? title,
     required String? icon,
     bool isDarkMode = false,
     Function()? onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
+    return TextButton(
+      onPressed: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -1,23 +1,24 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Orders/presentation/widgets/current_orders.dart';
+import 'package:ager_waffer/Features/Manage_Orders/presentation/widgets/current_manage_orders.dart';
+import 'package:ager_waffer/Features/Manage_Orders/presentation/widgets/incoming_orders.dart';
+import 'package:ager_waffer/Features/Manage_Orders/presentation/widgets/previous_orders.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/finished_orders.dart';
-import 'package:ager_waffer/Features/Orders/presentation/widgets/under_review_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MyOrdersScreen extends StatefulWidget {
-  const MyOrdersScreen({super.key});
+class ManageOrdersScreen extends StatefulWidget {
+  const ManageOrdersScreen({super.key});
 
   @override
-  State<MyOrdersScreen> createState() => _MyOrdersScreenState();
+  State<ManageOrdersScreen> createState() => _ManageOrdersScreenState();
 }
 
-class _MyOrdersScreenState extends State<MyOrdersScreen> {
+class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
   int selectedIndex = 0;
 
   final List<String> tabs = [
+    "الواردة",
     "الجارية",
-    "قيد المراجعة",
     "السابقة",
   ];
 
@@ -26,10 +27,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     return Scaffold(
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        foregroundColor: kWhiteColor,
+          backgroundColor: kPrimaryColor,
+          foregroundColor: kWhiteColor,
           title: Text(
-            'طلباتي',
+            'إدارة الطلبات',
             style: font16BlackSemiBold.copyWith(
               fontSize: 20,
               color: kWhiteColor,
@@ -94,9 +95,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                 ),
               ),
             ),
-            selectedIndex == 0 ? Expanded(child: CurrentOrders())
-                : selectedIndex == 1 ? Expanded(child: UnderReviewOrders())
-                : selectedIndex == 2 ? Expanded(child: FinishedOrders()) : Container(),
+            selectedIndex == 0 ? Expanded(child: IncomingOrders())
+                : selectedIndex == 1 ? Expanded(child: CurrentManageOrders())
+                : selectedIndex == 2 ? Expanded(child: PreviousOrders()) : Container(),
           ],
         ),
       ),

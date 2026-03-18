@@ -11,6 +11,7 @@ const Color kMoreLightPrimaryColor = Color(0xff1D5687);
 const Color kWhiteColor = const Color(0xffFFFFFF);
 const Color kBlackColor = Color.fromARGB(255, 0, 0, 0);
 const Color kOpacityWhiteColor = const Color(0xFFF4FDFA);
+const Color kOrangeColor = const Color(0xFFEA6D1F);
 const Color kDoneColor = const Color(0xFF2F3A5A);
 const Color kFavoriteColor = const Color(0xFFE9F1F4);
 const Color kMoreRedColor = const Color(0xFFD80C0C);
