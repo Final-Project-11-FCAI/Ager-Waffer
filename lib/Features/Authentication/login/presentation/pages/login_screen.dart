@@ -1,7 +1,7 @@
-import 'package:ager_waffer/Base/common/navigtor.dart';
+import 'package:ager_waffer/Base/Helper/app_state.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
+import '../../../../../Base/Helper/app_event.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -64,190 +66,220 @@ class _LoginScreenState extends State<LoginScreen>
             child: LogoAsText(),
           ),
         ),
-        body: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: kWhiteColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.r),
-              topRight: Radius.circular(25.r),
-            ),
-          ),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Shared.width * 0.04,
-                vertical: Shared.height * 0.08,
+        body: BlocListener<AuthenticationBloc, AppState>(
+          bloc: authenticationBloc,
+          listener: (context, state) {
+            if(state is LoginLoading){
+              Shared.showLoadingDialog(context: context);
+            }
+            else if(state is LoginDoneState){
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (c) => BlocProvider(
+                  create: (_) => BottomNavCubit(),
+                  child: const HomeLayoutScreen(),
+                )),
+              );
+            }else if(state is LoginErrorLoadingState) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        state.message?? "حدث خطأ ما يرجى المحاولة في وقت لاحق"),
+                  ));
+            }
+    },
+          child: Container(
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: kWhiteColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.r),
+                topRight: Radius.circular(25.r),
               ),
-              child: Column(
-                children: [
-                  Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        EmailTextField(
-                          emailController: emailController,
-                          icon: Icon(Icons.email_outlined),
-                          label: 'البريد الالكتروني',
-                        ),
-                        Gap(30.h),
-                        PasswordTextField(
-                          passwordController: passwordController,
-                          icon: Icon(Icons.lock_outline),
-                          label: 'كلمة المرور',
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: (BuildContext context) =>
-                                      FractionallySizedBox(
-                                        heightFactor: 0.85,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25.r),
-                                          ),
-                                          child: ForgetPasswordBottomSheet(),
-                                        ),
-                                      ),
-                                );
-                              },
-                              child: Text(
-                                'هل نسيت كلمة المرور؟',
-                                style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Gap(40.h),
-                        ButtonApp(
-                          onPressed: () async {
-                            Shared.showLoadingDialog(context: context);
-                            if (formKey.currentState!.validate()) {
-                              await FirebaseAuth.instance
-                                  .signInWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  )
-                                  .then(
-                                    (value) => Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BlocProvider(
-                                          create: (_) => BottomNavCubit(),
-                                          child: const HomeLayoutScreen(),
-                                        ),
-                                      ),
-                                      (route) => false,
-                                    ),
-                                  )
-                                  .onError(
-                                    (error, stackTrace) =>
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            content: Text('There is a problem with the password or email. Please try again'),
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Shared.width * 0.04,
+                  vertical: Shared.height * 0.08,
+                ),
+                child: Column(
+                  children: [
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          EmailTextField(
+                            emailController: emailController,
+                            icon: Icon(Icons.email_outlined),
+                            label: 'البريد الالكتروني',
+                          ),
+                          Gap(30.h),
+                          PasswordTextField(
+                            passwordController: passwordController,
+                            icon: Icon(Icons.lock_outline),
+                            label: 'كلمة المرور',
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (BuildContext context) =>
+                                        FractionallySizedBox(
+                                          heightFactor: 0.85,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(25.r),
+                                            ),
+                                            child: ForgetPasswordBottomSheet(),
                                           ),
                                         ),
                                   );
-                            }
-                            Shared.dismissDialog(context: context);
-                          },
-                          text: 'تسجيل الدخول',
-                          color: kPrimaryColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Gap(10.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 1,
-                          color: kLightBlackColor,
-                          endIndent: 20,
-                          indent: 20,
-                        ),
-                      ),
-                      Text(
-                        'أو سجل من خلال',
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 1,
-                          color: kLightBlackColor,
-                          indent: 20,
-                          endIndent: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      LogoIcon(
-                        path: 'assets/images/Facebook.png',
-                        onTap: () {},
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Shared.width * 0.02,
-                        ),
-                        child: LogoIcon(
-                          path: 'assets/images/Apple.png',
-                          onTap: () {},
-                          height: 83,
-                          width: 83,
-                        ),
-                      ),
-                      LogoIcon(path: "assets/images/Google.png", onTap: () {}),
-                    ],
-                  ),
-                  Gap(20.h),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "  ليس لديك حساب ؟",
-                          style: TextStyle(
-                            color: Color(0xff5588A3),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                                },
+                                child: Text(
+                                  'هل نسيت كلمة المرور؟',
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushReplacementNamed(
-                                context,
-                                'RegisterScreen',
-                              );
+                          Gap(40.h),
+                          ButtonApp(
+                            onPressed: () async {
+                              authenticationBloc.add(LoginEvent(
+                                email: emailController.text,
+                                password: passwordController.text
+                              ));
+
+
+                              // if (formKey.currentState!.validate()) {
+                              //   await FirebaseAuth.instance
+                              //       .signInWithEmailAndPassword(
+                              //         email: emailController.text,
+                              //         password: passwordController.text,
+                              //       )
+                              //       .then(
+                              //         (value) => Navigator.pushAndRemoveUntil(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //             builder: (context) => BlocProvider(
+                              //               create: (_) => BottomNavCubit(),
+                              //               child: const HomeLayoutScreen(),
+                              //             ),
+                              //           ),
+                              //           (route) => false,
+                              //         ),
+                              //       )
+                              //       .onError(
+                              //         (error, stackTrace) =>
+                              //             ScaffoldMessenger.of(
+                              //               context,
+                              //             ).showSnackBar(
+                              //               SnackBar(
+                              //                 content: Text('There is a problem with the password or email. Please try again'),
+                              //               ),
+                              //             ),
+                              //       );
+                              // }
+                              // Shared.dismissDialog(context: context);
                             },
+                            text: 'تسجيل الدخول',
+                            color: kPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Gap(10.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            thickness: 1,
+                            color: kLightBlackColor,
+                            endIndent: 20,
+                            indent: 20,
+                          ),
                         ),
-                        TextSpan(
-                          text: " أنشيء حسابًا الأن",
+                        Text(
+                          'أو سجل من خلال',
                           style: TextStyle(
                             color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            thickness: 1,
+                            color: kLightBlackColor,
+                            indent: 20,
+                            endIndent: 20,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        LogoIcon(
+                          path: 'assets/images/Facebook.png',
+                          onTap: () {},
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Shared.width * 0.02,
+                          ),
+                          child: LogoIcon(
+                            path: 'assets/images/Apple.png',
+                            onTap: () {},
+                            height: 83,
+                            width: 83,
+                          ),
+                        ),
+                        LogoIcon(path: "assets/images/Google.png", onTap: () {}),
+                      ],
+                    ),
+                    Gap(20.h),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "  ليس لديك حساب ؟",
+                            style: TextStyle(
+                              color: Color(0xff5588A3),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  'RegisterScreen',
+                                );
+                              },
+                          ),
+                          TextSpan(
+                            text: " أنشيء حسابًا الأن",
+                            style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

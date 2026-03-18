@@ -3,10 +3,15 @@ import 'dart:io';
 
 abstract class AppEvent {}
 
-// class LoginEvent extends AppEvent{
-//   final String mobile;
-//   LoginEvent({required this.mobile});
-// }
+class LoginEvent extends AppEvent{
+  final String email;
+  final String password;
+  LoginEvent({required this.email, required this.password,});
+}
+
+
+
+
 // class RegisterEvent extends AppEvent{
 //   final RegisterUserEntity registerUserEntity;
 //   RegisterEvent({required this.registerUserEntity});

@@ -23,6 +23,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'Features/Authentication/login/presentation/manager/authentication_bloc.dart';
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -209,7 +211,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
       builder: (context, snapshot) {
         return MultiBlocProvider(
           providers: [
-            // BlocProvider.value(value: LocationBloc()),
+             BlocProvider.value(value: AuthenticationBloc()),
             //   BlocProvider.value(value: NotificationsBloc()),
             //   BlocProvider.value(value: MyCarsBloc()),
             //   BlocProvider.value(value: ProfileBloc()),

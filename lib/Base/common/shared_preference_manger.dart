@@ -65,13 +65,32 @@ class CachingKey extends Enum<String> {
 
   static const CachingKey AUTH_TOKEN = CachingKey('AUTH_TOKEN');
   static const CachingKey DEVICE_TOKEN = CachingKey('DEVICE_TOKEN');
-  static const CachingKey USER_NAME = const CachingKey('USER_NAME');
-  static const CachingKey REFRESH_TOKEN = const CachingKey('REFRESH_TOKEN');
-  static const CachingKey VISITOR = const CachingKey('VISITOR');
-
   static const CachingKey USER_ID = const CachingKey('USER_ID');
   static const CachingKey USER_PHONE = const CachingKey('USER_PHONE');
   static const CachingKey PROFILE_IMAGE = const CachingKey('PROFILE_IMAGE');
+  static const CachingKey USER_NAME = const CachingKey('USER_NAME');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  static const CachingKey REFRESH_TOKEN = const CachingKey('REFRESH_TOKEN');
+  static const CachingKey VISITOR = const CachingKey('VISITOR');
+
+
   static const CachingKey USER_LOCATION_ID= const CachingKey('USER_LOCATION_ID');
 
   static const CachingKey APP_LANGUAGE = const CachingKey('APP_LANGUAGE');

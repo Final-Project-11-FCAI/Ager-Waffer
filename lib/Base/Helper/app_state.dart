@@ -9,32 +9,27 @@ class Start extends AppState{
 }
 
 
-// // LOGIN
-// class LoginLoading extends AppState{}
-//
-// class LoginDoneState extends AppState{
-//   Mappable? model;
-//   final String? indicator;
-//   LoginDoneState({this.model , this.indicator});
-//
-//   @override
-//   String toString() {
-//     return indicator!;
-//   }
-//
-// }
-//
-// class LoginErrorLoadingState extends AppState{
-//   Mappable? model;
-//   String? indicator;
-//   String? message;
-//   LoginErrorLoadingState({this.model,this.message,this.indicator});
-//   @override
-//   String toString() {
-//     return message!;
-//   }
-//
-// }
+// LOGIN
+class LoginLoading extends AppState{}
+
+class LoginDoneState extends AppState{
+  Mappable? model;
+  LoginDoneState({this.model});
+
+}
+
+class LoginErrorLoadingState extends AppState{
+  Mappable? model;
+  String? message;
+  LoginErrorLoadingState({this.model,this.message});
+  @override
+  String toString() {
+    return message!;
+  }
+}
+
+
+
 //
 // //REGISTER
 // class RegisterLoading extends AppState{}

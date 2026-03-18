@@ -1,10 +1,25 @@
 
 // this app base url
-const String baseUrl = 'https://bdayl.com/api/v1/';
+const String baseUrl = 'http://ajarwaffer.runasp.net/api/';
 
-// this api urls
+// authentication url
 
-const String loginUrl = "Account/Login";
+const String loginUrl = "Authentication/login";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const String registerUrl = "Account/Register";
 const String verifyOtpUrl = "Account/VerfiyOtp";
 const String resendOtpUrl = "Account/ResendOtp";
