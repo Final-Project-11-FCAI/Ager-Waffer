@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/Helper/app_state.dart';
+import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
@@ -38,6 +39,9 @@ class _LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+
+    emailController.addListener(checkFields);
+    passwordController.addListener(checkFields);
   }
 
   @override
@@ -46,8 +50,19 @@ class _LoginScreenState extends State<LoginScreen>
     super.dispose();
   }
 
-  bool isChecked = false;
-  bool isLoading = false;
+  bool isButtonEnabled = false;
+
+  void checkFields() {
+    final isValid =
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        InputValidation.isValidEmail(emailController.text) &&
+        InputValidation.passwordValidator(passwordController.text) == null;
+
+    setState(() {
+      isButtonEnabled = isValid;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,27 +84,30 @@ class _LoginScreenState extends State<LoginScreen>
         body: BlocListener<AuthenticationBloc, AppState>(
           bloc: authenticationBloc,
           listener: (context, state) {
-            if(state is LoginLoading){
+            if (state is LoginLoading) {
               Shared.showLoadingDialog(context: context);
-            }
-            else if(state is LoginDoneState){
+            } else if (state is LoginDoneState) {
+              Shared.dismissDialog(context: context);
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (c) => BlocProvider(
-                  create: (_) => BottomNavCubit(),
-                  child: const HomeLayoutScreen(),
-                )),
+                MaterialPageRoute(
+                  builder: (c) => BlocProvider(
+                    create: (_) => BottomNavCubit(),
+                    child: const HomeLayoutScreen(),
+                  ),
+                ),
               );
-            }else if(state is LoginErrorLoadingState) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                        state.message?? "حدث خطأ ما يرجى المحاولة في وقت لاحق"),
-                  ));
+            } else if (state is LoginErrorLoadingState) {
+              Shared.dismissDialog(context: context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    state.message ?? "حدث خطأ ما يرجى المحاولة في وقت لاحق",
+                  ),
+                ),
+              );
             }
-    },
+          },
           child: Container(
             height: double.infinity,
             decoration: BoxDecoration(
@@ -115,12 +133,20 @@ class _LoginScreenState extends State<LoginScreen>
                             emailController: emailController,
                             icon: Icon(Icons.email_outlined),
                             label: 'البريد الالكتروني',
+                            validator: (value) {
+                              return InputValidation.isValidEmail(value!)
+                                  ? null
+                                  : 'Enter your email correctly';
+                            },
                           ),
                           Gap(30.h),
                           PasswordTextField(
                             passwordController: passwordController,
                             icon: Icon(Icons.lock_outline),
                             label: 'كلمة المرور',
+                            validator: (value) {
+                              return InputValidation.passwordValidator(value!);
+                            },
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -154,44 +180,49 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                           Gap(40.h),
                           ButtonApp(
-                            onPressed: () async {
-                              authenticationBloc.add(LoginEvent(
-                                email: emailController.text,
-                                password: passwordController.text
-                              ));
+                            onPressed: isButtonEnabled
+                                ? () async {
+                                    if (formKey.currentState!.validate()) {
+                                      authenticationBloc.add(
+                                        LoginEvent(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        ),
+                                      );
+                                    }
 
-
-                              // if (formKey.currentState!.validate()) {
-                              //   await FirebaseAuth.instance
-                              //       .signInWithEmailAndPassword(
-                              //         email: emailController.text,
-                              //         password: passwordController.text,
-                              //       )
-                              //       .then(
-                              //         (value) => Navigator.pushAndRemoveUntil(
-                              //           context,
-                              //           MaterialPageRoute(
-                              //             builder: (context) => BlocProvider(
-                              //               create: (_) => BottomNavCubit(),
-                              //               child: const HomeLayoutScreen(),
-                              //             ),
-                              //           ),
-                              //           (route) => false,
-                              //         ),
-                              //       )
-                              //       .onError(
-                              //         (error, stackTrace) =>
-                              //             ScaffoldMessenger.of(
-                              //               context,
-                              //             ).showSnackBar(
-                              //               SnackBar(
-                              //                 content: Text('There is a problem with the password or email. Please try again'),
-                              //               ),
-                              //             ),
-                              //       );
-                              // }
-                              // Shared.dismissDialog(context: context);
-                            },
+                                    // if (formKey.currentState!.validate()) {
+                                    //   await FirebaseAuth.instance
+                                    //       .signInWithEmailAndPassword(
+                                    //         email: emailController.text,
+                                    //         password: passwordController.text,
+                                    //       )
+                                    //       .then(
+                                    //         (value) => Navigator.pushAndRemoveUntil(
+                                    //           context,
+                                    //           MaterialPageRoute(
+                                    //             builder: (context) => BlocProvider(
+                                    //               create: (_) => BottomNavCubit(),
+                                    //               child: const HomeLayoutScreen(),
+                                    //             ),
+                                    //           ),
+                                    //           (route) => false,
+                                    //         ),
+                                    //       )
+                                    //       .onError(
+                                    //         (error, stackTrace) =>
+                                    //             ScaffoldMessenger.of(
+                                    //               context,
+                                    //             ).showSnackBar(
+                                    //               SnackBar(
+                                    //                 content: Text('There is a problem with the password or email. Please try again'),
+                                    //               ),
+                                    //             ),
+                                    //       );
+                                    // }
+                                    // Shared.dismissDialog(context: context);
+                                  }
+                                : null,
                             text: 'تسجيل الدخول',
                             color: kPrimaryColor,
                           ),
@@ -245,7 +276,10 @@ class _LoginScreenState extends State<LoginScreen>
                             width: 83,
                           ),
                         ),
-                        LogoIcon(path: "assets/images/Google.png", onTap: () {}),
+                        LogoIcon(
+                          path: "assets/images/Google.png",
+                          onTap: () {},
+                        ),
                       ],
                     ),
                     Gap(20.h),

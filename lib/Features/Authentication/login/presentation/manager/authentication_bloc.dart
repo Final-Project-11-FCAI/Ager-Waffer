@@ -10,7 +10,7 @@ class AuthenticationBloc extends Bloc<AppEvent,AppState> with Validator {
 
   AuthenticationBloc() :super(Start()) {
     on<LoginEvent>(_onLogin);
-    // on<RegisterEvent>(_onRegister);
+    on<RegisterEvent>(_onRegister);
     // on<VerifyOtpEvent>(_onVerifyOtp);
     // on<ResendOtpEvent>(_onResendOtp);
     // on<RefreshTokenEvent>(_onRefreshToken);
@@ -36,6 +36,31 @@ class AuthenticationBloc extends Bloc<AppEvent,AppState> with Validator {
       emit(LoginErrorLoadingState(message:  response.messageAr));
     }
   }
+
+
+  Future<void> _onRegister(RegisterEvent event,
+      Emitter<AppState> emit) async {
+    emit(RegisterLoading());
+    var response = await authenticationRepository.register(
+        registerEntity: event.registerEntity
+    );
+
+    print("Response: ${response.toJson()}");
+    print("isSuccess: ${response.isSuccess}");
+    print("message: ${response.messageAr}");
+
+    if (response.isSuccess! ) {
+      sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.data?.token);
+      sharedPreferenceManager.writeData(CachingKey.USER_ID, response.data?.id);
+      sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.data?.fullName);
+      sharedPreferenceManager.writeData(CachingKey.USER_PHONE, response.data?.phoneNumber);
+      sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, response.data?.imageUrl);
+      emit(RegisterDoneState(model: response));
+    } else {
+      emit(RegisterErrorLoadingState(message:  response.messageAr));
+    }
+  }
+
 
 
 }

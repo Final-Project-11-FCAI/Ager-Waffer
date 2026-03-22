@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -136,6 +137,9 @@ class EditProfileScreen extends StatelessWidget {
                           passwordController: passwordController,
                           icon: Icon(Icons.lock_outline),
                           label: 'كلمة المرور',
+                            validator: (value) {
+                              return InputValidation.passwordValidator(value!);
+                            }
                         ),
                         Gap(25.h),
                         ButtonApp(

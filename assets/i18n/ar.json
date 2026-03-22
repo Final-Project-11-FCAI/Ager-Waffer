@@ -1,10 +1,10 @@
 {
-  "rowad_alnaql" : "رواد النقل",
-  "copy_rights"  : "All rights reserved to platform",
-  "welcome" : "أهلا",
-  "back_home" : "عودة للرئيسية",
-  "dashboard" : "الرئيسية",
-  "update_app": "تحديث تطبيق رواد النقل",
-  "update_avilable_content": "نسخة جديدة متاحة \n من فضلك قم بتحديث التطبيق",
-  "update_now": "تحديث الان"
+  "Enter_email_correctly" : "أدخل البريد الإلكتروني بشكل صحيح",
+  "Enter_first_name"  : "أدخل الاسم الأول",
+  "Enter_last_name"  : "أدخل الاسم الأخير",
+  "full_name_special_char" : "حرف خاص في الاسم الكامل",
+  "full_name_validation" : "التحقق من صحة الاسم الكامل",
+  "please_enter_valid_phone_number" : "الرجاء إدخال رقم هاتف صحيح",
+  "Sign_in": "تسجيل الدخول"
+
 }

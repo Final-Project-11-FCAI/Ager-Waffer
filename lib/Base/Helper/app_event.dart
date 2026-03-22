@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
+
 
 abstract class AppEvent {}
 
@@ -10,12 +12,15 @@ class LoginEvent extends AppEvent{
 }
 
 
+class RegisterEvent extends AppEvent{
+  final RegisterEntity registerEntity;
+  RegisterEvent({required this.registerEntity});
+}
 
 
-// class RegisterEvent extends AppEvent{
-//   final RegisterUserEntity registerUserEntity;
-//   RegisterEvent({required this.registerUserEntity});
-// }
+
+
+
 // class VerifyOtpEvent extends AppEvent{
 //   final OtpEntity otpEntity;
 //   VerifyOtpEvent({required this.otpEntity});

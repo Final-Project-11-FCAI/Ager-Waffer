@@ -30,33 +30,27 @@ class LoginErrorLoadingState extends AppState{
 
 
 
-//
-// //REGISTER
-// class RegisterLoading extends AppState{}
-//
-// class RegisterDoneState extends AppState{
-//   Mappable? model;
-//   final String? indicator;
-//   RegisterDoneState({this.model , this.indicator});
-//
-//   @override
-//   String toString() {
-//     return indicator!;
-//   }
-//
-// }
-//
-// class RegisterErrorLoadingState extends AppState{
-//   Mappable? model;
-//   String? indicator;
-//   String? message;
-//   RegisterErrorLoadingState({this.model,this.message,this.indicator});
-//   @override
-//   String toString() {
-//     return message!;
-//   }
-//
-// }
+//REGISTER
+class RegisterLoading extends AppState{}
+
+class RegisterDoneState extends AppState{
+  Mappable? model;
+  RegisterDoneState({this.model,});
+}
+
+class RegisterErrorLoadingState extends AppState{
+  Mappable? model;
+  String? message;
+  RegisterErrorLoadingState({this.model,this.message,});
+  @override
+  String toString() {
+    return message!;
+  }
+}
+
+
+
+
 //
 // //VERIFY OTP
 // class VerifyOtpLoading extends AppState{}

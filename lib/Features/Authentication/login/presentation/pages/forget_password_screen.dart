@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/change_password_done_bottom_sheet.dart';
@@ -55,6 +56,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                   passwordController: passwordController,
                   icon: Icon(Icons.lock_outline),
                   label: 'كلمة المرور',
+                    validator: (value) {
+                      return InputValidation.passwordValidator(value!);
+                    }
                 ),
                 Gap(40),
                 Text(
@@ -70,6 +74,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                   passwordController: confirmPasswordController,
                   icon: Icon(Icons.lock_outline),
                   label: 'تأكيد كلمة المرور',
+                    validator: (value) {
+                      return InputValidation.passwordValidator(value!);
+                    }
                 ),
                 Gap(50.h),
                 ButtonApp(
