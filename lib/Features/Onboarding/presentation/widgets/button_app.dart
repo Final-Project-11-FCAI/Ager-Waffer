@@ -19,7 +19,7 @@ class ButtonApp extends StatefulWidget {
 
   final int? currentPage;
   final PageController? controller;
-  final Function () onPressed;
+  final VoidCallback? onPressed;
   final String text;
   final Color color;
   final bool isLanguageScreen;

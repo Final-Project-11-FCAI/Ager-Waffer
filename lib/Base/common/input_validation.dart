@@ -1,11 +1,11 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 class InputValidation{
-  static String isValidName(String name) {
+  static String isValidName(String name, bool isFirstName) {
     /*final regex = RegExp(r'^[a-zA-Z\s]+$');
     return name.isNotEmpty && name.length > 2 && regex.hasMatch(name);*/
     if (name == null || name.isEmpty) {
-      return kEnter_full_name.tr();
+      return isFirstName ? kEnter_first_name.tr() : kEnter_last_name.tr();
     }
     if (name.length < 3 || name.length > 100) {
       return kfull_name_validation.tr();
@@ -31,6 +31,40 @@ class InputValidation{
         r'^[5-9][0-9]{8}$');
     return mobileRegExp.hasMatch(mobile);
   }
+
+  static String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "كلمة المرور مطلوبة";
+    }
+
+    if (value.length < 8) {
+      return "كلمة المرور يجب أن تكون 8 أحرف على الأقل";
+    }
+
+    // حرف كبير
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return "يجب أن تحتوي على حرف كبير";
+    }
+
+    // حرف صغير
+    if (!RegExp(r'[a-z]').hasMatch(value)) {
+      return "يجب أن تحتوي على حرف صغير";
+    }
+
+    // رقم
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return "يجب أن تحتوي على رقم";
+    }
+
+    // رمز خاص
+    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+      return "يجب أن تحتوي على رمز خاص";
+    }
+
+    return null; // ✅ valid
+  }
+
+
 }
 
 class MobileValidator {
@@ -48,7 +82,7 @@ class MobileValidator {
 
     // Check for length
     if (mobile.length != 9) {
-      return ksaudi_wrong_number.tr();
+      return 'ksaudi_wrong_number'.tr();
     }
 
     // Check validity
@@ -61,4 +95,5 @@ class MobileValidator {
 
     return "";
   }
+
 }

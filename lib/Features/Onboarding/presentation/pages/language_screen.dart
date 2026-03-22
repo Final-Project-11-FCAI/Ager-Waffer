@@ -21,34 +21,36 @@ class _LanguageScreenState extends State<LanguageScreen> {
     return Scaffold(
       backgroundColor: kWhiteColor,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.035, vertical: Shared.height * 0.16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "اختيار اللغة",
-                style: font14BlackBold.copyWith(fontSize: 24),
-              ),
-              Gap(14.h),
-              _buildLanguageButton(title: "العربية", flag: "assets/images/egypt_flag.png", value: "ar"),
-              Gap(20.h),
-              _buildLanguageButton(title: "English", flag: "assets/images/english_flag.png", value: "en"),
-              const Spacer(),
-              ButtonApp(
-                isLanguageScreen: true,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const OnboardingScreen(),
-                      ),
-                    );
-                  },
-                text: 'استمرار',
-                color: kPrimaryColor,
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.035, vertical: Shared.height * 0.14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "اختيار اللغة",
+                  style: font14BlackBold.copyWith(fontSize: 24),
+                ),
+                Gap(14.h),
+                _buildLanguageButton(title: "العربية", flag: "assets/images/egypt_flag.png", value: "ar"),
+                Gap(20.h),
+                _buildLanguageButton(title: "English", flag: "assets/images/english_flag.png", value: "en"),
+                Gap(Shared.height * 0.35),
+                ButtonApp(
+                  isLanguageScreen: true,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OnboardingScreen(),
+                        ),
+                      );
+                    },
+                  text: 'استمرار',
+                  color: kPrimaryColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),

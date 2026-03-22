@@ -5,6 +5,7 @@ const String baseUrl = 'http://ajarwaffer.runasp.net/api/';
 // authentication url
 
 const String loginUrl = "Authentication/login";
+const String registerUrl = "Authentication/register";
 
 
 
@@ -20,7 +21,6 @@ const String loginUrl = "Authentication/login";
 
 
 
-const String registerUrl = "Account/Register";
 const String verifyOtpUrl = "Account/VerfiyOtp";
 const String resendOtpUrl = "Account/ResendOtp";
 const String refreshTokenUrl = "Account/RefreshToken";

@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -35,6 +36,11 @@ class ForgetPasswordBottomSheet extends StatelessWidget {
                 emailController: emailController,
                 icon: Icon(Icons.email_outlined),
                 label: 'البريد الالكتروني',
+                  validator: (value) {
+                    return InputValidation.isValidEmail(value!)
+                        ? null
+                        : 'Enter your email correctly';
+                  }
               ),
               Gap(Shared.height * 0.12.h),
               ButtonApp(onPressed: () {
