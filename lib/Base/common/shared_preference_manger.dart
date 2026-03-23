@@ -43,7 +43,7 @@ class SharedPreferenceManager {
 
   Future<bool> readBool(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    return Future.value(sharedPreferences!.getBool(key.value)?? true);
+    return Future.value(sharedPreferences!.getBool(key.value)?? false);
   }
   Future<int> readInt(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -69,6 +69,8 @@ class CachingKey extends Enum<String> {
   static const CachingKey USER_PHONE = const CachingKey('USER_PHONE');
   static const CachingKey PROFILE_IMAGE = const CachingKey('PROFILE_IMAGE');
   static const CachingKey USER_NAME = const CachingKey('USER_NAME');
+  static const CachingKey IS_FIRST_LOGIN = const CachingKey('IS_FIRST_LOGIN');
+
 
 
 

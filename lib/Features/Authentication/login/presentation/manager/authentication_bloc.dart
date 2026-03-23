@@ -50,11 +50,11 @@ class AuthenticationBloc extends Bloc<AppEvent,AppState> with Validator {
     print("message: ${response.messageAr}");
 
     if (response.isSuccess! ) {
-      sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.data?.token);
-      sharedPreferenceManager.writeData(CachingKey.USER_ID, response.data?.id);
-      sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.data?.fullName);
-      sharedPreferenceManager.writeData(CachingKey.USER_PHONE, response.data?.phoneNumber);
-      sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, response.data?.imageUrl);
+      // sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.data?.token);
+      // sharedPreferenceManager.writeData(CachingKey.USER_ID, response.data?.id);
+      // sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.data?.fullName);
+      // sharedPreferenceManager.writeData(CachingKey.USER_PHONE, response.data?.phoneNumber);
+      // sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, response.data?.imageUrl);
       emit(RegisterDoneState(model: response));
     } else {
       emit(RegisterErrorLoadingState(message:  response.messageAr));

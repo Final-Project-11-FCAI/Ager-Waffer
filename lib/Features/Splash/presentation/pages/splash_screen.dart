@@ -1,8 +1,16 @@
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/pages/language_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -40,15 +48,55 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Navigate after animation
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LanguageScreen(),
-        ),
-      );
+      checkIfUserFirstLogin();
     });
   }
 
+  Future<void> checkIfUserFirstLogin() async {
+    final isFirstLogin =
+    await sharedPreferenceManager.readBool(CachingKey.IS_FIRST_LOGIN);
+
+    print("isFirstLogin : $isFirstLogin");
+
+    if (isFirstLogin != true) {
+      await sharedPreferenceManager.writeData(
+          CachingKey.IS_FIRST_LOGIN, true);
+
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const LanguageScreen(),
+        ),
+      );
+      return;
+    }
+
+    await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN).then((token){
+      print("token : $token");
+      if(token == 'null'){
+        customAnimatedPushNavigation(context, LoginScreen());
+      }
+      else{
+        if(isTokenExpired(token)) {
+          if (!mounted) return;
+          customAnimatedPushNavigation(context, LoginScreen());
+        } else {
+          if (!mounted) return;
+          customAnimatedPushNavigation(context, BlocProvider(
+            create: (_) => BottomNavCubit(),
+            child: const HomeLayoutScreen(),
+          ));
+        }
+      }
+    });
+
+  }
+
+  bool isTokenExpired(String token) {
+    return JwtDecoder.isExpired(token);
+  }
   @override
   void dispose() {
     _controller.dispose();

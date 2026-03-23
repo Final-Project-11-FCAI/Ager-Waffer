@@ -212,7 +212,6 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
         return MultiBlocProvider(
           providers: [
              BlocProvider.value(value: AuthenticationBloc()),
-            //   BlocProvider.value(value: NotificationsBloc()),
             //   BlocProvider.value(value: MyCarsBloc()),
             //   BlocProvider.value(value: ProfileBloc()),
             //   BlocProvider.value(value: UploadImageBloc()),

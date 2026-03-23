@@ -7,6 +7,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
@@ -100,10 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Shared.dismissDialog(context: context);
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (c) => BlocProvider(
-                  create: (_) => BottomNavCubit(),
-                  child: const HomeLayoutScreen(),
-                )),
+                MaterialPageRoute(builder: (c) => LoginScreen()),
               );
             }else if(state is RegisterErrorLoadingState) {
               Shared.dismissDialog(context: context);
