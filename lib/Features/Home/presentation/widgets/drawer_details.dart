@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
@@ -100,6 +101,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
             padding: EdgeInsets.symmetric(horizontal: Shared.height * 0.02.h),
             child: TextButton(
               onPressed: () async {
+                sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
                 await FirebaseAuth.instance.signOut();
                 Navigator.pushAndRemoveUntil(
                   context,

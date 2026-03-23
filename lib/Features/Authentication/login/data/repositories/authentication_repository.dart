@@ -6,6 +6,7 @@ import 'package:ager_waffer/Base/network/network_util.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/models/register_model.dart';
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
+import 'package:dio/dio.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class AuthenticationRepository {
@@ -26,16 +27,24 @@ class AuthenticationRepository {
 
 
   Future<RegisterModel> register({RegisterEntity? registerEntity}) async {
+    String? fileName = registerEntity!.profileImage?.path.split('/').last;
+
+    FormData formData = FormData.fromMap({
+      "FirstName": registerEntity.firstName,
+      "LastName": registerEntity.lastName,
+      "Email": registerEntity.email,
+      "Password": registerEntity.password,
+
+      if (registerEntity.profileImage != null)
+        "ProfileImage": await MultipartFile.fromFile(
+          registerEntity.profileImage!.path,
+          filename: fileName,
+        ),
+    });
 
     return NetworkUtil.internal().post(RegisterModel(),
         baseUrl +  registerUrl,
-        body: jsonEncode({
-          "FirstName": registerEntity!.firstName,
-          "LastName": registerEntity!.lastName,
-          "Email": registerEntity.email,
-          "Password": registerEntity.password,
-          "ProfileImage": registerEntity.profileImage,
-        }),
+        body: formData,
         headers: Map<String, String>.from({
           'Content-Type': 'application/json',
           'Accept': 'application/json',

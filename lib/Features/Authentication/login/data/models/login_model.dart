@@ -6,7 +6,6 @@ class LoginModel extends BaseMappable{
   String? messageAr;
   String? messageEn;
   int? statusCode;
-  Null? errors;
 
   LoginModel(
       {this.isSuccess,
@@ -14,7 +13,7 @@ class LoginModel extends BaseMappable{
         this.messageAr,
         this.messageEn,
         this.statusCode,
-        this.errors});
+        });
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     isSuccess = json['isSuccess'];
@@ -22,7 +21,6 @@ class LoginModel extends BaseMappable{
     messageAr = json['messageAr'];
     messageEn = json['messageEn'];
     statusCode = json['statusCode'];
-    errors = json['errors'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,7 +32,6 @@ class LoginModel extends BaseMappable{
     data['messageAr'] = this.messageAr;
     data['messageEn'] = this.messageEn;
     data['statusCode'] = this.statusCode;
-    data['errors'] = this.errors;
     return data;
   }
 
@@ -45,9 +42,7 @@ class LoginModel extends BaseMappable{
     messageAr = json['messageAr'];
     messageEn = json['messageEn'];
     statusCode = json['statusCode'];
-    if(json['errors'] != null)
-    errors = json['errors'].cast<String>();
-    return LoginModel(isSuccess: isSuccess,data: data,messageAr: messageAr,messageEn: messageEn, statusCode: statusCode, errors: errors);
+    return LoginModel(isSuccess: isSuccess,data: data,messageAr: messageAr,messageEn: messageEn, statusCode: statusCode,);
   }
 }
 
