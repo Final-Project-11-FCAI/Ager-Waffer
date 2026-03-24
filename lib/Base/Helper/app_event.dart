@@ -18,6 +18,24 @@ class RegisterEvent extends AppEvent{
 }
 
 
+class ForgetPasswordEvent extends AppEvent{
+  final String email;
+  ForgetPasswordEvent({required this.email,});
+}
+
+
+class VerifyOtpEvent extends AppEvent{
+  final String email;
+  final String otp;
+  VerifyOtpEvent({required this.email, required this.otp,});
+}
+
+class ResetPasswordEvent extends AppEvent{
+  final String email;
+  final String newPassword;
+  ResetPasswordEvent({required this.email, required this.newPassword,});
+}
+
 
 
 

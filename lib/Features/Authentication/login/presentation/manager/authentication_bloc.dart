@@ -11,7 +11,9 @@ class AuthenticationBloc extends Bloc<AppEvent,AppState> with Validator {
   AuthenticationBloc() :super(Start()) {
     on<LoginEvent>(_onLogin);
     on<RegisterEvent>(_onRegister);
-    // on<VerifyOtpEvent>(_onVerifyOtp);
+    on<ForgetPasswordEvent>(_onForgetPassword);
+    on<VerifyOtpEvent>(_onVerifyOtp);
+    on<ResetPasswordEvent>(_onResetPassword);
     // on<ResendOtpEvent>(_onResendOtp);
     // on<RefreshTokenEvent>(_onRefreshToken);
     // on<LogoutEvent>(_onLogout);
@@ -58,6 +60,49 @@ class AuthenticationBloc extends Bloc<AppEvent,AppState> with Validator {
       emit(RegisterDoneState(model: response));
     } else {
       emit(RegisterErrorLoadingState(message:  response.messageAr));
+    }
+  }
+
+
+  Future<void> _onForgetPassword(ForgetPasswordEvent event,
+      Emitter<AppState> emit) async {
+    emit(ForgetPasswordLoading());
+    var response = await authenticationRepository.forgetPassword(
+      email: event.email,
+    );
+
+    if (response.isSuccess! ) {
+      emit(ForgetPasswordDoneState(model: response));
+    } else {
+      emit(ForgetPasswordErrorLoadingState(message:  response.messageAr));
+    }
+  }
+
+
+  Future<void> _onVerifyOtp(VerifyOtpEvent event,
+      Emitter<AppState> emit) async {
+    emit(VerifyOtpLoading());
+    var response = await authenticationRepository.verifyOtp(
+        email: event.email, otp: event.otp
+    );
+    if (response.isSuccess! ) {
+      emit(VerifyOtpDoneState(model: response));
+    } else {
+      emit(VerifyOtpErrorLoadingState(message:  response.messageAr));
+    }
+  }
+
+
+  Future<void> _onResetPassword(ResetPasswordEvent event,
+      Emitter<AppState> emit) async {
+    emit(ResetPasswordLoading());
+    var response = await authenticationRepository.resetPassword(
+        email: event.email, newPassword: event.newPassword
+    );
+    if (response.isSuccess! ) {
+      emit(ResetPasswordDoneState(model: response));
+    } else {
+      emit(ResetPasswordErrorLoadingState(message:  response.messageAr));
     }
   }
 

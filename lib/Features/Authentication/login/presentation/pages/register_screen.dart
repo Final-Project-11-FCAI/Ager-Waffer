@@ -74,6 +74,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     emailController.addListener(checkFields);
     passwordController.addListener(checkFields);
   }
+
+  @override
+  void dispose() {
+    firstNameController.removeListener(checkFields);
+    lastNameController.removeListener(checkFields);
+    emailController.removeListener(checkFields);
+    passwordController.removeListener(checkFields);
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -312,7 +325,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               : null, // ❌ disabled لو false
 
                           text: 'إنشاء حساب',
-                          color: isButtonEnabled ? kPrimaryColor : kGreyColor,
+                          color: kPrimaryColor,
                         ),
                         Gap(10.h),
                       ],

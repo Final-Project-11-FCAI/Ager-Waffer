@@ -47,6 +47,10 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void dispose() {
     _controller.dispose();
+    emailController.removeListener(checkFields);
+    passwordController.removeListener(checkFields);
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
