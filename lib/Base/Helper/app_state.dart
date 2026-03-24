@@ -49,35 +49,70 @@ class RegisterErrorLoadingState extends AppState{
 }
 
 
+// FORGET PASSWORD
+class ForgetPasswordLoading extends AppState{}
+
+class ForgetPasswordDoneState extends AppState{
+  Mappable? model;
+  ForgetPasswordDoneState({this.model});
+
+}
+
+class ForgetPasswordErrorLoadingState extends AppState{
+  Mappable? model;
+  String? message;
+  ForgetPasswordErrorLoadingState({this.model,this.message});
+  @override
+  String toString() {
+    return message!;
+  }
+}
 
 
-//
-// //VERIFY OTP
-// class VerifyOtpLoading extends AppState{}
-//
-// class VerifyOtpDoneState extends AppState{
-//   Mappable? model;
-//   final String? indicator;
-//   VerifyOtpDoneState({this.model , this.indicator});
-//
-//   @override
-//   String toString() {
-//     return indicator!;
-//   }
-//
-// }
-//
-// class VerifyOtpErrorLoadingState extends AppState{
-//   Mappable? model;
-//   String? indicator;
-//   String? message;
-//   VerifyOtpErrorLoadingState({this.model,this.message,this.indicator});
-//   @override
-//   String toString() {
-//     return message!;
-//   }
-//
-// }
+//VERIFY OTP
+class VerifyOtpLoading extends AppState{}
+
+class VerifyOtpDoneState extends AppState{
+  Mappable? model;
+  VerifyOtpDoneState({this.model,});
+}
+
+class VerifyOtpErrorLoadingState extends AppState{
+  Mappable? model;
+  String? message;
+  VerifyOtpErrorLoadingState({this.model,this.message,});
+  @override
+  String toString() {
+    return message!;
+  }
+}
+
+
+//RESET PASSWORD
+class ResetPasswordLoading extends AppState{}
+
+class ResetPasswordDoneState extends AppState{
+  Mappable? model;
+  ResetPasswordDoneState({this.model,});
+}
+
+class ResetPasswordErrorLoadingState extends AppState{
+  Mappable? model;
+  String? message;
+  ResetPasswordErrorLoadingState({this.model,this.message,});
+  @override
+  String toString() {
+    return message!;
+  }
+}
+
+
+
+
+
+
+
+
 //
 // //RESEND OTP
 // class ResendOtpLoading extends AppState{}
