@@ -1,17 +1,21 @@
-import 'package:ager_waffer/Base/Helper/app_state.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/category_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/baby_items_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/books_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/electronics_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/home_essentials_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/other_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/travel_essentials_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/carousel_slider_container.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/category_item_list_view.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/custom_home_app_bar.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/drawer_details.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
-import 'package:ager_waffer/Features/Home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,26 +48,52 @@ class HomeScreen extends StatelessWidget {
     ),
   ];
 
-  final List<CategoryEntity> categories = [
-    CategoryEntity(image: 'assets/images/electronics.png', title: "إلكترونيات"),
-    CategoryEntity(
-      image: 'assets/images/home_supplies.png',
-      title: "مستلزمات المنزل",
-    ),
-    CategoryEntity(
-      image: 'assets/images/travel_supplies.png',
-      title: "مستلزمات السفر",
-    ),
-    CategoryEntity(image: 'assets/images/books.png', title: "كتب"),
-    CategoryEntity(
-      image: 'assets/images/children_items.png',
-      title: "أغراض أطفال",
-    ),
-    CategoryEntity(image: 'assets/images/others.png', title: "أخري"),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<CategoryEntity> categories = [
+      CategoryEntity(
+        image: 'assets/images/electronics.png',
+        title: "إلكترونيات",
+        onTap: () {
+          customAnimatedPushNavigation(context, ElectronicsScreen());
+        },
+      ),
+      CategoryEntity(
+        image: 'assets/images/home_supplies.png',
+        title: "مستلزمات المنزل",
+        onTap: () {
+          customAnimatedPushNavigation(context, HomeEssentialsScreen());
+        },
+      ),
+      CategoryEntity(
+        image: 'assets/images/travel_supplies.png',
+        title: "مستلزمات السفر",
+        onTap: () {
+          customAnimatedPushNavigation(context, TravelEssentialsScreen());
+        },
+      ),
+      CategoryEntity(
+        image: 'assets/images/books.png',
+        title: "كتب",
+        onTap: () {
+          customAnimatedPushNavigation(context, BooksScreen());
+        },
+      ),
+      CategoryEntity(
+        image: 'assets/images/children_items.png',
+        title: "أغراض أطفال",
+        onTap: () {
+          customAnimatedPushNavigation(context, BabyItemsScreen());
+        },
+      ),
+      CategoryEntity(
+        image: 'assets/images/others.png',
+        title: "أخري",
+        onTap: () {
+          customAnimatedPushNavigation(context, OtherScreen());
+        },
+      ),
+    ];
     return GestureDetector(
       onTap: () {
         Data user = context.read<LoginBloc>().state.user;
@@ -95,7 +125,12 @@ class HomeScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return CategoryItemListView(category: categories[index]);
+                      return GestureDetector(
+                        onTap: categories[index].onTap,
+                        child: CategoryItemListView(
+                          category: categories[index],
+                        ),
+                      );
                     },
                   ),
                 ),
