@@ -224,18 +224,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         EmailTextField(
                           emailController: emailController,
                           icon: Icon(Icons.email_outlined),
-                          label: kemailKey.tr(),
+                          label: kEmail.tr(),
                           validator: (value) {
                             return InputValidation.isValidEmail(value!)
                                 ? null
-                                : kenterValidEmailKey.tr();
+                                : kEnterValidEmail.tr();
                           },
                         ),
                         Gap(30.h),
                         PasswordTextField(
                           passwordController: passwordController,
                           icon: Icon(Icons.lock_outline),
-                          label: kpasswordKey.tr(),
+                          label: kPassword.tr(),
                             validator: (value) {
                               return InputValidation.passwordValidator(value!);
                             }

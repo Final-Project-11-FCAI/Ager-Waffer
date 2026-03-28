@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Helper/app_state.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ForgetPasswordBottomSheet extends StatefulWidget {
   const ForgetPasswordBottomSheet({super.key});
@@ -75,7 +77,7 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      state.message ?? "حدث خطأ ما يرجى المحاولة في وقت لاحق",
+                      state.message ?? kSomethingWentWrong.tr(),
                     ),
                   ),
                 );
@@ -86,7 +88,7 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
               child: Column(
                 children: [
                   Text(
-                    'أدخل بريدك الإلكتروني لإرسال رابط تعيين كلمة المرور',
+                    kForgetPasswordDesc.tr(),
                     textAlign: TextAlign.center,
                     style: font24PrimarySemiBold.copyWith(fontWeight: medium),
                   ),
@@ -94,11 +96,11 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                   EmailTextField(
                     emailController: emailController,
                     icon: Icon(Icons.email_outlined),
-                    label: 'البريد الالكتروني',
+                    label: kEmail.tr(),
                     validator: (value) {
                       return InputValidation.isValidEmail(value!)
                           ? null
-                          : 'Enter your email correctly';
+                          : kEnterValidEmail.tr();
                     },
                   ),
                   Gap(Shared.height * 0.12.h),
@@ -115,7 +117,7 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                           }
                         : null,
 
-                    text: 'استمرار',
+                    text: kContinue.tr(),
                     color: kPrimaryColor,
                     borderRadius: Shared.width * 0.04.h,
                   ),
@@ -124,7 +126,7 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    text: 'إلغاء',
+                    text: kCancel.tr(),
                     color: kPrimaryColor,
                     borderRadius: Shared.width * 0.04.h,
                   ),

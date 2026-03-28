@@ -10,9 +10,9 @@ String know = "now";
 
 
 String kSomethingWentWrong = 'something_went_wrong';
-String kemailKey = 'email';
-String kenterValidEmailKey = 'enter_valid_email';
-String kpasswordKey = 'password';
+String kEmail = 'email';
+String kEnterValidEmail = 'enter_valid_email';
+String kPassword = 'password';
 String kforgotPasswordKey = 'forgot_password';
 String kloginKey = 'login';
 String kloginWithKey = 'login_with';
@@ -29,6 +29,32 @@ String kLastName = 'last_name';
 String kCreateAccount = 'create_account';
 String kHaveAccount = 'have_account';
 String kLogin = 'login';
+
+
+String kVerifyEmailTitle = 'verify_email_title';
+String kVerifyEmailDesc = 'verify_email_desc';
+String kConfirm = 'confirm';
+String kResendCode = 'resend_code';
+String kResendIn = 'resend_in';
+String kSeconds = 'seconds';
+
+String kNewPasswordTitle = 'new_password_title';
+String kConfirmPasswordTitle = 'confirm_password_title';
+String kConfirmPassword = 'confirm_password';
+
+String kRequired = 'required';
+String kPasswordNotMatch = 'password_not_match';
+
+String kUpdatePassword = 'update_password';
+
+String kForgetPasswordDesc = 'forget_password_desc';
+String kContinue = 'continue';
+String kCancel = 'cancel';
+
+
+String kPasswordChanged = 'password_changed';
+String kLoginNowDesc = 'login_now_desc';
+String kLoginNow = 'login_now';
 
 
 

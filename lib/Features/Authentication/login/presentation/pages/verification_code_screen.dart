@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Helper/app_state.dart';
-import 'package:ager_waffer/Base/common/navigtor.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/pages/change_password_done_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/reset_password_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
@@ -99,7 +99,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  state.message ?? "حدث خطأ ما يرجى المحاولة في وقت لاحق",
+                  state.message ?? kSomethingWentWrong.tr(),
                 ),
               ),
             );
@@ -126,7 +126,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                         ),
                         Gap(20.h),
                         Text(
-                          "تأكيد البريد الإلكتروني",
+                          kVerifyEmailTitle.tr(),
                           textAlign: TextAlign.center,
                           style: font24PrimarySemiBold.copyWith(
                             fontWeight: bold,
@@ -135,7 +135,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                         ),
                         Gap(10.h),
                         Text(
-                          "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني",
+                          kVerifyEmailDesc.tr(),
                           textAlign: TextAlign.center,
                           style: font20PrimaryMedium.copyWith(color: kDoneColor),
                         ),
@@ -171,7 +171,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                               }
                             }
                                 : null,
-                          text: 'تأكيد',
+                          text: kConfirm.tr(),
                           color: kPrimaryColor,
                           borderRadius: Shared.width * 0.04.h,
                         ),
@@ -180,14 +180,14 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             ? TextButton(
                                 onPressed: startTimer,
                                 child: Text(
-                                  "إعادة إرسال الرمز",
+                                  kResendCode.tr(),
                                   style: font20PrimaryMedium.copyWith(
                                     color: kBlackColor,
                                   ),
                                 ),
                               )
                             : Text(
-                                "إعادة الإرسال خلال $secondsRemaining ثانية",
+                          "${kResendIn.tr()} $secondsRemaining ${kSeconds.tr()}",
                                 style: font16BlackSemiBold.copyWith(
                                   color: kGreyColor,
                                 ),

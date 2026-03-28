@@ -1,7 +1,9 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class PasswordTextField extends StatefulWidget {
   const PasswordTextField({
@@ -50,7 +52,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       children: [
         TextFormField(
           controller: widget.passwordController,
-          validator: (value) => value!.isEmpty ? "Requird" : null,
+          validator: (value) => value!.isEmpty ? kRequired.tr() : null,
           textInputAction: TextInputAction.done,
           keyboardType: TextInputType.visiblePassword,
           obscureText: isHidden,

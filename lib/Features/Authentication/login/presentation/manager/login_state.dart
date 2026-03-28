@@ -7,6 +7,7 @@ class LoginState extends Equatable{
   String failureMessage ;
   LoginState({required this.user,required this.status, this.failureMessage = ''});
 
+  @override
   List<Object?> get props => [user,status,failureMessage];
 
   LoginState copyWith({Data? user,loginStatus? status, String? failureMessage}){
