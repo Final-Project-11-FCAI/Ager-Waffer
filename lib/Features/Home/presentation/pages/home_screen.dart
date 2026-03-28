@@ -1,5 +1,9 @@
+import 'package:ager_waffer/Base/Helper/app_state.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/category_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/carousel_slider_container.dart';
@@ -9,6 +13,7 @@ import 'package:ager_waffer/Features/Home/presentation/widgets/drawer_details.da
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -40,10 +45,7 @@ class HomeScreen extends StatelessWidget {
   ];
 
   final List<CategoryEntity> categories = [
-    CategoryEntity(
-      image: 'assets/images/electronics.png',
-      title: "إلكترونيات",
-    ),
+    CategoryEntity(image: 'assets/images/electronics.png', title: "إلكترونيات"),
     CategoryEntity(
       image: 'assets/images/home_supplies.png',
       title: "مستلزمات المنزل",
@@ -52,31 +54,24 @@ class HomeScreen extends StatelessWidget {
       image: 'assets/images/travel_supplies.png',
       title: "مستلزمات السفر",
     ),
-    CategoryEntity(
-      image: 'assets/images/books.png',
-      title: "كتب",
-    ),
+    CategoryEntity(image: 'assets/images/books.png', title: "كتب"),
     CategoryEntity(
       image: 'assets/images/children_items.png',
       title: "أغراض أطفال",
     ),
-    CategoryEntity(
-      image: 'assets/images/others.png',
-      title: "أخري",
-    ),
+    CategoryEntity(image: 'assets/images/others.png', title: "أخري"),
   ];
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Data user = context.read<LoginBloc>().state.user;
+        print("user : ${user.toJson()}");
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        drawer: Drawer(
-          width: Shared.width * 0.8,
-          child: DrawerDetails(),
-        ),
+        drawer: Drawer(width: Shared.width * 0.8, child: DrawerDetails()),
         backgroundColor: kWhiteColor,
         appBar: CustomHomeAppBar(),
         body: SingleChildScrollView(
@@ -85,13 +80,12 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              SizedBox(
+                SizedBox(
                   height: Shared.height * 0.25.h,
-                  child: CarouselSliderContainer()),
-                Gap(14.h),
-                Text('الفئات',
-                  style: font14BlackBold,
+                  child: CarouselSliderContainer(),
                 ),
+                Gap(14.h),
+                Text('الفئات', style: font14BlackBold),
                 Gap(10.h),
                 SizedBox(
                   height: Shared.height * 0.2.h,
@@ -101,14 +95,12 @@ class HomeScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return CategoryItemListView(category: categories[index],);
+                      return CategoryItemListView(category: categories[index]);
                     },
                   ),
                 ),
                 Gap(18.h),
-                Text('العناصر المقترحة',
-                style: font14BlackBold,
-                ),
+                Text('العناصر المقترحة', style: font14BlackBold),
                 Gap(8.h),
                 ListView.builder(
                   itemCount: products.length,

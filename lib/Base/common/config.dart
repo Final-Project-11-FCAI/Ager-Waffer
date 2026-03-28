@@ -1,6 +1,6 @@
 
 // this app base url
-const String baseUrl = 'http://ajarwaffer.runasp.net/api/';
+const String baseUrl = 'https://ajarwaffer.runasp.net/api/';
 
 // authentication url
 
