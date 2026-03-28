@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Helper/app_state.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   ResetPasswordScreen({super.key, required this.email});
@@ -98,7 +100,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  state.message ?? "حدث خطأ ما يرجى المحاولة في وقت لاحق",
+                  state.message ?? kSomethingWentWrong.tr(),
                 ),
               ),
             );
@@ -122,7 +124,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'كلمة المرور الجديدة',
+                      kNewPasswordTitle.tr(),
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -133,14 +135,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     PasswordTextField(
                       passwordController: passwordController,
                       icon: Icon(Icons.lock_outline),
-                      label: 'كلمة المرور',
+                      label: kPassword.tr(),
                       validator: (value) {
                         return InputValidation.passwordValidator(value!);
                       },
                     ),
                     Gap(40),
                     Text(
-                      'تأكيد كلمة المرور',
+                      kConfirmPasswordTitle.tr(),
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -151,17 +153,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     PasswordTextField(
                       passwordController: confirmPasswordController,
                       icon: Icon(Icons.lock_outline),
-                      label: 'تأكيد كلمة المرور',
+                      label: kConfirmPassword.tr(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Required";
+                          return kRequired.tr();
                         }
                         if (InputValidation.passwordValidator(value) != null) {
                           return InputValidation.passwordValidator(value);
                         }
 
                         if (value != passwordController.text) {
-                          return "Passwords do not match";
+                          return kPasswordNotMatch.tr();
                         }
                         return null;
                       },
@@ -181,7 +183,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           }
                         }
                             : null,
-                      text: 'تحديث كلمة المرور',
+                      text: kUpdatePassword.tr(),
                       color: kPrimaryColor,
                     ),
                     Gap(10.h),
@@ -196,7 +198,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           ),
                         ),
                         Text(
-                          'أو سجل من خلال',
+                          kloginWithKey.tr(),
                           style: TextStyle(
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
@@ -244,7 +246,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "  ليس لديك حساب ؟",
+                              text: knoAccountKey.tr(),
                               style: TextStyle(
                                 color: Color(0xff5588A3),
                                 fontSize: 16,
@@ -259,7 +261,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 },
                             ),
                             TextSpan(
-                              text: " أنشيء حسابًا الأن",
+                              text: kcreateAccountNowKey.tr(),
                               style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 16,

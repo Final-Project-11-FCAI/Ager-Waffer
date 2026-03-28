@@ -1,7 +1,9 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class EmailTextField extends StatefulWidget {
   const EmailTextField({
@@ -52,7 +54,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
       children: [
         TextFormField(
           controller: widget.emailController,
-          validator: (value) => value!.isEmpty ? "Requird" : null,
+          validator: (value) => value!.isEmpty ? kRequired.tr() : null,
           keyboardType: widget.isName ? TextInputType.name : TextInputType.emailAddress,
           decoration: InputDecoration(
             label: Text(widget.label),
