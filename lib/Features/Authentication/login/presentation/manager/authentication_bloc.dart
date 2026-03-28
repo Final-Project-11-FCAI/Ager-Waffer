@@ -3,6 +3,7 @@ import 'package:ager_waffer/Base/Helper/app_state.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/validator.dart';
+import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/repositories/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 
@@ -18,6 +19,7 @@ class AuthenticationBloc extends Bloc<AppEvent,AppState> with Validator {
     // on<RefreshTokenEvent>(_onRefreshToken);
     // on<LogoutEvent>(_onLogout);
   }
+
 
   Future<void> _onLogin(LoginEvent event,
       Emitter<AppState> emit) async {

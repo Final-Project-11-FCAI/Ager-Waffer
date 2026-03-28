@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/reset_password_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
@@ -116,32 +117,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-      // ← ONLY ONE MaterialApp in the entire app!
-      navigatorKey: navigatorKey,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Tajawal'),
-      locale: LocalizeAndTranslate.getLocale(),
-      supportedLocales: LocalizeAndTranslate.getLocals(),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        DefaultCupertinoLocalizations.delegate,
-        CountryLocalizations.delegate,
-      ],
-      home: const SplashScreen(),
-      routes: {
-
-        'LoginScreen': (context) => LoginScreen(),
-        'RegisterScreen': (context) => RegisterScreen(),
-        // 'FrogetPassword': (context) => ResetPasswordScreen(email: '',),
-        '/home': (context) => BlocProvider(
-                              create: (_) => BottomNavCubit(),
-                              child: const HomeLayoutScreen()),
-
-      },
-    );
+    return MyMaterial();
   }
 
   // ... rest of your _fcmConfigure, didChangeMetrics, etc. stays unchanged ...
@@ -212,7 +188,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
         return MultiBlocProvider(
           providers: [
              BlocProvider.value(value: AuthenticationBloc()),
-            //   BlocProvider.value(value: MyCarsBloc()),
+               BlocProvider.value(value: LoginBloc()),
             //   BlocProvider.value(value: ProfileBloc()),
             //   BlocProvider.value(value: UploadImageBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
@@ -232,7 +208,18 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
               DefaultCupertinoLocalizations.delegate,
               CountryLocalizations.delegate,
             ],
-            home: SplashScreen(), //CongratulationScreen(),
+
+            home: const SplashScreen(),
+            routes: {
+
+              'LoginScreen': (context) => LoginScreen(),
+              'RegisterScreen': (context) => RegisterScreen(),
+              // 'FrogetPassword': (context) => ResetPasswordScreen(email: '',),
+              '/home': (context) => BlocProvider(
+                  create: (_) => BottomNavCubit(),
+                  child: const HomeLayoutScreen()),
+
+            },
           ),
         );
       },

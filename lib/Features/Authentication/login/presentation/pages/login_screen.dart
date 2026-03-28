@@ -3,6 +3,8 @@ import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_state.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
@@ -85,12 +87,12 @@ class _LoginScreenState extends State<LoginScreen>
             child: LogoAsText(),
           ),
         ),
-        body: BlocListener<AuthenticationBloc, AppState>(
-          bloc: authenticationBloc,
+        body: BlocListener<LoginBloc, LoginState>(
+          bloc: loginBloc,
           listener: (context, state) {
-            if (state is LoginLoading) {
+            if (state.status == loginStatus.loading) {
               Shared.showLoadingDialog(context: context);
-            } else if (state is LoginDoneState) {
+            } else if (state.status == loginStatus.success) {
               Shared.dismissDialog(context: context);
               Navigator.pushReplacement(
                 context,
@@ -101,12 +103,12 @@ class _LoginScreenState extends State<LoginScreen>
                   ),
                 ),
               );
-            } else if (state is LoginErrorLoadingState) {
+            } else if (state.status == loginStatus.failure) {
               Shared.dismissDialog(context: context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    state.message ?? "حدث خطأ ما يرجى المحاولة في وقت لاحق",
+                    state.failureMessage ?? "حدث خطأ ما يرجى المحاولة في وقت لاحق",
                   ),
                 ),
               );
@@ -187,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen>
                             onPressed: isButtonEnabled
                                 ? () async {
                                     if (formKey.currentState!.validate()) {
-                                      authenticationBloc.add(
+                                      loginBloc.add(
                                         LoginEvent(
                                           email: emailController.text,
                                           password: passwordController.text,
