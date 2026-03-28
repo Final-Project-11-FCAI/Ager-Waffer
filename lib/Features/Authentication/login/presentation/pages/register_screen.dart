@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Helper/app_state.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
@@ -11,8 +12,6 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/pages/log
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
-import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
-import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
 import 'package:flutter/gestures.dart';
@@ -21,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
@@ -123,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ).showSnackBar(
                   SnackBar(
                     content: Text(
-                        state.message?? "حدث خطأ ما يرجى المحاولة في وقت لاحق"),
+                        state.message?? kSomethingWentWrong.tr()),
                   ));
             }
           },
@@ -152,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 ListTile(
                                   leading: Icon(Icons.camera),
-                                  title: Text('Camera'),
+                                  title: Text(kCamera.tr()),
                                   onTap: () {
                                     Navigator.pop(context);
                                     pickImageFromSource(ImageSource.camera);
@@ -160,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 ListTile(
                                   leading: Icon(Icons.photo),
-                                  title: Text('Gallery'),
+                                  title: Text(kGallery.tr()),
                                   onTap: () {
                                     Navigator.pop(context);
                                     pickImageFromSource(ImageSource.gallery);
@@ -193,7 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   // Gap(10.h),
                   Text(
-                    'إضافة صورة',
+                    kAddImage.tr(),
                     style: font16BlackSemiBold.copyWith(fontWeight: medium),
                   ),
                   Gap(30.h),
@@ -204,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         EmailTextField(
                           emailController: firstNameController,
                           icon: Icon(Icons.account_circle_outlined),
-                          label: "الاسم الأول",
+                          label: kFirstName.tr(),
                           validator: (value) {
                             return InputValidation.isValidName(value!, true);
                           },
@@ -214,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         EmailTextField(
                           emailController: lastNameController,
                           icon: Icon(Icons.account_circle_outlined),
-                          label: "الاسم الثاني",
+                          label: kLastName.tr(),
                           validator: (value) {
                             return InputValidation.isValidName(value!, false);
                           },
@@ -224,18 +224,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         EmailTextField(
                           emailController: emailController,
                           icon: Icon(Icons.email_outlined),
-                          label: 'البريد الالكتروني',
+                          label: kemailKey.tr(),
                           validator: (value) {
                             return InputValidation.isValidEmail(value!)
                                 ? null
-                                : 'Enter your email correctly';
+                                : kenterValidEmailKey.tr();
                           },
                         ),
                         Gap(30.h),
                         PasswordTextField(
                           passwordController: passwordController,
                           icon: Icon(Icons.lock_outline),
-                          label: 'كلمة المرور',
+                          label: kpasswordKey.tr(),
                             validator: (value) {
                               return InputValidation.passwordValidator(value!);
                             }
@@ -324,7 +324,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                               : null, // ❌ disabled لو false
 
-                          text: 'إنشاء حساب',
+                          text: kCreateAccount.tr(),
                           color: kPrimaryColor,
                         ),
                         Gap(10.h),
@@ -343,7 +343,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       Text(
-                        'أو سجل من خلال',
+                        kloginWithKey.tr(),
                         style: TextStyle(
                           color: kPrimaryColor,
                           fontWeight: FontWeight.bold,
@@ -382,7 +382,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "  لديك حساب بالفعل ؟",
+                          text: '${kHaveAccount.tr()} ',
                           style: TextStyle(
                             color: Color(0xff5588A3),
                             fontSize: 16,
@@ -397,12 +397,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                         ),
                         TextSpan(
-                          text: " تسجيل الدخول",
+                          text: "${kLogin.tr()} ${know.tr()}",
                           style: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  'LoginScreen',
+                                );
+                              }
                         ),
                       ],
                     ),

@@ -1,8 +1,8 @@
-import 'package:ager_waffer/Base/Helper/app_state.dart';
+import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_state.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_bottom_sheet.dart';
@@ -13,14 +13,13 @@ import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
-import '../../../../../Base/Helper/app_event.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -108,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen>
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    state.failureMessage ?? "حدث خطأ ما يرجى المحاولة في وقت لاحق",
+                    state.failureMessage ?? kSomethingWentWrong.tr(),
                   ),
                 ),
               );
@@ -138,18 +137,18 @@ class _LoginScreenState extends State<LoginScreen>
                           EmailTextField(
                             emailController: emailController,
                             icon: Icon(Icons.email_outlined),
-                            label: 'البريد الالكتروني',
+                            label: kemailKey.tr(),
                             validator: (value) {
                               return InputValidation.isValidEmail(value!)
                                   ? null
-                                  : 'Enter your email correctly';
+                                  : kenterValidEmailKey.tr();
                             },
                           ),
                           Gap(30.h),
                           PasswordTextField(
                             passwordController: passwordController,
                             icon: Icon(Icons.lock_outline),
-                            label: 'كلمة المرور',
+                            label: kpasswordKey.tr(),
                             validator: (value) {
                               return InputValidation.passwordValidator(value!);
                             },
@@ -175,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   );
                                 },
                                 child: Text(
-                                  'هل نسيت كلمة المرور؟',
+                                  kforgotPasswordKey.tr(),
                                   style: TextStyle(
                                     color: kPrimaryColor,
                                     fontWeight: FontWeight.bold,
@@ -229,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     // Shared.dismissDialog(context: context);
                                   }
                                 : null,
-                            text: 'تسجيل الدخول',
+                            text: kLogin.tr(),
                             color: kPrimaryColor,
                           ),
                         ],
@@ -247,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
                         Text(
-                          'أو سجل من خلال',
+                          kloginWithKey.tr(),
                           style: TextStyle(
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
@@ -293,7 +292,7 @@ class _LoginScreenState extends State<LoginScreen>
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: "  ليس لديك حساب ؟",
+                            text: "${knoAccountKey.tr()} ",
                             style: TextStyle(
                               color: Color(0xff5588A3),
                               fontSize: 16,
@@ -308,12 +307,19 @@ class _LoginScreenState extends State<LoginScreen>
                               },
                           ),
                           TextSpan(
-                            text: " أنشيء حسابًا الأن",
+                            text: kcreateAccountNowKey.tr(),
                             style: TextStyle(
                               color: kPrimaryColor,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    'RegisterScreen',
+                                  );
+                                }
                           ),
                         ],
                       ),

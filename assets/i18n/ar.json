@@ -5,6 +5,28 @@
   "full_name_special_char" : "حرف خاص في الاسم الكامل",
   "full_name_validation" : "التحقق من صحة الاسم الكامل",
   "please_enter_valid_phone_number" : "الرجاء إدخال رقم هاتف صحيح",
-  "Sign_in": "تسجيل الدخول"
+  "Sign_in": "تسجيل الدخول",
+
+  "something_went_wrong": "حدث خطأ ما يرجى المحاولة في وقت لاحق",
+  "email": "البريد الإلكتروني",
+  "enter_valid_email": "أدخل البريد الإلكتروني بشكل صحيح",
+  "password": "كلمة المرور",
+  "forgot_password": "هل نسيت كلمة المرور؟",
+  "login": "تسجيل الدخول",
+  "login_with": "أو سجل من خلال",
+  "no_account": "ليس لديك حساب؟",
+  "create_account_now": " أنشئ حسابًا الآن",
+  "now": "الآن",
+
+
+
+  "camera": "الكاميرا",
+  "gallery": "المعرض",
+  "add_image": "إضافة صورة",
+  "first_name": "الاسم الأول",
+  "last_name": "الاسم الثاني",
+  "create_account": "إنشاء حساب",
+  "have_account": " لديك حساب بالفعل؟"
+
 
 }

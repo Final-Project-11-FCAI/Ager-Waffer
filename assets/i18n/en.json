@@ -5,7 +5,26 @@
   "full_name_special_char" : "full name special char",
   "full_name_validation" : "full name validation",
   "please_enter_valid_phone_number" : "please enter valid phone number",
-  "Sign_in": "Sign in"
+  "Sign_in": "Sign in",
+  "now": "Now",
+
+  "something_went_wrong": "Something went wrong, please try again later",
+  "email": "Email",
+  "enter_valid_email": "Enter your email correctly",
+  "password": "Password",
+  "forgot_password": "Forgot password?",
+  "login": "Login",
+  "login_with": "Or login with",
+  "no_account": "Don't have an account?",
+  "create_account_now": "Create an account now",
+
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "add_image": "Add Image",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "create_account": "Create Account",
+  "have_account": "Already have an account?"
 
 
 }
