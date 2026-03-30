@@ -36,6 +36,10 @@ class ResetPasswordEvent extends AppEvent{
   ResetPasswordEvent({required this.email, required this.newPassword,});
 }
 
+class GetAllItemsEvent extends AppEvent{
+  GetAllItemsEvent();
+}
+
 
 
 
