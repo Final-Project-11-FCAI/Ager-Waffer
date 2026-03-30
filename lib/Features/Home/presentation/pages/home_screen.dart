@@ -1,10 +1,15 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart' hide Data;
 import 'package:ager_waffer/Features/Home/domain/entities/category_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/all_items_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/baby_items_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/books_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/electronics_screen.dart';
@@ -21,32 +26,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
-  final List<ProductEntity> products = [
-    ProductEntity(
-      title: "خيمة للرحلات",
-      subtitle: "جديد",
-      price: 20,
-      image: "assets/images/tent.png",
-      rating: 4.5,
-    ),
-    ProductEntity(
-      title: "شنطة ظهر",
-      subtitle: "استعمال خفيف",
-      price: 30,
-      image: "assets/images/Backpack.png",
-      rating: 3.5,
-    ),
-    ProductEntity(
-      title: "مشاية أطفال",
-      subtitle: "بحالة جيدة",
-      price: 30,
-      image: "assets/images/baby_walker.png",
-      rating: 3.5,
-    ),
-  ];
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // final List<ProductEntity> products = [
+  //   ProductEntity(
+  //     title: "خيمة للرحلات",
+  //     subtitle: "جديد",
+  //     price: 20,
+  //     image: "assets/images/tent.png",
+  //     rating: 4.5,
+  //   ),
+  //   ProductEntity(
+  //     title: "شنطة ظهر",
+  //     subtitle: "استعمال خفيف",
+  //     price: 30,
+  //     image: "assets/images/Backpack.png",
+  //     rating: 3.5,
+  //   ),
+  //   ProductEntity(
+  //     title: "مشاية أطفال",
+  //     subtitle: "بحالة جيدة",
+  //     price: 30,
+  //     image: "assets/images/baby_walker.png",
+  //     rating: 3.5,
+  //   ),
+  // ];
+
+  @override
+  void initState() {
+    super.initState();
+    allItemsBloc.add(GetAllItemsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +71,8 @@ class HomeScreen extends StatelessWidget {
         image: 'assets/images/electronics.png',
         title: "إلكترونيات",
         onTap: () {
-          customAnimatedPushNavigation(context, ElectronicsScreen());
+          final products = allItemsBloc.state.product;
+          customAnimatedPushNavigation(context, ElectronicsScreen(products: products,));
         },
       ),
       CategoryEntity(
@@ -137,12 +154,31 @@ class HomeScreen extends StatelessWidget {
                 Gap(18.h),
                 Text('العناصر المقترحة', style: font14BlackBold),
                 Gap(8.h),
-                ListView.builder(
-                  itemCount: products.length,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return ProductCardListView(product: products[index]);
+                BlocBuilder<AllItemsBloc, AllItemsState>(
+                  bloc: allItemsBloc,
+                  builder: (context, state) {
+                    if (state.status == allItemsStatus.loading) {
+                      return const LoadingPlaceHolder(
+                        shimmerType: ShimmerType.list,
+                        cellShimmerHeight: 50,
+                        shimmerCount: 10,
+                      );
+                    } else if (state.status == allItemsStatus.success) {
+                      final products = state.product;
+                      return ListView.builder(
+                        itemCount: state.product.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return ProductCardListView(product: products[index]);
+                        },
+                      );
+                    }
+                    else if (state.status == allItemsStatus.failure) {
+                      return Center(child: Text(state.failureMessage));
+                    } else  {
+                      return Center(child: Text("No Data Yet"));
+                    }
                   },
                 ),
               ],

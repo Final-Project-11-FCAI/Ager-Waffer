@@ -1,16 +1,17 @@
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/product_details_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ProductCardListView extends StatefulWidget {
-  final ProductEntity product;
+  final ProductData product;
 
-  ProductCardListView({super.key, required this.product});
+  const ProductCardListView({super.key, required this.product});
 
   @override
   State<ProductCardListView> createState() => _ProductCardListViewState();
@@ -51,12 +52,22 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         ? 12.sp
                         : 0,
                   ),
-                  child: Image.asset(
-                    widget.product.image,
+                  child: widget.product.itemImages != null && widget.product.itemImages!.isNotEmpty
+                      ? CachedNetworkImage(
+                    imageUrl: widget.product.itemImages!.first,
                     width: 90.w,
                     height: 90.h,
                     fit: BoxFit.contain,
-                  ),
+                    placeholder: (context, url) =>
+                        Image.asset("assets/images/virtual_image.jpg"),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.error),
+                  ) : Image.asset(
+                    "assets/images/virtual_image.jpg",
+                    width: 90.w,
+                    height: 90.h,
+                    fit: BoxFit.contain,
+                  )
                 ),
                 GestureDetector(
                   onTap: () {
@@ -72,7 +83,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
               ],
             ),
           ),
-          Gap(16.w),
+          Gap(10.w),
           Expanded(
             flex: 2,
             child: Padding(
@@ -83,15 +94,15 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.product.title, style: font16BlackSemiBold),
+                      Text(widget.product.name!, style: font16BlackSemiBold),
                       Text(
-                        "${widget.product.price} ج/اليوم",
-                        style: font16BlackSemiBold.copyWith(fontSize: 11),
+                        "${widget.product.price} ج/${widget.product.rentUnit}",
+                        style: font16BlackSemiBold.copyWith(fontSize: 10),
                       ),
                     ],
                   ),
                   Text(
-                    widget.product.subtitle,
+                    widget.product.condition!,
                     style: font16BlackSemiBold.copyWith(
                       color: const Color.fromRGBO(85, 85, 85, 0.61),
                     ),
@@ -100,7 +111,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                   Row(
                     children: [
                       Text(
-                        "${widget.product.rating}",
+                        "${widget.product.averageRate}",
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 10,
                           color: const Color.fromRGBO(151, 151, 151, 1),
@@ -112,7 +123,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         (index) => Icon(
                           Icons.star,
                           size: 14.sp,
-                          color: index < widget.product.rating.floor()
+                          color: index < widget.product.averageRate!.floor()
                               ? Colors.amber
                               : Colors.grey.shade300,
                         ),

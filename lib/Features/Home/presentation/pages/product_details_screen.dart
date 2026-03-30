@@ -1,9 +1,9 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/review_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/contact_owner_container.dart';
-import 'package:ager_waffer/Features/Home/presentation/widgets/product_data.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_images.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/rent_and_favorite_button.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/review_item.dart';
@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
+import '../widgets/product_data.dart';
+
 class ProductDetailsScreen extends StatelessWidget {
-  final ProductEntity product;
+  final ProductData product;
 
   ProductDetailsScreen({super.key, required this.product});
 
@@ -68,14 +70,14 @@ class ProductDetailsScreen extends StatelessWidget {
                         child: ProductImages(product: product,),
                       ),
                       Gap(20.h),
-                      ProductData(product: product),
+                      ProductDataContainer(product: product),
                       Gap(10.h),
                      Padding(
                        padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.08.w, vertical: Shared.height * 0.02.h),
                        child: Divider(color: kBlackColor, thickness: 1.h,),
                      ),
                       Gap(10.h),
-                      ContactOwnerContainer(),
+                      ContactOwnerContainer(product: product,),
                       Gap(24.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

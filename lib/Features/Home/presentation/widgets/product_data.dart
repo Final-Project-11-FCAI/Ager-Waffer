@@ -1,13 +1,13 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class ProductData extends StatelessWidget {
-  const ProductData({super.key, required this.product});
+class ProductDataContainer extends StatelessWidget {
+  const ProductDataContainer({super.key, required this.product});
 
-  final ProductEntity product;
+  final ProductData product;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ProductData extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.title,
+                    product.name!,
                     style: font24PrimarySemiBold.copyWith(
                       fontSize: 20.sp,
                       color: kBlackColor,
@@ -34,7 +34,7 @@ class ProductData extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        product.rating.toStringAsFixed(1),
+                        product.averageRate!.toStringAsFixed(1),
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 12.sp,
                           color: kGreyColor,
@@ -46,7 +46,7 @@ class ProductData extends StatelessWidget {
                         (index) => Icon(
                           Icons.star,
                           size: 16.sp,
-                          color: index < product.rating.floor()
+                          color: index < product.averageRate!.floor()
                               ? Colors.amber
                               : Colors.grey.shade300,
                         ),
@@ -62,7 +62,7 @@ class ProductData extends StatelessWidget {
                           style: font16BlackSemiBold.copyWith(fontWeight: bold),
                         ),
                         TextSpan(
-                          text: product.subtitle,
+                          text: product.condition!,
                           style: font16BlackSemiBold.copyWith(
                             fontWeight: bold,
                             color: kBlueColor,
@@ -87,7 +87,7 @@ class ProductData extends StatelessWidget {
                 ),
                 Gap(6.h),
                 Text(
-                  'التأمين:500ج',
+                  'التأمين:${product.insurance}ج',
                   textAlign: TextAlign.center,
                   style: font20PrimaryMedium.copyWith(
                     color: kMoreGreyColor,
@@ -105,9 +105,7 @@ class ProductData extends StatelessWidget {
         ),
         Gap(8.h),
         Text(
-          "عربة أطفال مريحة بخامات قوية، مناسبة للاستخدام اليومي "
-              "داخل وخارج المنزل. مزودة بحزام أمان، ومظلة للحماية من الشمس، "
-              "مع إمكانية طيها وتخزينها بسهولة بعد الاستخدام.",
+          product.description!,
           style: font14GreyRegular.copyWith(fontWeight: medium),
         ),
       ],

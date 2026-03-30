@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/search_screen.dart';
 import 'package:ager_waffer/Features/Notification/presentation/pages/notifications_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = loginBloc.state.user;
     return AppBar(
       backgroundColor: kWhiteColor,
       automaticallyImplyLeading: false,
@@ -24,13 +26,15 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage('assets/images/profile_image.png'),
+                backgroundImage: user.imageUrl != null ?
+                  NetworkImage(user.imageUrl!)  
+                : AssetImage('assets/images/virtual_user.jpg'),
               ),
               Gap(8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('أهلا، علي', style: font15BlackRegular),
+                  Text('أهلا، ${user.firstName}', style: font15BlackRegular),
                   Gap(2),
                   Text(' تحب تستأجر ايه؟', style: font14GreyRegular),
                 ],

@@ -15,9 +15,6 @@ class AuthenticationBloc extends Bloc<AppEvent,AppState> with Validator {
     on<ForgetPasswordEvent>(_onForgetPassword);
     on<VerifyOtpEvent>(_onVerifyOtp);
     on<ResetPasswordEvent>(_onResetPassword);
-    // on<ResendOtpEvent>(_onResendOtp);
-    // on<RefreshTokenEvent>(_onRefreshToken);
-    // on<LogoutEvent>(_onLogout);
   }
 
 
