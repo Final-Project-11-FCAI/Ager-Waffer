@@ -1,36 +1,28 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/all_items_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BooksScreen extends StatelessWidget {
-  BooksScreen({super.key});
+class BooksScreen extends StatefulWidget {
+  const BooksScreen({super.key,});
 
-  final List<ProductEntity> products = [
-    ProductEntity(
-      title: "خيمة للرحلات",
-      subtitle: "جديد",
-      price: 20,
-      image: "assets/images/tent.png",
-      rating: 4.5,
-    ),
-    ProductEntity(
-      title: "شنطة ظهر",
-      subtitle: "استعمال خفيف",
-      price: 30,
-      image: "assets/images/Backpack.png",
-      rating: 3.5,
-    ),
-    ProductEntity(
-      title: "مشاية أطفال",
-      subtitle: "بحالة جيدة",
-      price: 30,
-      image: "assets/images/baby_walker.png",
-      rating: 3.5,
-    ),
-  ];
+  @override
+  State<BooksScreen> createState() => _BooksScreenState();
+}
+
+class _BooksScreenState extends State<BooksScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    allItemsBloc.add(GetAllItemsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,26 +39,49 @@ class BooksScreen extends StatelessWidget {
           ),
         ),
         body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: kWhiteColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.r),
-              topRight: Radius.circular(25.r),
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: kWhiteColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.r),
+                topRight: Radius.circular(25.r),
+              ),
             ),
-          ),
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: Shared.width * 0.04.w,
                 vertical: Shared.height * 0.025.h,
               ),
-              child: ListView.builder(
-                itemCount: products.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ProductCardListView(product: products[index]);
+              child: BlocBuilder<AllItemsBloc, AllItemsState>(
+                bloc: allItemsBloc,
+                builder: (context, state) {
+                  if (state.status == allItemsStatus.loading) {
+                    return const LoadingPlaceHolder(
+                      shimmerType: ShimmerType.list,
+                      cellShimmerHeight: 50,
+                      shimmerCount: 10,
+                    );
+                  } else if (state.status == allItemsStatus.success) {
+                    final products = state.product;
+                    return ListView.builder(
+                      itemCount: products.length,
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        if(products[index].categoryName == "Books"){
+                          return ProductCardListView(product: products[index]);
+                        }else {
+                          return Container();
+                        }
+                      },
+                    );
+                  }
+                  else if (state.status == allItemsStatus.failure) {
+                    return Center(child: Text(state.failureMessage));
+                  } else {
+                    return Center(child: Text("No Data Yet"));
+                  }
                 },
               ),
             )

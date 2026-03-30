@@ -1,11 +1,14 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class ContactOwnerContainer extends StatelessWidget {
-  const ContactOwnerContainer({super.key});
+  const ContactOwnerContainer({super.key, required this.product});
+
+  final ProductData product;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +33,13 @@ class ContactOwnerContainer extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 24.r,
-            backgroundImage: const AssetImage(
-              'assets/images/profile_image.png',
-            ),
+            backgroundImage: product.ownerPictureUrl != null && product.ownerPictureUrl!.isNotEmpty
+                ? NetworkImage(
+              product.ownerPictureUrl!,
+            )
+                : AssetImage(
+              'assets/images/virtual_user.jpg',
+            )
           ),
           Gap(12.w),
           Expanded(
@@ -40,7 +47,7 @@ class ContactOwnerContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "أحمد محمد",
+                  product.ownerName!,
                   style: font16BlackSemiBold.copyWith(fontSize: 14.sp),
                 ),
                 Row(

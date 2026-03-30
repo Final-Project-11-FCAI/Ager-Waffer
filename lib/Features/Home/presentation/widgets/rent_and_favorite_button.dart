@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/request_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class RentAndFavoriteButton extends StatelessWidget {
-  const RentAndFavoriteButton({super.key, required this.product});
-  final ProductEntity product;
+  const RentAndFavoriteButton({super.key, required this.product,});
+  final ProductData product;
+
 
   @override
   Widget build(BuildContext context) {

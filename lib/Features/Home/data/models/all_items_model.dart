@@ -82,12 +82,12 @@ class ProductData {
   int? id;
   String? name;
   String? description;
-  int? price;
-  int? insurance;
+  double? price;
+  double? insurance;
   String? condition;
   String? rentUnit;
   bool? isAvailable;
-  int? averageRate;
+  double? averageRate;
   List<String>? itemImages;
   String? categoryName;
   String? ownerName;

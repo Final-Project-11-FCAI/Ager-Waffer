@@ -1,8 +1,10 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -10,7 +12,8 @@ import 'package:intl/intl.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key, required this.product});
-  final ProductEntity product;
+  final ProductData product;
+
   @override
   State<RequestScreen> createState() => _RequestScreenState();
 }
@@ -30,7 +33,7 @@ class _RequestScreenState extends State<RequestScreen> {
     return 0;
   }
 
-  int get totalPrice => totalDays * widget.product.price;
+  double get totalPrice => totalDays * widget.product.price!;
 
   Future<void> _selectDate(bool isStart) async {
     final picked = await showDatePicker(
@@ -94,34 +97,46 @@ class _RequestScreenState extends State<RequestScreen> {
 
                     child: Row(
                       children: [
-                        Image.asset(widget.product.image, width: 90),
-
-                        const SizedBox(width: 12),
-
+                        // Image.asset(widget.product.itemImages![0], width: 90),
+                        widget.product.itemImages != null && widget.product.itemImages!.isNotEmpty
+                            ? CachedNetworkImage(
+                          imageUrl: widget.product.itemImages!.first,
+                          width: 90.w,
+                          height: 90.h,
+                          fit: BoxFit.contain,
+                          placeholder: (context, url) =>
+                              Image.asset("assets/images/virtual_image.jpg"),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ) : Image.asset(
+                          "assets/images/virtual_image.jpg",
+                          width: 90.w,
+                          height: 90.h,
+                          fit: BoxFit.contain,
+                        ),
+                        Gap(8.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                                 children: [
                                   Text(
-                                    widget.product.title,
+                                    widget.product.name!,
                                     style: font16BlackSemiBold,
                                   ),
 
                                   Text(
-                                    "${widget.product.price}ج/اليوم",
+                                    "${widget.product.price}ج/${widget.product.rentUnit}",
                                     style: font16BlackSemiBold.copyWith(
-                                      fontSize: 13,
+                                      fontSize: 11,
                                     ),
                                   ),
                                 ],
                               ),
                               Text(
-                                widget.product.subtitle,
+                                widget.product.condition!,
                                 style: font16BlackSemiBold.copyWith(
                                   color: kBlueColor,
                                 ),
@@ -130,7 +145,7 @@ class _RequestScreenState extends State<RequestScreen> {
                               Row(
                                 children: [
                                   Text(
-                                    "${widget.product.rating}",
+                                    "${widget.product.averageRate!}",
                                     style: font16BlackSemiBold.copyWith(
                                       fontSize: 10,
                                       color: Color.fromRGBO(151, 151, 151, 1),
@@ -142,7 +157,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         (index) => Icon(
                                       Icons.star,
                                       size: 14.sp,
-                                      color: index < widget.product.rating.floor()
+                                      color: index < widget.product.averageRate!.floor()
                                           ? Colors.amber
                                           : Colors.grey.shade300,
                                     ),
@@ -257,14 +272,14 @@ class _RequestScreenState extends State<RequestScreen> {
                         children: [
                           buildPriceRow(
                             Text(
-                              "سعر اليوم",
+                              "سعر ${widget.product.rentUnit}",
                               style: font15SomeBlackColorMedium.copyWith(
                                 fontSize: 13,
                                 color: kBlackColor,
                               ),
                             ),
                             Text(
-                              "${widget.product.price}ج/اليوم",
+                              "${widget.product.price}ج/${widget.product.rentUnit}",
                               style: font15SomeBlackColorMedium.copyWith(
                                 fontSize: 13,
                                 color: kBlackColor,
