@@ -62,16 +62,22 @@ class _BabyItemsScreenState extends State<BabyItemsScreen> {
                 );
               } else if (state.status == allItemsStatus.success) {
                 final products = state.product;
+                final babyGear = products.where((e) => e.categoryName == "Baby Gear").toList();
+
+                if (babyGear.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No Data Found",
+                      style: font16BlackSemiBold.copyWith(color: kBlackColor),
+                    ),
+                  );
+                }
                 return ListView.builder(
-                  itemCount: products.length,
+                  itemCount: babyGear.length,
                   shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    if(products[index].categoryName == "Books"){
-                      return ProductCardListView(product: products[index]);
-                    }else {
-                      return Container();
-                    }
+                    return ProductCardListView(product: babyGear[index]);
                   },
                 );
               }
