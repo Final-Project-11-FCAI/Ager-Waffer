@@ -41,11 +41,15 @@ class GetAllItemsEvent extends AppEvent{
   GetAllItemsEvent();
 }
 
-
 class AddItemEvent extends AppEvent{
   final AddItemEntity addItemEntity;
   AddItemEvent({required this.addItemEntity});
 }
+
+class GetMyListingsEvent extends AppEvent{
+  GetMyListingsEvent();
+}
+
 
 
 

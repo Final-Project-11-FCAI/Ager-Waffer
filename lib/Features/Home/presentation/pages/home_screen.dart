@@ -31,29 +31,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // final List<ProductEntity> products = [
-  //   ProductEntity(
-  //     title: "خيمة للرحلات",
-  //     subtitle: "جديد",
-  //     price: 20,
-  //     image: "assets/images/tent.png",
-  //     rating: 4.5,
-  //   ),
-  //   ProductEntity(
-  //     title: "شنطة ظهر",
-  //     subtitle: "استعمال خفيف",
-  //     price: 30,
-  //     image: "assets/images/Backpack.png",
-  //     rating: 3.5,
-  //   ),
-  //   ProductEntity(
-  //     title: "مشاية أطفال",
-  //     subtitle: "بحالة جيدة",
-  //     price: 30,
-  //     image: "assets/images/baby_walker.png",
-  //     rating: 3.5,
-  //   ),
-  // ];
 
   @override
   void initState() {

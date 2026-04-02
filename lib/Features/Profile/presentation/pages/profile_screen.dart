@@ -1,48 +1,36 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_state.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/add_product_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/edit_profile_screen.dart';
-import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/my_products_item_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
-  final List<ProductEntity> products = [
-    ProductEntity(
-      title: "كرسي طعام للأطفال",
-      subtitle: "جديد",
-      price: 30,
-      image: "assets/images/children_chair.png",
-      rating: 4.5,
-    ),
-    ProductEntity(
-      title: "شنطة تبريد",
-      subtitle: "استعمال خفيف",
-      price: 10,
-      image: "assets/images/cooler_bag.png",
-      rating: 3.5,
-    ),
-    ProductEntity(
-      title: "مكنسة كهربائية",
-      subtitle: "جديد",
-      price: 50,
-      image: "assets/images/vacuum_cleaner.png",
-      rating: 4.5,
-    ),
-  ];
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<MyListingsBloc>().add(GetMyListingsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
-    final user = loginBloc.state.user;
-
     return FutureBuilder(
       future: sharedPreferenceManager.getUser(),
       builder: (context, snapshot) {
@@ -135,15 +123,33 @@ class ProfileScreen extends StatelessWidget {
                           // EmptyProducts(),
                           SizedBox(
                             height: Shared.height * 0.61.h,
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: products.length,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return MyProductsItemListView(
-                                  product: products[index],
-                                );
+                            child: BlocBuilder<MyListingsBloc, MyListingsState>(
+                              bloc: myListingsBloc,
+                              builder: (context, state) {
+                                if (state.status == myListingsStatus.loading) {
+                                  return const LoadingPlaceHolder(
+                                    shimmerType: ShimmerType.list,
+                                    cellShimmerHeight: 50,
+                                    shimmerCount: 10,
+                                  );
+                                } else if (state.status == myListingsStatus.success){
+                                  final myListings = state.myListings;
+                                  return ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: myListings.length,
+                                      shrinkWrap: true,
+                                      physics: BouncingScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return MyProductsItemListView(
+                                          myListings: myListings[index],
+                                        );
+                                      },
+                                  );
+                                } else if (state.status == myListingsStatus.failure) {
+                                  return Center(child: Text(state.failureMessage));
+                                } else  {
+                                  return Center(child: Text("No Data Yet"));
+                                }
                               },
                             ),
                           ),

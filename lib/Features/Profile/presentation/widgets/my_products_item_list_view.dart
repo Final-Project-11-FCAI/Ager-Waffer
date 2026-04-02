@@ -1,15 +1,16 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Profile/data/models/my_listings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class MyProductsItemListView extends StatefulWidget {
-  final ProductEntity product;
+  final MyListingsData myListings;
 
-  const MyProductsItemListView({super.key, required this.product});
+  const MyProductsItemListView({super.key, required this.myListings});
 
   @override
   State<MyProductsItemListView> createState() => _MyProductsItemListViewState();
@@ -37,7 +38,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                 left: LocalizeAndTranslate.getLanguageCode() == 'en' ? 12.sp : 0,
               ),
               child: Image.asset(
-                widget.product.image,
+                widget.myListings.itemImages![0],
                 width: 90.w,
                 height: 90.h,
                 fit: BoxFit.contain,
@@ -55,22 +56,22 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.product.title, style: font14BlackBold.copyWith(fontSize: 12.sp)),
+                      Text(widget.myListings.name ?? '', style: font14BlackBold.copyWith(fontSize: 12.sp)),
                       Text(
-                        "${widget.product.price}جنيه/اليوم",
+                        "${widget.myListings.price}جنيه/اليوم",
                         style: font16BlackSemiBold.copyWith(fontSize: 11,),
                       ),
                     ],
                   ),
                   Text(
-                    widget.product.subtitle,
+                    widget.myListings.condition ?? '',
                     style: font16BlackSemiBold.copyWith(color: Color.fromRGBO(85, 85, 85, 0.61), fontSize: 11),
                   ),
                   Gap(5.h),
                   Row(
                     children: [
                       Text(
-                        "${widget.product.rating}",
+                        "${widget.myListings.averageRate}",
                         style: font16BlackSemiBold.copyWith(fontSize: 10, color: Color.fromRGBO(151, 151, 151, 1),),
                       ),
                       Gap(5.w),
@@ -79,7 +80,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                             (index) => Icon(
                           Icons.star,
                           size: 14.sp,
-                          color: index < widget.product.rating.floor() ? Colors.amber : Colors.grey.shade300,
+                          color: index < widget.myListings.averageRate!.floor() ? Colors.amber : Colors.grey.shade300,
                         ),
                       ),
                     ],

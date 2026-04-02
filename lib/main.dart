@@ -6,6 +6,7 @@ import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.da
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:ager_waffer/firebase_options.dart';
 import 'package:country_picker/country_picker.dart';
@@ -188,10 +189,11 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
       builder: (context, snapshot) {
         return MultiBlocProvider(
           providers: [
-             BlocProvider.value(value: AuthenticationBloc()),
-               BlocProvider.value(value: LoginBloc()),
-              BlocProvider.value(value: AllItemsBloc()),
-              BlocProvider.value(value: AddItemBloc()),
+            BlocProvider(create: (context) => AuthenticationBloc()),
+            BlocProvider(create: (context) => LoginBloc()),
+            BlocProvider(create: (context) => AllItemsBloc()),
+            BlocProvider(create: (context) => AddItemBloc()),
+            BlocProvider(create: (context) => MyListingsBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: OrdersBloc())
