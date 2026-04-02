@@ -64,16 +64,23 @@ class _BooksScreenState extends State<BooksScreen> {
                     );
                   } else if (state.status == allItemsStatus.success) {
                     final products = state.product;
+                    final books = products.where((e) => e.categoryName == "Books").toList();
+
+                    if (books.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No Data Found",
+                          style: font16BlackSemiBold.copyWith(color: kBlackColor),
+                        ),
+                      );
+                    }
+
                     return ListView.builder(
-                      itemCount: products.length,
+                      itemCount: books.length,
                       shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        if(products[index].categoryName == "Books"){
-                          return ProductCardListView(product: products[index]);
-                        }else {
-                          return Container();
-                        }
+                        return ProductCardListView(product: books[index]);
                       },
                     );
                   }

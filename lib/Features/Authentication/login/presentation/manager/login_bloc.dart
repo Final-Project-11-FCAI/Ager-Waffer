@@ -22,10 +22,12 @@ class LoginBloc extends Bloc<AppEvent , LoginState> {
 
     if (response.isSuccess! ) {
       sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.data?.token);
-      sharedPreferenceManager.writeData(CachingKey.USER_ID, response.data?.id);
-      sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.data?.fullName);
-      sharedPreferenceManager.writeData(CachingKey.USER_PHONE, response.data?.phoneNumber);
-      sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, response.data?.imageUrl);
+      // sharedPreferenceManager.writeData(CachingKey.USER_ID, response.data?.id);
+      // sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.data?.fullName);
+      // sharedPreferenceManager.writeData(CachingKey.USER_PHONE, response.data?.phoneNumber);
+      // sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, response.data?.imageUrl);
+
+      sharedPreferenceManager.saveUser(response.data!);
 
       emit(state.copyWith(status: loginStatus.success,user: response.data));
     } else {

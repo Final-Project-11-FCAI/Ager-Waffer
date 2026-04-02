@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
+import 'package:ager_waffer/Features/Home/domain/entities/add_item_entity.dart';
 
 
 abstract class AppEvent {}
@@ -39,6 +40,16 @@ class ResetPasswordEvent extends AppEvent{
 class GetAllItemsEvent extends AppEvent{
   GetAllItemsEvent();
 }
+
+class AddItemEvent extends AppEvent{
+  final AddItemEntity addItemEntity;
+  AddItemEvent({required this.addItemEntity});
+}
+
+class GetMyListingsEvent extends AppEvent{
+  GetMyListingsEvent();
+}
+
 
 
 

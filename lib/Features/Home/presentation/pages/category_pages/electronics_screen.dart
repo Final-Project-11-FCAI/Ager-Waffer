@@ -67,16 +67,22 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
                     );
                   } else if (state.status == allItemsStatus.success) {
                     final products = state.product;
+                    final electronics = products.where((e) => e.categoryName == "Electronics").toList();
+
+                    if (electronics.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No Data Found",
+                          style: font16BlackSemiBold.copyWith(color: kBlackColor),
+                        ),
+                      );
+                    }
                     return ListView.builder(
-                      itemCount: products.length,
+                      itemCount: electronics.length,
                       shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        if(products[index].categoryName == "Books"){
-                          return ProductCardListView(product: products[index]);
-                        }else {
-                          return Container();
-                        }
+                        return ProductCardListView(product: electronics[index]);
                       },
                     );
                   }

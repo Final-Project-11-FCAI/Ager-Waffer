@@ -62,16 +62,22 @@ class _HomeEssentialsScreenState extends State<HomeEssentialsScreen> {
                 );
               } else if (state.status == allItemsStatus.success) {
                 final products = state.product;
+                final homeAppliances = products.where((e) => e.categoryName == "Home Appliances").toList();
+
+                if (homeAppliances.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No Data Found",
+                      style: font16BlackSemiBold.copyWith(color: kBlackColor),
+                    ),
+                  );
+                }
                 return ListView.builder(
-                  itemCount: products.length,
+                  itemCount: homeAppliances.length,
                   shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    if (products[index].categoryName == "Home Appliances") {
-                      return ProductCardListView(product: products[index]);
-                    } else {
-                      return Container();
-                    }
+                    return ProductCardListView(product: homeAppliances[index]);
                   },
                 );
               } else if (state.status == allItemsStatus.failure) {

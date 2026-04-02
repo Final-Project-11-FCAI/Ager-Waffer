@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
@@ -10,13 +11,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   EditProfileScreen({super.key});
 
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController secondNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  void loadUser() async {
+    final user = await sharedPreferenceManager.getUser();
+
+    if (user != null) {
+      setState(() {
+        firstNameController.text = user.firstName ?? "";
+        secondNameController.text = user.lastName ?? "";
+        phoneController.text = user.phoneNumber ?? "";
+        emailController.text = user.email ?? "";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +130,7 @@ class EditProfileScreen extends StatelessWidget {
                         ),
                         Gap(10.h),
                         EditProfileTextField(
-                          controller: emailController,
+                          controller: phoneController,
                           keyboardType: TextInputType.number,
                           icon: Icon(Icons.phone),
                           label: 'رقم الهاتف',
