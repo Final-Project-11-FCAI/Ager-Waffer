@@ -1,6 +1,8 @@
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/add_product_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/edit_profile_screen.dart';
@@ -12,6 +14,7 @@ import 'package:gap/gap.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
+
   final List<ProductEntity> products = [
     ProductEntity(
       title: "كرسي طعام للأطفال",
@@ -35,101 +38,148 @@ class ProfileScreen extends StatelessWidget {
       rating: 4.5,
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      floatingActionButton: CircleAvatar(
-        radius: 25.r,
-        child: FloatingActionButton(
-          tooltip: 'إضافة منتج',
-        onPressed: (){
-            customAnimatedPushNavigation(context, AddProductScreen());
-        },
-            elevation: 3.sp,
+    final user = loginBloc.state.user;
+
+    return FutureBuilder(
+      future: sharedPreferenceManager.getUser(),
+      builder: (context, snapshot) {
+        print("snapshot : $snapshot");
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        final user = snapshot.data;
+        return Scaffold(
           backgroundColor: kPrimaryColor,
-          child: Icon(Icons.add, color: kWhiteColor,))),
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: Shared.height * 0.22.h),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhiteColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.r),
-                  topRight: Radius.circular(25.r),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(top: Shared.height * 0.05.h),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
-                  child: Column(
-                    children: [
-                      Gap(2.h),
-                      Text(
-                        'Ahmed Ali',
-                        style: font24PrimarySemiBold.copyWith(color: kBlackColor),
+          floatingActionButton: CircleAvatar(
+            radius: 25.r,
+            child: FloatingActionButton(
+              tooltip: 'إضافة منتج',
+              onPressed: () {
+                customAnimatedPushNavigation(context, AddProductScreen());
+              },
+              elevation: 3.sp,
+              backgroundColor: kPrimaryColor,
+              child: Icon(Icons.add, color: kWhiteColor),
+            ),
+          ),
+          body: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: Shared.height * 0.22.h),
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: kWhiteColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.r),
+                      topRight: Radius.circular(25.r),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: Shared.height * 0.07.h),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Shared.width * 0.04.w,
                       ),
-                      Text(
-                        'ahmedali@gmail.com',
-                        style: font16BlackSemiBold.copyWith(color: kBlackColor.withOpacity(0.64),),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Column(
                         children: [
-                          Text('4.5', style: font20PrimaryMedium.copyWith(fontSize: 15.sp),),
-                          Gap(3.w),
-                          Icon(Icons.star, size: 17.sp, color: Colors.amber),
+                          Gap(2.h),
+                          Text(
+                            user!.fullName.toString(),
+                            style: font24PrimarySemiBold.copyWith(
+                              color: kBlackColor,
+                            ),
+                          ),
+                          Text(
+                            user.email.toString(),
+                            style: font16BlackSemiBold.copyWith(
+                              color: kBlackColor.withOpacity(0.64),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '4.5',
+                                style: font20PrimaryMedium.copyWith(
+                                  fontSize: 15.sp,
+                                ),
+                              ),
+                              Gap(3.w),
+                              Icon(
+                                Icons.star,
+                                size: 17.sp,
+                                color: Colors.amber,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'منتجاتي',
+                                style: font16BlackSemiBold.copyWith(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Gap(5.h),
+                          // EmptyProducts(),
+                          SizedBox(
+                            height: Shared.height * 0.61.h,
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: products.length,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return MyProductsItemListView(
+                                  product: products[index],
+                                );
+                              },
+                            ),
+                          ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('منتجاتي', style: font16BlackSemiBold.copyWith(fontSize: 20),)
-                        ],
-                      ),
-                      Gap(5.h),
-                      // EmptyProducts(),
-                      SizedBox(
-                        height: Shared.height * 0.61.h,
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: products.length,
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return MyProductsItemListView(product: products[index],);
-                          },
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+              Positioned(
+                right: Shared.width * 0.25.sp,
+                left: Shared.width * 0.25.sp,
+                top: Shared.height * 0.08.sp,
+                child: CircleAvatar(
+                  radius: 70.r,
+                  // backgroundColor: kRedColor,
+                  backgroundImage: user.imageUrl != null
+                      ? NetworkImage(user.imageUrl.toString())
+                      : AssetImage('assets/images/virtual_user.jpg'),
+                ),
+              ),
+              Positioned(
+                right: Shared.width * -0.08.sp,
+                left: Shared.width * 0.28.sp,
+                top: Shared.height * 0.01.sp,
+                child: GestureDetector(
+                  onTap: () {
+                    customAnimatedPushNavigation(context, EditProfileScreen());
+                  },
+                  child: Image.asset('assets/images/edit_profile.png'),
+                ),
+              ),
+            ],
           ),
-          Positioned(
-            right: Shared.width * 0.25.sp,
-            left: Shared.width * 0.25.sp,
-            top: Shared.height * 0.032.sp,
-            child: Image.asset('assets/images/user_profile_image.png'),
-          ),
-          Positioned(
-            right: Shared.width * -0.08.sp,
-            left: Shared.width * 0.28.sp,
-            top: Shared.height * 0.01.sp,
-            child: GestureDetector(
-                onTap: () {
-                  customAnimatedPushNavigation(context, EditProfileScreen());
-                },
-                child: Image.asset('assets/images/edit_profile.png')),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Features/Authentication/login/data/models/login_model.dart';
 
 class SharedPreferenceManager {
   SharedPreferences? sharedPreferences;
@@ -7,6 +11,46 @@ class SharedPreferenceManager {
     sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences!.remove(key.value);
   }
+
+  Map<String, dynamic>? stringToMap(String? jsonString) {
+    if (jsonString == null || jsonString.isEmpty) return null;
+
+    try {
+      return jsonDecode(jsonString) as Map<String, dynamic>;
+    } catch (e) {
+      return null;
+    }
+  }
+
+
+  // --- New Functions and very important to access data ---//
+  Future<void> saveUser(Data user) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user', user.toUserJson());
+  }
+
+  Future<Data?> getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userString = prefs.getString('user');
+
+    print("userString : $userString");
+
+    if (userString != null) {
+      final map = stringToMap(userString);
+      if (map != null) {
+        return Data.fromJson(map);
+      }
+    }
+    return null;
+  }
+
+  Future<void> removeUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user');
+  }
+
+
+
 
   Future<Future> writeData(CachingKey key, value) async {
     print("${key.value} : $value");

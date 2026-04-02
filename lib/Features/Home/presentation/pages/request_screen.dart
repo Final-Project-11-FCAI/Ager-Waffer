@@ -122,11 +122,14 @@ class _RequestScreenState extends State<RequestScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    widget.product.name!,
-                                    style: font16BlackSemiBold,
+                                  Expanded(
+                                    child: Text(
+                                      widget.product.name!,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: font16BlackSemiBold,
+                                    ),
                                   ),
-
+                                  Gap(8.w),
                                   Text(
                                     "${widget.product.price}ج/${widget.product.rentUnit}",
                                     style: font16BlackSemiBold.copyWith(

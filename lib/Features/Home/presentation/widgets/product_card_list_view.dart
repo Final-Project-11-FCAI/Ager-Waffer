@@ -30,11 +30,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: const Color.fromRGBO(110, 122, 135, 1)),
         boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: Offset(0, 4),
-          ),
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 4)),
         ],
       ),
       child: Row(
@@ -52,22 +48,25 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         ? 12.sp
                         : 0,
                   ),
-                  child: widget.product.itemImages != null && widget.product.itemImages!.isNotEmpty
+                  child:
+                      widget.product.itemImages != null &&
+                          widget.product.itemImages!.isNotEmpty
                       ? CachedNetworkImage(
-                    imageUrl: widget.product.itemImages!.first,
-                    width: 90.w,
-                    height: 90.h,
-                    fit: BoxFit.contain,
-                    placeholder: (context, url) =>
-                        Image.asset("assets/images/virtual_image.jpg"),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error),
-                  ) : Image.asset(
-                    "assets/images/virtual_image.jpg",
-                    width: 90.w,
-                    height: 90.h,
-                    fit: BoxFit.contain,
-                  )
+                          imageUrl: widget.product.itemImages!.first,
+                          width: 90.w,
+                          height: 90.h,
+                          fit: BoxFit.contain,
+                          placeholder: (context, url) =>
+                              Image.asset("assets/images/virtual_image.jpg"),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        )
+                      : Image.asset(
+                          "assets/images/virtual_image.jpg",
+                          width: 90.w,
+                          height: 90.h,
+                          fit: BoxFit.contain,
+                        ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -92,9 +91,16 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.product.name!, style: font16BlackSemiBold),
+                      Expanded(
+                        child: Text(
+                          widget.product.name!,
+                          style: font16BlackSemiBold,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Gap(8.w),
                       Text(
                         "${widget.product.price} ج/${widget.product.rentUnit}",
                         style: font16BlackSemiBold.copyWith(fontSize: 10),
@@ -144,7 +150,10 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                           ),
                         ),
                         onPressed: () {
-                         customAnimatedPushNavigation(context, ProductDetailsScreen(product: widget.product));
+                          customAnimatedPushNavigation(
+                            context,
+                            ProductDetailsScreen(product: widget.product),
+                          );
                         },
                         child: Text(
                           "عرض",
