@@ -4,10 +4,13 @@ import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
+import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_state.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/add_product_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/edit_profile_screen.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/my_products_item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,8 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<MyListingsBloc>().add(GetMyListingsEvent());
-  }
+    context.read<MyListingsBloc>().add(GetMyListingsEvent());  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +126,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: Shared.height * 0.61.h,
                             child: BlocBuilder<MyListingsBloc, MyListingsState>(
-                              bloc: myListingsBloc,
                               builder: (context, state) {
                                 if (state.status == myListingsStatus.loading) {
                                   return const LoadingPlaceHolder(
@@ -146,10 +147,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       },
                                   );
                                 } else if (state.status == myListingsStatus.failure) {
-                                  return Center(child: Text(state.failureMessage));
+                                  return CustomErrorWidget(
+                                    message: state.failureMessage,
+                                    onRetry: () {
+                                      context.read<MyListingsBloc>().add(GetMyListingsEvent());
+                                    },
+                                  );
                                 } else  {
-                                  return Center(child: Text("No Data Yet"));
-                                }
+                                  return Center(child: Text("لا توجد منتجات"));                                }
                               },
                             ),
                           ),

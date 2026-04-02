@@ -89,17 +89,17 @@ class MyListingsData {
   int? id;
   String? name;
   String? description;
-  int? price;
-  int? insurance;
+  double? price;
+  double? insurance;
   String? condition;
   String? rentUnit;
   bool? isAvailable;
-  int? averageRate;
+  double? averageRate;
   List<String>? itemImages;
   String? categoryName;
   String? ownerName;
-  Null? ownerPictureUrl;
-  Null? city;
+  String? ownerPictureUrl;
+  String? city;
 
   MyListingsData({
     this.id,
@@ -120,19 +120,19 @@ class MyListingsData {
 
   MyListingsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    name = json['name'] ?? '';
     description = json['description'];
-    price = json['price'];
-    insurance = json['insurance'];
+    price = (json['price'] as num?)?.toDouble() ?? 0.0;
+    insurance = (json['insurance'] as num?)?.toDouble();
     condition = json['condition'];
     rentUnit = json['rentUnit'];
     isAvailable = json['isAvailable'];
-    averageRate = json['averageRate'];
+    averageRate = (json['averageRate'] as num?)?.toDouble();
     itemImages = json['itemImages'].cast<String>();
     categoryName = json['categoryName'];
     ownerName = json['ownerName'];
-    ownerPictureUrl = json['ownerPictureUrl'];
-    city = json['city'];
+    ownerPictureUrl = json['ownerPictureUrl']?.toString();
+    city = json['city']?.toString() ?? 'Unknown';
   }
 
   Map<String, dynamic> toJson() {

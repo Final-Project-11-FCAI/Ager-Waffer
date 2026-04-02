@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Profile/data/models/my_listings_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -37,8 +38,20 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                 right: LocalizeAndTranslate.getLanguageCode() == 'en' ? 0 : 12.sp,
                 left: LocalizeAndTranslate.getLanguageCode() == 'en' ? 12.sp : 0,
               ),
-              child: Image.asset(
-                widget.myListings.itemImages![0],
+              child: widget.myListings.itemImages != null &&
+                  widget.myListings.itemImages!.isNotEmpty
+                  ? CachedNetworkImage(
+                imageUrl: widget.myListings.itemImages!.first,
+                width: 90.w,
+                height: 90.h,
+                fit: BoxFit.contain,
+                placeholder: (context, url) =>
+                    Image.asset("assets/images/virtual_image.jpg"),
+                errorWidget: (context, url, error) =>
+                    Icon(Icons.error),
+              )
+                  : Image.asset(
+                "assets/images/virtual_image.jpg",
                 width: 90.w,
                 height: 90.h,
                 fit: BoxFit.contain,
