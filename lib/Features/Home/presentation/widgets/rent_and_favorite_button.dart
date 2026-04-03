@@ -32,10 +32,10 @@ class RentAndFavoriteButton extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-                customAnimatedPushNavigation(context, RequestScreen(product: product,));
+                product.isAvailable == true ? customAnimatedPushNavigation(context, RequestScreen(product: product,)) : null;
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
+                backgroundColor: product.isAvailable == true ? kPrimaryColor : kGreyColor,
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14.r),
@@ -53,10 +53,13 @@ class RentAndFavoriteButton extends StatelessWidget {
           Gap(10.w),
           Expanded(
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                product.isAvailable == true ? null : null;
+              },
               style: OutlinedButton.styleFrom(
+                backgroundColor: product.isAvailable == true ? kWhiteColor : kGreyColor,
                 padding: EdgeInsets.symmetric(vertical: 12.h),
-                side: BorderSide(color: kPrimaryColor.withOpacity(0.5)),
+                side: BorderSide(color: product.isAvailable == true ? kPrimaryColor.withOpacity(0.5) : kGreyColor),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14.r),
                 ),
@@ -65,7 +68,7 @@ class RentAndFavoriteButton extends StatelessWidget {
                 "إضافة للمفضلة",
                 style: font16BlackSemiBold.copyWith(
                   fontSize: 13.sp,
-                  color: kPrimaryColor,
+                  color: product.isAvailable == true ? kPrimaryColor : kWhiteColor,
                 ),
               ),
             ),

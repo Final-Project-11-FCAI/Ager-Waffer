@@ -202,12 +202,13 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                 context.read<AllItemsBloc>().add(
                   GetAllItemsEvent(),
                 );
+                allItemsBloc.add(GetAllItemsEvent());
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: kPrimaryColor,
                   foregroundColor: kWhiteColor
               ),
-              child: Text("حذف", style: TextStyle(color: Colors.red)),
+              child: Text("حذف", style: TextStyle(color: kWhiteColor)),
             ),
           ],
         );

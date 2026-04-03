@@ -84,7 +84,15 @@ class UpdateProfileEvent extends AppEvent {
   });
 }
 
+class ToggleAvailabilityEvent extends AppEvent {
+  final int id;
+  final bool isAvailable;
 
+  ToggleAvailabilityEvent({
+    required this.id,
+    required this.isAvailable,
+  });
+}
 
 
 // class VerifyOtpEvent extends AppEvent{

@@ -8,6 +8,7 @@ import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/toggle_availability_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_profile_bloc.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
@@ -200,6 +201,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => DeleteItemBloc()),
             BlocProvider(create: (context) => UpdateItemBloc()),
             BlocProvider(create: (context) => UpdateProfileBloc()),
+            BlocProvider(create: (context) => ToggleAvailabilityBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: OrdersBloc())
