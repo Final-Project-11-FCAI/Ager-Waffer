@@ -1,10 +1,16 @@
 import 'dart:io';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/change_password_done_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
+import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/item_details_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/request_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/widgets/user_information.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:ager_waffer/firebase_options.dart';
 import 'package:country_picker/country_picker.dart';
@@ -187,9 +193,9 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
       builder: (context, snapshot) {
         return MultiBlocProvider(
           providers: [
-             BlocProvider.value(value: AuthenticationBloc()),
-               BlocProvider.value(value: LoginBloc()),
-              BlocProvider.value(value: AllItemsBloc()),
+            BlocProvider.value(value: AuthenticationBloc()),
+            BlocProvider.value(value: LoginBloc()),
+            BlocProvider.value(value: AllItemsBloc()),
             //   BlocProvider.value(value: UploadImageBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: OrdersBloc())
@@ -209,16 +215,16 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
               CountryLocalizations.delegate,
             ],
 
-            home: const SplashScreen(),
+            
+            home: SplashScreen(),
             routes: {
-
               'LoginScreen': (context) => LoginScreen(),
               'RegisterScreen': (context) => RegisterScreen(),
               // 'FrogetPassword': (context) => ResetPasswordScreen(email: '',),
               '/home': (context) => BlocProvider(
-                  create: (_) => BottomNavCubit(),
-                  child: const HomeLayoutScreen()),
-
+                create: (_) => BottomNavCubit(),
+                child: const HomeLayoutScreen(),
+              ),
             },
           ),
         );
