@@ -1,8 +1,10 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class RentalTypeContainer extends StatefulWidget {
   const RentalTypeContainer({super.key, required this.onChanged});
@@ -15,9 +17,9 @@ class RentalTypeContainer extends StatefulWidget {
 class _RentalTypeContainerState extends State<RentalTypeContainer> {
   int selectedIndex = 0;
   final List<String> items = [
-    "يومي",
-    "أسبوعي",
-    "شهري",
+    kDaily.tr(),
+    kWeekly.tr(),
+    kMonthly.tr(),
   ];
 
   @override

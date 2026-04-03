@@ -74,18 +74,34 @@ class _SplashScreenState extends State<SplashScreen>
     await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN).then((token){
       print("token : $token");
       if(token == 'null'){
-        customAnimatedPushNavigation(context, LoginScreen());
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const LoginScreen(),
+          ),
+        );
       }
       else{
         if(isTokenExpired(token)) {
           if (!mounted) return;
-          customAnimatedPushNavigation(context, LoginScreen());
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const LoginScreen(),
+            ),
+          );
+
         } else {
           if (!mounted) return;
-          customAnimatedPushNavigation(context, BlocProvider(
-            create: (_) => BottomNavCubit(),
-            child: const HomeLayoutScreen(),
-          ));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (_) => BottomNavCubit(),
+                child: const HomeLayoutScreen(),
+              ),
+            ),
+          );
         }
       }
     });

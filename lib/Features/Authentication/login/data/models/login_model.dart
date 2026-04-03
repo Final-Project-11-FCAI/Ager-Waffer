@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ager_waffer/Base/network/network-mappers.dart';
 
 class LoginModel extends BaseMappable{
@@ -75,6 +77,79 @@ class Data {
         this.imagePublicId,
         this.token,
         this.tokenExpirey});
+
+  Data copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? fullName,
+    String? email,
+    String? phoneNumber,
+    String? city,
+    String? street,
+    String? governorate,
+    String? imageUrl,
+    String? imagePublicId,
+    String? token,
+    String? tokenExpirey,
+  }) {
+    return Data(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      city: city ?? this.city,
+      street: street ?? this.street,
+      governorate: governorate ?? this.governorate,
+      imageUrl: imageUrl ?? this.imageUrl,
+      imagePublicId: imagePublicId ?? this.imagePublicId,
+      token: token ?? this.token,
+      tokenExpirey: tokenExpirey ?? this.tokenExpirey,
+    );
+  }
+
+  // Convert object to Map
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'firstName': firstName,
+      'lastName': lastName,
+      'fullName': fullName,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'city': city,
+      'street': street,
+      'governorate': governorate,
+      'imageUrl': imageUrl,
+      'imagePublicId': imagePublicId,
+      'token': token,
+      'tokenExpirey': tokenExpirey
+    };
+  }
+
+  // Convert Map to object
+  factory Data.fromMap(Map<String, dynamic> map) {
+    return Data(
+        id: map['id'],
+        firstName: map['firstName'],
+        lastName: map['lastName'],
+        fullName: map['fullName'],
+        email: map['email'],
+        phoneNumber: map['phoneNumber'],
+        city: map['city'],
+        street: map['street'],
+        governorate: map['governorate'],
+        imageUrl: map['imageUrl'],
+        imagePublicId: map['imagePublicId'],
+        token: map['token'],
+        tokenExpirey: map['tokenExpirey'],
+    );
+  }
+
+  // Convert object to JSON string
+  String toUserJson() => json.encode(toMap());
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];

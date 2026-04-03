@@ -8,7 +8,7 @@ class AllItemsRepository {
   Future<AllItemsModel> getAllItems() async {
     return NetworkUtil.internal().get(
       AllItemsModel(),
-      "${baseUrl}Items?Search&CategoryId&IsAvailable&Condition&OwnerId&Sort&pageIndex=1&pageSize=5",
+      "${baseUrl}Items?pageIndex=1&pageSize=50",
       headers: Map<String, String>.from({
         'Content-Type': 'application/json',
         'Accept': 'application/json',

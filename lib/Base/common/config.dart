@@ -9,6 +9,8 @@ const String registerUrl = "Authentication/register";
 const String forgetPasswordUrl = "Authentication/forgot-password";
 const String verifyOtpUrl = "Authentication/verify-otp";
 const String resetPasswordUrl = "Authentication/reset-password";
+const String updateProfileUrl = "Authentication/update-profile";
+const String addItemUrl = "Items";
 
 
 

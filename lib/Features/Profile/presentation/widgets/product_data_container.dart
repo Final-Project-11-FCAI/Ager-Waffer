@@ -9,7 +9,8 @@ class ProductDataContainer extends StatefulWidget {
     super.key,
     required this.hintText,
     this.isOptions = false,
-    this.isDescription = false, this.options = const [], this.optionsLength,
+    this.isDescription = false, this.options = const [
+    ], this.optionsLength, this.controller, this.keyboardType, this.onItemSelected,
   });
 
   final String hintText;
@@ -17,6 +18,9 @@ class ProductDataContainer extends StatefulWidget {
   final bool isDescription;
   final int? optionsLength;
   final List<String> options;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final Function(String)? onItemSelected;
 
   @override
   State<ProductDataContainer> createState() => _ProductDataContainerState();
@@ -24,6 +28,7 @@ class ProductDataContainer extends StatefulWidget {
 
 class _ProductDataContainerState extends State<ProductDataContainer> {
   bool isOpen = false;
+  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,12 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
                 ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.hintText, style: font15SomeBlackColorMedium),
+                Text(
+                  selectedValue ?? widget.hintText,
+                  style: font15SomeBlackColorMedium.copyWith(
+                    color: selectedValue == null ? kGreyColor : kBlackColor,
+                  ),
+                ),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -61,7 +71,9 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
                 ),
               ],
             )
-                : TextField(
+                : TextFormField(
+              controller: widget.controller,
+              keyboardType: widget.keyboardType,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
@@ -71,16 +83,22 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
           ),
         ),
         isOpen
-            ? Padding(
-          padding: EdgeInsets.only(top: Shared.height * 0.012.h),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18.r),
-              color: kWhiteColor,
-              border: Border.all(color: kBorderColor, width: 1.w),
-            ),
-            child: Padding(
+            ? AnimatedCrossFade(
+          duration: const Duration(milliseconds: 300),
+          crossFadeState:
+          isOpen ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          firstChild: Padding(
+            padding: EdgeInsets.only(top: Shared.height * 0.012.h),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18.r),
+                color: kWhiteColor,
+                border: Border.all(color: kBorderColor, width: 1.w),
+              ),
+              child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: Shared.width * 0.04.w,
                   vertical: Shared.height * 0.02.h,
@@ -88,18 +106,38 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
                 child: ListView.builder(
                   itemCount: widget.optionsLength,
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: Shared.height * 0.01.h),
-                      child: Text(widget.options[index] ?? '', style: font15SomeBlackColorMedium.copyWith(color: kBlackColor),
+                    return InkWell(
+                      onTap: () {
+                        String value = widget.options[index];
+
+                        setState(() {
+                          selectedValue = value;
+                          isOpen = false;
+                        });
+
+                        widget.onItemSelected?.call(value);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: Shared.height * 0.01.h,
+                        ),
+                        child: Text(
+                          widget.options[index],
+                          style: font15SomeBlackColorMedium.copyWith(
+                            color: kBlackColor,
+                          ),
+                        ),
                       ),
                     );
-                  },)
+                  },
+                ),
+              ),
             ),
           ),
-        )
-            : Container(),
+          secondChild: const SizedBox(),
+        ) : const SizedBox(),
       ],
     );
   }

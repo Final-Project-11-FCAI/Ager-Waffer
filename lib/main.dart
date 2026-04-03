@@ -11,6 +11,12 @@ import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.
 import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/request_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/user_information.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/toggle_availability_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/update_item_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/update_profile_bloc.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:ager_waffer/firebase_options.dart';
 import 'package:country_picker/country_picker.dart';
@@ -197,6 +203,16 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider.value(value: LoginBloc()),
             BlocProvider.value(value: AllItemsBloc()),
             //   BlocProvider.value(value: UploadImageBloc()),
+            BlocProvider(create: (context) => AuthenticationBloc()),
+            BlocProvider(create: (context) => LoginBloc()),
+            BlocProvider(create: (context) => AllItemsBloc()),
+            BlocProvider(create: (context) => AddItemBloc()),
+            BlocProvider(create: (context) => MyListingsBloc()),
+            BlocProvider(create: (context) => DeleteItemBloc()),
+            BlocProvider(create: (context) => UpdateItemBloc()),
+            BlocProvider(create: (context) => UpdateProfileBloc()),
+            BlocProvider(create: (context) => ToggleAvailabilityBloc()),
+            //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: OrdersBloc())
           ],
@@ -382,3 +398,4 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
+
