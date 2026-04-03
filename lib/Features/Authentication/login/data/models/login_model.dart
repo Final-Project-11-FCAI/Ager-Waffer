@@ -78,6 +78,38 @@ class Data {
         this.token,
         this.tokenExpirey});
 
+  Data copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? fullName,
+    String? email,
+    String? phoneNumber,
+    String? city,
+    String? street,
+    String? governorate,
+    String? imageUrl,
+    String? imagePublicId,
+    String? token,
+    String? tokenExpirey,
+  }) {
+    return Data(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      city: city ?? this.city,
+      street: street ?? this.street,
+      governorate: governorate ?? this.governorate,
+      imageUrl: imageUrl ?? this.imageUrl,
+      imagePublicId: imagePublicId ?? this.imagePublicId,
+      token: token ?? this.token,
+      tokenExpirey: tokenExpirey ?? this.tokenExpirey,
+    );
+  }
+
   // Convert object to Map
   Map<String, dynamic> toMap() {
     return {
