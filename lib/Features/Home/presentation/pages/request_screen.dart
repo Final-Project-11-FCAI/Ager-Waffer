@@ -1,7 +1,9 @@
+import 'dart:ui';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/renatl_terms_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -98,29 +100,33 @@ class _RequestScreenState extends State<RequestScreen> {
                     child: Row(
                       children: [
                         // Image.asset(widget.product.itemImages![0], width: 90),
-                        widget.product.itemImages != null && widget.product.itemImages!.isNotEmpty
+                        widget.product.itemImages != null &&
+                                widget.product.itemImages!.isNotEmpty
                             ? CachedNetworkImage(
-                          imageUrl: widget.product.itemImages!.first,
-                          width: 90.w,
-                          height: 90.h,
-                          fit: BoxFit.contain,
-                          placeholder: (context, url) =>
-                              Image.asset("assets/images/virtual_image.jpg"),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        ) : Image.asset(
-                          "assets/images/virtual_image.jpg",
-                          width: 90.w,
-                          height: 90.h,
-                          fit: BoxFit.contain,
-                        ),
+                                imageUrl: widget.product.itemImages!.first,
+                                width: 90.w,
+                                height: 90.h,
+                                fit: BoxFit.contain,
+                                placeholder: (context, url) => Image.asset(
+                                  "assets/images/virtual_image.jpg",
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              )
+                            : Image.asset(
+                                "assets/images/virtual_image.jpg",
+                                width: 90.w,
+                                height: 90.h,
+                                fit: BoxFit.contain,
+                              ),
                         Gap(8.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Text(
@@ -157,10 +163,13 @@ class _RequestScreenState extends State<RequestScreen> {
                                   Gap(5.w),
                                   ...List.generate(
                                     5,
-                                        (index) => Icon(
+                                    (index) => Icon(
                                       Icons.star,
                                       size: 14.sp,
-                                      color: index < widget.product.averageRate!.floor()
+                                      color:
+                                          index <
+                                              widget.product.averageRate!
+                                                  .floor()
                                           ? Colors.amber
                                           : Colors.grey.shade300,
                                     ),
@@ -218,7 +227,7 @@ class _RequestScreenState extends State<RequestScreen> {
                               Expanded(
                                 child: buildDateBox(
                                   startDate,
-                                      () => _selectDate(true),
+                                  () => _selectDate(true),
                                 ),
                               ),
 
@@ -227,7 +236,7 @@ class _RequestScreenState extends State<RequestScreen> {
                               Expanded(
                                 child: buildDateBox(
                                   endDate,
-                                      () => _selectDate(false),
+                                  () => _selectDate(false),
                                 ),
                               ),
                             ],
@@ -241,16 +250,17 @@ class _RequestScreenState extends State<RequestScreen> {
                                   borderRadius: BorderRadius.circular(16.r),
                                   color: Colors.blue[50],
                                 ),
-                                child: totalDays > 0 ?
-                                Row(
-                                  children: [
-                                    Image.asset('assets/images/period.png'),
-                                    Gap(5.w),
-                                    Text(
-                                      "المدة: $totalDays أيام",
-                                    ),
-                                  ],
-                                ) : SizedBox.shrink(),
+                                child: totalDays > 0
+                                    ? Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/period.png',
+                                          ),
+                                          Gap(5.w),
+                                          Text("المدة: $totalDays أيام"),
+                                        ],
+                                      )
+                                    : SizedBox.shrink(),
                               ),
                             ],
                           ),
@@ -307,7 +317,11 @@ class _RequestScreenState extends State<RequestScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 4.h),
-                            child: Divider(height: 1, color: kGreyColor, thickness: 1),
+                            child: Divider(
+                              height: 1,
+                              color: kGreyColor,
+                              thickness: 1,
+                            ),
                           ),
 
                           buildPriceRow(
@@ -325,31 +339,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       ),
                     ),
                   ),
-                  Gap(20.h),
-                  const Text(
-                    "بيانات المستأجر",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Gap(15.h),
-                  buildTextField(
-                    Text("الاسم بالكامل", style: font15BlackRegular),
-                    Icons.person,
-                  ),
-                  Gap(25.h),
-                  buildTextField(
-                    Text("رقم الهاتف", style: font15BlackRegular),
-                    Icons.phone,
-                  ),
-                  Gap(25.h),
-                  buildTextField(
-                    Text("العنوان", style: font15BlackRegular),
-                    Icons.location_on,
-                  ),
-                  Gap(25.h),
-                  buildTextField(
-                    Text("البريد الإلكتروني", style: font15BlackRegular),
-                    Icons.email,
-                  ),
+
                   Gap(25.h),
                   Row(
                     children: [
@@ -365,10 +355,27 @@ class _RequestScreenState extends State<RequestScreen> {
                       ),
                       Text(
                         "بإرسال الطلب أنت توافق علي",
-                        style: font15SomeBlackColorMedium.copyWith(fontSize: 14),
+                        style: font15SomeBlackColorMedium.copyWith(
+                          fontSize: 14,
+                        ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            barrierColor: Colors.black.withOpacity(0.2),
+                            builder: (context) {
+                              return BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                child: Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  child: RenatlTermsScreen(),
+                                ),
+                              );
+                            },
+                          );
+                        },
                         child: Text(
                           'شروط الإيجار',
                           style: font14BlackBold.copyWith(
@@ -381,33 +388,37 @@ class _RequestScreenState extends State<RequestScreen> {
                   ),
                   Gap(20.h),
                   ButtonApp(
-                      onPressed: () {
-                        if (!agree) {
-                          AwesomeDialog(
-                            titleTextStyle: font14BlackBold.copyWith(fontSize: 24),
-                            context: context,
-                            dialogType: DialogType.info,
-                            animType: AnimType.rightSlide,
-                            title: "يجب الموافقة على الشروط",
-                            headerAnimationLoop: false,
-                          ).show();
-                          return;
-                        }
+                    onPressed: () {
+                      if (!agree) {
+                        AwesomeDialog(
+                          titleTextStyle: font14BlackBold.copyWith(
+                            fontSize: 24,
+                          ),
+                          context: context,
+                          dialogType: DialogType.info,
+                          animType: AnimType.rightSlide,
+                          title: "يجب الموافقة على الشروط",
+                          headerAnimationLoop: false,
+                        ).show();
+                        return;
+                      }
 
-                        if (startDate == null || endDate == null) {
-                          AwesomeDialog(
-                            titleTextStyle: font14BlackBold.copyWith(fontSize: 24),
-                            context: context,
-                            dialogType: DialogType.info,
-                            animType: AnimType.rightSlide,
-                            title: "اختر فترة الإيجار",
-                            headerAnimationLoop: false,
-                          ).show();
-                          return;
-                        }
-                      },
-                      text: "تأكيد طلب الإيجار",
-                      color: kPrimaryColor,
+                      if (startDate == null || endDate == null) {
+                        AwesomeDialog(
+                          titleTextStyle: font14BlackBold.copyWith(
+                            fontSize: 24,
+                          ),
+                          context: context,
+                          dialogType: DialogType.info,
+                          animType: AnimType.rightSlide,
+                          title: "اختر فترة الإيجار",
+                          headerAnimationLoop: false,
+                        ).show();
+                        return;
+                      }
+                    },
+                    text: "تأكيد طلب الإيجار",
+                    color: kPrimaryColor,
                     borderRadius: Shared.width * 0.04.w,
                   ),
                 ],
@@ -457,27 +468,6 @@ class _RequestScreenState extends State<RequestScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
         children: [title, value],
-      ),
-    );
-  }
-
-  Widget buildTextField(Widget text, IconData icon) {
-    return SizedBox(
-      height: 60,
-      child: TextField(
-        textAlign: TextAlign.right,
-
-        decoration: InputDecoration(
-          label: text,
-          contentPadding: EdgeInsets.all(36),
-          prefixIcon: Icon(icon),
-
-          filled: true,
-
-          fillColor: kWhiteColor,
-
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        ),
       ),
     );
   }

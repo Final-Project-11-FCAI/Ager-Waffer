@@ -12,6 +12,7 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/pages/log
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
+import 'package:ager_waffer/Features/Home/presentation/widgets/coustom_showdialog.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
 import 'package:flutter/gestures.dart';
@@ -54,11 +55,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void checkFields() {
     final isValid =
         firstNameController.text.isNotEmpty &&
-            lastNameController.text.isNotEmpty &&
-            emailController.text.isNotEmpty &&
-            passwordController.text.isNotEmpty &&
-            InputValidation.isValidEmail(emailController.text) &&
-            InputValidation.passwordValidator(passwordController.text) == null;
+        lastNameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        InputValidation.isValidEmail(emailController.text) &&
+        InputValidation.passwordValidator(passwordController.text) == null;
 
     setState(() {
       isButtonEnabled = isValid;
@@ -87,6 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     passwordController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -107,24 +109,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: BlocListener(
           bloc: authenticationBloc,
           listener: (context, state) {
-            if(state is RegisterLoading){
+            if (state is RegisterLoading) {
               Shared.showLoadingDialog(context: context);
-            }
-            else if(state is RegisterDoneState){
-              Shared.dismissDialog(context: context);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (c) => LoginScreen()),
+            } else if (state is RegisterDoneState) {
+              CoustomShowdialog.show(
+                context: context,
+                title: Text(
+                  "تم إنشاء الحساب بنجاح",
+                  style: font14BlackBold.copyWith(
+                    fontSize: 24,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                description: RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "مرحبًا بك في",
+                        style: font20PrimaryMedium.copyWith(fontSize: 17),
+                      ),
+                      TextSpan(
+                        text: "أجّر و وفّر",
+                        style: font16BlackSemiBold.copyWith(
+                          color: kBlueColor,
+                          fontSize: 17,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            "..! يمكنك الآن استئجار المنتجات أو عرض أغراضك للإيجار بسهولة.",
+                        style: font20PrimaryMedium.copyWith(fontSize: 17),
+                      ),
+                    ],
+                  ),
+                ),
+                buttonText: " ← سجل دخول بحسابك الآن ",
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (c) => LoginScreen()),
+                  );
+                },
               );
-            }else if(state is RegisterErrorLoadingState) {
+              // Shared.dismissDialog(context: context);
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(builder: (c) => LoginScreen()),
+              // );
+            } else if (state is RegisterErrorLoadingState) {
               Shared.dismissDialog(context: context);
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                        state.message?? kSomethingWentWrong.tr()),
-                  ));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message ?? kSomethingWentWrong.tr()),
+                ),
+              );
             }
           },
           child: Container(
@@ -176,10 +214,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           CircleAvatar(
                             radius: Shared.width * 0.14.r,
                             backgroundColor: kBlackColor,
-                            backgroundImage:
-                            _selectedImage != null ? FileImage(_selectedImage!) : null,
+                            backgroundImage: _selectedImage != null
+                                ? FileImage(_selectedImage!)
+                                : null,
                             child: _selectedImage == null
-                                ? Icon(Icons.person, color: Colors.white, size: 40)
+                                ? Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 40,
+                                  )
                                 : null,
                           ),
                           Positioned(
@@ -236,92 +279,92 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           passwordController: passwordController,
                           icon: Icon(Icons.lock_outline),
                           label: kPassword.tr(),
-                            validator: (value) {
-                              return InputValidation.passwordValidator(value!);
-                            }
+                          validator: (value) {
+                            return InputValidation.passwordValidator(value!);
+                          },
                         ),
                         Gap(30.h),
                         ButtonApp(
                           onPressed: isButtonEnabled
                               ? () async {
-                            if (formKey.currentState!.validate()) {
-                              authenticationBloc.add(RegisterEvent(
-                                registerEntity: RegisterEntity(
-                                  firstName: firstNameController.text,
-                                  lastName: lastNameController.text,
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  profileImage: _selectedImage,
-                                ),
-                              ));
-                            }
+                                  if (formKey.currentState!.validate()) {
+                                    authenticationBloc.add(
+                                      RegisterEvent(
+                                        registerEntity: RegisterEntity(
+                                          firstName: firstNameController.text,
+                                          lastName: lastNameController.text,
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          profileImage: _selectedImage,
+                                        ),
+                                      ),
+                                    );
+                                  }
 
-
-                            // if (formKey.currentState!.validate()) {
-                            //   try {
-                            //     // إنشاء المستخدم في Firebase Auth
-                            //     UserCredential userCredential = await FirebaseAuth
-                            //         .instance
-                            //         .createUserWithEmailAndPassword(
-                            //           email: emailController.text,
-                            //           password: passwordController.text,
-                            //         );
-                            //
-                            //     User? user = userCredential.user;
-                            //
-                            //     if (user != null) {
-                            //       // تحديث اسم المستخدم
-                            //       if (firstNameController.text.isNotEmpty) {
-                            //         await user.updateDisplayName(
-                            //           "${firstNameController.text} ${lastNameController.text}",
-                            //         );
-                            //       }
-                            //
-                            //       // 🔥 حفظ المستخدم في Firestore
-                            //       await FirebaseFirestore.instance
-                            //           .collection('users')
-                            //           .doc(user.uid)
-                            //           .set({
-                            //             "uid": user.uid,
-                            //             "name":
-                            //                 "${firstNameController.text} ${lastNameController.text}",
-                            //             "email": emailController.text,
-                            //             'about': "Hello! I'm ${firstNameController.text}",
-                            //             'last_message_time':
-                            //                 DateTime.now().millisecondsSinceEpoch,
-                            //             'image': '',
-                            //             "created_at":
-                            //                 DateTime.now().millisecondsSinceEpoch,
-                            //             'last_activated': user
-                            //                 .metadata
-                            //                 .lastSignInTime!
-                            //                 .millisecondsSinceEpoch
-                            //                 .toString(),
-                            //             'push_token': '',
-                            //             'online': false,
-                            //             'my_users': [],
-                            //           });
-                            //     }
-                            //
-                            //     Navigator.pushAndRemoveUntil(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //         builder: (context) => BlocProvider(
-                            //           create: (_) => BottomNavCubit(),
-                            //           child: const HomeLayoutScreen(),
-                            //         ),
-                            //       ),
-                            //       (route) => false,
-                            //     );
-                            //   } catch (error) {
-                            //     ScaffoldMessenger.of(context).showSnackBar(
-                            //       SnackBar(content: Text(error.toString())),
-                            //     );
-                            //   }
-                            // }
-                            // Shared.dismissDialog(context: context);
-
-                          }
+                                  // if (formKey.currentState!.validate()) {
+                                  //   try {
+                                  //     // إنشاء المستخدم في Firebase Auth
+                                  //     UserCredential userCredential = await FirebaseAuth
+                                  //         .instance
+                                  //         .createUserWithEmailAndPassword(
+                                  //           email: emailController.text,
+                                  //           password: passwordController.text,
+                                  //         );
+                                  //
+                                  //     User? user = userCredential.user;
+                                  //
+                                  //     if (user != null) {
+                                  //       // تحديث اسم المستخدم
+                                  //       if (firstNameController.text.isNotEmpty) {
+                                  //         await user.updateDisplayName(
+                                  //           "${firstNameController.text} ${lastNameController.text}",
+                                  //         );
+                                  //       }
+                                  //
+                                  //       // 🔥 حفظ المستخدم في Firestore
+                                  //       await FirebaseFirestore.instance
+                                  //           .collection('users')
+                                  //           .doc(user.uid)
+                                  //           .set({
+                                  //             "uid": user.uid,
+                                  //             "name":
+                                  //                 "${firstNameController.text} ${lastNameController.text}",
+                                  //             "email": emailController.text,
+                                  //             'about': "Hello! I'm ${firstNameController.text}",
+                                  //             'last_message_time':
+                                  //                 DateTime.now().millisecondsSinceEpoch,
+                                  //             'image': '',
+                                  //             "created_at":
+                                  //                 DateTime.now().millisecondsSinceEpoch,
+                                  //             'last_activated': user
+                                  //                 .metadata
+                                  //                 .lastSignInTime!
+                                  //                 .millisecondsSinceEpoch
+                                  //                 .toString(),
+                                  //             'push_token': '',
+                                  //             'online': false,
+                                  //             'my_users': [],
+                                  //           });
+                                  //     }
+                                  //
+                                  //     Navigator.pushAndRemoveUntil(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //         builder: (context) => BlocProvider(
+                                  //           create: (_) => BottomNavCubit(),
+                                  //           child: const HomeLayoutScreen(),
+                                  //         ),
+                                  //       ),
+                                  //       (route) => false,
+                                  //     );
+                                  //   } catch (error) {
+                                  //     ScaffoldMessenger.of(context).showSnackBar(
+                                  //       SnackBar(content: Text(error.toString())),
+                                  //     );
+                                  //   }
+                                  // }
+                                  // Shared.dismissDialog(context: context);
+                                }
                               : null, // ❌ disabled لو false
 
                           text: kCreateAccount.tr(),
@@ -363,7 +406,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      LogoIcon(path: 'assets/images/Facebook.png', onTap: () {}),
+                      LogoIcon(
+                        path: 'assets/images/Facebook.png',
+                        onTap: () {},
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: Shared.width * 0.02,
@@ -403,13 +449,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  'LoginScreen',
-                                );
-                              }
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                'LoginScreen',
+                              );
+                            },
                         ),
                       ],
                     ),
