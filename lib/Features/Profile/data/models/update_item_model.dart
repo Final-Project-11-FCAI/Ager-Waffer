@@ -1,21 +1,21 @@
 import 'package:ager_waffer/Base/network/network-mappers.dart';
 
-class AddItemModel extends BaseMappable{
+class UpdateItemModel extends BaseMappable{
   bool? isSuccess;
   Data? data;
   String? messageAr;
   String? messageEn;
   int? statusCode;
 
-  AddItemModel(
+  UpdateItemModel(
       {this.isSuccess,
         this.data,
         this.messageAr,
         this.messageEn,
         this.statusCode,
-      });
+       });
 
-  AddItemModel.fromJson(Map<String, dynamic> json) {
+  UpdateItemModel.fromJson(Map<String, dynamic> json) {
     isSuccess = json['isSuccess'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     messageAr = json['messageAr'];
@@ -42,7 +42,13 @@ class AddItemModel extends BaseMappable{
     messageAr = json['messageAr'];
     messageEn = json['messageEn'];
     statusCode = json['statusCode'];
-    return AddItemModel(isSuccess: isSuccess,data: data,messageAr: messageAr,messageEn: messageEn, statusCode: statusCode,);
+    return UpdateItemModel(
+      isSuccess: isSuccess,
+      data: data,
+      messageAr: messageAr,
+      messageEn: messageEn,
+      statusCode: statusCode,
+    );
   }
 }
 
@@ -50,17 +56,17 @@ class Data {
   int? id;
   String? name;
   String? description;
-  int? price;
-  int? insurance;
+  double? price;
+  double? insurance;
   String? condition;
   String? rentUnit;
   bool? isAvailable;
-  int? averageRate;
   List<String>? itemImages;
   String? categoryName;
   String? ownerName;
   String? ownerPictureUrl;
   String? city;
+  double? averageRate;
 
   Data(
       {this.id,
@@ -71,28 +77,30 @@ class Data {
         this.condition,
         this.rentUnit,
         this.isAvailable,
-        this.averageRate,
         this.itemImages,
         this.categoryName,
         this.ownerName,
         this.ownerPictureUrl,
-        this.city});
+        this.city,
+        this.averageRate});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    price = json['price'];
-    insurance = json['insurance'];
+    price = (json['price'] as num?)?.toDouble() ?? 0.0;
+    insurance = (json['insurance'] as num?)?.toDouble();
     condition = json['condition'];
     rentUnit = json['rentUnit'];
     isAvailable = json['isAvailable'];
-    averageRate = json['averageRate'];
-    itemImages = json['itemImages'].cast<String>();
+    itemImages = json['itemImages'] != null
+        ? List<String>.from(json['itemImages'] as List)
+        : null;
     categoryName = json['categoryName'];
     ownerName = json['ownerName'];
     ownerPictureUrl = json['ownerPictureUrl'];
     city = json['city'];
+    averageRate = (json['averageRate'] as num?)?.toDouble();
   }
 
   Map<String, dynamic> toJson() {
@@ -105,14 +113,12 @@ class Data {
     data['condition'] = this.condition;
     data['rentUnit'] = this.rentUnit;
     data['isAvailable'] = this.isAvailable;
-    data['averageRate'] = this.averageRate;
     data['itemImages'] = this.itemImages;
     data['categoryName'] = this.categoryName;
     data['ownerName'] = this.ownerName;
     data['ownerPictureUrl'] = this.ownerPictureUrl;
     data['city'] = this.city;
+    data['averageRate'] = this.averageRate;
     return data;
   }
 }
-
-AddItemModel addItemModel = AddItemModel();

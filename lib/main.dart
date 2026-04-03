@@ -6,7 +6,9 @@ import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.da
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/update_item_bloc.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:ager_waffer/firebase_options.dart';
 import 'package:country_picker/country_picker.dart';
@@ -194,6 +196,8 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => AllItemsBloc()),
             BlocProvider(create: (context) => AddItemBloc()),
             BlocProvider(create: (context) => MyListingsBloc()),
+            BlocProvider(create: (context) => DeleteItemBloc()),
+            BlocProvider(create: (context) => UpdateItemBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: OrdersBloc())

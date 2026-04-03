@@ -1,29 +1,46 @@
-import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:localize_and_translate/localize_and_translate.dart';
 
-class RentalTypeContainer extends StatefulWidget {
-  const RentalTypeContainer({super.key, required this.onChanged});
+class UpdateRentalTypeContainer extends StatefulWidget {
+  const UpdateRentalTypeContainer({
+    super.key,
+    required this.onChanged,
+    this.initialValue,
+  });
+
   final ValueChanged<String> onChanged;
+  final String? initialValue;
 
   @override
-  State<RentalTypeContainer> createState() => _RentalTypeContainerState();
+  State<UpdateRentalTypeContainer> createState() => _UpdateRentalTypeContainerState();
 }
 
-class _RentalTypeContainerState extends State<RentalTypeContainer> {
-  int selectedIndex = 0;
+class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
+
   final List<String> items = [
-    kDaily.tr(),
-    kWeekly.tr(),
-    kMonthly.tr(),
+    "يومي",
+    "أسبوعي",
+    "شهري",
   ];
 
+  int getSelectedIndex() {
+    final value = widget.initialValue;
+
+    if (value == null) return 0;
+
+    if (value.contains("يوم")) return 0;
+    if (value.contains("أسبوع")) return 1;
+    if (value.contains("شهر")) return 2;
+
+    return 0;
+  }
   @override
   Widget build(BuildContext context) {
+    final currentIndex = getSelectedIndex(); // 🔥 هنا
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.r),
@@ -36,9 +53,6 @@ class _RentalTypeContainerState extends State<RentalTypeContainer> {
               (index) => Expanded(
             child: GestureDetector(
               onTap: () {
-                setState(() {
-                  selectedIndex = index;
-                });
                 widget.onChanged(items[index]);
               },
               child: Padding(
@@ -47,9 +61,7 @@ class _RentalTypeContainerState extends State<RentalTypeContainer> {
                   duration: const Duration(milliseconds: 250),
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   decoration: BoxDecoration(
-                    color: selectedIndex == index
-                        ? kLightPrimaryColor
-                        : kSmallContainerColor,
+                    color: getSelectedIndex() == index ? kLightPrimaryColor : kSmallContainerColor,
                     borderRadius: BorderRadius.circular(18.r),
                   ),
                   child: Center(
@@ -58,10 +70,10 @@ class _RentalTypeContainerState extends State<RentalTypeContainer> {
                       style: font15BlackRegular.copyWith(
                         fontSize: 17.sp,
                         fontWeight: medium,
-                        color: selectedIndex == index
+                        color: getSelectedIndex() == index
                             ? kWhiteColor
                             : kBlackColor,
-                      )
+                      ),
                     ),
                   ),
                 ),

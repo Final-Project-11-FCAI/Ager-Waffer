@@ -27,11 +27,11 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   List<String> categoryOptions = [
-    'إلكترونيات',
-    'أجهزة منزلية',
-    'مستلزمات أطفال',
-    'كتب',
-    'معدات سفر',
+    kElectronics.tr(),
+    kHomeAppliances.tr(),
+    kBabyGear.tr(),
+    kBooks.tr(),
+    kTravelGear.tr(),
   ];
   List<String> governmentOptions = [
     'الإسكندرية',
@@ -40,10 +40,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'البحر الأحمر',
   ];
   List<String> productStatesOptions = [
-    'أول استخدام',
-    'جديد',
-    'مستخدم',
-    'مستخدم بشدة',
+    kBrandNew.tr(),
+    kNew.tr(),
+    kUsed.tr(),
+    kHeavilyUsed.tr(),
   ];
 
   final formKey = GlobalKey<FormState>();
@@ -234,17 +234,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 });
                               },
                             ),
-                            Gap(5.h),
-                            buildSwitchRow(
-                              title: "أقبل التفاوض على السعر",
-                              value: acceptNegotiation,
-                              onChanged: (val) {
-                                setState(() {
-                                  acceptNegotiation = val;
-                                });
-                              },
-                            ),
-                            // Gap(20.h),
                           ],
                         ),
                       ),
