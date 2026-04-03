@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/add_item_entity.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 abstract class AppEvent {}
@@ -64,6 +65,22 @@ class UpdateItemEvent extends AppEvent {
   UpdateItemEvent({
     required this.productId,
     required this.addItemEntity,
+  });
+}
+
+class UpdateProfileEvent extends AppEvent {
+  final String firstName;
+  final String lastName;
+  final String? phone;
+  final String? password;
+  final XFile? profileImage;
+
+  UpdateProfileEvent({
+    required this.firstName,
+    required this.lastName,
+    this.phone,
+    this.password,
+    this.profileImage,
   });
 }
 
