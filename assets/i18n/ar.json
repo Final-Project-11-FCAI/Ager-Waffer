@@ -40,8 +40,21 @@
   "cancel": "إلغاء",
   "password_changed": "تم تغيير كلمة المرور",
   "login_now_desc": "يمكنك تسجيل الدخول الآن",
-  "login_now": "تسجيل الدخول الآن"
+  "login_now": "تسجيل الدخول الآن",
 
 
 
+
+  "electronics": "إلكترونيات",
+  "home_appliances": "أجهزة منزلية",
+  "baby_gear": "مستلزمات أطفال",
+  "books": "كتب",
+  "travel_gear": "معدات سفر",
+  "daily": "يومي",
+  "weekly": "أسبوعي",
+  "monthly": "شهري",
+  "brand_new": "أول استخدام",
+  "new": "جديد",
+  "used": "مستخدم",
+  "heavily_used": "مستخدم بشدة"
 }

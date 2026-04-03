@@ -10,7 +10,7 @@ class AddItemEntity {
   final String city;
   final bool isAvailable;
   final String price;
-  final List<File> images;
+  final List<File>? images;
 
   AddItemEntity({
     required this.name,

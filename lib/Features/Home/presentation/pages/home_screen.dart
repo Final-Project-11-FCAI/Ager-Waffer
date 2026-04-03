@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -18,6 +19,7 @@ import 'package:ager_waffer/Features/Home/presentation/widgets/category_item_lis
 import 'package:ager_waffer/Features/Home/presentation/widgets/custom_home_app_bar.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/drawer_details.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<CategoryEntity> categories = [
       CategoryEntity(
         image: 'assets/images/electronics.png',
-        title: "إلكترونيات",
+        title:  kElectronics.tr(),
         onTap: () {
           final products = allItemsBloc.state.product;
           customAnimatedPushNavigation(context, ElectronicsScreen(products: products,));
@@ -51,28 +53,28 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       CategoryEntity(
         image: 'assets/images/home_supplies.png',
-        title: "مستلزمات المنزل",
+        title: kHomeAppliances.tr(),
         onTap: () {
           customAnimatedPushNavigation(context, HomeEssentialsScreen());
         },
       ),
       CategoryEntity(
         image: 'assets/images/travel_supplies.png',
-        title: "مستلزمات السفر",
+        title: kTravelGear.tr(),
         onTap: () {
           customAnimatedPushNavigation(context, TravelEssentialsScreen());
         },
       ),
       CategoryEntity(
         image: 'assets/images/books.png',
-        title: "كتب",
+        title: kBooks.tr(),
         onTap: () {
           customAnimatedPushNavigation(context, BooksScreen());
         },
       ),
       CategoryEntity(
         image: 'assets/images/children_items.png',
-        title: "أغراض أطفال",
+        title: kBabyGear.tr(),
         onTap: () {
           customAnimatedPushNavigation(context, BabyItemsScreen());
         },

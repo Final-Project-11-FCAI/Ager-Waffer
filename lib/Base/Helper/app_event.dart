@@ -50,6 +50,22 @@ class GetMyListingsEvent extends AppEvent{
   GetMyListingsEvent();
 }
 
+class DeleteItemEvent extends AppEvent {
+  final int productId;
+
+  DeleteItemEvent({required this.productId});
+}
+
+
+class UpdateItemEvent extends AppEvent {
+  final int productId;
+  final AddItemEntity addItemEntity;
+
+  UpdateItemEvent({
+    required this.productId,
+    required this.addItemEntity,
+  });
+}
 
 
 

@@ -1,9 +1,17 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Profile/data/models/my_listings_model.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_state.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/pages/update_product_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -69,7 +77,9 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.myListings.name ?? '', style: font14BlackBold.copyWith(fontSize: 12.sp)),
+                      Expanded(child: Text(widget.myListings.name ?? '',
+                          overflow: TextOverflow.ellipsis,
+                          style: font14BlackBold.copyWith(fontSize: 12.sp))),
                       Text(
                         "${widget.myListings.price}جنيه/اليوم",
                         style: font16BlackSemiBold.copyWith(fontSize: 11,),
@@ -105,7 +115,9 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                       deleteOrEditProductButton(
                           title: 'تعديل',
                           icon: 'assets/images/edit_icon.png',
-                          onTap: (){},
+                          onTap: (){
+                            customAnimatedPushNavigation(context, UpdateProductScreen(product: widget.myListings,));
+                          },
                           textColor: kBlueColor,
                           backgroundColor: kOpacityGreyColor,
                           borderColor: kBlueColor
@@ -114,7 +126,9 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                       deleteOrEditProductButton(
                           title: 'حذف',
                           icon: 'assets/images/delete_icon.png',
-                          onTap: (){},
+                          onTap: (){
+                            _showDeleteDialog(context);
+                          },
                         textColor: kMoreRedColor,
                         backgroundColor: kMoreRedColor.withOpacity(0.21),
                         borderColor: kBlackColor.withOpacity(0.31)
@@ -157,6 +171,47 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("تأكيد الحذف"),
+          surfaceTintColor: kWhiteColor,
+          content: Text("هل أنت متأكد أنك تريد حذف هذا المنتج؟"),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: kPrimaryColor,
+                  foregroundColor: kWhiteColor
+              ),
+              child: Text("إلغاء"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.read<DeleteItemBloc>().add(
+                  DeleteItemEvent(
+                    productId: widget.myListings.id!,
+                  ),
+                );
+                Navigator.of(context).pop();
+                context.read<AllItemsBloc>().add(
+                  GetAllItemsEvent(),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: kPrimaryColor,
+                  foregroundColor: kWhiteColor
+              ),
+              child: Text("حذف", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
     );
   }
 

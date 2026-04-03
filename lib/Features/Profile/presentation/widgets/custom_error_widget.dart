@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomErrorWidget extends StatelessWidget {
@@ -20,6 +21,10 @@ class CustomErrorWidget extends StatelessWidget {
           const SizedBox(height: 10),
           ElevatedButton(
             onPressed: onRetry,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kPrimaryColor,
+              foregroundColor: kWhiteColor
+            ),
             child: const Text("Retry"),
           ),
         ],

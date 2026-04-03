@@ -40,7 +40,21 @@
   "cancel": "Cancel",
   "password_changed": "Password changed successfully",
   "login_now_desc": "You can now log in",
-  "login_now": "Login now"
+  "login_now": "Login now",
+
+
+  "electronics": "Electronics",
+  "home_appliances": "Home Appliances",
+  "baby_gear": "Baby Gear",
+  "books": "Books",
+  "travel_gear": "Travel Gear",
+  "daily": "Daily",
+  "weekly": "Weekly",
+  "monthly": "Monthly",
+  "brand_new": "BrandNew",
+  "new": "New",
+  "used": "Used",
+  "heavily_used": "HeavilyUsed"
 
 
 }

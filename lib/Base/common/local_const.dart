@@ -58,3 +58,15 @@ String kLoginNow = 'login_now';
 
 
 
+String kElectronics= 'electronics';
+String kHomeAppliances = 'home_appliances';
+String kBabyGear = 'baby_gear';
+String kBooks = 'books';
+String kTravelGear = 'travel_gear';
+String kDaily = 'daily';
+String kWeekly = 'weekly';
+String kMonthly = 'monthly';
+String kBrandNew = 'brand_new';
+String kNew = 'new';
+String kUsed = 'used';
+String kHeavilyUsed = 'heavily_used';
