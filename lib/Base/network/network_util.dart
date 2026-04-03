@@ -173,6 +173,36 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
   }
 
 
+  Future<ResponseType> patch<ResponseType extends Mappable>(
+      ResponseType? responseType,
+      String? url,
+      {Map<String, dynamic>? headers, body, encoding}) {
+
+    Dio dio = Dio();
+
+    final adapter = dio.httpClientAdapter as IOHttpClientAdapter;
+    adapter.createHttpClient = () {
+      final dioClient = HttpClient();
+      dioClient.badCertificateCallback =
+          (cert, host, port) => true;
+      return dioClient;
+    };
+
+    return dio
+        .patch(
+      url!,
+      data: body,
+      options: Options(
+        headers: headers,
+        requestEncoder: encoding,
+        contentType: Headers.jsonContentType, // 🔥 مهم
+      ),
+    )
+        .then((response) {
+      return handleResponse(response, responseType);
+    });
+  }
+
   ResponseType handleResponse<ResponseType extends Mappable>(Response? response, ResponseType? responseType) {
     final int? statusCode = response!.statusCode;
     if (statusCode! >= 200 && statusCode < 300) {

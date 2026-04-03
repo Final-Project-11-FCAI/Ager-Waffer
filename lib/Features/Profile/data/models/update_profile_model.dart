@@ -58,13 +58,13 @@ class Data {
   String? lastName;
   String? fullName;
   String? email;
-  num? phoneNumber;
+  String? phoneNumber;
   double? averageRate;
   String? city;
   String? street;
   String? governorate;
   String? imageUrl;
-  int? imagePublicId;
+  String? imagePublicId;
   String? token;
   String? tokenExpirey;
 

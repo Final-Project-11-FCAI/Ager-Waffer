@@ -4,6 +4,7 @@ import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_profile_bloc.dart';
@@ -42,10 +43,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   bool get _hasChanges =>
       firstNameController.text != _originalFirstName ||
-          secondNameController.text != _originalLastName ||
-          phoneController.text != _originalPhone ||
-          passwordController.text.isNotEmpty ||
-          _pickedImage != null;
+      secondNameController.text != _originalLastName ||
+      phoneController.text != _originalPhone ||
+      passwordController.text.isNotEmpty ||
+      _pickedImage != null;
 
   @override
   void initState() {
@@ -100,7 +101,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           );
 
-          Navigator.pop(context, true);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const LoginScreen()),
+            (route) => false,
+          );
         } else if (state.status == updateProfileStatus.failure) {
           Shared.dismissDialog(context: context);
 
@@ -216,7 +221,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           PasswordTextField(
                             passwordController: passwordController,
                             icon: Icon(Icons.lock_outline),
-                            label: 'كلمة المرور',
+                            label: 'ادخل كلمة المرور الجديدة',
                             validator: (value) {
                               return InputValidation.passwordValidator(value!);
                             },
@@ -225,20 +230,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ButtonApp(
                             onPressed: _hasChanges
                                 ? () {
-                              context.read<UpdateProfileBloc>().add(
-                                UpdateProfileEvent(
-                                  firstName: firstNameController.text,
-                                  lastName: secondNameController.text,
-                                  phone: phoneController.text.isEmpty
-                                      ? null
-                                      : phoneController.text,
-                                  password: passwordController.text.isEmpty
-                                      ? null
-                                      : passwordController.text,
-                                  profileImage: _pickedImage,
-                                ),
-                              );
-                            }
+                                    _showUpdateDialog(context);
+                                  }
                                 : null,
                             text: 'حفظ',
                             color: _hasChanges ? kPrimaryColor : kGreyColor,
@@ -257,11 +250,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 top: Shared.height * 0.02.sp,
                 child: _pickedImage != null
                     ? CircleAvatar(
-                  radius: 70.r,
-                  backgroundImage: FileImage(File(_pickedImage!.path)),
-                )
+                        radius: 70.r,
+                        backgroundImage: FileImage(File(_pickedImage!.path)),
+                      )
                     : CircleAvatar(
-               radius: 70.r, backgroundImage: NetworkImage(widget.user.imageUrl.toString(),)),
+                        radius: 70.r,
+                        backgroundImage: NetworkImage(
+                          widget.user.imageUrl.toString(),
+                        ),
+                      ),
               ),
 
               // Camera Edit Button
@@ -291,6 +288,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showUpdateDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("تأكيد التعديل"),
+          surfaceTintColor: kWhiteColor,
+          content: Text(
+            "سوف يتم الخروج الي صفحة تسجيل الدخول للتسجيل مرة اخرى",
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kPrimaryColor,
+                foregroundColor: kWhiteColor,
+              ),
+              child: Text("إلغاء"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.read<UpdateProfileBloc>().add(
+                  UpdateProfileEvent(
+                    firstName: firstNameController.text,
+                    lastName: secondNameController.text,
+                    phone: phoneController.text.isEmpty
+                        ? null
+                        : phoneController.text,
+                    password: passwordController.text.isEmpty
+                        ? null
+                        : passwordController.text,
+                    profileImage: _pickedImage,
+                  ),
+                );
+
+                Navigator.of(context).pop(); // بس كده
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kPrimaryColor,
+                foregroundColor: kWhiteColor,
+              ),
+              child: Text("تعديل", style: TextStyle(color: kWhiteColor)),
+            ),
+          ],
+        );
+      },
     );
   }
 }

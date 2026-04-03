@@ -8,6 +8,8 @@ import 'package:ager_waffer/Features/Home/domain/entities/add_item_entity.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Profile/data/models/my_listings_model.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/toggle_availability_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/toggle_availability_state.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_item_state.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/update_product_data_container.dart';
@@ -21,6 +23,7 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 
 class UpdateProductScreen extends StatefulWidget {
   const UpdateProductScreen({super.key, required this.product});
+
   final MyListingsData product;
 
   @override
@@ -65,7 +68,6 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
   bool isFormValid = false;
 
-  /// Snapshot of loaded product — button stays off until current state differs.
   late String _initialName;
   late String _initialDescription;
   late String _initialPriceText;
@@ -94,13 +96,13 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     setState(() {
       final baseValid =
           nameController.text.isNotEmpty &&
-              descriptionController.text.isNotEmpty &&
-              priceController.text.isNotEmpty &&
-              insuranceController.text.isNotEmpty &&
-              selectedCategory.isNotEmpty &&
-              selectedCondition.isNotEmpty &&
-              selectedCity.isNotEmpty &&
-              (images.isNotEmpty || widget.product.itemImages?.isNotEmpty == true);
+          descriptionController.text.isNotEmpty &&
+          priceController.text.isNotEmpty &&
+          insuranceController.text.isNotEmpty &&
+          selectedCategory.isNotEmpty &&
+          selectedCondition.isNotEmpty &&
+          selectedCity.isNotEmpty &&
+          (images.isNotEmpty || widget.product.itemImages?.isNotEmpty == true);
       isFormValid = baseValid && _hasChangesFromInitial();
     });
   }
@@ -123,8 +125,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     isAvailable = product.isAvailable ?? true;
     rentalType = mapRentUnit(product.rentUnit);
 
-    if (product.itemImages != null && product.itemImages!.isNotEmpty) {
-    }
+    if (product.itemImages != null && product.itemImages!.isNotEmpty) {}
 
     _initialName = nameController.text.trim();
     _initialDescription = descriptionController.text.trim();
@@ -162,7 +163,8 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
     if (value.contains("يوم") || value.toLowerCase().contains("day")) {
       return "يومي";
-    } else if (value.contains("أسبوع") || value.toLowerCase().contains("week")) {
+    } else if (value.contains("أسبوع") ||
+        value.toLowerCase().contains("week")) {
       return "أسبوعي";
     } else if (value.contains("شهر") || value.toLowerCase().contains("month")) {
       return "شهري";
@@ -177,13 +179,31 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        backgroundColor: kPrimaryColor,
-        appBar: AppBar(
+      child: BlocListener<ToggleAvailabilityBloc, ToggleAvailabilityState>(
+        listener: (context, state) {
+          if (state.status == toggleAvailabilityStatus.loading) {
+            Shared.showLoadingDialog(context: context);
+          } else if (state.status == toggleAvailabilityStatus.success) {
+            Shared.dismissDialog(context: context);
+          } else if (state.status == toggleAvailabilityStatus.failure) {
+            Shared.dismissDialog(context: context);
+
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.failureMessage)));
+
+            setState(() {
+              isAvailable = !isAvailable;
+            });
+          }
+        },
+        child: Scaffold(
           backgroundColor: kPrimaryColor,
-          foregroundColor: kWhiteColor,
-        ),
-        body: BlocListener<UpdateItemBloc, UpdateItemState>(
+          appBar: AppBar(
+            backgroundColor: kPrimaryColor,
+            foregroundColor: kWhiteColor,
+          ),
+          body: BlocListener<UpdateItemBloc, UpdateItemState>(
             listener: (context, state) {
               if (state.status == updateItemStatus.loading) {
                 Shared.showLoadingDialog(context: context);
@@ -200,34 +220,36 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                     ),
                   ),
                 );
-            }
-          },
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: kWhiteColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25.r),
-                topRight: Radius.circular(25.r),
+              }
+            },
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: kWhiteColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25.r),
+                  topRight: Radius.circular(25.r),
+                ),
               ),
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Shared.width * 0.04.w,
-                        vertical: Shared.height * 0.025.h,
-                      ),
-                      child: Form(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Shared.width * 0.04.w,
+                          vertical: Shared.height * 0.025.h,
+                        ),
+                        child: Form(
                           key: formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               UpdateUploadImages(
-                                initialImage: widget.product.itemImages?.isNotEmpty == true
+                                initialImage:
+                                    widget.product.itemImages?.isNotEmpty ==
+                                        true
                                     ? widget.product.itemImages!.first
                                     : null,
                                 onImagesSelected: (files) {
@@ -292,7 +314,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               Gap(20.h),
                               UpdateProductDataContainer(
                                 hintText:
-                                'سعر الإيجار (جنيه/${rentalType.substring(0, rentalType.length - 1)})',
+                                    'سعر الإيجار (جنيه/${rentalType.substring(0, rentalType.length - 1)})',
                                 keyboardType: TextInputType.number,
                                 controller: priceController,
                               ),
@@ -315,65 +337,82 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                                 },
                               ),
                               Gap(30.h),
-                              buildSwitchRow(
-                                title: "المنتج متاح حالياً",
-                                value: isAvailable,
-                                onChanged: (val) {
-                                  setState(() {
-                                    isAvailable = val;
-                                  });
-                                  validateForm();
+                              BlocBuilder<
+                                ToggleAvailabilityBloc,
+                                ToggleAvailabilityState
+                              >(
+                                builder: (context, state) {
+                                  return buildSwitchRow(
+                                    title: "المنتج متاح حالياً",
+                                    value: isAvailable,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        isAvailable = val;
+                                      });
+                                      validateForm();
+
+                                      context
+                                          .read<ToggleAvailabilityBloc>()
+                                          .add(
+                                            ToggleAvailabilityEvent(
+                                              id: widget.product.id!,
+                                              isAvailable: val,
+                                            ),
+                                          );
+                                    },
+                                  );
                                 },
                               ),
                               // Gap(20.h),
                             ],
                           ),
                         ),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
-                  decoration: BoxDecoration(
-                    color: kWhiteColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
-                        blurRadius: 12,
-                        offset: const Offset(0, -4),
-                      ),
-                    ],
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
+                    decoration: BoxDecoration(
+                      color: kWhiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.06),
+                          blurRadius: 12,
+                          offset: const Offset(0, -4),
+                        ),
+                      ],
+                    ),
+                    child: ButtonApp(
+                      onPressed: isFormValid
+                          ? () {
+                              if (formKey.currentState!.validate()) {
+                                context.read<UpdateItemBloc>().add(
+                                  UpdateItemEvent(
+                                    productId: widget.product.id!,
+                                    addItemEntity: AddItemEntity(
+                                      name: nameController.text,
+                                      description: descriptionController.text,
+                                      price: priceController.text,
+                                      insurance: insuranceController.text,
+                                      isAvailable: isAvailable,
+                                      rentUnit: rentalType,
+                                      condition: selectedCondition,
+                                      categoryName: selectedCategory,
+                                      city: selectedCity,
+                                      images: images.isNotEmpty ? images : null,
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          : null,
+                      text: 'تعديل المنتج',
+                      color: kPrimaryColor,
+                    ),
                   ),
-                  child: ButtonApp(
-                    onPressed: isFormValid
-                        ? () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<UpdateItemBloc>().add(
-                          UpdateItemEvent(
-                              productId: widget.product.id!,
-                              addItemEntity: AddItemEntity(
-                                name: nameController.text,
-                                description: descriptionController.text,
-                                price: priceController.text,
-                                insurance: insuranceController.text,
-                                isAvailable: isAvailable,
-                                rentUnit: rentalType,
-                                condition: selectedCondition,
-                                categoryName: selectedCategory,
-                                city: selectedCity,
-                                images: images.isNotEmpty ? images : null,
-                              )
-                          )
-                        );
-                      }
-                    }
-                        : null,
-                    text: 'تعديل المنتج',
-                    color: kPrimaryColor,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -398,8 +437,8 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           trackOutlineWidth: MaterialStateProperty.all(0),
           trackOutlineColor: MaterialStateProperty.resolveWith<Color?>((
-              states,
-              ) {
+            states,
+          ) {
             if (states.contains(MaterialState.selected)) {
               return kLightPrimaryColor;
             }
