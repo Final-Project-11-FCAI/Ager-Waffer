@@ -1,16 +1,12 @@
 import 'dart:io';
+
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/pages/change_password_done_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
-import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/item_details_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
-import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
-import 'package:ager_waffer/Features/Home/presentation/pages/request_screen.dart';
-import 'package:ager_waffer/Features/Home/presentation/widgets/user_information.dart';
+import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
@@ -26,16 +22,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'Base/Notifications/local_notification_service.dart';
 import 'Base/common/shared.dart';
 import 'Base/common/shared_preference_manger.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'dart:ui';
-import 'package:firebase_core/firebase_core.dart';
-
 import 'Features/Authentication/login/presentation/manager/authentication_bloc.dart';
 
 @pragma('vm:entry-point')
@@ -199,10 +193,6 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
       builder: (context, snapshot) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider.value(value: AuthenticationBloc()),
-            BlocProvider.value(value: LoginBloc()),
-            BlocProvider.value(value: AllItemsBloc()),
-            //   BlocProvider.value(value: UploadImageBloc()),
             BlocProvider(create: (context) => AuthenticationBloc()),
             BlocProvider(create: (context) => LoginBloc()),
             BlocProvider(create: (context) => AllItemsBloc()),
@@ -212,6 +202,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => UpdateItemBloc()),
             BlocProvider(create: (context) => UpdateProfileBloc()),
             BlocProvider(create: (context) => ToggleAvailabilityBloc()),
+            BlocProvider(create: (context) => AddReviewBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: OrdersBloc())

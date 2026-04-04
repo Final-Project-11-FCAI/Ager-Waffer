@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ButtonApp extends StatefulWidget {
@@ -14,8 +15,8 @@ class ButtonApp extends StatefulWidget {
     required this.onPressed,
     required this.text,
     required this.color,
+    this.isReview = false,
   });
-
 
   final int? currentPage;
   final PageController? controller;
@@ -23,14 +24,15 @@ class ButtonApp extends StatefulWidget {
   final String text;
   final Color color;
   final bool isLanguageScreen;
+  final bool isReview;
   final double? borderRadius;
 
   @override
   State<ButtonApp> createState() => _ButtonAppState();
 }
 
-class _ButtonAppState extends State<ButtonApp> with SingleTickerProviderStateMixin{
-
+class _ButtonAppState extends State<ButtonApp>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
@@ -76,20 +78,46 @@ class _ButtonAppState extends State<ButtonApp> with SingleTickerProviderStateMix
           child: ElevatedButton(
             onPressed: widget.onPressed,
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: widget.isLanguageScreen ? Shared.height * 0.024.h : Shared.height * 0.02.h),
+              padding: EdgeInsets.symmetric(
+                vertical: widget.isLanguageScreen
+                    ? Shared.height * 0.024.h
+                    : Shared.height * 0.02.h,
+              ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius ?? Shared.width * 0.07.w),
+                borderRadius: BorderRadius.circular(
+                  widget.borderRadius ?? Shared.width * 0.07.w,
+                ),
                 side: BorderSide(color: kPrimaryColor, width: 1),
               ),
               backgroundColor: widget.color,
             ),
-            child: Text(
-              widget.text,
-              style: GoogleFonts.notoSansArabic(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: widget.color == kPrimaryColor || widget.color == kDoneColor ? kWhiteColor : kPrimaryColor,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.text,
+                  style: GoogleFonts.notoSansArabic(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color:
+                        widget.color == kPrimaryColor || widget.color == kDoneColor
+                        ? kWhiteColor
+                        : kPrimaryColor,
+                  ),
+                ),
+                widget.isReview ?
+                Row(
+                  children: [
+                    Gap(10.w),
+                    const Icon(
+                      Icons.send,
+                      color: kWhiteColor,
+                      size: 20,
+                    ),
+                  ],
+                )
+                : const SizedBox.shrink(),
+              ],
             ),
           ),
         ),

@@ -44,10 +44,12 @@ class ReviewItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          review.name,
-                          style: font16BlackSemiBold.copyWith(
-                            fontSize: 13.sp,
+                        Expanded(
+                          child: Text(
+                            review.name,
+                            style: font16BlackSemiBold.copyWith(
+                              fontSize: 13.sp,
+                            ),
                           ),
                         ),
                         Text(

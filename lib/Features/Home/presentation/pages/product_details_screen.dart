@@ -92,7 +92,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       ListView.builder(
                         itemCount: reviews.length,
                         shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
+                        physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                         return Padding(
                           padding: EdgeInsets.symmetric(vertical: 8.h),

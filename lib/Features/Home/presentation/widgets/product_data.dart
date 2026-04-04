@@ -19,62 +19,60 @@ class ProductDataContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name!,
-                      overflow: TextOverflow.ellipsis,
-                      style: font24PrimarySemiBold.copyWith(
-                        fontSize: 20.sp,
-                        color: kBlackColor,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name!,
+                    overflow: TextOverflow.ellipsis,
+                    style: font24PrimarySemiBold.copyWith(
+                      fontSize: 20.sp,
+                      color: kBlackColor,
                     ),
-                    Gap(8.h),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          product.averageRate!.toStringAsFixed(1),
-                          style: font16BlackSemiBold.copyWith(
-                            fontSize: 12.sp,
-                            color: kGreyColor,
-                          ),
+                  ),
+                  Gap(8.h),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        product.averageRate!.toStringAsFixed(1),
+                        style: font16BlackSemiBold.copyWith(
+                          fontSize: 12.sp,
+                          color: kGreyColor,
                         ),
-                        Gap(4.w),
-                        ...List.generate(
-                          5,
-                          (index) => Icon(
-                            Icons.star,
-                            size: 16.sp,
-                            color: index < product.averageRate!.floor()
-                                ? Colors.amber
-                                : Colors.grey.shade300,
+                      ),
+                      Gap(4.w),
+                      ...List.generate(
+                        5,
+                        (index) => Icon(
+                          Icons.star,
+                          size: 16.sp,
+                          color: index < product.averageRate!.floor()
+                              ? Colors.amber
+                              : Colors.grey.shade300,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Gap(4.h),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'الحالة : ',
+                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                        ),
+                        TextSpan(
+                          text: product.condition!,
+                          style: font16BlackSemiBold.copyWith(
+                            fontWeight: bold,
+                            color: kBlueColor,
                           ),
                         ),
                       ],
                     ),
-                    Gap(4.h),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'الحالة : ',
-                            style: font16BlackSemiBold.copyWith(fontWeight: bold),
-                          ),
-                          TextSpan(
-                            text: product.condition!,
-                            style: font16BlackSemiBold.copyWith(
-                              fontWeight: bold,
-                              color: kBlueColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Gap(10.w),

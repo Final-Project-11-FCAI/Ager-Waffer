@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/dialogs.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -127,7 +128,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           title: 'حذف',
                           icon: 'assets/images/delete_icon.png',
                           onTap: (){
-                            _showDeleteDialog(context);
+                            Dialogs.showDialogDeleteProduct(context, productId: widget.myListings.id!);
                           },
                         textColor: kMoreRedColor,
                         backgroundColor: kMoreRedColor.withOpacity(0.21),
@@ -173,47 +174,4 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
       ),
     );
   }
-
-  void _showDeleteDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("تأكيد الحذف"),
-          surfaceTintColor: kWhiteColor,
-          content: Text("هل أنت متأكد أنك تريد حذف هذا المنتج؟"),
-          actions: [
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
-                  foregroundColor: kWhiteColor
-              ),
-              child: Text("إلغاء"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.read<DeleteItemBloc>().add(
-                  DeleteItemEvent(
-                    productId: widget.myListings.id!,
-                  ),
-                );
-                Navigator.of(context).pop();
-                context.read<AllItemsBloc>().add(
-                  GetAllItemsEvent(),
-                );
-                allItemsBloc.add(GetAllItemsEvent());
-              },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
-                  foregroundColor: kWhiteColor
-              ),
-              child: Text("حذف", style: TextStyle(color: kWhiteColor)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
 }

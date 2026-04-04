@@ -116,34 +116,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 context: context,
                 title: Text(
                   "تم إنشاء الحساب بنجاح",
+                  textAlign: TextAlign.center,
                   style: font14BlackBold.copyWith(
                     fontSize: 24,
                     color: kPrimaryColor,
                   ),
                 ),
                 description: RichText(
+                  textAlign: TextAlign.center,
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                        text: "مرحبًا بك في",
-                        style: font20PrimaryMedium.copyWith(fontSize: 17),
+                        text: "مرحبًا بك في ",
+                        style: font20PrimaryMedium.copyWith(fontSize: 16),
                       ),
                       TextSpan(
                         text: "أجّر و وفّر",
                         style: font16BlackSemiBold.copyWith(
                           color: kBlueColor,
-                          fontSize: 17,
+                          fontSize: 16,
                         ),
                       ),
                       TextSpan(
                         text:
-                            "..! يمكنك الآن استئجار المنتجات أو عرض أغراضك للإيجار بسهولة.",
-                        style: font20PrimaryMedium.copyWith(fontSize: 17),
+                        "..! يمكنك الآن استئجار المنتجات أو عرض أغراضك للإيجار بسهولة.",
+                        style: font20PrimaryMedium.copyWith(fontSize: 16),
                       ),
                     ],
                   ),
                 ),
-                buttonText: " ← سجل دخول بحسابك الآن ",
+                buttonText: "← سجل الدخول الآن",
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
@@ -152,10 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               );
               // Shared.dismissDialog(context: context);
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(builder: (c) => LoginScreen()),
-              // );
+
             } else if (state is RegisterErrorLoadingState) {
               Shared.dismissDialog(context: context);
               ScaffoldMessenger.of(context).showSnackBar(

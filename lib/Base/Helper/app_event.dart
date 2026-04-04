@@ -95,6 +95,26 @@ class ToggleAvailabilityEvent extends AppEvent {
 }
 
 
+class AddReviewEvent extends AppEvent {
+  final int reviewType;
+  final int itemId;
+  final String? reviewedUserId;
+  final String reviewText;
+  final int rate;
+
+  AddReviewEvent({
+    required this.reviewType,
+    required this.itemId,
+    this.reviewedUserId,
+    required this.reviewText,
+    required this.rate,
+  });
+}
+
+
+
+
+
 // class VerifyOtpEvent extends AppEvent{
 //   final OtpEntity otpEntity;
 //   VerifyOtpEvent({required this.otpEntity});
