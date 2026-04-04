@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/dialogs.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/add_item_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_state.dart';
@@ -17,6 +20,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+
+import '../../../Home/presentation/manager/all_items_bloc.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
@@ -62,17 +67,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
   List<File> images = [];
 
   bool isFormValid = false;
+
   void validateForm() {
     setState(() {
       isFormValid =
           nameController.text.isNotEmpty &&
-              descriptionController.text.isNotEmpty &&
-              priceController.text.isNotEmpty &&
-              insuranceController.text.isNotEmpty &&
-              selectedCategory.isNotEmpty &&
-              selectedCondition.isNotEmpty &&
-              selectedCity.isNotEmpty &&
-              images.isNotEmpty;
+          descriptionController.text.isNotEmpty &&
+          priceController.text.isNotEmpty &&
+          insuranceController.text.isNotEmpty &&
+          selectedCategory.isNotEmpty &&
+          selectedCondition.isNotEmpty &&
+          selectedCity.isNotEmpty &&
+          images.isNotEmpty;
     });
   }
 
@@ -125,14 +131,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         } else if (state.status == addItemStatus.success) {
                           Shared.dismissDialog(context: context);
 
-                          Dialogs.showDialogTest(context);
-
+                          Dialogs.showDialogSuccess(
+                            context,
+                            title: "تم إضافة المنتج بنجاح.",
+                            subTitle: "أصبح منتجك الآن متاحًا للإيجار.",
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                              allItemsBloc.add(GetAllItemsEvent());
+                            },
+                            textButton: "عرض منتجاتي"
+                          );
                         } else if (state.status == addItemStatus.failure) {
                           Shared.dismissDialog(context: context);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                state.failureMessage ?? kSomethingWentWrong.tr(),
+                                state.failureMessage ??
+                                    kSomethingWentWrong.tr(),
                               ),
                             ),
                           );
@@ -147,7 +163,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               onImagesSelected: (files) {
                                 images = files;
                                 validateForm();
-                                },
+                              },
                             ),
                             Gap(50.h),
                             ProductDataContainer(
@@ -257,23 +273,25 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 child: ButtonApp(
                   onPressed: isFormValid
                       ? () {
-                    if (formKey.currentState!.validate()) {
-                      addItemBloc.add(AddItemEvent(
-                        addItemEntity: AddItemEntity(
-                          name: nameController.text,
-                          description: descriptionController.text,
-                          price: priceController.text,
-                          insurance: insuranceController.text,
-                          isAvailable: isAvailable,
-                          rentUnit: rentalType,
-                          condition: selectedCondition,
-                          categoryName: selectedCategory,
-                          city: selectedCity,
-                          images: images,
-                        ),
-                      ));
-                    }
-                  }
+                          if (formKey.currentState!.validate()) {
+                            addItemBloc.add(
+                              AddItemEvent(
+                                addItemEntity: AddItemEntity(
+                                  name: nameController.text,
+                                  description: descriptionController.text,
+                                  price: priceController.text,
+                                  insurance: insuranceController.text,
+                                  isAvailable: isAvailable,
+                                  rentUnit: rentalType,
+                                  condition: selectedCondition,
+                                  categoryName: selectedCategory,
+                                  city: selectedCity,
+                                  images: images,
+                                ),
+                              ),
+                            );
+                          }
+                        }
                       : null,
                   text: 'إضافة المنتج',
                   color: kPrimaryColor,
