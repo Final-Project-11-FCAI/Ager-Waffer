@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeLayoutScreen extends StatelessWidget {
-  const HomeLayoutScreen({super.key});
+  const HomeLayoutScreen({super.key, this.email = '', this.password = ''});
+
+  final String email;
+  final String password;
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      HomeScreen(),
+      HomeScreen(email: email, password: password,),
       FavoriteScreen(),
       MyOrdersScreen(),
       ConversationsScreen(),

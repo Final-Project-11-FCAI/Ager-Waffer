@@ -220,10 +220,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               top: Shared.height * 0.01.sp,
               child: GestureDetector(
                 onTap: () async {
+                  final Data? userData = await sharedPreferenceManager.getUser();
                   final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => EditProfileScreen(user: user),
+                      builder: (_) => EditProfileScreen(user: user, userData: userData,),
                     ),
                   );
 

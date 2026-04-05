@@ -20,9 +20,10 @@ import 'dart:io';
 import '../../../Authentication/login/data/models/login_model.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key, required this.user});
+  const EditProfileScreen({super.key, required this.user, this.userData});
 
   final Data user;
+  final Data? userData;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -65,7 +66,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {
         firstNameController.text = user.firstName ?? "";
         secondNameController.text = user.lastName ?? "";
-        phoneController.text = user.phoneNumber ?? "";
+        phoneController.text = widget.userData!.phoneNumber ?? "";
         emailController.text = user.email ?? "";
 
         _originalFirstName = user.firstName ?? "";
@@ -208,6 +209,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.number,
                             icon: Icon(Icons.phone),
                             label: 'رقم الهاتف',
+                            validator: (value) {
+                              return InputValidation.isValidEgyptianPhone(value ?? '');
+                            },
                           ),
                           Gap(15.h),
                           Text(

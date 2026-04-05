@@ -26,8 +26,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+  const HomeScreen({super.key, required this.email, required this.password});
+  final String email;
+  final String password;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -38,6 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     allItemsBloc.add(GetAllItemsEvent());
+  }
+
+  Future<void> _refreshData() async {
+    context.read<AllItemsBloc>().add(GetAllItemsEvent());
+
+    context.read<LoginBloc>().add(LoginEvent(email: widget.email, password: widget.password));
+    // optional delay (عشان يظهر animation)
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override
@@ -91,67 +100,73 @@ class _HomeScreenState extends State<HomeScreen> {
           drawer: Drawer(width: Shared.width * 0.8, child: DrawerDetails()),
           backgroundColor: kWhiteColor,
           appBar: CustomHomeAppBar(),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: Shared.height * 0.25.h,
-                    child: CarouselSliderContainer(),
-                  ),
-                  Gap(14.h),
-                  Text('الفئات', style: font14BlackBold),
-                  Gap(10.h),
-                  SizedBox(
-                    height: Shared.height * 0.2.h,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: categories.length,
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: categories[index].onTap,
-                          child: CategoryItemListView(
-                            category: categories[index],
-                          ),
-                        );
+          body: RefreshIndicator(
+            color: kPrimaryColor,
+            backgroundColor: Colors.white,
+            onRefresh: _refreshData,
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: Shared.height * 0.25.h,
+                      child: CarouselSliderContainer(),
+                    ),
+                    Gap(14.h),
+                    Text('الفئات', style: font14BlackBold),
+                    Gap(10.h),
+                    SizedBox(
+                      height: Shared.height * 0.2.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categories.length,
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: categories[index].onTap,
+                            child: CategoryItemListView(
+                              category: categories[index],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Gap(18.h),
+                    Text('العناصر المقترحة', style: font14BlackBold),
+                    Gap(8.h),
+                    BlocBuilder<AllItemsBloc, AllItemsState>(
+                      bloc: allItemsBloc,
+                      builder: (context, state) {
+                        if (state.status == allItemsStatus.loading) {
+                          return const LoadingPlaceHolder(
+                            shimmerType: ShimmerType.list,
+                            cellShimmerHeight: 50,
+                            shimmerCount: 10,
+                          );
+                        } else if (state.status == allItemsStatus.success) {
+                          final products = state.product;
+                          return ListView.builder(
+                            itemCount: state.product.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return ProductCardListView(product: products[index]);
+                            },
+                          );
+                        }
+                        else if (state.status == allItemsStatus.failure) {
+                          return Center(child: Text(state.failureMessage));
+                        } else  {
+                          return Center(child: Text("No Data Yet"));
+                        }
                       },
                     ),
-                  ),
-                  Gap(18.h),
-                  Text('العناصر المقترحة', style: font14BlackBold),
-                  Gap(8.h),
-                  BlocBuilder<AllItemsBloc, AllItemsState>(
-                    bloc: allItemsBloc,
-                    builder: (context, state) {
-                      if (state.status == allItemsStatus.loading) {
-                        return const LoadingPlaceHolder(
-                          shimmerType: ShimmerType.list,
-                          cellShimmerHeight: 50,
-                          shimmerCount: 10,
-                        );
-                      } else if (state.status == allItemsStatus.success) {
-                        final products = state.product;
-                        return ListView.builder(
-                          itemCount: state.product.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return ProductCardListView(product: products[index]);
-                          },
-                        );
-                      }
-                      else if (state.status == allItemsStatus.failure) {
-                        return Center(child: Text(state.failureMessage));
-                      } else  {
-                        return Center(child: Text("No Data Yet"));
-                      }
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

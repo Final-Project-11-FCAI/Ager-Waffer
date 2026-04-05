@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen>
                 MaterialPageRoute(
                   builder: (c) => BlocProvider(
                     create: (_) => BottomNavCubit(),
-                    child: const HomeLayoutScreen(),
+                    child: HomeLayoutScreen(email: emailController.text,password: passwordController.text,),
                   ),
                 ),
               );
