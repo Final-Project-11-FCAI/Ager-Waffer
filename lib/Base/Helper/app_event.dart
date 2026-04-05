@@ -112,6 +112,11 @@ class AddReviewEvent extends AppEvent {
 }
 
 
+class GetItemReviewEvent extends AppEvent {
+  final int itemId;
+
+  GetItemReviewEvent({required this.itemId});
+}
 
 
 

@@ -10,11 +10,12 @@ class EmailTextField extends StatefulWidget {
     super.key,
     required this.icon,
     required this.label,
-    this.isName = false, required this.emailController, required this.validator,
+    this.isName = false, required this.emailController, required this.validator, this.isPhone = false,
   });
   final Icon icon;
   final String label;
   final bool isName;
+  final bool isPhone;
   final TextEditingController emailController;
   final String? Function(String?)? validator;
 
@@ -55,7 +56,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
         TextFormField(
           controller: widget.emailController,
           validator: (value) => value!.isEmpty ? kRequired.tr() : null,
-          keyboardType: widget.isName ? TextInputType.name : TextInputType.emailAddress,
+          keyboardType: widget.isName ? TextInputType.name : widget.isPhone ? TextInputType.phone : TextInputType.emailAddress,
           decoration: InputDecoration(
             label: Text(widget.label),
             prefixIcon: widget.icon,

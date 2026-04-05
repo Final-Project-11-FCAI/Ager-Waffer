@@ -1,14 +1,17 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ElectronicsScreen extends StatefulWidget {
   const ElectronicsScreen({super.key, required this.products});
@@ -67,14 +70,26 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
                     );
                   } else if (state.status == allItemsStatus.success) {
                     final products = state.product;
-                    final electronics = products.where((e) => e.categoryName == "Electronics").toList();
+                    final electronics = products.where((e) => e.categoryName == kElectronics.tr()).toList();
 
                     if (electronics.isEmpty) {
-                      return Center(
-                        child: Text(
-                          "No Data Found",
-                          style: font16BlackSemiBold.copyWith(color: kBlackColor),
-                        ),
+                      return LayoutBuilder(
+                        builder: (context, constraints) {
+                          return SingleChildScrollView(
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: constraints.maxHeight,
+                              ),
+                              child: Center(
+                                child: EmptyProducts(
+                                  image: 'assets/images/no_products.png',
+                                  title: 'لا توجد عناصر متاحة',
+                                  subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       );
                     }
                     return ListView.builder(

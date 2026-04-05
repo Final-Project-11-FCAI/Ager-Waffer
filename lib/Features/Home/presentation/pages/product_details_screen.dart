@@ -1,43 +1,40 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/review_entity.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/contact_owner_container.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_images.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/rent_and_favorite_button.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/review_item.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 import '../widgets/product_data.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   final ProductData product;
 
-  ProductDetailsScreen({super.key, required this.product});
+  const ProductDetailsScreen({super.key, required this.product});
 
-  final List<ReviewEntity> reviews = [
-    ReviewEntity(
-      name: "عمرو حسن",
-      comment: "عربة ممتازة ومريحة جداً، والتعامل مع المالك كان احترافي.",
-      date: "منذ 3 أيام",
-      rating: 4.5,
-    ),
-     ReviewEntity(
-      name: "ندي يونس",
-      comment: "العربة نظيفة وسهلة الاستخدام، أنصح بها جداً للأمهات.",
-      date: "منذ أسبوع",
-      rating: 5.0,
-    ),
-    ReviewEntity(
-      name: "مني علي",
-      comment: "تجربة جيدة بشكل عام، فقط حجم العربة أكبر مما توقعت.",
-      date: "منذ أسبوعين",
-      rating: 4.0,
-    ),
-  ];
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ItemReviewBloc>().add(GetItemReviewEvent(itemId: widget.product.id!));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,17 +64,17 @@ class ProductDetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: ProductImages(product: product,),
+                        child: ProductImages(product: widget.product,),
                       ),
                       Gap(20.h),
-                      ProductDataContainer(product: product),
+                      ProductDataContainer(product: widget.product),
                       Gap(10.h),
                      Padding(
                        padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.08.w, vertical: Shared.height * 0.02.h),
                        child: Divider(color: kBlackColor, thickness: 1.h,),
                      ),
                       Gap(10.h),
-                      ContactOwnerContainer(product: product,),
+                      ContactOwnerContainer(product: widget.product,),
                       Gap(24.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,25 +86,49 @@ class ProductDetailsScreen extends StatelessWidget {
                         ],
                       ),
                       Gap(5.h),
-                      ListView.builder(
-                        itemCount: reviews.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                          child: ReviewItem(
-                            review: reviews[index],
-                          ),
-                        );
-                      },
+                      BlocBuilder<ItemReviewBloc, ItemReviewState>(
+                        builder: (context, state) {
+                          if (state.status == itemReviewStatus.loading) {
+                            return const LoadingPlaceHolder(
+                              shimmerType: ShimmerType.list,
+                              cellShimmerHeight: 50,
+                              shimmerCount: 10,
+                            );
+                          } else if (state.status == itemReviewStatus.success) {
+                            final reviews = state.reviews;
+                            return reviews.isNotEmpty ?
+                            ListView.builder(
+                              itemCount: reviews.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                                  child: ReviewItem(
+                                    review: reviews[index],
+                                  ),
+                                );
+                              },
+                            ) : Center(child: EmptyProducts(
+                              image: 'assets/images/empty_products.png',
+                              title: 'لا يوجد تقيمات حتي الان',
+                              subTitle: '',
+                              titleFontSize: 19.sp,
+                            ));
+                          }
+                          else if (state.status == itemReviewStatus.failure) {
+                            return Center(child: Text(state.failureMessage));
+                          } else  {
+                            return Center(child: Text("No Data Yet"));
+                          }
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            RentAndFavoriteButton(product: product,)
+            RentAndFavoriteButton(product: widget.product,)
           ],
         ),
       ),

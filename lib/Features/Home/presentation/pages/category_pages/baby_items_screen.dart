@@ -1,13 +1,16 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class BabyItemsScreen extends StatefulWidget {
   const BabyItemsScreen({super.key});
@@ -62,14 +65,26 @@ class _BabyItemsScreenState extends State<BabyItemsScreen> {
                 );
               } else if (state.status == allItemsStatus.success) {
                 final products = state.product;
-                final babyGear = products.where((e) => e.categoryName == "Baby Gear").toList();
+                final babyGear = products.where((e) => e.categoryName == kBabyGear.tr()).toList();
 
                 if (babyGear.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "No Data Found",
-                      style: font16BlackSemiBold.copyWith(color: kBlackColor),
-                    ),
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SingleChildScrollView(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                          ),
+                          child: Center(
+                            child: EmptyProducts(
+                              image: 'assets/images/no_products.png',
+                              title: 'لا توجد عناصر متاحة',
+                              subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   );
                 }
                 return ListView.builder(

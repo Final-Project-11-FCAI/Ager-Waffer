@@ -1,0 +1,143 @@
+import 'package:ager_waffer/Base/common/input_validation.dart';
+import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
+import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
+
+class UserInformation extends StatefulWidget {
+  const UserInformation({super.key});
+
+  @override
+  State<UserInformation> createState() => _UserInformationState();
+}
+
+class _UserInformationState extends State<UserInformation> {
+  final formKey = GlobalKey<FormState>();
+  final phoneController = TextEditingController();
+  final cityController = TextEditingController();
+  final govController = TextEditingController();
+  final streetController = TextEditingController();
+
+  bool isFormValid = false;
+  void validateForm() {
+    final isValid =
+        phoneController.text.isNotEmpty &&
+            cityController.text.isNotEmpty &&
+            govController.text.isNotEmpty &&
+            streetController.text.isNotEmpty &&
+            InputValidation.isValidEgyptianPhone(phoneController.text) == '' &&
+            InputValidation.isValidAddress(govController.text, '') == '' &&
+            InputValidation.isValidAddress(cityController.text, '') == '' &&
+            InputValidation.isValidAddress(streetController.text, '') == '';
+
+    setState(() {
+      isFormValid = isValid;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    phoneController.addListener(validateForm);
+    cityController.addListener(validateForm);
+    govController.addListener(validateForm);
+    streetController.addListener(validateForm);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Shared.width * 0.06.w,
+            vertical: Shared.height * 0.04.h,
+          ),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "يرجي إستكمال بياناتك أولاً",
+                  style: font20BoldGreyRegular.copyWith(
+                    color: kBlackColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gap(5.h),
+                Text(
+                  "لإتمام عملية إضافة المنتجات",
+                  style: font20PrimaryMedium.copyWith(
+                    fontSize: 16,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                Gap(30.h),
+                EmailTextField(
+                  icon: Icon(Icons.phone),
+                  label: 'رقم الهاتف',
+                  emailController: phoneController,
+                  isPhone: true,
+                  validator: (value) {
+                    return InputValidation.isValidEgyptianPhone(value ?? '');
+                  },
+                ),
+                Gap(20.h),
+                EmailTextField(
+                  icon: Icon(Icons.location_on),
+                  label: 'المحافظة',
+                  isName: true,
+                  emailController: govController,
+                  validator: (value) {
+                    return InputValidation.isValidAddress(value ?? '', 'ادخل محافظتك',);
+                  },
+                ),
+                Gap(20.h),
+
+                EmailTextField(
+                  icon: Icon(Icons.location_city),
+                  label: 'المدينة',
+                  emailController: cityController,
+                  isName: true,
+                  validator: (value) {
+                    return InputValidation.isValidAddress(value ?? '', 'ادخل مدينتك',);
+                  },
+                ),
+                Gap(20.h),
+                EmailTextField(
+                  icon: Icon(Icons.streetview),
+                  label: 'الشارع',
+                  isName: true,
+                  emailController: streetController,
+                  validator: (value) {
+                    return InputValidation.isValidAddress(value ?? '', 'ادخل شارعك');
+                  },
+                ),
+                Gap(30.h),
+            ButtonApp(
+              onPressed: isFormValid
+                  ? () {
+                if (formKey.currentState!.validate()) {
+                  Navigator.pop(context);
+                }
+              }
+                  : null,
+              text: 'حفظ',
+              color: kPrimaryColor,
+            ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

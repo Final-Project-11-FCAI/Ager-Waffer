@@ -1,15 +1,50 @@
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/review_entity.dart';
+import 'package:ager_waffer/Features/Home/data/models/item_reviews_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 class ReviewItem extends StatelessWidget {
-  final ReviewEntity review;
+  final Data review;
 
   const ReviewItem({super.key,
     required this.review,
   });
+  
+  String formatDateSmart(String date) {
+    try {
+      final now = DateTime.now();
+      final parsedDate = DateTime.parse(date);
+      final diff = now.difference(parsedDate);
+
+      // أقل من دقيقة
+      if (diff.inSeconds < 60) {
+        return 'منذ لحظات';
+      }
+
+      // أقل من ساعة
+      if (diff.inMinutes < 60) {
+        return 'منذ ${diff.inMinutes} دقيقة';
+      }
+
+      // أقل من 24 ساعة
+      if (diff.inHours < 24) {
+        return 'منذ ${diff.inHours} ساعة';
+      }
+
+      // أقل من أسبوع
+      if (diff.inDays <= 7) {
+        return 'منذ ${diff.inDays} يوم';
+      }
+
+      // بعد كده تاريخ عادي
+      return DateFormat('dd MMM yyyy', 'ar').format(parsedDate);
+
+    } catch (e) {
+      return date;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +67,7 @@ class ReviewItem extends StatelessWidget {
               CircleAvatar(
                 radius: 20.r,
                 backgroundColor: kOpacityGreyColor,
-                backgroundImage: const AssetImage(
-                  'assets/images/profile_image.png',
-                ),
+                backgroundImage: NetworkImage(review.authorImageUrl ?? 'assets/images/virtual_user.jpg'),
               ),
               Gap(10.w),
               Expanded(
@@ -46,14 +79,14 @@ class ReviewItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            review.name,
+                            review.authorName ?? 'User Name',
                             style: font16BlackSemiBold.copyWith(
                               fontSize: 13.sp,
                             ),
                           ),
                         ),
                         Text(
-                          review.date,
+                          formatDateSmart(review.createAt!) ?? 'date',
                           style: font14GreyRegular.copyWith(
                             fontSize: 11.sp,
                           ),
@@ -63,7 +96,7 @@ class ReviewItem extends StatelessWidget {
                     Gap(4.h),
                     Row(
                       children: [
-                        Text('4.5', style: font20PrimaryMedium.copyWith(fontSize: 12.sp,color: kPartGreyColor),),
+                        Text(review.rate.toString() ?? '0.0', style: font20PrimaryMedium.copyWith(fontSize: 12.sp,color: kPartGreyColor),),
                         Gap(1.w),
                         Icon(Icons.star, size: 12.sp, color: Colors.amber),
                       ],
@@ -75,7 +108,7 @@ class ReviewItem extends StatelessWidget {
           ),
           Gap(6.h),
           Text(
-            review.comment,
+            review.reviewText ?? 'Review Text',
             style: font14GreyRegular.copyWith(
               fontSize: 12.sp,
               color: kBlackColor

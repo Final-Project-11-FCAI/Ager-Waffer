@@ -296,19 +296,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("تأكيد التعديل"),
+          title: Text("تأكيد التعديل",
+            style: font20PrimaryMedium.copyWith(fontWeight: bold),
+          ),
           surfaceTintColor: kWhiteColor,
           content: Text(
             "سوف يتم الخروج الي صفحة تسجيل الدخول للتسجيل مرة اخرى",
+            style: font16BlackSemiBold.copyWith(
+              fontWeight: medium,
+              color: kMoreGreyColor,
+            ),
           ),
           actions: [
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                foregroundColor: kWhiteColor,
+                backgroundColor: kWhiteColor,
+                foregroundColor: kPrimaryColor,
               ),
-              child: Text("إلغاء"),
+              child: Text("إلغاء",
+                style: font16BlackSemiBold.copyWith(
+                  fontSize: 14.sp,
+                  color: kPrimaryColor,
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -332,7 +343,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 backgroundColor: kPrimaryColor,
                 foregroundColor: kWhiteColor,
               ),
-              child: Text("تعديل", style: TextStyle(color: kWhiteColor)),
+              child: Text("تعديل", style: font16BlackSemiBold.copyWith(
+                fontSize: 14.sp,
+                color: kWhiteColor,
+              ),),
             ),
           ],
         );

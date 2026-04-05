@@ -135,7 +135,7 @@ class Dialogs {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'حذف'.toString(),
+                                  'حذف',
                                   style: font16BlackSemiBold.copyWith(
                                     fontSize: 14.sp,
                                     color: kWhiteColor,
@@ -172,7 +172,7 @@ class Dialogs {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'إلغاء'.toString(),
+                                  'إلغاء',
                                   style: font16BlackSemiBold.copyWith(
                                     fontSize: 14.sp,
                                     color: kPrimaryColor,

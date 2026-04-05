@@ -15,6 +15,34 @@ class InputValidation{
     }
     return '';
   }
+
+
+  static String isValidAddress(String value, String errorMessage) {
+    if (value.trim().isEmpty) {
+      return errorMessage;
+    }
+    return '';
+  }
+
+  static String isValidEgyptianPhone(String phone) {
+    if (phone.isEmpty) {
+      return 'من فضلك أدخل رقم الهاتف';
+    }
+
+    // يشيل أي مسافات
+    phone = phone.trim();
+
+    // Regex للموبايل المصري
+    final regex = RegExp(r'^01[0125][0-9]{8}$');
+
+    if (!regex.hasMatch(phone)) {
+      return 'رقم هاتف غير صحيح';
+    }
+
+    return '';
+  }
+
+
   static bool isValidNameValidation(String name) {
     final regex = RegExp(r'^[a-zA-Z\s]+$');
     return name.isNotEmpty && name.length > 2 && regex.hasMatch(name);

@@ -12,6 +12,7 @@ import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_st
 import 'package:ager_waffer/Features/Profile/presentation/pages/add_product_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/edit_profile_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/my_products_item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -110,11 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             Gap(3.w),
-                            Icon(
-                              Icons.star,
-                              size: 17.sp,
-                              color: Colors.amber,
-                            ),
+                            Icon(Icons.star, size: 17.sp, color: Colors.amber),
                           ],
                         ),
                         Row(
@@ -122,9 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               'منتجاتي',
-                              style: font16BlackSemiBold.copyWith(
-                                fontSize: 20,
-                              ),
+                              style: font16BlackSemiBold.copyWith(fontSize: 20),
                             ),
                           ],
                         ),
@@ -135,13 +130,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             listener: (context, state) {
                               if (state.status == deleteItemStatus.loading) {
                                 Shared.showLoadingDialog(context: context);
-                              } else if (state.status == deleteItemStatus.success) {
+                              } else if (state.status ==
+                                  deleteItemStatus.success) {
                                 Shared.dismissDialog(context: context);
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("تم حذف المنتج بنجاح")),
+                                  SnackBar(
+                                    content: Text("تم حذف المنتج بنجاح"),
+                                  ),
                                 );
-                                context.read<MyListingsBloc>().add(GetMyListingsEvent());
-                              } else if (state.status == deleteItemStatus.failure) {
+                                context.read<MyListingsBloc>().add(
+                                  GetMyListingsEvent(),
+                                );
+                              } else if (state.status ==
+                                  deleteItemStatus.failure) {
                                 Shared.dismissDialog(context: context);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(state.failureMessage)),
@@ -156,26 +157,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     cellShimmerHeight: 50,
                                     shimmerCount: 10,
                                   );
-                                } else if (state.status == myListingsStatus.success) {
+                                } else if (state.status ==
+                                    myListingsStatus.success) {
                                   final myListings = state.myListings;
                                   return myListings.isNotEmpty
                                       ? ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: myListings.length,
-                                    shrinkWrap: true,
-                                    physics: BouncingScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      return MyProductsItemListView(
-                                        myListings: myListings[index],
-                                      );
-                                    },
-                                  )
-                                      : Center(child: Text("No Data Yet"));
-                                } else if (state.status == myListingsStatus.failure) {
+                                          padding: EdgeInsets.zero,
+                                          itemCount: myListings.length,
+                                          shrinkWrap: true,
+                                          physics: BouncingScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            return MyProductsItemListView(
+                                              myListings: myListings[index],
+                                            );
+                                          },
+                                        )
+                                      : EmptyProducts(
+                                          image: 'assets/images/empty_products.png',
+                                          title: 'لم تقم بإضافة أي منتجات بعد',
+                                          subTitle: 'أضف منتجاتك ليتمكن الآخرون من استئجارها',
+                                        );
+                                } else if (state.status ==
+                                    myListingsStatus.failure) {
                                   return CustomErrorWidget(
                                     message: state.failureMessage,
                                     onRetry: () {
-                                      context.read<MyListingsBloc>().add(GetMyListingsEvent());
+                                      context.read<MyListingsBloc>().add(
+                                        GetMyListingsEvent(),
+                                      );
                                     },
                                   );
                                 } else {
@@ -198,8 +207,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: CircleAvatar(
                 radius: 70.r,
                 backgroundImage: user.imageUrl != null
-                    ? NetworkImage("${user.imageUrl}?t=${DateTime.now().millisecondsSinceEpoch}")
-                    : AssetImage('assets/images/virtual_user.jpg') as ImageProvider,
+                    ? NetworkImage(
+                        "${user.imageUrl}?t=${DateTime.now().millisecondsSinceEpoch}",
+                      )
+                    : AssetImage('assets/images/virtual_user.jpg')
+                          as ImageProvider,
               ),
             ),
             Positioned(
@@ -210,7 +222,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () async {
                   final result = await Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => EditProfileScreen(user: user,)),
+                    MaterialPageRoute(
+                      builder: (_) => EditProfileScreen(user: user),
+                    ),
                   );
 
                   if (result == true) {
