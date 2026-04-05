@@ -3,13 +3,9 @@ import 'dart:io';
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/dialogs.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
-import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/add_item_entity.dart';
-import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
-import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
-import 'package:ager_waffer/Features/Profile/presentation/widgets/user_information.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_state.dart';
@@ -17,6 +13,7 @@ import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bl
 import 'package:ager_waffer/Features/Profile/presentation/widgets/product_data_container.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/rental_type_container.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/upload_product_images_container.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/user_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -103,19 +100,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         builder: (context) {
-        return WillPopScope(
-          onWillPop: () async {
-            Navigator.pop(context);
-            Navigator.pop(context);
-            return false;
-          },
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom, // 🔥 ده الحل
-            ),
-            child: UserInformation(),
-          ),
-        );
+        return UserInformation();
       },
       );
     });

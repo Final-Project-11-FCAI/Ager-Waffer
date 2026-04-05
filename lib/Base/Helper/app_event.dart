@@ -119,6 +119,21 @@ class GetItemReviewEvent extends AppEvent {
 }
 
 
+class UpdateAddressEvent extends AppEvent {
+  final String city;
+  final String street;
+  final String governorate;
+  final String phoneNumber;
+
+  UpdateAddressEvent({
+    required this.city,
+    required this.street,
+    required this.governorate,
+    required this.phoneNumber,
+  });
+}
+
+
 
 // class VerifyOtpEvent extends AppEvent{
 //   final OtpEntity otpEntity;

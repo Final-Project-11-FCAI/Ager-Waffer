@@ -12,6 +12,7 @@ const String resetPasswordUrl = "Authentication/reset-password";
 const String updateProfileUrl = "Authentication/update-profile";
 const String addItemUrl = "Items";
 const String addReviewUrl = "Review/AddReview";
+const String updateAddressUrl = "Authentication/update-address";
 
 
 

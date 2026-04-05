@@ -42,6 +42,22 @@ class InputValidation{
     return '';
   }
 
+  static String? isValidEditEgyptianPhone(String phone) {
+    if (phone.isEmpty) {
+      return 'من فضلك أدخل رقم الهاتف';
+    }
+
+    phone = phone.trim();
+
+    final regex = RegExp(r'^01[0125][0-9]{8}$');
+
+    if (!regex.hasMatch(phone)) {
+      return 'رقم هاتف غير صحيح';
+    }
+
+    return null;
+  }
+
 
   static bool isValidNameValidation(String name) {
     final regex = RegExp(r'^[a-zA-Z\s]+$');

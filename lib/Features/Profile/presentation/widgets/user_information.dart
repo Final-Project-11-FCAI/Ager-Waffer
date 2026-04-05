@@ -1,10 +1,16 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/update_address_bloc.dart';
+import 'package:ager_waffer/Features/Profile/presentation/manager/update_address_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:gap/gap.dart';
 
 class UserInformation extends StatefulWidget {
@@ -50,90 +56,127 @@ class _UserInformationState extends State<UserInformation> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
+    return BlocListener<UpdateAddressBloc, UpdateAddressState>(
+      listener: (context, state) {
+        if (state.status == updateAddressStatus.loading) {
+          Shared.showLoadingDialog(context: context);
+        } else if (state.status == updateAddressStatus.success) {
+          Shared.dismissDialog(context: context);
+          Navigator.of(context).pop();
+        } else if (state.status == updateAddressStatus.failure) {
+          Shared.dismissDialog(context: context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.failureMessage ??
+                    kSomethingWentWrong.tr(),
+              ),
+            ),
+          );
+        }
       },
-      child: SingleChildScrollView(
+      child: WillPopScope(
+        onWillPop: () async {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          return false;
+        },
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Shared.width * 0.06.w,
-            vertical: Shared.height * 0.04.h,
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "يرجي إستكمال بياناتك أولاً",
-                  style: font20BoldGreyRegular.copyWith(
-                    color: kBlackColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Shared.width * 0.06.w,
+                  vertical: Shared.height * 0.04.h,
                 ),
-                Gap(5.h),
-                Text(
-                  "لإتمام عملية إضافة المنتجات",
-                  style: font20PrimaryMedium.copyWith(
-                    fontSize: 16,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "يرجي إستكمال بياناتك أولاً",
+                        style: font20BoldGreyRegular.copyWith(
+                          color: kBlackColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Gap(5.h),
+                      Text(
+                        "لإتمام عملية إضافة المنتجات",
+                        style: font20PrimaryMedium.copyWith(
+                          fontSize: 16,
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                      Gap(30.h),
+                      EmailTextField(
+                        icon: Icon(Icons.phone),
+                        label: 'رقم الهاتف',
+                        emailController: phoneController,
+                        isPhone: true,
+                        validator: (value) {
+                          return InputValidation.isValidEgyptianPhone(value ?? '');
+                        },
+                      ),
+                      Gap(20.h),
+                      EmailTextField(
+                        icon: Icon(Icons.location_on),
+                        label: 'المحافظة',
+                        isName: true,
+                        emailController: govController,
+                        validator: (value) {
+                          return InputValidation.isValidAddress(value ?? '', 'ادخل محافظتك',);
+                        },
+                      ),
+                      Gap(20.h),
+
+                      EmailTextField(
+                        icon: Icon(Icons.location_city),
+                        label: 'المدينة',
+                        emailController: cityController,
+                        isName: true,
+                        validator: (value) {
+                          return InputValidation.isValidAddress(value ?? '', 'ادخل مدينتك',);
+                        },
+                      ),
+                      Gap(20.h),
+                      EmailTextField(
+                        icon: Icon(Icons.streetview),
+                        label: 'الشارع',
+                        isName: true,
+                        emailController: streetController,
+                        validator: (value) {
+                          return InputValidation.isValidAddress(value ?? '', 'ادخل شارعك');
+                        },
+                      ),
+                      Gap(30.h),
+                  ButtonApp(
+                    onPressed: isFormValid
+                        ? () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<UpdateAddressBloc>().add(UpdateAddressEvent(
+                          phoneNumber: phoneController.text,
+                          city: cityController.text,
+                          governorate: govController.text,
+                          street: streetController.text,
+                        ));
+                      }
+                    }
+                        : null,
+                    text: 'حفظ',
                     color: kPrimaryColor,
                   ),
+                    ],
+                  ),
                 ),
-                Gap(30.h),
-                EmailTextField(
-                  icon: Icon(Icons.phone),
-                  label: 'رقم الهاتف',
-                  emailController: phoneController,
-                  isPhone: true,
-                  validator: (value) {
-                    return InputValidation.isValidEgyptianPhone(value ?? '');
-                  },
-                ),
-                Gap(20.h),
-                EmailTextField(
-                  icon: Icon(Icons.location_on),
-                  label: 'المحافظة',
-                  isName: true,
-                  emailController: govController,
-                  validator: (value) {
-                    return InputValidation.isValidAddress(value ?? '', 'ادخل محافظتك',);
-                  },
-                ),
-                Gap(20.h),
-
-                EmailTextField(
-                  icon: Icon(Icons.location_city),
-                  label: 'المدينة',
-                  emailController: cityController,
-                  isName: true,
-                  validator: (value) {
-                    return InputValidation.isValidAddress(value ?? '', 'ادخل مدينتك',);
-                  },
-                ),
-                Gap(20.h),
-                EmailTextField(
-                  icon: Icon(Icons.streetview),
-                  label: 'الشارع',
-                  isName: true,
-                  emailController: streetController,
-                  validator: (value) {
-                    return InputValidation.isValidAddress(value ?? '', 'ادخل شارعك');
-                  },
-                ),
-                Gap(30.h),
-            ButtonApp(
-              onPressed: isFormValid
-                  ? () {
-                if (formKey.currentState!.validate()) {
-                  Navigator.pop(context);
-                }
-              }
-                  : null,
-              text: 'حفظ',
-              color: kPrimaryColor,
-            ),
-              ],
+              ),
             ),
           ),
         ),

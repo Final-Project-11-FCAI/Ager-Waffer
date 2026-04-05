@@ -1,6 +1,5 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
-import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -30,6 +29,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController secondNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -42,12 +42,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String _originalLastName = '';
   String _originalPhone = '';
 
+  bool get _isPasswordValid {
+    if (passwordController.text.isEmpty) return true;
+
+    return InputValidation.passwordValidator(
+        passwordController.text) ==
+        null;
+  }
+
   bool get _hasChanges =>
-      firstNameController.text != _originalFirstName ||
-      secondNameController.text != _originalLastName ||
-      phoneController.text != _originalPhone ||
-      passwordController.text.isNotEmpty ||
-      _pickedImage != null;
+      (firstNameController.text != _originalFirstName ||
+          secondNameController.text != _originalLastName ||
+          phoneController.text != _originalPhone ||
+          passwordController.text.isNotEmpty ||
+          _pickedImage != null) &&
+          _isPasswordValid &&
+          _isPhoneValid;
+
+  bool get _isPhoneValid {
+    // لو المستخدم ما غيّرش الرقم → اعتبره valid
+    if (phoneController.text == _originalPhone) return true;
+
+    // لو فاضي → اعتبره valid (عشان انت بتبعت null)
+    if (phoneController.text.isEmpty) return true;
+
+    // لو كتب رقم → لازم يكون valid
+    return InputValidation.isValidEditEgyptianPhone(
+        phoneController.text) ==
+        null;
+  }
 
   @override
   void initState() {
@@ -139,156 +162,160 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               onPressed: () => Navigator.pop(context),
             ),
           ),
-          body: Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: Shared.height * 0.15.h),
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: kWhiteColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.r),
-                      topRight: Radius.circular(25.r),
-                    ),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: Shared.height * 0.1.h,
-                        right: Shared.width * 0.04.w,
-                        left: Shared.width * 0.025.h,
-                        bottom: Shared.width * 0.04.h,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'الاسم الأول',
-                            style: font24LightPrimarySemiBold.copyWith(
-                              fontSize: 16,
-                              fontWeight: medium,
-                            ),
-                          ),
-                          Gap(10.h),
-                          EditProfileTextField(
-                            controller: firstNameController,
-                            icon: Icon(Icons.account_circle_outlined),
-                            label: "الاسم الأول",
-                            keyboardType: TextInputType.name,
-                            isPrefixFound: true,
-                          ),
-                          Gap(15.h),
-                          Text(
-                            "الاسم الثاني",
-                            style: font24LightPrimarySemiBold.copyWith(
-                              fontSize: 16,
-                              fontWeight: medium,
-                            ),
-                          ),
-                          Gap(10.h),
-                          EditProfileTextField(
-                            controller: secondNameController,
-                            icon: Icon(Icons.account_circle_outlined),
-                            label: "الاسم الثاني",
-                            keyboardType: TextInputType.name,
-                            isPrefixFound: true,
-                          ),
-                          Gap(15.h),
-                          Text(
-                            'رقم الهاتف',
-                            style: font24LightPrimarySemiBold.copyWith(
-                              fontSize: 16,
-                              fontWeight: medium,
-                            ),
-                          ),
-                          Gap(10.h),
-                          EditProfileTextField(
-                            controller: phoneController,
-                            keyboardType: TextInputType.number,
-                            icon: Icon(Icons.phone),
-                            label: 'رقم الهاتف',
-                            validator: (value) {
-                              return InputValidation.isValidEgyptianPhone(value ?? '');
-                            },
-                          ),
-                          Gap(15.h),
-                          Text(
-                            'كلمة المرور',
-                            style: font24LightPrimarySemiBold.copyWith(
-                              fontSize: 16,
-                              fontWeight: medium,
-                            ),
-                          ),
-                          Gap(10.h),
-                          PasswordTextField(
-                            passwordController: passwordController,
-                            icon: Icon(Icons.lock_outline),
-                            label: 'ادخل كلمة المرور الجديدة',
-                            validator: (value) {
-                              return InputValidation.passwordValidator(value!);
-                            },
-                          ),
-                          Gap(25.h),
-                          ButtonApp(
-                            onPressed: _hasChanges
-                                ? () {
-                                    _showUpdateDialog(context);
-                                  }
-                                : null,
-                            text: 'حفظ',
-                            color: _hasChanges ? kPrimaryColor : kGreyColor,
-                          ),
-                        ],
+          body: Form(
+            key: _formKey,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: Shared.height * 0.15.h),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: kWhiteColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25.r),
+                        topRight: Radius.circular(25.r),
                       ),
                     ),
-                  ),
-                ),
-              ),
-
-              // Profile Image
-              Positioned(
-                right: Shared.width * 0.25.sp,
-                left: Shared.width * 0.25.sp,
-                top: Shared.height * 0.02.sp,
-                child: _pickedImage != null
-                    ? CircleAvatar(
-                        radius: 70.r,
-                        backgroundImage: FileImage(File(_pickedImage!.path)),
-                      )
-                    : CircleAvatar(
-                        radius: 70.r,
-                        backgroundImage: NetworkImage(
-                          widget.user.imageUrl.toString(),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: Shared.height * 0.1.h,
+                          right: Shared.width * 0.04.w,
+                          left: Shared.width * 0.025.h,
+                          bottom: Shared.width * 0.04.h,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'الاسم الأول',
+                              style: font24LightPrimarySemiBold.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
+                            ),
+                            Gap(10.h),
+                            EditProfileTextField(
+                              controller: firstNameController,
+                              icon: Icon(Icons.account_circle_outlined),
+                              label: "الاسم الأول",
+                              keyboardType: TextInputType.name,
+                              isPrefixFound: true,
+                            ),
+                            Gap(15.h),
+                            Text(
+                              "الاسم الثاني",
+                              style: font24LightPrimarySemiBold.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
+                            ),
+                            Gap(10.h),
+                            EditProfileTextField(
+                              controller: secondNameController,
+                              icon: Icon(Icons.account_circle_outlined),
+                              label: "الاسم الثاني",
+                              keyboardType: TextInputType.name,
+                              isPrefixFound: true,
+                            ),
+                            Gap(15.h),
+                            Text(
+                              'رقم الهاتف',
+                              style: font24LightPrimarySemiBold.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
+                            ),
+                            Gap(10.h),
+                            EditProfileTextField(
+                              controller: phoneController,
+                              keyboardType: TextInputType.number,
+                              icon: Icon(Icons.phone),
+                              label: 'رقم الهاتف',
+                              validator: (value) {
+                                if (value == _originalPhone || value!.isEmpty) return null;
+                                return InputValidation.isValidEditEgyptianPhone(value ?? '');
+                                },
+                            ),
+                            Gap(15.h),
+                            Text(
+                              'كلمة المرور',
+                              style: font24LightPrimarySemiBold.copyWith(
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
+                            ),
+                            Gap(10.h),
+                            PasswordTextField(
+                              passwordController: passwordController,
+                              icon: Icon(Icons.lock_outline),
+                              label: 'ادخل كلمة المرور الجديدة',
+                              validator: (value) {
+                                return InputValidation.passwordValidator(value!);
+                              },
+                            ),
+                            Gap(25.h),
+                            ButtonApp(
+                              onPressed: _hasChanges
+                                  ? () {
+                                      _showUpdateDialog(context);
+                                    }
+                                  : null,
+                              text: 'حفظ',
+                              color: _hasChanges ? kPrimaryColor : kGreyColor,
+                            ),
+                          ],
                         ),
                       ),
-              ),
-
-              // Camera Edit Button
-              Positioned(
-                right: Shared.width * 0.31.w,
-                top: Shared.height * 0.16.h,
-                child: GestureDetector(
-                  onTap: () async {
-                    final ImagePicker picker = ImagePicker();
-                    final XFile? image = await picker.pickImage(
-                      source: ImageSource.gallery,
-                    );
-                    if (image != null) {
-                      setState(() {
-                        _pickedImage = image;
-                      });
-                    }
-                  },
-                  child: Image.asset(
-                    'assets/images/camera_edit.png',
-                    width: Shared.width * 0.1.w,
-                    height: Shared.height * 0.05.h,
+                    ),
                   ),
                 ),
-              ),
-            ],
+
+                // Profile Image
+                Positioned(
+                  right: Shared.width * 0.25.sp,
+                  left: Shared.width * 0.25.sp,
+                  top: Shared.height * 0.02.sp,
+                  child: _pickedImage != null
+                      ? CircleAvatar(
+                          radius: 70.r,
+                          backgroundImage: FileImage(File(_pickedImage!.path)),
+                        )
+                      : CircleAvatar(
+                          radius: 70.r,
+                          backgroundImage: NetworkImage(
+                            widget.user.imageUrl.toString(),
+                          ),
+                        ),
+                ),
+
+                // Camera Edit Button
+                Positioned(
+                  right: Shared.width * 0.31.w,
+                  top: Shared.height * 0.16.h,
+                  child: GestureDetector(
+                    onTap: () async {
+                      final ImagePicker picker = ImagePicker();
+                      final XFile? image = await picker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+                      if (image != null) {
+                        setState(() {
+                          _pickedImage = image;
+                        });
+                      }
+                    },
+                    child: Image.asset(
+                      'assets/images/camera_edit.png',
+                      width: Shared.width * 0.1.w,
+                      height: Shared.height * 0.05.h,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

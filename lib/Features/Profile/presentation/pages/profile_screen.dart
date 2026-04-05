@@ -124,8 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                         Gap(5.h),
-                        SizedBox(
-                          height: Shared.height * 0.57.h,
+                        Expanded(
                           child: BlocListener<DeleteItemBloc, DeleteItemState>(
                             listener: (context, state) {
                               if (state.status == deleteItemStatus.loading) {
