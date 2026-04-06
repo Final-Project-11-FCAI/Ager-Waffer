@@ -59,7 +59,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   bool isAvailable = true;
   bool acceptNegotiation = false;
-  String rentalType = "يومي";
+  String rentalType = kDaily.tr();
   String selectedCategory = "";
   String selectedCondition = "";
   String selectedCity = "";
@@ -147,15 +147,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
                           Dialogs.showDialogSuccess(
                             context,
-                            title: "تم إضافة المنتج بنجاح.",
-                            subTitle: "أصبح منتجك الآن متاحًا للإيجار.",
+                            title: kAddProductSuccessTitle.tr(),
+                            subTitle: kAddProductSuccessDesc.tr(),
                             onPressed: () {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
                               allItemsBloc.add(GetAllItemsEvent());
                               context.read<MyListingsBloc>().add(GetMyListingsEvent());
                             },
-                            textButton: "عرض منتجاتي"
+                            textButton: kShowMyProducts.tr(),
                           );
                         } else if (state.status == addItemStatus.failure) {
                           Shared.dismissDialog(context: context);
@@ -182,13 +182,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                             Gap(50.h),
                             ProductDataContainer(
-                              hintText: 'اسم المنتج',
+                              hintText: kProductName.tr(),
                               keyboardType: TextInputType.name,
                               controller: nameController,
                             ),
                             Gap(20.h),
                             ProductDataContainer(
-                              hintText: 'الفئة',
+                              hintText: kCategory.tr(),
                               isOptions: true,
                               options: categoryOptions,
                               optionsLength: categoryOptions.length,
@@ -199,14 +199,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                             Gap(20.h),
                             ProductDataContainer(
-                              hintText: 'وصف المنتج...',
+                              hintText: kProductDescription.tr(),
                               isDescription: true,
                               keyboardType: TextInputType.text,
                               controller: descriptionController,
                             ),
                             Gap(20.h),
                             ProductDataContainer(
-                              hintText: 'حالة المنتج',
+                              hintText: kProductCondition.tr(),
                               isOptions: true,
                               options: productStatesOptions,
                               optionsLength: productStatesOptions.length,
@@ -217,7 +217,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                             Gap(30.h),
                             Text(
-                              'نوع الإيجار',
+                              kRentalType.tr(),
                               style: font16BlackSemiBold.copyWith(
                                 color: kSomeBlackColor,
                               ),
@@ -233,20 +233,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                             Gap(20.h),
                             ProductDataContainer(
-                              hintText:
-                                  'سعر الإيجار (جنيه/${rentalType.substring(0, rentalType.length - 1)})',
+                              hintText: "${kRentalPrice.tr()} (${kCurrencyPer.tr().replaceAll('{unit}', rentalType)})",
                               keyboardType: TextInputType.number,
                               controller: priceController,
                             ),
                             Gap(20.h),
                             ProductDataContainer(
-                              hintText: 'قيمة التأمين',
+                              hintText: kInsurance.tr(),
                               keyboardType: TextInputType.number,
                               controller: insuranceController,
                             ),
                             Gap(20.h),
                             ProductDataContainer(
-                              hintText: 'المحافظة',
+                              hintText: kCity.tr(),
                               isOptions: true,
                               options: governmentOptions,
                               optionsLength: governmentOptions.length,
@@ -257,7 +256,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                             Gap(30.h),
                             buildSwitchRow(
-                              title: "المنتج متاح حالياً",
+                              title: kProductAvailable.tr(),
                               value: isAvailable,
                               onChanged: (val) {
                                 setState(() {
@@ -308,7 +307,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           }
                         }
                       : null,
-                  text: 'إضافة المنتج',
+                  text: kAddProduct.tr(),
                   color: kPrimaryColor,
                 ),
               ),

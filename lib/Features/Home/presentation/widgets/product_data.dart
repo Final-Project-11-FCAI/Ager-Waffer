@@ -1,7 +1,9 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:gap/gap.dart';
 
 class ProductDataContainer extends StatelessWidget {
@@ -59,7 +61,7 @@ class ProductDataContainer extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'الحالة : ',
+                          text: '${kCondition.tr()} : ',
                           style: font16BlackSemiBold.copyWith(fontWeight: bold),
                         ),
                         TextSpan(
@@ -88,7 +90,7 @@ class ProductDataContainer extends StatelessWidget {
                 ),
                 Gap(6.h),
                 Text(
-                  'التأمين:${product.insurance}ج',
+                  "${kInsuranceOnly.tr()}: ${product.insurance} ${'currency'.tr()}",
                   textAlign: TextAlign.center,
                   style: font20PrimaryMedium.copyWith(
                     color: kMoreGreyColor,
@@ -101,7 +103,7 @@ class ProductDataContainer extends StatelessWidget {
         ),
         Gap(16.h),
         Text(
-          "الوصف",
+          kDescription.tr(),
           style: font16BlackSemiBold,
         ),
         Gap(8.h),

@@ -133,6 +133,17 @@ class UpdateAddressEvent extends AppEvent {
   });
 }
 
+class ExternalLoginEvent extends AppEvent {
+  final String provider; // google or facebook
+  final String accessToken;
+
+  ExternalLoginEvent({
+    required this.provider,
+    required this.accessToken,
+  });
+}
+
+
 
 
 // class VerifyOtpEvent extends AppEvent{

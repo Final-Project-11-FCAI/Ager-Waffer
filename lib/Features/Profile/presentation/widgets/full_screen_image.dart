@@ -18,7 +18,6 @@ class _FullScreenImageState extends State<FullScreenImage> {
   Offset position = Offset.zero;
   Offset startPosition = Offset.zero;
 
-  /// 🔥 للتحكم في swipe down
   double verticalDrag = 0;
 
   @override
@@ -26,8 +25,6 @@ class _FullScreenImageState extends State<FullScreenImage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
-
-        /// 📸 swipe down to close
         onVerticalDragUpdate: (details) {
           setState(() {
             verticalDrag += details.delta.dy;
@@ -42,7 +39,6 @@ class _FullScreenImageState extends State<FullScreenImage> {
           });
         },
 
-        /// 🔍 double tap zoom
         onDoubleTap: () {
           setState(() {
             scale = scale == 1.0 ? 2.5 : 1.0;

@@ -112,10 +112,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             if (state is RegisterLoading) {
               Shared.showLoadingDialog(context: context);
             } else if (state is RegisterDoneState) {
-              CoustomShowdialog.show(
+              CustomShowDialog.show(
                 context: context,
                 title: Text(
-                  "تم إنشاء الحساب بنجاح",
+                  kRegisterSuccessTitle.tr(),
                   textAlign: TextAlign.center,
                   style: font14BlackBold.copyWith(
                     fontSize: 24,
@@ -127,11 +127,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                        text: "مرحبًا بك في ",
+                        text: kWelcomePrefix.tr(),
                         style: font20PrimaryMedium.copyWith(fontSize: 16),
                       ),
                       TextSpan(
-                        text: "أجّر و وفّر",
+                        text: kAppName.tr(),
                         style: font16BlackSemiBold.copyWith(
                           color: kBlueColor,
                           fontSize: 16,
@@ -139,13 +139,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextSpan(
                         text:
-                        "..! يمكنك الآن استئجار المنتجات أو عرض أغراضك للإيجار بسهولة.",
+                        kWelcomeDesc.tr(),
                         style: font20PrimaryMedium.copyWith(fontSize: 16),
                       ),
                     ],
                   ),
                 ),
-                buttonText: "← سجل الدخول الآن",
+                buttonText: kLoginNowArrow.tr(),
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,

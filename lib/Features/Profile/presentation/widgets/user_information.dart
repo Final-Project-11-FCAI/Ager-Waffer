@@ -101,7 +101,7 @@ class _UserInformationState extends State<UserInformation> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "يرجي إستكمال بياناتك أولاً",
+                      kCompleteDataTitle.tr(),
                         style: font20BoldGreyRegular.copyWith(
                           color: kBlackColor,
                           fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class _UserInformationState extends State<UserInformation> {
                       ),
                       Gap(5.h),
                       Text(
-                        "لإتمام عملية إضافة المنتجات",
+                        kCompleteDataDesc.tr(),
                         style: font20PrimaryMedium.copyWith(
                           fontSize: 16,
                           color: kPrimaryColor,
@@ -118,7 +118,7 @@ class _UserInformationState extends State<UserInformation> {
                       Gap(30.h),
                       EmailTextField(
                         icon: Icon(Icons.phone),
-                        label: 'رقم الهاتف',
+                        label: kPhone.tr(),
                         emailController: phoneController,
                         isPhone: true,
                         validator: (value) {
@@ -128,32 +128,32 @@ class _UserInformationState extends State<UserInformation> {
                       Gap(20.h),
                       EmailTextField(
                         icon: Icon(Icons.location_on),
-                        label: 'المحافظة',
+                        label: kCity.tr(),
                         isName: true,
                         emailController: govController,
                         validator: (value) {
-                          return InputValidation.isValidAddress(value ?? '', 'ادخل محافظتك',);
+                          return InputValidation.isValidAddress(value ?? '', kEnterGovernorate.tr(),);
                         },
                       ),
                       Gap(20.h),
 
                       EmailTextField(
                         icon: Icon(Icons.location_city),
-                        label: 'المدينة',
+                        label: kGovernorate.tr(),
                         emailController: cityController,
                         isName: true,
                         validator: (value) {
-                          return InputValidation.isValidAddress(value ?? '', 'ادخل مدينتك',);
+                          return InputValidation.isValidAddress(value ?? '', kEnterCity.tr(),);
                         },
                       ),
                       Gap(20.h),
                       EmailTextField(
                         icon: Icon(Icons.streetview),
-                        label: 'الشارع',
+                        label: kStreet.tr(),
                         isName: true,
                         emailController: streetController,
                         validator: (value) {
-                          return InputValidation.isValidAddress(value ?? '', 'ادخل شارعك');
+                          return InputValidation.isValidAddress(value ?? '', kEnterStreet.tr(),);
                         },
                       ),
                       Gap(30.h),
@@ -170,7 +170,7 @@ class _UserInformationState extends State<UserInformation> {
                       }
                     }
                         : null,
-                    text: 'حفظ',
+                    text: kSave.tr(),
                     color: kPrimaryColor,
                   ),
                     ],

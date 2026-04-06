@@ -1,4 +1,7 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
+
 import 'package:flutter/material.dart';
 
 class CustomErrorWidget extends StatelessWidget {
@@ -23,9 +26,9 @@ class CustomErrorWidget extends StatelessWidget {
             onPressed: onRetry,
             style: ElevatedButton.styleFrom(
               backgroundColor: kPrimaryColor,
-              foregroundColor: kWhiteColor
+              foregroundColor: kWhiteColor,
             ),
-            child: const Text("Retry"),
+            child: Text(kRetry.tr()),
           ),
         ],
       ),

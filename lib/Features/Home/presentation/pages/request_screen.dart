@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/common/dialogs.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
@@ -8,6 +9,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
@@ -61,7 +63,7 @@ class _RequestScreenState extends State<RequestScreen> {
   }
 
   String formatDate(DateTime? date) {
-    if (date == null) return "اختر التاريخ";
+    if (date == null) return kSelectDate.tr();
     return DateFormat('yyyy/MM/dd').format(date);
   }
 
@@ -144,7 +146,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         ),
                                         Gap(8.w),
                                         Text(
-                                          "${widget.product.price}ج/${widget.product.rentUnit}",
+                                          "${widget.product.price} ${kPricePerUnit.tr()} ${widget.product.rentUnit}",
                                           style: font16BlackSemiBold.copyWith(
                                             fontSize: 11,
                                           ),
@@ -203,7 +205,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         ),
                         Gap(20.h),
                         Text(
-                          "فترة الإيجار",
+                          kRentalPeriod.tr(),
                           style: font16BlackSemiBold.copyWith(fontSize: 16),
                         ),
                         Gap(10.h),
@@ -221,12 +223,12 @@ class _RequestScreenState extends State<RequestScreen> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
-                                      "تاريخ البداية",
+                                      kStartDate.tr(),
                                       style: font15SomeBlackColorMedium
                                           .copyWith(color: kgreyColor),
                                     ),
                                     Text(
-                                      "تاريخ النهاية",
+                                      kEndDate.tr(),
                                       style: font15SomeBlackColorMedium
                                           .copyWith(color: kgreyColor),
                                     ),
@@ -270,7 +272,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                                   'assets/images/period.png',
                                                 ),
                                                 Gap(5.w),
-                                                Text("المدة: $totalDays أيام"),
+                                                Text("${kDuration.tr()}: $totalDays ${kDays.tr()}"),
                                               ],
                                             )
                                           : SizedBox.shrink(),
@@ -283,7 +285,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         ),
                         Gap(20.h),
                         Text(
-                          "ملخص السعر",
+                          kPriceSummary.tr(),
                           style: font16BlackSemiBold.copyWith(fontSize: 16),
                         ),
                         Gap(10.h),
@@ -298,7 +300,7 @@ class _RequestScreenState extends State<RequestScreen> {
                               children: [
                                 buildPriceRow(
                                   Text(
-                                    "سعر ${widget.product.rentUnit}",
+                                    "${kPricePerUnit.tr()} ${widget.product.rentUnit}",
                                     style: font15SomeBlackColorMedium.copyWith(
                                       fontSize: 13,
                                       color: kBlackColor,
@@ -314,7 +316,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                 ),
                                 buildPriceRow(
                                   Text(
-                                    "عدد الأيام",
+                                    kNumberOfDays.tr(),
                                     style: font15SomeBlackColorMedium.copyWith(
                                       fontSize: 13,
                                       color: kBlackColor,
@@ -339,7 +341,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
                                 buildPriceRow(
                                   Text(
-                                    "الإجمالي",
+                                    kTotal.tr(),
                                     style: font14BlackBold.copyWith(
                                       fontSize: 13,
                                     ),
@@ -356,69 +358,65 @@ class _RequestScreenState extends State<RequestScreen> {
                             ),
                           ),
                         ),
-                        // Gap(20.h),
-                        // const Text(
-                        //   "بيانات المستأجر",
-                        //   style: TextStyle(fontWeight: FontWeight.bold),
-                        // ),
-                        // Gap(15.h),
-                        // buildTextField(
-                        //   Text("الاسم بالكامل", style: font15BlackRegular),
-                        //   Icons.person,
-                        // ),
-                        // Gap(25.h),
-                        // buildTextField(
-                        //   Text("رقم الهاتف", style: font15BlackRegular),
-                        //   Icons.phone,
-                        // ),
-                        // Gap(25.h),
-                        // buildTextField(
-                        //   Text("العنوان", style: font15BlackRegular),
-                        //   Icons.location_on,
-                        // ),
-                        // Gap(25.h),
-                        // buildTextField(
-                        //   Text("البريد الإلكتروني", style: font15BlackRegular),
-                        //   Icons.email,
-                        // ),
-                        Gap(6.h),
-                        Row(
-                          children: [
-                            Checkbox(
-                              visualDensity: VisualDensity.compact,
-                              value: agree,
-                              onChanged: (value) {
-                                setState(() {
-                                  agree = value!;
-                                });
-                              },
-                              activeColor: kPrimaryColor,
-                            ),
-                            Text(
-                              "بإرسال الطلب أنت توافق علي",
-                              style: font15SomeBlackColorMedium.copyWith(
-                                fontSize: 14,
+                        Gap(14.h),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(16.r),
+                            border: Border.all(color: Colors.grey.shade300),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Checkbox(
+                                visualDensity: VisualDensity.compact,
+                                value: agree,
+                                onChanged: (value) {
+                                  setState(() {
+                                    agree = value!;
+                                  });
+                                },
+                                activeColor: kPrimaryColor,
                               ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: (context) {
-                                    return const RenatlTermsScreen();
-                                  },
-                                );
-                              },
-                              child: Text(
-                                'شروط الإيجار',
-                                style: font14BlackBold.copyWith(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
+                              Gap(8.w),
+                              Expanded(
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: font15SomeBlackColorMedium.copyWith(
+                                      fontSize: 14,
+                                      color: Colors.black87,
+                                    ),
+                                    children: [
+                                      TextSpan(text: "${kAgreeTermsPrefix.tr()} "),
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              builder: (context) {
+                                                return const RentalTermsScreen();
+                                              },
+                                            );
+                                          },
+                                          child: Text(
+                                            kRentalTerms.tr(),
+                                            style: font14BlackBold.copyWith(
+                                              color: kLightPrimaryColor,
+                                              decoration: TextDecoration.underline,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -446,7 +444,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         context: context,
                         dialogType: DialogType.info,
                         animType: AnimType.rightSlide,
-                        title: "يجب الموافقة على الشروط",
+                        title: kMustAgree.tr(),
                         headerAnimationLoop: false,
                       ).show();
                       return;
@@ -458,7 +456,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         context: context,
                         dialogType: DialogType.info,
                         animType: AnimType.rightSlide,
-                        title: "اختر فترة الإيجار",
+                        title: kSelectPeriod.tr(),
                         headerAnimationLoop: false,
                       ).show();
                       return;
@@ -466,15 +464,15 @@ class _RequestScreenState extends State<RequestScreen> {
 
                     Dialogs.showDialogSuccess(
                         context,
-                        title: 'تم إرسال طلب الإيجار بنجاح',
-                        subTitle: 'سيتم إشعارك عند رد المالك علي طلبك.',
+                        title: kRequestSuccessTitle.tr(),
+                        subTitle: kRequestSuccessDesc.tr(),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        textButton: 'حسنًا'
+                        textButton: kOk.tr(),
                     );
                   },
-                  text: "تأكيد طلب الإيجار",
+                  text: kConfirmRequest.tr(),
                   color: kPrimaryColor,
                   borderRadius: Shared.width * 0.04.w,
                 ),

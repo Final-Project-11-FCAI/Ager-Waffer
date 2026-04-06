@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -81,13 +82,13 @@ class Dialogs {
                 SizedBox(height: Shared.height * 0.01),
                 Gap(6.h),
                 Text(
-                  " حذف المنتج ؟ ",
+                  kDeleteProductTitle.tr(),
                   textAlign: TextAlign.center,
                   style: font20PrimaryMedium.copyWith(fontWeight: bold),
                 ),
                 Gap(10.h),
                 Text(
-                  "هل أنت متأكد من حذف هذا المنتج؟ لن تتمكن من استعادته بعد إتمام عملية الحذف.",
+                  kDeleteProductDesc.tr(),
                   textAlign: TextAlign.center,
                   style: font16BlackSemiBold.copyWith(
                     fontWeight: medium,
@@ -135,7 +136,7 @@ class Dialogs {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'حذف',
+                                 kDelete.tr(),
                                   style: font16BlackSemiBold.copyWith(
                                     fontSize: 14.sp,
                                     color: kWhiteColor,
@@ -172,7 +173,7 @@ class Dialogs {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'إلغاء',
+                                  kCancel.tr(),
                                   style: font16BlackSemiBold.copyWith(
                                     fontSize: 14.sp,
                                     color: kPrimaryColor,

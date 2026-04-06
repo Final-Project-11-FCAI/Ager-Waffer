@@ -1,8 +1,10 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:gap/gap.dart';
 
 class ContactOwnerContainer extends StatelessWidget {
@@ -60,7 +62,7 @@ class ContactOwnerContainer extends StatelessWidget {
                     Icon(Icons.star, size: 17.sp, color: Colors.amber),
                     Gap(2.w),
                     Text(
-                      "(15منتج)",
+                      "(15${kProduct.tr()})",
                       style: font20PrimaryMedium.copyWith(
                         fontSize: 11.sp,
                         color: kPartGreyColor,
@@ -87,7 +89,7 @@ class ContactOwnerContainer extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "تواصل مع المالك",
+                    kContactOwner.tr(),
                     style: font16BlackSemiBold.copyWith(
                       fontSize: 12.sp,
                       color: kBlueColor,

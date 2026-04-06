@@ -1,48 +1,42 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/item_reviews_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:localize_and_translate/localize_and_translate.dart%20%20';
 
 class ReviewItem extends StatelessWidget {
   final Data review;
 
-  const ReviewItem({super.key,
-    required this.review,
-  });
-  
+  const ReviewItem({super.key, required this.review});
+
   String formatDateSmart(String date) {
     try {
       final now = DateTime.now();
       final parsedDate = DateTime.parse(date);
       final diff = now.difference(parsedDate);
 
-      // أقل من دقيقة
       if (diff.inSeconds < 60) {
-        return 'منذ لحظات';
+        return kMomentsAgo.tr();
       }
 
-      // أقل من ساعة
       if (diff.inMinutes < 60) {
-        return 'منذ ${diff.inMinutes} دقيقة';
+        return "${diff.inMinutes} ${'minute'.tr()} ${'ago'.tr()}";
       }
 
-      // أقل من 24 ساعة
       if (diff.inHours < 24) {
-        return 'منذ ${diff.inHours} ساعة';
+        return "${kHoursAgo.tr()} ${diff.inHours}";
       }
 
-      // أقل من أسبوع
       if (diff.inDays <= 7) {
-        return 'منذ ${diff.inDays} يوم';
+        return "${kDaysAgo.tr()} ${diff.inDays}";
       }
 
-      // بعد كده تاريخ عادي
-      return DateFormat('dd MMM yyyy', 'ar').format(parsedDate);
-
+      return DateFormat('dd MMM yyyy').format(parsedDate);
     } catch (e) {
-      return date;
+      return kDate.tr();
     }
   }
 
@@ -53,10 +47,7 @@ class ReviewItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: kWhiteColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(
-          color: kBlackColor.withOpacity(0.2),
-          width: 1.w,
-        ),
+        border: Border.all(color: kBlackColor.withOpacity(0.2), width: 1.w),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +58,9 @@ class ReviewItem extends StatelessWidget {
               CircleAvatar(
                 radius: 20.r,
                 backgroundColor: kOpacityGreyColor,
-                backgroundImage: NetworkImage(review.authorImageUrl ?? 'assets/images/virtual_user.jpg'),
+                backgroundImage: NetworkImage(
+                  review.authorImageUrl ?? 'assets/images/virtual_user.jpg',
+                ),
               ),
               Gap(10.w),
               Expanded(
@@ -79,24 +72,28 @@ class ReviewItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            review.authorName ?? 'User Name',
+                            review.authorName ?? kUserName.tr(),
                             style: font16BlackSemiBold.copyWith(
                               fontSize: 13.sp,
                             ),
                           ),
                         ),
                         Text(
-                          formatDateSmart(review.createAt!) ?? 'date',
-                          style: font14GreyRegular.copyWith(
-                            fontSize: 11.sp,
-                          ),
+                          formatDateSmart(review.createAt!) ?? kDate.tr(),
+                          style: font14GreyRegular.copyWith(fontSize: 11.sp),
                         ),
                       ],
                     ),
                     Gap(4.h),
                     Row(
                       children: [
-                        Text(review.rate.toString() ?? '0.0', style: font20PrimaryMedium.copyWith(fontSize: 12.sp,color: kPartGreyColor),),
+                        Text(
+                          review.rate.toString() ?? '0.0',
+                          style: font20PrimaryMedium.copyWith(
+                            fontSize: 12.sp,
+                            color: kPartGreyColor,
+                          ),
+                        ),
                         Gap(1.w),
                         Icon(Icons.star, size: 12.sp, color: Colors.amber),
                       ],
@@ -108,10 +105,10 @@ class ReviewItem extends StatelessWidget {
           ),
           Gap(6.h),
           Text(
-            review.reviewText ?? 'Review Text',
+            review.reviewText ?? kReviewText.tr(),
             style: font14GreyRegular.copyWith(
               fontSize: 12.sp,
-              color: kBlackColor
+              color: kBlackColor,
             ),
           ),
         ],

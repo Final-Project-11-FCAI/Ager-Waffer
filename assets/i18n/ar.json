@@ -9,7 +9,6 @@
   "something_went_wrong": "حدث خطأ ما يرجى المحاولة في وقت لاحق",
   "email": "البريد الإلكتروني",
   "enter_valid_email": "أدخل البريد الإلكتروني بشكل صحيح",
-  "password": "كلمة المرور",
   "forgot_password": "هل نسيت كلمة المرور؟",
   "login": "تسجيل الدخول",
   "login_with": "أو سجل من خلال",
@@ -19,8 +18,6 @@
   "camera": "الكاميرا",
   "gallery": "المعرض",
   "add_image": "إضافة صورة",
-  "first_name": "الاسم الأول",
-  "last_name": "الاسم الثاني",
   "create_account": "إنشاء حساب",
   "have_account": " لديك حساب بالفعل؟",
   "verify_email_title": "تأكيد البريد الإلكتروني",
@@ -37,7 +34,6 @@
   "update_password": "تحديث كلمة المرور",
   "forget_password_desc": "أدخل بريدك الإلكتروني لإرسال رابط تعيين كلمة المرور",
   "continue": "استمرار",
-  "cancel": "إلغاء",
   "password_changed": "تم تغيير كلمة المرور",
   "login_now_desc": "يمكنك تسجيل الدخول الآن",
   "login_now": "تسجيل الدخول الآن",
@@ -56,5 +52,187 @@
   "brand_new": "أول استخدام",
   "new": "جديد",
   "used": "مستخدم",
-  "heavily_used": "مستخدم بشدة"
+  "heavily_used": "مستخدم بشدة",
+
+
+
+
+  "add_product_success_title": "تم إضافة المنتج بنجاح",
+  "add_product_success_desc": "أصبح منتجك الآن متاحًا للإيجار",
+  "show_my_products": "عرض منتجاتي",
+
+  "product_name": "اسم المنتج",
+  "category": "الفئة",
+  "product_description": "وصف المنتج...",
+  "product_condition": "حالة المنتج",
+
+  "rental_type": "نوع الإيجار",
+  "rental_price": "سعر الإيجار",
+  "insurance": "قيمة التأمين",
+  "city": "المحافظة",
+
+  "product_available": "المنتج متاح حالياً",
+  "add_product": "إضافة المنتج",
+  "currency_per": "جنيه/{unit}",
+
+
+
+  "first_name": "الاسم الأول",
+  "last_name": "الاسم الثاني",
+  "phone": "رقم الهاتف",
+  "password": "كلمة المرور",
+  "enter_new_password": "ادخل كلمة المرور الجديدة",
+
+  "save": "حفظ",
+
+  "update_success": "تم تحديث الملف الشخصي بنجاح",
+  "update_error": "حدث خطأ أثناء التحديث",
+
+  "confirm_edit_title": "تأكيد التعديل",
+  "confirm_edit_desc": "سوف يتم تسجيل الخروج للمتابعة مرة أخرى",
+  "edit_product": "تعديل المنتج",
+  "cancel": "إلغاء",
+  "edit": "تعديل",
+
+  "add_product_tooltip": "إضافة منتج",
+  "my_products": "منتجاتي",
+  "delete_success": "تم حذف المنتج بنجاح",
+
+  "no_products_yet": "لم تقم بإضافة أي منتجات بعد",
+  "add_products_desc": "أضف منتجاتك ليتمكن الآخرون من استئجارها",
+  "no_products": "لا توجد منتجات",
+  "retry": "إعادة المحاولة",
+
+  "delete": "حذف",
+  "currency_per_day": " جنيه/اليوم",
+
+  "max_images": "الحد الأقصى 5 صور",
+  "min_images": "يجب اختيار 3 صور على الأقل",
+
+  "upload_product_images": "ارفع صور المنتج",
+  "upload_range": "يمكنك رفع من 3 إلى 5 صور",
+  "upload_images": "تحميل الصور",
+
+
+
+  "complete_data_title": "يرجى استكمال بياناتك أولاً",
+  "complete_data_desc": "لإتمام عملية إضافة المنتجات",
+
+  "governorate": "المدينة",
+  "street": "الشارع",
+
+  "enter_governorate": "ادخل محافظتك",
+  "enter_city": "ادخل مدينتك",
+  "enter_street": "ادخل شارعك",
+
+
+
+  "home": "الرئيسية",
+  "favorite": "المفضلة",
+  "my_orders": "مستأجراتي",
+  "my_chats": "محادثاتي",
+  "my_account": "حسابي",
+
+
+  "categories": "الفئات",
+  "suggested_items": "العناصر المقترحة",
+  "no_data_yet": "لا توجد بيانات حتى الآن",
+
+  "no_reviews_yet": "لا يوجد تقييمات حتى الآن",
+  "reviews": "التقييمات",
+
+
+  "rental_terms_title": "شروط الإيجار",
+  "agree": "موافق",
+
+  "term_1": "الالتزام بمدة الإيجار المحددة",
+  "term_2": "إعادة المنتج بنفس حالته وقت الاستلام",
+  "term_3": "يتحمل المستأجر تكلفة أي تلف ناتج عن سوء الاستخدام",
+  "term_4": "يتم استرداد مبلغ التأمين بعد فحص المنتج",
+  "term_5": "يُستخدم المنتج للغرض المتفق عليه فقط ولا يسمح بإعادة تأجيره",
+
+
+
+  "select_date": "اختر التاريخ",
+
+  "rental_period": "فترة الإيجار",
+  "start_date": "تاريخ البداية",
+  "end_date": "تاريخ النهاية",
+  "duration": "المدة",
+  "days": "أيام",
+
+  "price_summary": "ملخص السعر",
+  "price_per_unit": "سعر",
+  "number_of_days": "عدد الأيام",
+  "total": "الإجمالي",
+
+  "agree_terms_prefix": "بإرسال الطلب أنت توافق على",
+  "rental_terms": "شروط الإيجار",
+
+  "must_agree": "يجب الموافقة على الشروط",
+  "select_period": "اختر فترة الإيجار",
+
+  "request_success_title": "تم إرسال طلب الإيجار بنجاح",
+  "request_success_desc": "سيتم إشعارك عند رد المالك على طلبك",
+  "ok": "حسنًا",
+
+  "confirm_request": "تأكيد طلب الإيجار",
+
+  "contact_owner": "تواصل مع المالك",
+  "product": "منتج",
+
+  "register_success_title": "تم إنشاء الحساب بنجاح",
+
+  "welcome_prefix": "مرحبًا بك في ",
+  "app_name": "أجّر و وفّر",
+  "welcome_desc": "..! يمكنك الآن استئجار المنتجات أو عرض أغراضك للإيجار بسهولة.",
+
+  "login_now_arrow": "← سجل الدخول الآن",
+
+  "hello": "أهلاً",
+  "what_do_you_want": "تحب تستأجر إيه؟",
+  "error": "خطأ",
+
+  "search_hint": "ابحث عن منتج للإيجار...",
+
+  "manage_orders": "إدارة الطلبات",
+  "language": "اللغة",
+  "dark_mode": "الوضع الداكن",
+  "contact_us": "تواصل معنا",
+  "logout": "تسجيل الخروج",
+
+
+  "condition": "الحالة",
+  "insurance_only": "التأمين",
+  "description": "الوصف",
+  "currency": "جنيه",
+
+  "add_to_favorite": "إضافة للمفضلة",
+  "rent_now": "استأجر الآن",
+
+
+  "moments_ago": "منذ لحظات",
+  "minutes_ago": "منذ",
+  "hours_ago": "منذ",
+  "days_ago": "منذ",
+
+  "user_name": "مستخدم",
+  "review_text": "لا يوجد تعليق",
+  "date": "تاريخ",
+  "view": "عرض",
+
+  "delete_product_title": "حذف المنتج؟",
+  "delete_product_desc": "هل أنت متأكد من حذف هذا المنتج؟ لن تتمكن من استعادته بعد إتمام عملية الحذف.",
+
+  "enter_phone": "من فضلك أدخل رقم الهاتف",
+  "invalid_phone": "يرجى إدخال رقم هاتف مصري صحيح",
+
+
+  "password_required": "كلمة المرور مطلوبة",
+  "password_min_length": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+  "password_uppercase": "يجب أن تحتوي على حرف كبير",
+  "password_lowercase": "يجب أن تحتوي على حرف صغير",
+  "password_number": "يجب أن تحتوي على رقم",
+  "password_special_char": "يجب أن تحتوي على رمز خاص"
+
 }

@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/presentation/pages/coversations_screen.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/pages/favorite_screen.dart';
@@ -5,6 +6,7 @@ import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.
 import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
 import 'package:ager_waffer/Features/Orders/presentation/pages/my_orders_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/profile_screen.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,27 +60,27 @@ class HomeLayoutScreen extends StatelessWidget {
                 items: [
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/home.png', color: currentIndex == 0 ? kPrimaryColor : kMoreGreyColor,),
-                    label: "الرئيسية",
+                    label: kHome.tr(),
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/heart.png', color: currentIndex == 1 ? kPrimaryColor : kMoreGreyColor,),
-                    label: "المفضلة",
+                    label: kFavorite.tr(),
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/shopping-cart.png', color: currentIndex == 2 ? kPrimaryColor : kMoreGreyColor,),
-                    label: "مستأجراتي",
+                    label: kMyOrders.tr(),
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/shopping-cart.png', color: currentIndex == 3 ? kPrimaryColor : kMoreGreyColor,),
-                    label: "محادثاتي",
+                    label: kMyChats.tr(),
                     backgroundColor: kWhiteColor,
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/profile.png', color: currentIndex == 4 ? kPrimaryColor : kMoreGreyColor,),
-                    label: "حسابي",
+                    label: kMyAccount.tr(),
                     backgroundColor: kWhiteColor,
                   ),
                 ],

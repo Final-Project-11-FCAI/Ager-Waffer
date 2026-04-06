@@ -1,18 +1,12 @@
-import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/dialogs.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
-import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Profile/data/models/my_listings_model.dart';
-import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_bloc.dart';
-import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_state.dart';
-import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/update_product_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -82,7 +76,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           overflow: TextOverflow.ellipsis,
                           style: font14BlackBold.copyWith(fontSize: 12.sp))),
                       Text(
-                        "${widget.myListings.price}جنيه/اليوم",
+                        "${widget.myListings.price}${kCurrencyPerDay.tr()}",
                         style: font16BlackSemiBold.copyWith(fontSize: 11,),
                       ),
                     ],
@@ -114,7 +108,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       deleteOrEditProductButton(
-                          title: 'تعديل',
+                          title: kEdit.tr(),
                           icon: 'assets/images/edit_icon.png',
                           onTap: (){
                             customAnimatedPushNavigation(context, UpdateProductScreen(product: widget.myListings,));
@@ -125,7 +119,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                       ),
                       Gap(7.w),
                       deleteOrEditProductButton(
-                          title: 'حذف',
+                          title: kDelete.tr(),
                           icon: 'assets/images/delete_icon.png',
                           onTap: (){
                             Dialogs.showDialogDeleteProduct(context, productId: widget.myListings.id!);

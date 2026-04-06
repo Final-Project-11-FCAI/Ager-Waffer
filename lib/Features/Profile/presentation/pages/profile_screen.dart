@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
@@ -16,6 +17,7 @@ import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products
 import 'package:ager_waffer/Features/Profile/presentation/widgets/my_products_item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -57,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         floatingActionButton: CircleAvatar(
           radius: 25.r,
           child: FloatingActionButton(
-            tooltip: 'إضافة منتج',
+            tooltip: kAddProductTooltip.tr(),
             onPressed: () {
               customAnimatedPushNavigation(context, AddProductScreen());
             },
@@ -118,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'منتجاتي',
+                              kMyProducts.tr(),
                               style: font16BlackSemiBold.copyWith(fontSize: 20),
                             ),
                           ],
@@ -134,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Shared.dismissDialog(context: context);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text("تم حذف المنتج بنجاح"),
+                                    content: Text(kDeleteSuccess.tr()),
                                   ),
                                 );
                                 context.read<MyListingsBloc>().add(
@@ -173,8 +175,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         )
                                       : EmptyProducts(
                                           image: 'assets/images/empty_products.png',
-                                          title: 'لم تقم بإضافة أي منتجات بعد',
-                                          subTitle: 'أضف منتجاتك ليتمكن الآخرون من استئجارها',
+                                          title: kNoProductsYet.tr(),
+                                          subTitle: kAddProductsDesc.tr(),
                                         );
                                 } else if (state.status ==
                                     myListingsStatus.failure) {
@@ -187,7 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                   );
                                 } else {
-                                  return Center(child: Text("لا توجد منتجات"));
+                                  return Center(child: Text(kNoProducts.tr()));
                                 }
                               },
                             ),

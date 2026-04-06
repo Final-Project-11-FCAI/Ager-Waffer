@@ -1,9 +1,11 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class CustomSearchTextField extends StatelessWidget {
-  const CustomSearchTextField({Key? key}) : super(key: key);
+  const CustomSearchTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class CustomSearchTextField extends StatelessWidget {
       decoration: InputDecoration(
           enabledBorder: buildOutlineInputBorder(),
           focusedBorder: buildOutlineInputBorder(),
-          hintText: 'ابحث عن منتج للايجار...',
+          hintText: kSearchHint.tr(),
           hintStyle: font15BlackRegular.copyWith(
             fontSize: 18.sp,
             color: Color.fromRGBO(0, 51, 78, 0.74),

@@ -1,13 +1,14 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/search_screen.dart';
 import 'package:ager_waffer/Features/Notification/presentation/pages/notifications_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 import '../../../Authentication/login/data/models/login_model.dart';
 
@@ -25,8 +26,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         print("snapshot : $snapshot");
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
-        }else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.hasError) {
+          return Text('${kError.tr()}: ${snapshot.error}');
         }
 
         final user = snapshot.data;
@@ -39,17 +40,25 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: user?.imageUrl != null ?
-                    NetworkImage(user!.imageUrl.toString())
+                    backgroundImage: user?.imageUrl != null
+                        ? NetworkImage(user!.imageUrl.toString())
                         : AssetImage('assets/images/virtual_user.jpg'),
                   ),
                   Gap(8.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('أهلا، ${user!.firstName}', style: font15BlackRegular),
+                      Text(
+                        "${kHello.tr()}, ${user!.firstName}",
+                        overflow: TextOverflow.ellipsis,
+                        style: font15BlackRegular,
+                      ),
                       Gap(2),
-                      Text(' تحب تستأجر ايه؟', style: font14GreyRegular),
+                      Text(
+                        kWhatDoYouWant.tr(),
+                        overflow: TextOverflow.ellipsis,
+                        style: font14GreyRegular,
+                      ),
                     ],
                   ),
                 ],
@@ -57,29 +66,42 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               Row(
                 children: [
                   GestureDetector(
-                      onTap: (){
-                        customAnimatedPushNavigation(context, SearchScreen());
-                      },
-                      child: Image.asset('assets/images/search_icon.png', width: 19.sp,)),
+                    onTap: () {
+                      customAnimatedPushNavigation(context, SearchScreen());
+                    },
+                    child: Image.asset(
+                      'assets/images/search_icon.png',
+                      width: 19.sp,
+                    ),
+                  ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Shared.width * 0.04.w,
+                    ),
                     child: GestureDetector(
-                        onTap: (){
-                          customAnimatedPushNavigation(context, NotificationsScreen());
-                        },
-                        child: Image.asset('assets/images/notification_icon.png', width: Shared.width * 0.06.w,)),
+                      onTap: () {
+                        customAnimatedPushNavigation(
+                          context,
+                          NotificationsScreen(),
+                        );
+                      },
+                      child: Image.asset(
+                        'assets/images/notification_icon.png',
+                        width: Shared.width * 0.06.w,
+                      ),
+                    ),
                   ),
                   GestureDetector(
-                      onTap: (){
-                        Scaffold.of(context).openDrawer();
-                      },
-                      child: Icon(Icons.menu, size: 26.sp,)),
+                    onTap: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    child: Icon(Icons.menu, size: 26.sp),
+                  ),
                 ],
               ),
             ],
           ),
         );
-
       },
     );
   }

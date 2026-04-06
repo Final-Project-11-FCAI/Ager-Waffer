@@ -1,6 +1,5 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -27,8 +26,6 @@ class EmptyProducts extends StatelessWidget {
           Text(subTitle,
             textAlign: TextAlign.center,
             style: font20PrimaryMedium.copyWith(color: kBorderColor,fontSize: 18.sp),),
-          //
-          // ButtonApp(onPressed: (){}, text: 'إضافة منتج', color: kPrimaryColor, borderRadius: Shared.width * 0.06.h,)
         ],
       ),
     );

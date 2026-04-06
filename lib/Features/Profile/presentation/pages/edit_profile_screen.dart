@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'dart:io';
 
 import '../../../Authentication/login/data/models/login_model.dart';
@@ -120,7 +122,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('تم تحديث الملف الشخصي بنجاح'),
+              content: Text(kUpdateSuccess.tr()),
               backgroundColor: Colors.green,
             ),
           );
@@ -140,7 +142,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               content: Text(
                 state.failureMessage.isNotEmpty
                     ? state.failureMessage
-                    : 'حدث خطأ أثناء التحديث',
+                    : kUpdateError.tr(),
               ),
               backgroundColor: Colors.red,
               behavior: SnackBarBehavior.floating,
@@ -190,7 +192,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'الاسم الأول',
+                              kFirstName.tr(),
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
@@ -200,13 +202,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             EditProfileTextField(
                               controller: firstNameController,
                               icon: Icon(Icons.account_circle_outlined),
-                              label: "الاسم الأول",
+                              label: kFirstName.tr(),
                               keyboardType: TextInputType.name,
                               isPrefixFound: true,
                             ),
                             Gap(15.h),
                             Text(
-                              "الاسم الثاني",
+                              kLastName.tr(),
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
@@ -216,13 +218,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             EditProfileTextField(
                               controller: secondNameController,
                               icon: Icon(Icons.account_circle_outlined),
-                              label: "الاسم الثاني",
+                              label: kLastName.tr(),
                               keyboardType: TextInputType.name,
                               isPrefixFound: true,
                             ),
                             Gap(15.h),
                             Text(
-                              'رقم الهاتف',
+                              kPhone.tr(),
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
@@ -233,7 +235,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               controller: phoneController,
                               keyboardType: TextInputType.number,
                               icon: Icon(Icons.phone),
-                              label: 'رقم الهاتف',
+                              label: kPhone.tr(),
                               validator: (value) {
                                 if (value == _originalPhone || value!.isEmpty) return null;
                                 return InputValidation.isValidEditEgyptianPhone(value ?? '');
@@ -241,7 +243,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             Gap(15.h),
                             Text(
-                              'كلمة المرور',
+                              kPassword.tr(),
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
@@ -251,7 +253,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             PasswordTextField(
                               passwordController: passwordController,
                               icon: Icon(Icons.lock_outline),
-                              label: 'ادخل كلمة المرور الجديدة',
+                              label: kEnterNewPassword.tr(),
                               validator: (value) {
                                 return InputValidation.passwordValidator(value!);
                               },
@@ -263,7 +265,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       _showUpdateDialog(context);
                                     }
                                   : null,
-                              text: 'حفظ',
+                              text: kSave.tr(),
                               color: _hasChanges ? kPrimaryColor : kGreyColor,
                             ),
                           ],
@@ -327,12 +329,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("تأكيد التعديل",
+          title: Text(kConfirmEditTitle.tr(),
             style: font20PrimaryMedium.copyWith(fontWeight: bold),
           ),
           surfaceTintColor: kWhiteColor,
           content: Text(
-            "سوف يتم الخروج الي صفحة تسجيل الدخول للتسجيل مرة اخرى",
+            kConfirmEditDesc.tr(),
             style: font16BlackSemiBold.copyWith(
               fontWeight: medium,
               color: kMoreGreyColor,
@@ -345,7 +347,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 backgroundColor: kWhiteColor,
                 foregroundColor: kPrimaryColor,
               ),
-              child: Text("إلغاء",
+              child: Text(kCancel.tr(),
                 style: font16BlackSemiBold.copyWith(
                   fontSize: 14.sp,
                   color: kPrimaryColor,
@@ -374,7 +376,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 backgroundColor: kPrimaryColor,
                 foregroundColor: kWhiteColor,
               ),
-              child: Text("تعديل", style: font16BlackSemiBold.copyWith(
+              child: Text(kEdit.tr(), style: font16BlackSemiBold.copyWith(
                 fontSize: 14.sp,
                 color: kWhiteColor,
               ),),
