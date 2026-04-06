@@ -1,10 +1,9 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/product_entity.dart';
-import 'package:ager_waffer/Features/Home/domain/entities/review_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/contact_owner_container.dart';
@@ -16,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 import '../widgets/product_data.dart';
 
@@ -80,7 +80,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "التقييمات",
+                          kReviews.tr(),
                             style: font16BlackSemiBold.copyWith(fontWeight: bold),
                           ),
                         ],
@@ -111,7 +111,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               },
                             ) : Center(child: EmptyProducts(
                               image: 'assets/images/empty_products.png',
-                              title: 'لا يوجد تقيمات حتي الان',
+                              title: kNoReviewsYet.tr(),
                               subTitle: '',
                               titleFontSize: 19.sp,
                             ));
@@ -119,7 +119,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           else if (state.status == itemReviewStatus.failure) {
                             return Center(child: Text(state.failureMessage));
                           } else  {
-                            return Center(child: Text("No Data Yet"));
+                            return Center(child: Text(kNoDataYet.tr()));
                           }
                         },
                       ),

@@ -1,9 +1,5 @@
-import 'package:ager_waffer/Base/common/shared.dart';
-import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 
 class CarouselSliderContainer extends StatelessWidget {
   const CarouselSliderContainer({super.key});

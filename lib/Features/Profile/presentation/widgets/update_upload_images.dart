@@ -1,16 +1,18 @@
 import 'dart:io';
 
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/full_screen_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateUploadImages extends StatefulWidget {
   final Function(List<File>)? onImagesSelected;
-  final String? initialImage; // 🔥 صورة من API
+  final String? initialImage;
 
   const UpdateUploadImages({
     super.key,
@@ -41,13 +43,13 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
       updatedImages = updatedImages.take(5).toList();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("الحد الأقصى 5 صور")),
+        SnackBar(content: Text(kMaxImages.tr())),
       );
     }
 
     if (updatedImages.length < 3) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("يجب اختيار 3 صور على الأقل")),
+        SnackBar(content: Text(kMinImages.tr())),
       );
       return;
     }
@@ -109,12 +111,12 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
           ),
           Gap(10.h),
           Text(
-            'ارفع صور المنتج',
+            kUploadProductImages.tr(),
             style: font16BlackSemiBold.copyWith(fontSize: 15),
           ),
           Gap(4.h),
           Text(
-            'يمكنك رفع من 3 إلي 5 صور',
+            kUploadRange.tr(),
             style: font13kLightPrimaryColorMedium,
           ),
           Gap(10.h),
@@ -129,7 +131,7 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
                 ),
               ),
               child: Text(
-                'تحميل الصور',
+                  kUploadImages.tr(),
                 style: font13kLightPrimaryColorMedium.copyWith(
                   color: kWhiteColor,
                 ),

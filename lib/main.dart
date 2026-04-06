@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
@@ -207,6 +208,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => AddReviewBloc()),
             BlocProvider(create: (context) => ItemReviewBloc()),
             BlocProvider(create: (context) => UpdateAddressBloc()),
+            BlocProvider(create: (context) => ExternalLoginBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: OrdersBloc())

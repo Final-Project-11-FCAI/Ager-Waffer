@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
@@ -156,7 +157,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                           );
                         },
                         child: Text(
-                          "عرض",
+                          kView.tr(),
                           style: font16BlackSemiBold.copyWith(
                             color: kWhiteColor,
                           ),

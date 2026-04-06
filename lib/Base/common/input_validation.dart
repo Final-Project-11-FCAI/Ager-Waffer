@@ -26,7 +26,7 @@ class InputValidation{
 
   static String isValidEgyptianPhone(String phone) {
     if (phone.isEmpty) {
-      return 'من فضلك أدخل رقم الهاتف';
+      return kEnterPhone.tr();
     }
 
     // يشيل أي مسافات
@@ -36,7 +36,7 @@ class InputValidation{
     final regex = RegExp(r'^01[0125][0-9]{8}$');
 
     if (!regex.hasMatch(phone)) {
-      return 'رقم هاتف غير صحيح';
+      return kInvalidPhone.tr();
     }
 
     return '';
@@ -44,7 +44,7 @@ class InputValidation{
 
   static String? isValidEditEgyptianPhone(String phone) {
     if (phone.isEmpty) {
-      return 'من فضلك أدخل رقم الهاتف';
+      return kEnterPhone.tr();
     }
 
     phone = phone.trim();
@@ -52,7 +52,7 @@ class InputValidation{
     final regex = RegExp(r'^01[0125][0-9]{8}$');
 
     if (!regex.hasMatch(phone)) {
-      return 'رقم هاتف غير صحيح';
+      return kInvalidPhone.tr();
     }
 
     return null;
@@ -78,36 +78,31 @@ class InputValidation{
 
   static String? passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return "كلمة المرور مطلوبة";
+      return kPasswordRequired.tr();
     }
 
     if (value.length < 8) {
-      return "كلمة المرور يجب أن تكون 8 أحرف على الأقل";
+      return kPasswordMinLength.tr();
     }
 
-    // حرف كبير
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return "يجب أن تحتوي على حرف كبير";
+      return kPasswordUppercase.tr();
     }
 
-    // حرف صغير
     if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return "يجب أن تحتوي على حرف صغير";
+      return kPasswordLowercase.tr();
     }
 
-    // رقم
     if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return "يجب أن تحتوي على رقم";
+      return kPasswordNumber.tr();
     }
 
-    // رمز خاص
     if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return "يجب أن تحتوي على رمز خاص";
+      return kPasswordSpecialChar.tr();
     }
 
-    return null; // ✅ valid
+    return null;
   }
-
 
 }
 

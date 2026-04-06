@@ -3,7 +3,7 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 
-class CoustomShowdialog {
+class CustomShowDialog {
   static void show({
     required BuildContext context,
     required Widget title,
@@ -26,7 +26,6 @@ class CoustomShowdialog {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  /// 🔹 Icon
                   Container(
                     width: 100,
                     height: 100,

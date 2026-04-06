@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: CarouselSliderContainer(),
                     ),
                     Gap(14.h),
-                    Text('الفئات', style: font14BlackBold),
+                    Text(kCategories.tr(), style: font14BlackBold),
                     Gap(10.h),
                     SizedBox(
                       height: Shared.height * 0.2.h,
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Gap(18.h),
-                    Text('العناصر المقترحة', style: font14BlackBold),
+                    Text(kSuggestedItems.tr(), style: font14BlackBold),
                     Gap(8.h),
                     BlocBuilder<AllItemsBloc, AllItemsState>(
                       bloc: allItemsBloc,
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         else if (state.status == allItemsStatus.failure) {
                           return Center(child: Text(state.failureMessage));
                         } else  {
-                          return Center(child: Text("No Data Yet"));
+                          return Center(child: Text(kNoDataYet.tr()));
                         }
                       },
                     ),

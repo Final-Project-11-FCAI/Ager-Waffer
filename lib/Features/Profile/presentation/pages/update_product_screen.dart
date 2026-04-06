@@ -259,13 +259,13 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               ),
                               Gap(50.h),
                               UpdateProductDataContainer(
-                                hintText: 'اسم المنتج',
+                                hintText: kProductName.tr(),
                                 keyboardType: TextInputType.name,
                                 controller: nameController,
                               ),
                               Gap(20.h),
                               UpdateProductDataContainer(
-                                hintText: 'الفئة',
+                                hintText: kCategory.tr(),
                                 isOptions: true,
                                 options: categoryOptions,
                                 initialValue: selectedCategory,
@@ -277,14 +277,14 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               ),
                               Gap(20.h),
                               UpdateProductDataContainer(
-                                hintText: 'وصف المنتج...',
+                                hintText: kProductDescription.tr(),
                                 isDescription: true,
                                 keyboardType: TextInputType.text,
                                 controller: descriptionController,
                               ),
                               Gap(20.h),
                               UpdateProductDataContainer(
-                                hintText: 'حالة المنتج',
+                                hintText: kProductCondition.tr(),
                                 isOptions: true,
                                 options: productStatesOptions,
                                 initialValue: selectedCondition,
@@ -296,7 +296,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               ),
                               Gap(30.h),
                               Text(
-                                'نوع الإيجار',
+                                kRentalType.tr(),
                                 style: font16BlackSemiBold.copyWith(
                                   color: kSomeBlackColor,
                                 ),
@@ -313,20 +313,19 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               ),
                               Gap(20.h),
                               UpdateProductDataContainer(
-                                hintText:
-                                    'سعر الإيجار (جنيه/${rentalType.substring(0, rentalType.length - 1)})',
+                                hintText: "${kRentalPrice.tr()} (${kCurrencyPer.tr().replaceAll('{unit}', rentalType)})",
                                 keyboardType: TextInputType.number,
                                 controller: priceController,
                               ),
                               Gap(20.h),
                               UpdateProductDataContainer(
-                                hintText: 'قيمة التأمين',
+                                hintText: kInsurance.tr(),
                                 keyboardType: TextInputType.number,
                                 controller: insuranceController,
                               ),
                               Gap(20.h),
                               UpdateProductDataContainer(
-                                hintText: 'المحافظة',
+                                hintText: kCity.tr(),
                                 isOptions: true,
                                 options: governmentOptions,
                                 initialValue: selectedCity,
@@ -343,7 +342,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               >(
                                 builder: (context, state) {
                                   return buildSwitchRow(
-                                    title: "المنتج متاح حالياً",
+                                    title: kProductAvailable.tr(),
                                     value: isAvailable,
                                     onChanged: (val) {
                                       setState(() {
@@ -407,7 +406,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               }
                             }
                           : null,
-                      text: 'تعديل المنتج',
+                      text: kEditProduct.tr(),
                       color: kPrimaryColor,
                     ),
                   ),

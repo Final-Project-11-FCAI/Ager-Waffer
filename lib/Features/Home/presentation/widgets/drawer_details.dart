@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
@@ -5,9 +6,12 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
+import '../../../Authentication/login/data/models/login_model.dart';
 
 class DrawerDetails extends StatefulWidget {
   const DrawerDetails({super.key});
@@ -30,47 +34,57 @@ class _DrawerDetailsState extends State<DrawerDetails> {
               vertical: Shared.height * 0.03.h,
             ),
             decoration: BoxDecoration(color: kDrawerColor.withOpacity(0.05)),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage(
-                    'assets/images/profile_image.png',
-                  ),
+            child: FutureBuilder<Data?>(
+                  future: sharedPreferenceManager.getUser(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return CircularProgressIndicator();
+                    }
+
+                    final user = snapshot.data;
+                    return Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(user?.imageUrl ?? 'assets/images/virtual_user.jpg'),
+                        ),
+                        Gap(8),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
+                              style: font15BlackRegular.copyWith(fontWeight: semiBold),
+                            ),
+                            Gap(2),
+                            Text(
+                              user?.email ?? '',
+                              style: font13kLightPrimaryColorMedium.copyWith(
+                                color: kGreyColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Gap(35.w),
+                        CircleAvatar(
+                          backgroundColor: kBorderColor.withOpacity(0.09),
+                          radius: 20.r,
+                          child: InkWell(
+                              onTap: () => Navigator.of(context).pop(),
+                              child: Icon(Icons.arrow_forward_ios_sharp, color: kGreyColor)),
+                        ),
+                      ],
+                    );
+                  },
                 ),
-                Gap(8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'أحمد علي',
-                      style: font15BlackRegular.copyWith(fontWeight: semiBold),
-                    ),
-                    Gap(2),
-                    Text(
-                      'ahmedali@gmail.com',
-                      style: font13kLightPrimaryColorMedium.copyWith(
-                        color: kGreyColor,
-                      ),
-                    ),
-                  ],
-                ),
-                Gap(35.w),
-                CircleAvatar(
-                  backgroundColor: kBorderColor.withOpacity(0.09),
-                  radius: 20.r,
-                  child: Icon(Icons.arrow_forward_ios_sharp, color: kGreyColor),
-                ),
-              ],
-            ),
           ),
           Divider(height: 1.h, thickness: 0.8, color: kBorderColor),
           Gap(Shared.height * 0.02.h),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
+            padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.0.w),
             child: Column(
               children: [
                 drawerItem(
-                  title: 'إدارة الطلبات',
+                  title: kManageOrders.tr(),
                   icon: 'assets/images/management_orders.png',
                   onTap: () {
                     Navigator.of(context).pop();
@@ -78,16 +92,16 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                   },
                 ),
                 Gap(2.h),
-                drawerItem(title: 'اللغة', icon: 'assets/images/language.png'),
+                drawerItem(title: kLanguage.tr(), icon: 'assets/images/language.png'),
                 Gap(2.h),
                 drawerItem(
-                  title: 'الوضع الداكن',
+                  title: kDarkMode.tr(),
                   icon: 'assets/images/dark_mode.png',
                   isDarkMode: true,
                 ),
                 Gap(2.h),
                 drawerItem(
-                  title: 'تواصل معنا',
+                  title: kContactUs.tr(),
                   icon: 'assets/images/contact_us.png',
                 ),
               ],
@@ -118,7 +132,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                   ),
                   Gap(8.w),
                   Text(
-                    'تسجيل الخروج',
+                    kLogout.tr(),
                     style: font16BlackSemiBold.copyWith(
                       color: kMoreRedColor,
                       fontWeight: bold,
@@ -179,7 +193,10 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     });
                   },
                 )
-              : Icon(Icons.arrow_forward_ios_outlined),
+              : Padding(
+                padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
+                child: Icon(Icons.arrow_forward_ios_outlined),
+              ),
         ],
       ),
     );

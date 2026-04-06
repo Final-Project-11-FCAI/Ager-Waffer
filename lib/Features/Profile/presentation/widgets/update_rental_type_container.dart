@@ -1,7 +1,9 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UpdateRentalTypeContainer extends StatefulWidget {
@@ -21,9 +23,9 @@ class UpdateRentalTypeContainer extends StatefulWidget {
 class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
 
   final List<String> items = [
-    "يومي",
-    "أسبوعي",
-    "شهري",
+    kDaily.tr(),
+    kWeekly.tr(),
+    kMonthly.tr(),
   ];
 
   int getSelectedIndex() {
@@ -39,7 +41,7 @@ class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
   }
   @override
   Widget build(BuildContext context) {
-    final currentIndex = getSelectedIndex(); // 🔥 هنا
+    final currentIndex = getSelectedIndex();
 
     return Container(
       decoration: BoxDecoration(

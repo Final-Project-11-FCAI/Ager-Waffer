@@ -70,3 +70,177 @@ String kBrandNew = 'brand_new';
 String kNew = 'new';
 String kUsed = 'used';
 String kHeavilyUsed = 'heavily_used';
+
+
+String kAddProductSuccessTitle = 'add_product_success_title';
+String kAddProductSuccessDesc = 'add_product_success_desc';
+String kShowMyProducts = 'show_my_products';
+
+String kProductName = 'product_name';
+String kCategory = 'category';
+String kProductDescription = 'product_description';
+String kProductCondition = 'product_condition';
+
+String kRentalType = 'rental_type';
+String kRentalPrice = 'rental_price';
+String kInsurance = 'insurance';
+String kCity = 'city';
+
+String kProductAvailable = 'product_available';
+String kAddProduct = 'add_product';
+
+String kCurrencyPer = 'currency_per';
+
+
+String kPhone = 'phone';
+String kEnterNewPassword = 'enter_new_password';
+
+String kSave = 'save';
+
+String kUpdateSuccess = 'update_success';
+String kUpdateError = 'update_error';
+
+String kConfirmEditTitle = 'confirm_edit_title';
+String kConfirmEditDesc = 'confirm_edit_desc';
+
+String kEdit = 'edit';
+
+
+String kAddProductTooltip = 'add_product_tooltip';
+
+String kMyProducts = 'my_products';
+String kDeleteSuccess = 'delete_success';
+
+String kNoProductsYet = 'no_products_yet';
+String kAddProductsDesc = 'add_products_desc';
+String kNoProducts = 'no_products';
+String kEditProduct = 'edit_product';
+String kRetry = 'retry';
+
+String kDelete = 'delete';
+String kCurrencyPerDay = 'currency_per_day';
+
+String kMaxImages = 'max_images';
+String kMinImages = 'min_images';
+
+String kUploadProductImages = 'upload_product_images';
+String kUploadRange = 'upload_range';
+String kUploadImages = 'upload_images';
+
+
+String kCompleteDataTitle = 'complete_data_title';
+String kCompleteDataDesc = 'complete_data_desc';
+
+String kGovernorate = 'governorate';
+String kStreet = 'street';
+
+String kEnterGovernorate = 'enter_governorate';
+String kEnterCity = 'enter_city';
+String kEnterStreet = 'enter_street';
+
+String kHome = 'home';
+String kFavorite = 'favorite';
+String kMyOrders = 'my_orders';
+String kMyChats = 'my_chats';
+String kMyAccount = 'my_account';
+
+String kCategories = 'categories';
+String kSuggestedItems = 'suggested_items';
+String kNoDataYet = 'no_data_yet';
+
+String kNoReviewsYet = 'no_reviews_yet';
+String kReviews = 'reviews';
+
+
+String kRentalTermsTitle = 'rental_terms_title';
+String kAgree = 'agree';
+
+String kTerm1 = 'term_1';
+String kTerm2 = 'term_2';
+String kTerm3 = 'term_3';
+String kTerm4 = 'term_4';
+String kTerm5 = 'term_5';
+
+
+
+String kSelectDate = 'select_date';
+
+String kRentalPeriod = 'rental_period';
+String kStartDate = 'start_date';
+String kEndDate = 'end_date';
+String kDuration = 'duration';
+String kDays = 'days';
+
+String kPriceSummary = 'price_summary';
+String kPricePerUnit = 'price_per_unit';
+String kNumberOfDays = 'number_of_days';
+String kTotal = 'total';
+
+String kAgreeTermsPrefix = 'agree_terms_prefix';
+String kRentalTerms = 'rental_terms';
+
+String kMustAgree = 'must_agree';
+String kSelectPeriod = 'select_period';
+
+String kRequestSuccessTitle = 'request_success_title';
+String kRequestSuccessDesc = 'request_success_desc';
+String kOk = 'ok';
+
+String kConfirmRequest = 'confirm_request';
+
+String kContactOwner = 'contact_owner';
+String kProduct = 'product';
+
+String kRegisterSuccessTitle = 'register_success_title';
+
+String kWelcomePrefix = 'welcome_prefix';
+String kAppName = 'app_name';
+String kWelcomeDesc = 'welcome_desc';
+
+String kLoginNowArrow = 'login_now_arrow';
+
+String kHello = 'hello';
+String kWhatDoYouWant = 'what_do_you_want';
+String kError = 'error';
+String kSearchHint = 'search_hint';
+String kView = 'view';
+
+String kManageOrders = 'manage_orders';
+String kLanguage = 'language';
+String kDarkMode = 'dark_mode';
+String kContactUs = 'contact_us';
+String kLogout = 'logout';
+
+String kCondition = 'condition';
+String kInsuranceOnly = 'insurance_only';
+String kDescription = 'description';
+
+String kAddToFavorite = 'add_to_favorite';
+String kRentNow = 'rent_now';
+
+String kMomentsAgo = 'moments_ago';
+String kMinutesAgo = 'minutes_ago';
+String kHoursAgo = 'hours_ago';
+String kDaysAgo = 'days_ago';
+
+String kUserName = 'user_name';
+String kReviewText = 'review_text';
+String kDate = 'date';
+
+String kDeleteProductTitle = 'delete_product_title';
+String kDeleteProductDesc = 'delete_product_desc';
+
+String kEnterPhone = 'enter_phone';
+String kInvalidPhone = 'invalid_phone';
+
+
+String kPasswordRequired = 'password_required';
+String kPasswordMinLength = 'password_min_length';
+String kPasswordUppercase = 'password_uppercase';
+String kPasswordLowercase = 'password_lowercase';
+String kPasswordNumber = 'password_number';
+String kPasswordSpecialChar = 'password_special_char';
+
+
+
+

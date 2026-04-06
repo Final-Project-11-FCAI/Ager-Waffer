@@ -1,6 +1,8 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart%20%20';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({super.key});
@@ -14,7 +16,7 @@ class SearchTextField extends StatelessWidget {
           borderSide: BorderSide(color: kPrimaryColor.withOpacity(0.1)),
         ),
         prefixIcon: Icon(Icons.search, color: kLightPrimaryColor),
-        hintText: 'ابحث عن منتج للايجار...',
+        hintText: kSearchHint.tr(),
         hintStyle: font20PrimaryMedium.copyWith(
           fontWeight: regular,
           color: Color.fromRGBO(0, 51, 78, 0.74),

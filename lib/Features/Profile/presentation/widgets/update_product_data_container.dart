@@ -15,7 +15,7 @@ class UpdateProductDataContainer extends StatefulWidget {
     this.controller,
     this.keyboardType,
     this.onItemSelected,
-    this.initialValue, // 🔥 الجديد
+    this.initialValue,
   });
 
   final String hintText;
@@ -26,7 +26,7 @@ class UpdateProductDataContainer extends StatefulWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final Function(String)? onItemSelected;
-  final String? initialValue; // 🔥 الجديد
+  final String? initialValue;
 
   @override
   State<UpdateProductDataContainer> createState() => _UpdateProductDataContainerState();
@@ -40,7 +40,6 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
   void initState() {
     super.initState();
 
-    // 🔥 لو في initial value حطها
     if (widget.initialValue != null && widget.initialValue!.isNotEmpty) {
       selectedValue = widget.initialValue;
     }

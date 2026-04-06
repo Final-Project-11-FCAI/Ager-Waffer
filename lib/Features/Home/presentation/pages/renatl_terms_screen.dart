@@ -1,25 +1,27 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:gap/gap.dart';
 
-class RenatlTermsScreen extends StatefulWidget {
-  const RenatlTermsScreen({super.key});
+class RentalTermsScreen extends StatefulWidget {
+  const RentalTermsScreen({super.key});
 
   @override
-  State<RenatlTermsScreen> createState() => _RenatlTermsScreenState();
+  State<RentalTermsScreen> createState() => _RentalTermsScreenState();
 }
 
-class _RenatlTermsScreenState extends State<RenatlTermsScreen> {
+class _RentalTermsScreenState extends State<RentalTermsScreen> {
   List<bool> termsChecked = [false, false, false, false, false];
 
   final List<String> terms = [
-    "الالتزام بمدة الإيجار المحددة",
-    "إعادة المنتج بنفس حالته وقت الاستلام",
-    "يتحمل المستأجر تكلفة أي تلف ناتج عن سوء الاستخدام",
-    "يتم استرداد مبلغ التأمين بعد فحص المنتج",
-    "يُستخدم المنتج للغرض المتفق عليه فقط ولا يسمح بإعادة تأجيره",
+    kTerm1.tr(),
+    kTerm2.tr(),
+    kTerm3.tr(),
+    kTerm4.tr(),
+    kTerm5.tr(),
   ];
 
   @override
@@ -30,7 +32,7 @@ class _RenatlTermsScreenState extends State<RenatlTermsScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "شروط الإيجار",
+          kRentalTermsTitle.tr(),
             style: font14BlackBold.copyWith(fontSize: 20),
           ),
           Gap(25.h),
@@ -49,8 +51,8 @@ class _RenatlTermsScreenState extends State<RenatlTermsScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
-                "موافق",
+              child: Text(
+                kAgree.tr(),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
