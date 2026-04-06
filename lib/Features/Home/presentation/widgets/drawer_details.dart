@@ -43,28 +43,32 @@ class _DrawerDetailsState extends State<DrawerDetails> {
 
                     final user = snapshot.data;
                     return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(user?.imageUrl ?? 'assets/images/virtual_user.jpg'),
-                        ),
-                        Gap(8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Text(
-                              "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
-                              style: font15BlackRegular.copyWith(fontWeight: semiBold),
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(user?.imageUrl ?? 'assets/images/virtual_user.jpg'),
                             ),
-                            Gap(2),
-                            Text(
-                              user?.email ?? '',
-                              style: font13kLightPrimaryColorMedium.copyWith(
-                                color: kGreyColor,
-                              ),
+                            Gap(8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
+                                  style: font15BlackRegular.copyWith(fontWeight: semiBold),
+                                ),
+                                Gap(2),
+                                Text(
+                                  user?.email ?? '',
+                                  style: font13kLightPrimaryColorMedium.copyWith(
+                                    color: kGreyColor,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        Gap(35.w),
                         CircleAvatar(
                           backgroundColor: kBorderColor.withOpacity(0.09),
                           radius: 20.r,

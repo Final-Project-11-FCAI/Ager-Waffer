@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.ager_waffer"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 36
         versionCode = 1                  // ← just a number
         versionName = "1.0"              // ← any string you want

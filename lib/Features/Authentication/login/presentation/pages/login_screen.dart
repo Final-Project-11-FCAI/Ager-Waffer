@@ -3,13 +3,14 @@ import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/login/data/repositories/auth_external_services.dart';
+import 'package:ager_waffer/Features/Authentication/login/data/external_services/auth_external_services.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_state.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_state.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/external_login_widget.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
@@ -38,7 +39,6 @@ class _LoginScreenState extends State<LoginScreen>
   TextEditingController passwordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  final auth = AuthExternalService();
 
   @override
   void initState() {
@@ -267,76 +267,7 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        LogoIcon(
-                          path: 'assets/images/Facebook.png',
-                          onTap: () {},
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.02,
-                          ),
-                          child: LogoIcon(
-                            path: 'assets/images/Apple.png',
-                            onTap: () {},
-                            height: 83,
-                            width: 83,
-                          ),
-                        ),
-                        BlocListener<ExternalLoginBloc, ExternalLoginState>(
-                          listener: (context, state) {
-                            if (state.status == externalLoginStatus.loading) {
-                              Shared.showLoadingDialog(context: context);
-                            } else if (state.status == externalLoginStatus.success) {
-                              Shared.dismissDialog(context: context);
-
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (c) => BlocProvider(
-                                    create: (_) => BottomNavCubit(),
-                                    child: HomeLayoutScreen(),
-                                  ),
-                                ),
-                              );
-
-                            } else if (state.status == externalLoginStatus.failure) {
-                              Shared.dismissDialog(context: context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    state.failureMessage ?? kSomethingWentWrong.tr(),
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          child: LogoIcon(
-                            path: "assets/images/Google.png",
-                            onTap: () async {
-                              final token = await auth.signInWithGoogleAndGetAccessToken();
-                              if (token != null) {
-                                print("Token: $token");
-
-                                context.read<ExternalLoginBloc>().add(
-                                  ExternalLoginEvent(
-                                    provider: 'google',
-                                    accessToken: token,
-                                  ),
-                                );
-                              } else {
-                                print('Sign-in failed');
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Google sign-in failed")),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                    ExternalLoginWidget(),
                     Gap(20.h),
                     RichText(
                       text: TextSpan(
