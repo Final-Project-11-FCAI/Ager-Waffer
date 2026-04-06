@@ -159,9 +159,11 @@
   "duration": "Duration",
   "days": "days",
 
+  "egp": "EGP",
+
 
   "price_summary": "Price summary",
-  "price_per_unit": "Price per",
+  "price_per_unit": "Price",
   "number_of_days": "Number of days",
   "total": "Total",
 

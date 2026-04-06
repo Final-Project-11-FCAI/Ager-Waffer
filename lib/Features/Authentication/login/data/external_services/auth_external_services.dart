@@ -15,7 +15,7 @@ class AuthExternalService {
       final GoogleSignInAccount user =
       await _googleSignIn.authenticate();
 
-      print("✅ Google user selected");
+      print("Google user selected");
 
       // 2️⃣ الحصول على accessToken
       final authorization = await user.authorizationClient
@@ -26,12 +26,12 @@ class AuthExternalService {
       ]);
 
       if (authorization == null) {
-        print("❌ Authorization failed");
+        print("Authorization failed");
         return null;
       }
 
       final accessToken = authorization.accessToken;
-      print("🔥 AccessToken: $accessToken");
+      print("AccessToken: $accessToken");
 
       final googleAuth = user.authentication;
 
@@ -43,7 +43,7 @@ class AuthExternalService {
 
       return accessToken;
     } catch (e) {
-      print("🔥 Google Sign-In Error: $e");
+      print("Google Sign-In Error: $e");
       return null;
     }
   }

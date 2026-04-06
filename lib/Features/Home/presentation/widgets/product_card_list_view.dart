@@ -50,24 +50,24 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         : 0,
                   ),
                   child:
-                      widget.product.itemImages != null &&
-                          widget.product.itemImages!.isNotEmpty
+                  widget.product.itemImages != null &&
+                      widget.product.itemImages!.isNotEmpty
                       ? CachedNetworkImage(
-                          imageUrl: widget.product.itemImages!.first,
-                          width: 90.w,
-                          height: 90.h,
-                          fit: BoxFit.contain,
-                          placeholder: (context, url) =>
-                              Image.asset("assets/images/virtual_image.jpg"),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        )
+                    imageUrl: widget.product.itemImages!.first,
+                    width: 90.w,
+                    height: 90.h,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) =>
+                        Image.asset("assets/images/virtual_image.jpg"),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.error),
+                  )
                       : Image.asset(
-                          "assets/images/virtual_image.jpg",
-                          width: 90.w,
-                          height: 90.h,
-                          fit: BoxFit.contain,
-                        ),
+                    "assets/images/virtual_image.jpg",
+                    width: 90.w,
+                    height: 90.h,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -127,7 +127,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                       Gap(5.w),
                       ...List.generate(
                         5,
-                        (index) => Icon(
+                            (index) => Icon(
                           Icons.star,
                           size: 14.sp,
                           color: index < widget.product.averageRate!.floor()

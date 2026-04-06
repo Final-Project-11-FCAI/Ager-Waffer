@@ -35,33 +35,38 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           backgroundColor: kWhiteColor,
           automaticallyImplyLeading: false,
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: user?.imageUrl != null
-                        ? NetworkImage(user!.imageUrl.toString())
-                        : AssetImage('assets/images/virtual_user.jpg'),
-                  ),
-                  Gap(8.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${kHello.tr()}, ${user!.firstName}",
-                        overflow: TextOverflow.ellipsis,
-                        style: font15BlackRegular,
+              Expanded(
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: user?.imageUrl != null
+                          ? NetworkImage(user!.imageUrl.toString())
+                          : const AssetImage('assets/images/virtual_user.jpg')
+                      as ImageProvider,
+                    ),
+                    Gap(8.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "${kHello.tr()}, ${user!.firstName}",
+                            overflow: TextOverflow.ellipsis,
+                            style: font15BlackRegular,
+                          ),
+                          Gap(2),
+                          Text(
+                            kWhatDoYouWant.tr(),
+                            overflow: TextOverflow.ellipsis,
+                            style: font14GreyRegular,
+                          ),
+                        ],
                       ),
-                      Gap(2),
-                      Text(
-                        kWhatDoYouWant.tr(),
-                        overflow: TextOverflow.ellipsis,
-                        style: font14GreyRegular,
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
               Row(
                 children: [

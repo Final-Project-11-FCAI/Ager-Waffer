@@ -146,7 +146,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         ),
                                         Gap(8.w),
                                         Text(
-                                          "${widget.product.price} ${kPricePerUnit.tr()} ${widget.product.rentUnit}",
+                                          "${widget.product.price} ${kPricePerUnit.tr()}/${widget.product.rentUnit}",
                                           style: font16BlackSemiBold.copyWith(
                                             fontSize: 11,
                                           ),
@@ -307,7 +307,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "${widget.product.price}ج/${widget.product.rentUnit}",
+                                    "${widget.product.price} ${kEgp.tr()}/${widget.product.rentUnit}",
                                     style: font15SomeBlackColorMedium.copyWith(
                                       fontSize: 13,
                                       color: kBlackColor,
@@ -392,21 +392,26 @@ class _RequestScreenState extends State<RequestScreen> {
                                       WidgetSpan(
                                         alignment: PlaceholderAlignment.middle,
                                         child: GestureDetector(
-                                          onTap: () {
-                                            showModalBottomSheet(
-                                              context: context,
-                                              isScrollControlled: true,
-                                              builder: (context) {
-                                                return const RentalTermsScreen();
-                                              },
-                                            );
-                                          },
+                                            onTap: () async {
+                                              final result = await showModalBottomSheet<bool>(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                builder: (context) {
+                                                  return const RentalTermsScreen();
+                                                },
+                                              );
+                                              if (result == true) {
+                                                setState(() {
+                                                  agree = true;
+                                                });
+                                              }
+                                            },
                                           child: Text(
                                             kRentalTerms.tr(),
                                             style: font14BlackBold.copyWith(
                                               color: kLightPrimaryColor,
                                               decoration: TextDecoration.underline,
-                                              fontSize: 14,
+                                              fontSize: 15,
                                             ),
                                           ),
                                         ),
