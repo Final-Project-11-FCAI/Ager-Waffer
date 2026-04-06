@@ -96,7 +96,13 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                   },
                 ),
                 Gap(2.h),
-                drawerItem(title: kLanguage.tr(), icon: 'assets/images/language.png'),
+                drawerItem(
+                  title: kLanguage.tr(),
+                  icon: 'assets/images/language.png',
+                  onTap: () {
+                    showLanguageDialog();
+                  },
+                ),
                 Gap(2.h),
                 drawerItem(
                   title: kDarkMode.tr(),
@@ -148,6 +154,59 @@ class _DrawerDetailsState extends State<DrawerDetails> {
           ),
         ],
       ),
+    );
+  }
+
+  void showLanguageDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Text(
+            "Choose Language",
+            style: font20PrimaryMedium,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // English
+              ListTile(
+                leading: Icon(Icons.language),
+                title: Text("English"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  // await translator.setNewLanguage(
+                  //   context,
+                  //   newLanguage: "en",
+                  //   remember: true,
+                  //   restart: true,
+                  // );
+                },
+              ),
+
+              Divider(),
+
+              // Arabic
+              ListTile(
+                leading: Icon(Icons.language),
+                title: Text("العربية"),
+                onTap: () async {
+                  // Navigator.pop(context);
+                  // await translator.setNewLanguage(
+                  //   context,
+                  //   newLanguage: "ar",
+                  //   remember: true,
+                  //   restart: true,
+                  // );
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

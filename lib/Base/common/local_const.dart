@@ -175,6 +175,7 @@ String kPriceSummary = 'price_summary';
 String kPricePerUnit = 'price_per_unit';
 String kNumberOfDays = 'number_of_days';
 String kTotal = 'total';
+String kEgp= 'egp';
 
 String kAgreeTermsPrefix = 'agree_terms_prefix';
 String kRentalTerms = 'rental_terms';

@@ -49,7 +49,7 @@ class _RentalTermsScreenState extends State<RentalTermsScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
               child: Text(
                 kAgree.tr(),
