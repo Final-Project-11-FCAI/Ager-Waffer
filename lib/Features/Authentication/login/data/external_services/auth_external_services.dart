@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthExternalService {
@@ -7,12 +8,10 @@ class AuthExternalService {
 
   Future<String?> signInWithGoogleAndGetAccessToken() async {
     try {
-      // 🔥 مهم جدًا: حط هنا Web Client ID من Firebase
       await _googleSignIn.initialize(
         serverClientId: "784984253888-5k2hdf3ltoeg0f3uecr5g7l8n907oaid.apps.googleusercontent.com",
       );
 
-      // 1️⃣ تسجيل الدخول
       final GoogleSignInAccount user =
       await _googleSignIn.authenticate();
 
@@ -34,7 +33,6 @@ class AuthExternalService {
       final accessToken = authorization.accessToken;
       print("🔥 AccessToken: $accessToken");
 
-      // 3️⃣ Firebase login (اختياري)
       final googleAuth = user.authentication;
 
       final credential = GoogleAuthProvider.credential(
@@ -54,4 +52,37 @@ class AuthExternalService {
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
+
+
+  Future<String?> signInWithFacebookAndGetAccessToken() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+
+      if (result.status != LoginStatus.success) {
+        print("❌ Facebook login failed: ${result.message}");
+        return null;
+      }
+
+      final accessToken = result.accessToken?.tokenString;
+
+      if (accessToken == null) {
+        print("❌ AccessToken is null");
+        return null;
+      }
+
+      // 🔥 Firebase login
+      final OAuthCredential credential =
+      FacebookAuthProvider.credential(accessToken);
+
+      await _auth.signInWithCredential(credential);
+
+      print("✅ Firebase login success");
+
+      return accessToken;
+    } catch (e) {
+      print("🔥 Facebook Error: $e");
+      return null;
+    }
+  }
+
 }
