@@ -132,10 +132,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // ... rest of your _fcmConfigure, didChangeMetrics, etc. stays unchanged ...
 }
 
+
+
 var navigatorKey = GlobalKey<NavigatorState>();
 
 class MyMaterial extends StatefulWidget {
   static var app_langauge;
+  static bool isDark = false;
 
   @override
   MyMaterialState createState() => MyMaterialState();
@@ -145,6 +148,16 @@ class MyMaterial extends StatefulWidget {
 
     app_langauge = newLocale.languageCode;
     state?.setState(() => state.local = newLocale);
+  }
+
+  static void toggleTheme(BuildContext context, bool value) {
+    MyMaterialState? state = context.findAncestorStateOfType();
+
+    if (state != null) {
+      state.setState(() {
+        isDark = value;
+      });
+    }
   }
 }
 
@@ -161,10 +174,21 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
+    loadTheme();
+
     _currentLanguageCode = WidgetsBinding.instance.window.locale.languageCode;
     WidgetsBinding.instance.addObserver(this);
 
     _fcmConfigure(context);
+  }
+
+  Future<void> loadTheme() async {
+    bool isDarkSaved =
+    await sharedPreferenceManager.readBool(CachingKey.DARK_MODE);
+    setState(() {
+      MyMaterial.isDark = isDarkSaved;
+    });
   }
 
   @override
@@ -215,9 +239,11 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
           ],
 
           child: MaterialApp(
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            themeMode: MyMaterial.isDark ? ThemeMode.dark : ThemeMode.light,
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(fontFamily: 'Tajawal'),
             locale: LocalizeAndTranslate.getLocale(),
             supportedLocales: LocalizeAndTranslate.getLocals(),
             localizationsDelegates: [

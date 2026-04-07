@@ -5,6 +5,7 @@ import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
+import 'package:ager_waffer/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';
@@ -166,41 +167,29 @@ class _DrawerDetailsState extends State<DrawerDetails> {
             borderRadius: BorderRadius.circular(16),
           ),
           title: Text(
-            "Choose Language",
-            style: font20PrimaryMedium,
+            kLanguage.tr(),
+            style: font20PrimaryMedium.copyWith(fontWeight: bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // English
               ListTile(
-                leading: Icon(Icons.language),
-                title: Text("English"),
+                visualDensity: VisualDensity.compact,
+                leading: Image.asset("assets/images/english_flag.png"),
+                title: Text("English", style: font16BlackSemiBold,),
                 onTap: () async {
-                  Navigator.pop(context);
-                  // await translator.setNewLanguage(
-                  //   context,
-                  //   newLanguage: "en",
-                  //   remember: true,
-                  //   restart: true,
-                  // );
+                  await changeLanguage("en");
+                  MyMaterial.setLocale(context, Locale("en"));
                 },
               ),
-
               Divider(),
-
-              // Arabic
               ListTile(
-                leading: Icon(Icons.language),
-                title: Text("العربية"),
+                visualDensity: VisualDensity.compact,
+                leading: Image.asset("assets/images/egypt_flag.png"),
+                title: Text("العربية", style: font16BlackSemiBold,),
                 onTap: () async {
-                  // Navigator.pop(context);
-                  // await translator.setNewLanguage(
-                  //   context,
-                  //   newLanguage: "ar",
-                  //   remember: true,
-                  //   restart: true,
-                  // );
+                  await changeLanguage("ar");
+                  MyMaterial.setLocale(context, Locale("ar"));
                 },
               ),
             ],
@@ -209,6 +198,20 @@ class _DrawerDetailsState extends State<DrawerDetails> {
       },
     );
   }
+
+  Future<void> changeLanguage(String lang) async {
+    await LocalizeAndTranslate.setLanguageCode(lang);
+
+    MyMaterial.setLocale(context, Locale(lang));
+
+    sharedPreferenceManager.writeData(
+      CachingKey.APP_LANGUAGE,
+      lang,
+    );
+
+    Navigator.pop(context);
+  }
+
 
   TextButton drawerItem({
     required String? title,
@@ -235,8 +238,8 @@ class _DrawerDetailsState extends State<DrawerDetails> {
           ),
           isDarkMode
               ? Switch(
-                  value: isSwitched,
-                  activeTrackColor: kLightPrimaryColor,
+            value: MyMaterial.isDark,
+            activeTrackColor: kLightPrimaryColor,
                   activeColor: kWhiteColor,
                   inactiveTrackColor: kInactiveSwitchColor.withOpacity(0.3),
                   inactiveThumbColor: kWhiteColor,
@@ -250,11 +253,14 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     }
                     return kInactiveSwitchColor.withOpacity(0);
                   }),
-                  onChanged: (value) {
-                    setState(() {
-                      isSwitched = value;
-                    });
-                  },
+              onChanged: (value) {
+                MyMaterial.toggleTheme(context, value);
+
+                sharedPreferenceManager.writeData(
+                  CachingKey.DARK_MODE,
+                  value,
+                );
+              },
                 )
               : Padding(
                 padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),

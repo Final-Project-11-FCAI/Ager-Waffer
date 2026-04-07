@@ -216,8 +216,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Positioned(
-              right: Shared.width * -0.08.sp,
-              left: Shared.width * 0.28.sp,
+              right: LocalizeAndTranslate.getLanguageCode() == 'en' ? Shared.width * 0.28.sp : Shared.width * -0.08.sp,
+              left: LocalizeAndTranslate.getLanguageCode() == 'en' ?  Shared.width * -0.08.sp : Shared.width * 0.28.sp,
               top: Shared.height * 0.01.sp,
               child: GestureDetector(
                 onTap: () async {

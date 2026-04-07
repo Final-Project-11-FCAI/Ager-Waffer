@@ -116,7 +116,7 @@ class Dialogs {
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.05.w,
+                            horizontal: Shared.width * 0.03.w,
                             vertical: Shared.height * 0.008.h,
                           ),
                           decoration: BoxDecoration(
@@ -153,7 +153,7 @@ class Dialogs {
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.06.w,
+                            horizontal: Shared.width * 0.03.w,
                             vertical: Shared.height * 0.008.h,
                           ),
                           decoration: BoxDecoration(

@@ -114,6 +114,8 @@ class CachingKey extends Enum<String> {
   static const CachingKey PROFILE_IMAGE = const CachingKey('PROFILE_IMAGE');
   static const CachingKey USER_NAME = const CachingKey('USER_NAME');
   static const CachingKey IS_FIRST_LOGIN = const CachingKey('IS_FIRST_LOGIN');
+  static const CachingKey APP_LANGUAGE = const CachingKey('APP_LANGUAGE');
+  static const CachingKey DARK_MODE = const CachingKey('DARK_MODE');
 
 
 
@@ -139,7 +141,6 @@ class CachingKey extends Enum<String> {
 
   static const CachingKey USER_LOCATION_ID= const CachingKey('USER_LOCATION_ID');
 
-  static const CachingKey APP_LANGUAGE = const CachingKey('APP_LANGUAGE');
   static const CachingKey CAR_ID = const CachingKey('CAR_ID');
   static const CachingKey CAR_MODEL_ID = const CachingKey('CAR_MODEL_ID');
   static const CachingKey CAR_Brand_ID = const CachingKey('CAR_MODEL_ID');
