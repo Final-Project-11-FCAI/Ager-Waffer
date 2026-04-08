@@ -17,6 +17,11 @@ const String updateAddressUrl = "Authentication/update-address";
 
 
 
+// Chats Url
+const String allChatsUrl = "Chat/conversations";
+
+
+
 
 
 

@@ -144,6 +144,20 @@ class ExternalLoginEvent extends AppEvent {
 }
 
 
+//Chats Events
+class GetAllChatsEvent extends AppEvent {
+  GetAllChatsEvent();
+}
+
+class GetMessagesEvent extends AppEvent {
+  final String conversationId;
+
+  GetMessagesEvent({required this.conversationId});
+}
+
+
+
+
 
 
 // class VerifyOtpEvent extends AppEvent{
