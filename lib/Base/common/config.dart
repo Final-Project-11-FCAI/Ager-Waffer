@@ -17,6 +17,7 @@ const String updateAddressUrl = "Authentication/update-address";
 
 
 const String sendRequestsUrl = "RentalRequests";
+const String myOrdersUrl = "RentalRequests/sent";
 
 
 
