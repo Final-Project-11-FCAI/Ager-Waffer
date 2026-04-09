@@ -9,6 +9,7 @@ import 'package:ager_waffer/Features/Chat/presentation/manager/get_messages_bloc
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/send_request_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
@@ -236,6 +237,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => UpdateAddressBloc()),
             BlocProvider(create: (context) => ExternalLoginBloc()),
             BlocProvider(create: (context) => AllChatsBloc()),
+            BlocProvider(create: (context) => SendRequestBloc()),
             // BlocProvider(create: (context) => GetMessagesBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),

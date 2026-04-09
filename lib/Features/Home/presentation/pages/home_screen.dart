@@ -3,6 +3,7 @@ import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
@@ -27,14 +28,15 @@ import 'package:gap/gap.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.email, required this.password});
+
   final String email;
   final String password;
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -44,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _refreshData() async {
     context.read<AllItemsBloc>().add(GetAllItemsEvent());
 
-    context.read<LoginBloc>().add(LoginEvent(email: widget.email, password: widget.password));
+    context.read<LoginBloc>().add(
+      LoginEvent(email: widget.email, password: widget.password),
+    );
     // optional delay (عشان يظهر animation)
     await Future.delayed(const Duration(seconds: 1));
   }
@@ -54,10 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<CategoryEntity> categories = [
       CategoryEntity(
         image: 'assets/images/electronics.png',
-        title:  kElectronics.tr(),
+        title: kElectronics.tr(),
         onTap: () {
           final products = allItemsBloc.state.product;
-          customAnimatedPushNavigation(context, ElectronicsScreen(products: products,));
+          customAnimatedPushNavigation(
+            context,
+            ElectronicsScreen(products: products),
+          );
         },
       ),
       CategoryEntity(
@@ -149,18 +156,37 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         } else if (state.status == allItemsStatus.success) {
                           final products = state.product;
-                          return ListView.builder(
-                            itemCount: state.product.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return ProductCardListView(product: products[index]);
-                            },
+
+                          return FutureBuilder<Data?>(
+                            future: sharedPreferenceManager.getUser(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return SizedBox();
+                              }
+
+                              final user = snapshot.data;
+
+                              final filteredProducts = products.where((product) {
+                                final ownerId = product.ownerId?.toString().trim();
+                                final userId = user?.id?.toString().trim();
+                                return ownerId != userId;
+                              }).toList();
+
+                              return ListView.builder(
+                                itemCount: filteredProducts.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return ProductCardListView(
+                                    product: filteredProducts[index],
+                                  );
+                                },
+                              );
+                            }
                           );
-                        }
-                        else if (state.status == allItemsStatus.failure) {
+                        } else if (state.status == allItemsStatus.failure) {
                           return Center(child: Text(state.failureMessage));
-                        } else  {
+                        } else {
                           return Center(child: Text(kNoDataYet.tr()));
                         }
                       },
