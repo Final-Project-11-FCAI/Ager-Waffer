@@ -31,7 +31,7 @@ class ReviewItem extends StatelessWidget {
       }
 
       if (diff.inDays <= 7) {
-        return "${kDaysAgo.tr()} ${diff.inDays}";
+        return "${diff.inDays} ${kDaysAgo.tr()}";
       }
 
       return DateFormat('dd MMM yyyy').format(parsedDate);

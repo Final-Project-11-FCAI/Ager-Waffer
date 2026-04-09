@@ -14,43 +14,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class UnderReviewOrders extends StatefulWidget {
-  const UnderReviewOrders({super.key,});
+  const UnderReviewOrders({super.key});
 
   @override
   State<UnderReviewOrders> createState() => _UnderReviewOrdersState();
 }
 
 class _UnderReviewOrdersState extends State<UnderReviewOrders> {
-
   @override
   void initState() {
     super.initState();
     context.read<MyOrdersBloc>().add(GetMyOrdersEvent());
   }
-
-  final List<UnderReviewOrdersEntity> underReviewOrders = [
-    UnderReviewOrdersEntity(
-      image: 'assets/images/camera.png',
-      title: 'Canon EOS كاميرا',
-      owner: 'احمد محمد',
-      time: '1 فبراير - 5 فبراير',
-      price: '500جنيه',
-    ),
-    UnderReviewOrdersEntity(
-      image: 'assets/images/stroller.png',
-      title: 'عربة أطفال',
-      owner: 'ندي خالد',
-      time: '5 مارس - 5 يوليو',
-      price: '1000جنيه',
-    ),
-    UnderReviewOrdersEntity(
-      image: 'assets/images/electric_stove.png',
-      title: 'بوتجاز كهربائي',
-      owner: 'يوسف محمد',
-      time: '5 مارس - 5 يوليو',
-      price: '200جنيه',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +37,13 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
             cellShimmerHeight: 50,
             shimmerCount: 10,
           );
-        }else if (state.status == myOrdersStatus.success){
+        } else if (state.status == myOrdersStatus.success) {
           final orders = state.orders;
-          final pendingOrders = orders.where((e) => e.status == "Pending").toList();
+          final pendingOrders = orders
+              .where((e) => e.status == "Pending")
+              .toList();
 
-          if(pendingOrders.isEmpty) {
+          if (pendingOrders.isEmpty) {
             return LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
@@ -78,14 +55,14 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                       child: EmptyProducts(
                         image: 'assets/images/no_products.png',
                         title: 'لا توجد عناصر متاحة',
-                        subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                        subTitle:
+                            'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
                       ),
                     ),
                   ),
                 );
               },
             );
-
           }
 
           return ListView.builder(
@@ -118,7 +95,8 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.network(pendingOrders[index].itemImages!.first,
+                            Image.network(
+                              pendingOrders[index].itemImages!.first,
                               width: 90.w,
                               height: 90.h,
                               fit: BoxFit.contain,
@@ -129,7 +107,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  pendingOrders[index].itemName!,
+                                  pendingOrders[index].itemName ?? '',
                                   style: font16BlackSemiBold.copyWith(
                                     color: kPrimaryColor,
                                   ),
@@ -141,16 +119,17 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                                     Gap(5.w),
                                     Text(
                                       "المالك: ${pendingOrders[index].ownerName}",
-                                      style: font13kLightPrimaryColorMedium.copyWith(
-                                        color: kBlackColor,
-                                      ),
+                                      style: font13kLightPrimaryColorMedium
+                                          .copyWith(color: kBlackColor),
                                     ),
                                   ],
                                 ),
                                 Gap(5.w),
                                 Row(
                                   children: [
-                                    Image.asset('assets/images/date_determine.png'),
+                                    Image.asset(
+                                      'assets/images/date_determine.png',
+                                    ),
                                     Gap(5.w),
                                     Text(
                                       '${pendingOrders[index].fromDate!} - ${pendingOrders[index].toDate!}',
@@ -223,12 +202,12 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
               );
             },
           );
-        }else if (state.status == myOrdersStatus.failure) {
+        } else if (state.status == myOrdersStatus.failure) {
           return Center(child: Text(state.failureMessage));
         } else {
           return Center(child: Text("No Data Yet"));
         }
-      }
+      },
     );
   }
 
