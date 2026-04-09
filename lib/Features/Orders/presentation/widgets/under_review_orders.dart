@@ -54,9 +54,9 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                     child: Center(
                       child: EmptyProducts(
                         image: 'assets/images/no_products.png',
-                        title: 'لا توجد عناصر متاحة',
+                        title: 'لا توجد طلبات قيد المراجعة',
                         subTitle:
-                            'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                            'لم يتم العثور على طلبات تتم مراجعتهاً',
                       ),
                     ),
                   ),

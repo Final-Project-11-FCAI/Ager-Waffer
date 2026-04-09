@@ -157,6 +157,10 @@ class GetMyOrdersEvent extends AppEvent {
   GetMyOrdersEvent();
 }
 
+class GetOrdersManagementEvent extends AppEvent {
+  GetOrdersManagementEvent();
+}
+
 
 
 //Chats Events

@@ -74,8 +74,8 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                       child: Center(
                         child: EmptyProducts(
                           image: 'assets/images/no_products.png',
-                          title: 'لا توجد عناصر متاحة',
-                          subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                          title: 'لا توجد منتجات سابقة',
+                          subTitle: 'لم يتم العثور على اي منتجات سابقةً',
                         ),
                       ),
                     ),

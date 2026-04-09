@@ -50,8 +50,8 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                     child: Center(
                       child: EmptyProducts(
                         image: 'assets/images/no_products.png',
-                        title: 'لا توجد عناصر متاحة',
-                        subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                        title: 'لا توجد طلبات جارية',
+                        subTitle: 'لم يتم العثور على اي طلبات جارية حتي الانً',
                       ),
                     ),
                   ),
