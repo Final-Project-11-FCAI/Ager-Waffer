@@ -1,202 +1,233 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Orders/domain/entities/current_orders_entity.dart';
-import 'package:ager_waffer/Features/Orders/domain/entities/finished_orders_entity.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
+import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class CurrentOrders extends StatelessWidget {
-  CurrentOrders({super.key});
+class CurrentOrders extends StatefulWidget {
+  const CurrentOrders({super.key});
 
-  final List<CurrentOrdersEntity> currentOrders = [
-    CurrentOrdersEntity(
-      image: 'assets/images/camera.png',
-      title: 'Canon EOS كاميرا',
-      owner: 'احمد محمد',
-      time: '1 فبراير - 5 فبراير',
-      price: '500جنيه',
-      remainder: 'متبقي يومين',
-    ),
-    CurrentOrdersEntity(
-      image: 'assets/images/stroller.png',
-      title: 'عربة أطفال',
-      owner: 'ندي خالد',
-      time: '5 مارس - 5 يوليو',
-      price: '1000جنيه',
-      remainder: 'متبقي 15 يوم',
-    ),
-    CurrentOrdersEntity(
-      image: 'assets/images/electric_stove.png',
-      title: 'بوتجاز كهربائي',
-      owner: 'يوسف محمد',
-      time: '5 مارس - 5 يوليو',
-      price: '200جنيه',
-      remainder: 'متبقي 10 أيام',
-    ),
-  ];
+  @override
+  State<CurrentOrders> createState() => _CurrentOrdersState();
+}
+
+class _CurrentOrdersState extends State<CurrentOrders> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<MyOrdersBloc>().add(GetMyOrdersEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: currentOrders.length,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Shared.width * 0.04.w,
-            vertical: Shared.height * 0.015.h,
-          ),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: kWhiteColor,
-              borderRadius: BorderRadius.circular(10.r),
-              border: Border.all(
-                color: kBlackColor.withOpacity(0.2),
-                width: 1.w,
-              ),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Shared.width * 0.04.w,
-                    vertical: Shared.height * 0.02.h,
+    return BlocBuilder<MyOrdersBloc, MyOrdersState>(
+      builder: (context, state) {
+        if (state.status == myOrdersStatus.loading) {
+          return const LoadingPlaceHolder(
+            shimmerType: ShimmerType.list,
+            cellShimmerHeight: 50,
+            shimmerCount: 10,
+          );
+        } else if (state.status == myOrdersStatus.success){
+          final orders = state.orders;
+          final currentOrders = orders.where((e) => e.status == "Approved").toList();
+
+          if(currentOrders.isEmpty) {
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: Center(
+                      child: EmptyProducts(
+                        image: 'assets/images/no_products.png',
+                        title: 'لا توجد عناصر متاحة',
+                        subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                      ),
+                    ),
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                );
+              },
+            );
+          }
+
+          return ListView.builder(
+            itemCount: currentOrders.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Shared.width * 0.04.w,
+                  vertical: Shared.height * 0.015.h,
+                ),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: kWhiteColor,
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(
+                      color: kBlackColor.withOpacity(0.2),
+                      width: 1.w,
+                    ),
+                  ),
+                  child: Column(
                     children: [
-                      Image.asset(currentOrders[index].image),
-                      Gap(20.h),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            currentOrders[index].title,
-                            style: font16BlackSemiBold.copyWith(
-                              color: kPrimaryColor,
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Shared.width * 0.04.w,
+                          vertical: Shared.height * 0.02.h,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.network(currentOrders[index].itemImages!.first,
+                              width: 90.w,
+                              height: 90.h,
+                              fit: BoxFit.contain,),
+                            Gap(20.h),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  currentOrders[index].itemName ?? '',
+                                  style: font16BlackSemiBold.copyWith(
+                                    color: kPrimaryColor,
+                                  ),
+                                ),
+                                Gap(2.h),
+                                Row(
+                                  children: [
+                                    Image.asset('assets/images/owner.png'),
+                                    Gap(5.w),
+                                    Text(
+                                      "المالك: ${currentOrders[index].ownerName ?? ''}",
+                                      style: font13kLightPrimaryColorMedium.copyWith(
+                                        color: kBlackColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Gap(5.h),
+                                Row(
+                                  children: [
+                                    Image.asset('assets/images/date_determine.png'),
+                                    Gap(5.w),
+                                    Text(
+                                      '${currentOrders[index].fromDate!} - ${currentOrders[index].toDate!}',
+                                      style: font20PrimaryMedium.copyWith(
+                                        fontSize: 12.sp,
+                                        color: kTextGreyColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Gap(5.h),
+                                Row(
+                                  children: [
+                                    Image.asset('assets/images/remainder.png'),
+                                    Gap(5.w),
+                                    Text(
+                                      ' متبقي ${currentOrders[index].timeLeftInDays.toString() ?? ''} يوم',
+                                      style: font20PrimaryMedium.copyWith(
+                                        fontSize: 13.sp,
+                                        color: kOrangeColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                          Gap(2.h),
-                          Row(
-                            children: [
-                              Image.asset('assets/images/owner.png'),
-                              Gap(5.w),
-                              Text(
-                                "المالك: ${currentOrders[index].owner}",
-                                style: font13kLightPrimaryColorMedium.copyWith(
-                                  color: kBlackColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Gap(5.h),
-                          Row(
-                            children: [
-                              Image.asset('assets/images/date_determine.png'),
-                              Gap(5.w),
-                              Text(
-                                currentOrders[index].time,
-                                style: font20PrimaryMedium.copyWith(
-                                  fontSize: 12.sp,
-                                  color: kTextGreyColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Gap(5.h),
-                          Row(
-                            children: [
-                              Image.asset('assets/images/remainder.png'),
-                              Gap(5.w),
-                              Text(
-                                currentOrders[index].remainder,
-                                style: font20PrimaryMedium.copyWith(
-                                  fontSize: 13.sp,
-                                  color: kOrangeColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Gap(10),
-                Divider(
-                  height: 1,
-                  thickness: 0.7,
-                  color: kBlackColor.withOpacity(0.19),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Shared.width * 0.04.w,
-                    vertical: Shared.height * 0.02.h,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'إجمالي المبلغ',
-                        style: font13kLightPrimaryColorMedium.copyWith(
-                          color: kDarkGreyColor,
+                          ],
                         ),
                       ),
-                      Text(
-                        currentOrders[index].price,
-                        style: font24LightPrimarySemiBold.copyWith(
-                          fontSize: 14.sp,
+                      Gap(10),
+                      Divider(
+                        height: 1,
+                        thickness: 0.7,
+                        color: kBlackColor.withOpacity(0.19),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Shared.width * 0.04.w,
+                          vertical: Shared.height * 0.02.h,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'إجمالي المبلغ',
+                              style: font13kLightPrimaryColorMedium.copyWith(
+                                color: kDarkGreyColor,
+                              ),
+                            ),
+                            Text(
+                              currentOrders[index].totalPrice.toString(),
+                              style: font24LightPrimarySemiBold.copyWith(
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Shared.width * 0.1.w,
+                        ),
+                        child: Divider(
+                          height: 1,
+                          thickness: 0.5,
+                          color: kBlackColor.withOpacity(0.19),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Shared.width * 0.04.w,
+                          vertical: Shared.height * 0.02.h,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            orderButton(
+                              text: 'عرض التفاصيل',
+                              icon: 'assets/images/refresh.png',
+                              backgroundColor: kLightPrimaryColor,
+                              textColor: kWhiteColor,
+                              isNotIcon: true,
+                              onTap: () {},
+                            ),
+                            orderButton(
+                              text: 'مراسلة المالك',
+                              icon: 'assets/images/contact_icon.png',
+                              backgroundColor: kWhiteColor,
+                              textColor: kPrimaryColor,
+                              onTap: () {},
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Shared.width * 0.1.w,
-                  ),
-                  child: Divider(
-                    height: 1,
-                    thickness: 0.5,
-                    color: kBlackColor.withOpacity(0.19),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Shared.width * 0.04.w,
-                    vertical: Shared.height * 0.02.h,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      orderButton(
-                        text: 'عرض التفاصيل',
-                        icon: 'assets/images/refresh.png',
-                        backgroundColor: kLightPrimaryColor,
-                        textColor: kWhiteColor,
-                        isNotIcon: true,
-                        onTap: () {},
-                      ),
-                      orderButton(
-                        text: 'مراسلة المالك',
-                        icon: 'assets/images/contact_icon.png',
-                        backgroundColor: kWhiteColor,
-                        textColor: kPrimaryColor,
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+              );
+            },
+          );
+    } else if (state.status == myOrdersStatus.failure) {
+          return Center(child: Text(state.failureMessage));
+        } else {
+          return Center(child: Text("No Data Yet"));
+        }
+      }
     );
   }
 

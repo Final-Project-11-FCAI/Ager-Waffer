@@ -94,7 +94,7 @@ class OrderData {
   String? fromDate;
   String? toDate;
   double? totalPrice;
-  Null? timeLeftInDays;
+  int? timeLeftInDays;
   String? status;
 
   OrderData({
