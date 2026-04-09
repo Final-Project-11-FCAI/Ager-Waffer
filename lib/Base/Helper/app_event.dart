@@ -153,7 +153,9 @@ class SendRequestEvent extends AppEvent {
   SendRequestEvent({required this.rentalRequestEntity});
 }
 
-
+class GetMyOrdersEvent extends AppEvent {
+  GetMyOrdersEvent();
+}
 
 
 
