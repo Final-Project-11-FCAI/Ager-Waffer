@@ -1,7 +1,9 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Manage_Orders/data/models/orders_management_model.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
+import 'package:ager_waffer/Features/Orders/data/models/my_orders_model.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,10 +12,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class RatingBottomSheet extends StatefulWidget {
-  const RatingBottomSheet({super.key, required this.reviewType, required this.hint});
+  const RatingBottomSheet({
+    super.key,
+    required this.reviewType,
+    required this.hint,
+    this.completedOrders = const [],
+    required this.index,
+    this.previousOrders = const [],
+  });
 
   final String reviewType;
   final String hint;
+  final List<OrderManagementData> previousOrders;
+  final List<OrderData> completedOrders;
+  final int index;
 
   @override
   State<RatingBottomSheet> createState() => _RatingBottomSheetState();
@@ -94,7 +106,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                 itemSize: 30,
                 itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
                 itemBuilder: (context, _) =>
-                const Icon(Icons.star, color: Colors.amber),
+                    const Icon(Icons.star, color: Colors.amber),
                 onRatingUpdate: (value) {
                   setState(() {
                     rating = value;
@@ -138,13 +150,17 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                 context.read<AddReviewBloc>().add(
                   AddReviewEvent(
                     reviewType: reviewTypeValue,
-                    itemId: 2,
-                    reviewedUserId: reviewTypeValue == 1 ? null : "1",
+                    itemId: widget.reviewType == 'المستأجر'
+                        ? widget.previousOrders[widget.index].itemId!
+                        : widget.completedOrders[widget.index].itemId!,
+                    reviewedUserId: widget.reviewType == 'المستأجر'
+                        ? widget.previousOrders[widget.index].renteeId
+                        : widget.completedOrders[widget.index].ownerId,
                     reviewText: commentController.text,
                     rate: rating.toInt(),
                   ),
                 );
-                },
+              },
               text: "إرسال التقييم",
               color: kPrimaryColor,
               isReview: true,

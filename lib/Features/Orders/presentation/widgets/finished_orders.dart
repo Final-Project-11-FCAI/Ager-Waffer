@@ -24,7 +24,6 @@ class FinishedOrders extends StatefulWidget {
 }
 
 class _FinishedOrdersState extends State<FinishedOrders> {
-
   @override
   void initState() {
     super.initState();
@@ -44,9 +43,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
           Shared.dismissDialog(context: context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                state.failureMessage ?? kSomethingWentWrong.tr(),
-              ),
+              content: Text(state.failureMessage ?? kSomethingWentWrong.tr()),
             ),
           );
         }
@@ -59,11 +56,13 @@ class _FinishedOrdersState extends State<FinishedOrders> {
               cellShimmerHeight: 50,
               shimmerCount: 10,
             );
-          } else if (state.status == myOrdersStatus.success){
+          } else if (state.status == myOrdersStatus.success) {
             final orders = state.orders;
-            final completedOrders = orders.where((e) => e.status == "Completed").toList();
+            final completedOrders = orders
+                .where((e) => e.status == "Completed")
+                .toList();
 
-            if(completedOrders.isEmpty) {
+            if (completedOrders.isEmpty) {
               return LayoutBuilder(
                 builder: (context, constraints) {
                   return SingleChildScrollView(
@@ -138,16 +137,17 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                       Gap(5.w),
                                       Text(
                                         "المالك: ${completedOrders[index].ownerName ?? ''}",
-                                        style: font13kLightPrimaryColorMedium.copyWith(
-                                          color: kBlackColor,
-                                        ),
+                                        style: font13kLightPrimaryColorMedium
+                                            .copyWith(color: kBlackColor),
                                       ),
                                     ],
                                   ),
                                   Gap(5.w),
                                   Row(
                                     children: [
-                                      Image.asset('assets/images/date_determine.png'),
+                                      Image.asset(
+                                        'assets/images/date_determine.png',
+                                      ),
                                       Gap(5.w),
                                       Text(
                                         '${completedOrders[index].fromDate!} - ${completedOrders[index].toDate!}',
@@ -225,7 +225,12 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                           borderRadius: BorderRadius.vertical(
                                             top: Radius.circular(25.r),
                                           ),
-                                          child: const RatingBottomSheet(reviewType: 'المنتج',hint: 'المنتج',),
+                                          child: RatingBottomSheet(
+                                            reviewType: 'المنتج',
+                                            hint: 'المنتج',
+                                            completedOrders: completedOrders,
+                                            index: index,
+                                          ),
                                         ),
                                       );
                                     },
@@ -247,7 +252,12 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                           borderRadius: BorderRadius.vertical(
                                             top: Radius.circular(25.r),
                                           ),
-                                          child: const RatingBottomSheet(reviewType: 'المالك',hint: 'التعامل',),
+                                          child: RatingBottomSheet(
+                                            reviewType: 'المالك',
+                                            hint: 'التعامل',
+                                            completedOrders: completedOrders,
+                                            index: index,
+                                          ),
                                         ),
                                       );
                                     },
