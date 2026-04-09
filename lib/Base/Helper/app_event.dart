@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/add_item_entity.dart';
+import 'package:ager_waffer/Features/Home/domain/entities/send_request_entity.dart';
 import 'package:image_picker/image_picker.dart';
 
 
@@ -144,6 +145,18 @@ class ExternalLoginEvent extends AppEvent {
 }
 
 
+//Orders Events
+
+class SendRequestEvent extends AppEvent {
+  final SendRequestEntity rentalRequestEntity;
+
+  SendRequestEvent({required this.rentalRequestEntity});
+}
+
+
+
+
+
 //Chats Events
 class GetAllChatsEvent extends AppEvent {
   GetAllChatsEvent();
@@ -154,6 +167,7 @@ class GetMessagesEvent extends AppEvent {
 
   GetMessagesEvent({required this.conversationId});
 }
+
 
 
 

@@ -16,6 +16,9 @@ const String addReviewUrl = "Review/AddReview";
 const String updateAddressUrl = "Authentication/update-address";
 
 
+const String sendRequestsUrl = "RentalRequests";
+
+
 
 // Chats Url
 const String allChatsUrl = "Chat/conversations";
