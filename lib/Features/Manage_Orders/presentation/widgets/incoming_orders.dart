@@ -91,7 +91,13 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.network(incomingOrders[index].itemImages!.first,
+                            incomingOrders[index].itemImages == null ?
+                            Image.asset(
+                              'assets/images/virtual_image.jpg', width: 90.w,
+                              height: 90.h,
+                              fit: BoxFit.contain,)
+                                : Image.network(
+                              incomingOrders[index].itemImages!.first,
                               width: 90.w,
                               height: 90.h,
                               fit: BoxFit.contain,
@@ -126,7 +132,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                     Image.asset('assets/images/date_determine.png'),
                                     Gap(5.w),
                                     Text(
-                                      '${incomingOrders[index].fromDate!} - ${incomingOrders[index].toDate!}',
+                                      '${incomingOrders[index].fromDate ?? ''} - ${incomingOrders[index].toDate ?? ''}',
                                       style: font20PrimaryMedium.copyWith(
                                         fontSize: 12.sp,
                                         color: kTextGreyColor,

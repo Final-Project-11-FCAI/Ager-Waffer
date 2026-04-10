@@ -11,38 +11,27 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class RatingBottomSheet extends StatefulWidget {
-  const RatingBottomSheet({
+class RenterRatingBottomSheet extends StatefulWidget {
+  const RenterRatingBottomSheet({
     super.key,
     required this.reviewType,
     required this.hint,
-    required this.completedOrders,
+    required this.previousOrders,
     required this.index,
   });
 
   final String reviewType;
   final String hint;
-  final List<OrderData> completedOrders;
+  final List<OrderManagementData> previousOrders;
   final int index;
 
   @override
-  State<RatingBottomSheet> createState() => _RatingBottomSheetState();
+  State<RenterRatingBottomSheet> createState() => _RenterRatingBottomSheetState();
 }
 
-class _RatingBottomSheetState extends State<RatingBottomSheet> {
+class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
   double rating = 0;
   TextEditingController commentController = TextEditingController();
-
-  int getReviewTypeValue(String type) {
-    switch (type) {
-      case 'المنتج':
-        return 1;
-      case 'المالك':
-        return 2;
-      default:
-        return 1;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,20 +130,11 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                   );
                   return;
                 }
-                final reviewTypeValue = getReviewTypeValue(widget.reviewType);
-
-                // if (order.itemId == null || order.renteeId == null) {
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     const SnackBar(content: Text("بيانات غير مكتملة")),
-                //   );
-                //   return;
-                // }
-
                 context.read<AddReviewBloc>().add(
                   AddReviewEvent(
-                    reviewType: reviewTypeValue,
-                    itemId: widget.completedOrders[widget.index].itemId!,
-                    reviewedUserId: widget.completedOrders[widget.index].ownerId,
+                    reviewType: 3,
+                    itemId: widget.previousOrders[widget.index].itemId!,
+                    reviewedUserId: widget.previousOrders[widget.index].renteeId,
                     reviewText: commentController.text,
                     rate: rating.toInt(),
                   ),

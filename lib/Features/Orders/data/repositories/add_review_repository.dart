@@ -1,5 +1,4 @@
 import 'package:ager_waffer/Base/common/config.dart';
-import 'package:dio/dio.dart';
 import 'package:ager_waffer/Base/network/network_util.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -16,21 +15,21 @@ class AddReviewRepository {
     required int rate,
   }) async {
 
-    FormData formData = FormData.fromMap({
+    final Map<String, dynamic> body = {
       "reviewType": reviewType,
       "itemId": itemId,
       "reviewText": reviewText,
       "rate": rate,
-
       if (reviewedUserId != null) "reviewedUserId": reviewedUserId,
-    });
+    };
 
     return NetworkUtil.internal().post(
       AddReviewModel(),
       baseUrl + addReviewUrl,
-      body: formData,
+      body: body,
       headers: Map<String, String>.from({
         'Accept': 'application/json',
+        'Content-Type': 'application/json',
         "Authorization":
         "Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}",
         'Language': LocalizeAndTranslate.getLanguageCode().toUpperCase(),

@@ -144,6 +144,11 @@ class ExternalLoginEvent extends AppEvent {
   });
 }
 
+class CancelOrderEvent extends AppEvent {
+  final int orderId;
+
+  CancelOrderEvent({required this.orderId});
+}
 
 //Orders Events
 
