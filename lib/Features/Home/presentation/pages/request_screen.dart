@@ -34,6 +34,8 @@ class _RequestScreenState extends State<RequestScreen> {
   int dailyPrice = 50;
   bool agree = false;
 
+  bool isRequestSent = false;
+
   bool get isValid {
     if (startDate == null || endDate == null) return false;
 
@@ -108,6 +110,9 @@ class _RequestScreenState extends State<RequestScreen> {
                 subTitle: kRequestSuccessDesc.tr(),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  setState(() {
+                    isRequestSent = true;
+                  });
                 },
                 textButton: kOk.tr(),
               );
@@ -505,7 +510,7 @@ class _RequestScreenState extends State<RequestScreen> {
                     ],
                   ),
                   child: ButtonApp(
-                    onPressed: isValid
+                    onPressed: (isValid && !isRequestSent)
                         ? () {
                             context.read<SendRequestBloc>().add(
                               SendRequestEvent(
@@ -523,7 +528,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             );
                           }
                         : null,
-                    text: kConfirmRequest.tr(),
+                    text: isRequestSent ? "تم الإرسال" : kConfirmRequest.tr(),
                     color: kPrimaryColor,
                     borderRadius: Shared.width * 0.04.w,
                   ),

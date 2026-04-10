@@ -213,8 +213,8 @@
   "rent_now": "Rent now",
 
   "moments_ago": "Just now",
-  "minutes_ago": "",
-  "hours_ago": "",
+  "minutes_ago": "minutes ago",
+  "hours_ago": "hours ago",
   "days_ago": "days ago",
 
   "user_name": "User",

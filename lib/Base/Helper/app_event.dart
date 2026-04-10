@@ -144,11 +144,6 @@ class ExternalLoginEvent extends AppEvent {
   });
 }
 
-class CancelOrderEvent extends AppEvent {
-  final int orderId;
-
-  CancelOrderEvent({required this.orderId});
-}
 
 //Orders Events
 
@@ -166,7 +161,23 @@ class GetOrdersManagementEvent extends AppEvent {
   GetOrdersManagementEvent();
 }
 
+class CancelOrderEvent extends AppEvent {
+  final int orderId;
 
+  CancelOrderEvent({required this.orderId});
+}
+
+class AcceptOrderEvent extends AppEvent {
+  final int orderId;
+
+  AcceptOrderEvent({required this.orderId});
+}
+
+class DeclineOrderEvent extends AppEvent {
+  final int orderId;
+
+  DeclineOrderEvent({required this.orderId});
+}
 
 //Chats Events
 class GetAllChatsEvent extends AppEvent {
