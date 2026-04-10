@@ -23,15 +23,21 @@ class ReviewItem extends StatelessWidget {
       }
 
       if (diff.inMinutes < 60) {
-        return "${diff.inMinutes} ${'minute'.tr()} ${'ago'.tr()}";
+        return LocalizeAndTranslate.getLanguageCode() == 'ar' ?
+        "${kMinutesAgo.tr()} ${diff.inMinutes} دقيقة"
+            : "${diff.inMinutes} ${kMinutesAgo.tr()}";
       }
 
       if (diff.inHours < 24) {
-        return "${kHoursAgo.tr()} ${diff.inHours}";
+        return LocalizeAndTranslate.getLanguageCode() == 'ar' ?
+          "${kHoursAgo.tr()} ${diff.inHours} ساعة"
+              : "${diff.inHours} ${kHoursAgo.tr()}";
       }
 
       if (diff.inDays <= 7) {
-        return "${diff.inDays} ${kDaysAgo.tr()}";
+        return LocalizeAndTranslate.getLanguageCode() == 'ar' ?
+          "${kDaysAgo.tr()} ${diff.inDays} يوم"
+              : "${diff.inDays} ${kDaysAgo.tr()}";
       }
 
       return DateFormat('dd MMM yyyy').format(parsedDate);
