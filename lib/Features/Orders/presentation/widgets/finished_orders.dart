@@ -39,6 +39,14 @@ class _FinishedOrdersState extends State<FinishedOrders> {
         } else if (state.status == addReviewStatus.success) {
           Shared.dismissDialog(context: context);
           Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: kGreenColor,
+              content: Text(
+                'تم اضافة التقييم بنجاح',
+              ),
+            ),
+          );
         } else if (state.status == addReviewStatus.failure) {
           Shared.dismissDialog(context: context);
           ScaffoldMessenger.of(context).showSnackBar(
@@ -113,7 +121,12 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Image.network(
+                              completedOrders[index].itemImages == null ?
+                              Image.asset(
+                                'assets/images/virtual_image.jpg', width: 90.w,
+                                height: 90.h,
+                                fit: BoxFit.contain,)
+                                  : Image.network(
                                 completedOrders[index].itemImages!.first,
                                 width: 90.w,
                                 height: 90.h,
@@ -150,7 +163,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                       ),
                                       Gap(5.w),
                                       Text(
-                                        '${completedOrders[index].fromDate!} - ${completedOrders[index].toDate!}',
+                                        '${completedOrders[index].fromDate ?? ''} - ${completedOrders[index].toDate ?? ''}',
                                         style: font20PrimaryMedium.copyWith(
                                           fontSize: 12.sp,
                                           color: kTextGreyColor,

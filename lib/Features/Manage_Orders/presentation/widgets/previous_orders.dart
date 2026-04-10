@@ -8,6 +8,7 @@ import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_m
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_state.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/rating_bottom_sheet.dart';
+import 'package:ager_waffer/Features/Orders/presentation/widgets/renter_rating_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,6 +40,14 @@ class _PreviousOrdersState extends State<PreviousOrders> {
         } else if (state.status == addReviewStatus.success) {
           Shared.dismissDialog(context: context);
           Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: kGreenColor,
+              content: Text(
+                'تم اضافة التقييم بنجاح',
+              ),
+            ),
+          );
         } else if (state.status == addReviewStatus.failure) {
           Shared.dismissDialog(context: context);
           ScaffoldMessenger.of(context).showSnackBar(
@@ -114,7 +123,13 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Image.network(previousOrders[index].itemImages!.first,
+                              previousOrders[index].itemImages == null ?
+                              Image.asset(
+                                'assets/images/virtual_image.jpg', width: 90.w,
+                                height: 90.h,
+                                fit: BoxFit.contain,)
+                                  : Image.network(
+                                previousOrders[index].itemImages!.first,
                                 width: 90.w,
                                 height: 90.h,
                                 fit: BoxFit.contain,
@@ -149,7 +164,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                       Image.asset('assets/images/date_determine.png'),
                                       Gap(5.w),
                                       Text(
-                                        '${previousOrders[index].fromDate!} - ${previousOrders[index].toDate!}',
+                                        '${previousOrders[index].fromDate ?? ''} - ${previousOrders[index].toDate ?? ''}',
                                         style: font20PrimaryMedium.copyWith(
                                           fontSize: 12.sp,
                                           color: kTextGreyColor,
@@ -224,7 +239,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                             borderRadius: BorderRadius.vertical(
                                               top: Radius.circular(25.r),
                                             ),
-                                            child: RatingBottomSheet(
+                                            child: RenterRatingBottomSheet(
                                               reviewType: 'المستأجر',hint: 'التعامل',
                                               previousOrders: previousOrders,
                                               index: index,
@@ -260,7 +275,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
     required Function() onTap,
   }) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         width: double.infinity,
         height: Shared.height * 0.065.h,

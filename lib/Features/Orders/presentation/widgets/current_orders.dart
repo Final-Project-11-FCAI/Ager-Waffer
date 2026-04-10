@@ -90,10 +90,17 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.network(currentOrders[index].itemImages!.first,
+                            currentOrders[index].itemImages == null ?
+                            Image.asset(
+                              'assets/images/virtual_image.jpg', width: 90.w,
+                              height: 90.h,
+                              fit: BoxFit.contain,)
+                                : Image.network(
+                              currentOrders[index].itemImages!.first,
                               width: 90.w,
                               height: 90.h,
-                              fit: BoxFit.contain,),
+                              fit: BoxFit.contain,
+                            ),
                             Gap(20.h),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +131,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                     Image.asset('assets/images/date_determine.png'),
                                     Gap(5.w),
                                     Text(
-                                      '${currentOrders[index].fromDate!} - ${currentOrders[index].toDate!}',
+                                      '${currentOrders[index].fromDate ?? ''} - ${currentOrders[index].toDate ?? ''}',
                                       style: font20PrimaryMedium.copyWith(
                                         fontSize: 12.sp,
                                         color: kTextGreyColor,
