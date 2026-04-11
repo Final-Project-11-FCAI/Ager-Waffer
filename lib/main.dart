@@ -24,6 +24,7 @@ import 'package:ager_waffer/Features/Profile/presentation/manager/toggle_availab
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_address_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/update_profile_bloc.dart';
+import 'package:ager_waffer/Features/Splash/presentation/manager/device_register_bloc.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:ager_waffer/firebase_options.dart';
 import 'package:country_picker/country_picker.dart';
@@ -248,6 +249,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => CancelOrderBloc()),
             BlocProvider(create: (context) => AcceptOrderBloc()),
             BlocProvider(create: (context) => DeclineOrderBloc()),
+            BlocProvider(create: (context) => DeviceRegisterBloc()),
             // BlocProvider(create: (context) => GetMessagesBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
