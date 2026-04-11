@@ -38,8 +38,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
       listener: (context, state) {
         if (state.status == acceptOrderStatus.loading) {
           Shared.showLoadingDialog(context: context);
-        } else if (state.status ==
-            acceptOrderStatus.success) {
+        } else if (state.status == acceptOrderStatus.success) {
           Shared.dismissDialog(context: context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -50,8 +49,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
           context.read<OrdersManagementBloc>().add(
             GetOrdersManagementEvent(),
           );
-        } else if (state.status ==
-            acceptOrderStatus.failure) {
+        } else if (state.status == acceptOrderStatus.failure) {
           Shared.dismissDialog(context: context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
