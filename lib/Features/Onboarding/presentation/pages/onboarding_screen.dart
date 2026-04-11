@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Onboarding/models/Onboarding_Data.dart';
@@ -8,6 +9,7 @@ import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dar
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -50,12 +52,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: onboardingDate[index].title,
+                          text: onboardingDate[index].title.tr(),
                           style: font24LightPrimarySemiBold,
                         ),
                         _currentPage == 0
                             ? TextSpan(
-                                text: 'أجر و وفر',
+                                text: kAppName.tr(),
                                 style: font24PrimarySemiBold,
                               )
                             : const TextSpan(),
@@ -68,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       horizontal: Shared.width * 0.1,
                     ),
                     child: Text(
-                      onboardingDate[index].subTitle,
+                      onboardingDate[index].subTitle.tr(),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.notoSansArabic(
                         fontSize: 20,
@@ -105,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       vertical: Shared.height * 0.015,
                     ),
                     child: ButtonApp(
-                      text: 'التالي',
+                      text: kNext.tr(),
                       color: kPrimaryColor,
                       onPressed: () {
                         if (_currentPage == onboardingDate.length - 1) {

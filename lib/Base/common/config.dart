@@ -10,6 +10,9 @@ const String registerUrl = "Authentication/register";
 const String forgetPasswordUrl = "Authentication/forgot-password";
 const String verifyOtpUrl = "Authentication/verify-otp";
 const String resetPasswordUrl = "Authentication/reset-password";
+
+const String deviceRegisterUrl = "Device/register";
+
 const String updateProfileUrl = "Authentication/update-profile";
 const String addItemUrl = "Items";
 const String addReviewUrl = "Review/AddReview";
@@ -19,6 +22,7 @@ const String updateAddressUrl = "Authentication/update-address";
 const String sendRequestsUrl = "RentalRequests";
 const String myOrdersUrl = "RentalRequests/sent";
 const String ordersManagementUrl = "RentalRequests/received";
+const String ownerRentalCountUrl = "RentalRequests/Owner-rental-count";
 
 
 

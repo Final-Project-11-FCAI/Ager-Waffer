@@ -6,6 +6,7 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,7 +100,14 @@ class _BooksScreenState extends State<BooksScreen> {
                     );
                   }
                   else if (state.status == allItemsStatus.failure) {
-                    return Center(child: Text(state.failureMessage));
+                    return CustomErrorWidget(
+                      message: state.failureMessage,
+                      onRetry: () {
+                        context.read<AllItemsBloc>().add(
+                          GetAllItemsEvent(),
+                        );
+                      },
+                    );
                   } else {
                     return Center(child: Text("No Data Yet"));
                   }

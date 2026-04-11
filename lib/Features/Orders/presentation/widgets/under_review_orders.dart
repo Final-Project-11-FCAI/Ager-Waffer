@@ -7,12 +7,14 @@ import 'package:ager_waffer/Features/Orders/presentation/manager/cancel_order_bl
 import 'package:ager_waffer/Features/Orders/presentation/manager/cancel_order_state.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:localize_and_translate/localize_and_translate.dart%20%20';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class UnderReviewOrders extends StatefulWidget {
   const UnderReviewOrders({super.key});
@@ -38,8 +40,8 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
           Shared.dismissDialog(context: context);
 
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("تم إلغاء الطلب بنجاح"),
+            SnackBar(
+              content: Text(kCancelOrderSuccess.tr()),
               backgroundColor: kGreenColor,
             ),
           );
@@ -78,9 +80,8 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                       child: Center(
                         child: EmptyProducts(
                           image: 'assets/images/no_products.png',
-                          title: 'لا توجد طلبات قيد المراجعة',
-                          subTitle:
-                              'لم يتم العثور على طلبات تتم مراجعتهاً',
+                          title: kNoUnderReviewOrders.tr(),
+                          subTitle: kNoUnderReviewOrdersDesc.tr(),
                         ),
                       ),
                     ),
@@ -119,16 +120,18 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              pendingOrders[index].itemImages == null ?
-                              Image.asset(
-                                'assets/images/virtual_image.jpg', width: 90.w,
-                                height: 90.h,
-                                fit: BoxFit.contain,)
-                                  : Image.network(
-                                pendingOrders[index].itemImages!.first,
+                              CachedNetworkImage(
+                                imageUrl: pendingOrders[index].itemImages!.first,
                                 width: 90.w,
                                 height: 90.h,
                                 fit: BoxFit.contain,
+                                placeholder: (context, url) => Image.asset(
+                                  "assets/images/virtual_image.jpg",
+                                  fit: BoxFit.contain,
+                                ),
+                                errorWidget: (context, url, error) {
+                                  return Image.asset("assets/images/virtual_image.jpg");
+                                },
                               ),
                               Gap(20.h),
                               Column(
@@ -147,7 +150,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                                       Image.asset('assets/images/owner.png'),
                                       Gap(5.w),
                                       Text(
-                                        "المالك: ${pendingOrders[index].ownerName}",
+                                          "${kOwner.tr()}: ${pendingOrders[index].ownerName}",
                                         style: font13kLightPrimaryColorMedium
                                             .copyWith(color: kBlackColor),
                                       ),
@@ -189,7 +192,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'إجمالي المبلغ',
+                                kTotalAmount.tr(),
                                 style: font13kLightPrimaryColorMedium.copyWith(
                                   color: kDarkGreyColor,
                                 ),
@@ -219,7 +222,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                             vertical: Shared.height * 0.02.h,
                           ),
                           child: orderButton(
-                            text: 'إلغاء الطلب',
+                            text: kCancelOrder.tr(),
                             backgroundColor: kWhiteColor,
                             textColor: kPrimaryColor,
                               onTap: () {
@@ -243,9 +246,16 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
               },
             );
           } else if (state.status == myOrdersStatus.failure) {
-            return Center(child: Text(state.failureMessage));
+            return CustomErrorWidget(
+              message: state.failureMessage,
+              onRetry: () {
+                context.read<MyOrdersBloc>().add(
+                  GetMyOrdersEvent(),
+                );
+              },
+            );
           } else {
-            return Center(child: Text("No Data Yet"));
+            return Center(child: Text(kNoDataYet.tr()));
           }
         },
       ),
@@ -264,14 +274,14 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          title: const Text("تأكيد الإلغاء"),
-          content: const Text("هل أنت متأكد أنك تريد إلغاء الطلب؟"),
+          title: Text(kCancelConfirmTitle.tr()),
+          content: Text(kCancelConfirmDesc.tr()),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text("رجوع"),
+              child: Text(kBack.tr()),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -282,7 +292,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
 
                 onConfirm();
               },
-              child: const Text("تأكيد"),
+              child: Text(kConfirm.tr()),
             ),
           ],
         );

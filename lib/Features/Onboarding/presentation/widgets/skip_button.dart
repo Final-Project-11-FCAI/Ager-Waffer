@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/pages/choose_login_or_register_screen.dart';
@@ -31,7 +32,7 @@ class SkipButton extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'تخطي',
+                kSkip.tr(),
                 style: GoogleFonts.notoSansArabic(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,

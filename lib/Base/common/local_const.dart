@@ -7,6 +7,22 @@ String kfull_name_validation = "full_name_validation";
 String kplease_enter_valid_phone_number = "please_enter_valid_phone_number";
 String ksignin = "Sign_in";
 String know = "now";
+String kSkip = 'skip';
+String kSent = 'sent';
+String kStartJourney = 'start_journey';
+String kCreateNewAccount = 'create_new_account';
+String kHaveAccountLogin = 'have_account_login';
+String kAppName = 'app_name';
+String kNext = 'next';
+
+String kOnboardingTitle1 = 'onboarding_title_1';
+String kOnboardingSubTitle1 = 'onboarding_subtitle_1';
+
+String kOnboardingTitle2 = 'onboarding_title_2';
+String kOnboardingSubTitle2 = 'onboarding_subtitle_2';
+
+String kOnboardingTitle3 = 'onboarding_title_3';
+String kOnboardingSubTitle3 = 'onboarding_subtitle_3';
 
 
 String kSomethingWentWrong = 'something_went_wrong';
@@ -90,13 +106,16 @@ String kProductAvailable = 'product_available';
 String kAddProduct = 'add_product';
 
 String kCurrencyPer = 'currency_per';
-
+String kSomethingWrong = 'something_wrong';
+String kServerError = 'server_error';
+String kUnexpectedError = 'unexpected_error';
+String kNoInternet = 'no_internet';
 
 String kPhone = 'phone';
 String kEnterNewPassword = 'enter_new_password';
 
 String kSave = 'save';
-
+String kCurrency = 'currency';
 String kUpdateSuccess = 'update_success';
 String kUpdateError = 'update_error';
 
@@ -189,13 +208,62 @@ String kOk = 'ok';
 
 String kConfirmRequest = 'confirm_request';
 
+String kNoCurrentOrders = 'no_current_orders';
+String kNoCurrentOrdersDesc = 'no_current_orders_desc';
+
+String kOwner = 'owner';
+String kRemaining = 'remaining';
+
+String kTotalAmount = 'total_amount';
+
+String kViewDetails = 'view_details';
 String kContactOwner = 'contact_owner';
+
+String kReviewAddedSuccess = 'review_added_success';
+
+String kNoPreviousProducts = 'no_previous_products';
+String kNoPreviousProductsDesc = 'no_previous_products_desc';
+
+
+String kRateProduct = 'rate_product';
+String kRateOwner = 'rate_owner';
+
 String kProduct = 'product';
+String kOwnerKey = 'owner_key'; // للـ bottom sheet
+String kInteraction = 'interaction';
+
+String kHowWasExperience = 'how_was_experience';
+String kYourOpinionMatters = 'your_opinion_matters';
+
+String kRate = 'rate';
+String kCommentHint = 'comment_hint';
+String kOptional = 'optional';
+
+String kSubmitReview = 'submit_review';
+
+String kCancelOrderSuccess = 'cancel_order_success';
+String kCancelOrderFailed = 'cancel_order_failed';
+String kNoUnderReviewOrders = 'no_under_review_orders';
+String kNoUnderReviewOrdersDesc = 'no_under_review_orders_desc';
+
+String kReviewFailed = 'review_failed';
+
+
+String kCancelOrder = 'cancel_order';
+
+String kCancelConfirmTitle = 'cancel_confirm_title';
+String kCancelConfirmDesc = 'cancel_confirm_desc';
+String kBack = 'back';
+
+
+String kCurrent = 'current';
+String kUnderReview = 'under_review';
+String kPrevious = 'previous';
+
 
 String kRegisterSuccessTitle = 'register_success_title';
 
 String kWelcomePrefix = 'welcome_prefix';
-String kAppName = 'app_name';
 String kWelcomeDesc = 'welcome_desc';
 
 String kLoginNowArrow = 'login_now_arrow';

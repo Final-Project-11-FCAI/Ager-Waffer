@@ -15,26 +15,45 @@ class AllChatsBloc extends Bloc<AppEvent, AllChatsState> {
 
   Future<void> _onGetAllChats(
       GetAllChatsEvent event,
-      Emitter<AllChatsState> emit) async {
+      Emitter<AllChatsState> emit,
+      ) async {
 
     emit(state.copyWith(status: allChatsStatus.loading));
 
-    var response = await allChatsRepository.getAllChats();
+    try {
+      var response = await allChatsRepository.getAllChats();
 
-    if (response.isSuccess!) {
-      print("chats count: ${response.data?.length}");
+      if (response.isSuccess == true) {
+        print("chats count: ${response.data?.length}");
 
-      emit(state.copyWith(
-        status: allChatsStatus.success,
-        chats: response.data ?? [],
-      ));
-    } else {
+        emit(state.copyWith(
+          status: allChatsStatus.success,
+          chats: response.data ?? [],
+        ));
+      } else {
+        emit(state.copyWith(
+          status: allChatsStatus.failure,
+          failureMessage: response.messageAr ?? "حدث خطأ",
+        ));
+      }
+
+    } catch (e, stackTrace) {
+      print("ERROR: $e");
+      print("STACK: $stackTrace");
+
+      String message = "حدث خطأ أثناء تحميل المحادثات";
+
+      if (e.toString().contains("SocketException")) {
+        message = "تأكد من اتصال الإنترنت";
+      } else if (e.toString().contains("TimeoutException")) {
+        message = "انتهت مهلة الاتصال، حاول مرة أخرى";
+      }
+
       emit(state.copyWith(
         status: allChatsStatus.failure,
-        failureMessage: response.messageAr ?? '',
+        failureMessage: message,
       ));
     }
-  }
-}
+  }}
 
 final AllChatsBloc allChatsBloc = AllChatsBloc();

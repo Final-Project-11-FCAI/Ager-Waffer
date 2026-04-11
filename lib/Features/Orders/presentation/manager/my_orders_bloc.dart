@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Features/Orders/data/repositories/my_orders_repository.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class MyOrdersBloc extends Bloc<AppEvent, MyOrdersState> {
   MyOrdersBloc()
@@ -37,20 +39,18 @@ class MyOrdersBloc extends Bloc<AppEvent, MyOrdersState> {
       else {
         emit(state.copyWith(
           status: myOrdersStatus.failure,
-          failureMessage: response.messageAr ?? "حدث خطأ",
+          failureMessage: response.messageAr ?? kSomethingWrong.tr(),
           orders: [],
         ));
       }
     }
 
     catch (e) {
-      print("ERROR: $e");
-
-      String message = "حدث خطأ غير متوقع";
+      String message = kUnexpectedError.tr();
 
       if (e is SocketException ||
           e.toString().contains("Network is unreachable")) {
-        message = "لا يوجد اتصال بالإنترنت";
+        message = kNoInternet.tr();
       }
 
       emit(state.copyWith(

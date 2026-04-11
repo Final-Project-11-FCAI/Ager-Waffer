@@ -1,9 +1,11 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/current_orders.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/finished_orders.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/under_review_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
@@ -16,9 +18,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   int selectedIndex = 0;
 
   final List<String> tabs = [
-    "الجارية",
-    "قيد المراجعة",
-    "السابقة",
+    kCurrent.tr(),
+    kUnderReview.tr(),
+    kPrevious.tr(),
   ];
 
   @override

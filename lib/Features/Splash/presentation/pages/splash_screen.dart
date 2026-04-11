@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
@@ -6,6 +7,7 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/pages/log
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/pages/language_screen.dart';
+import 'package:ager_waffer/Features/Splash/presentation/manager/device_register_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -48,6 +50,14 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 3), () {
       checkIfUserFirstLogin();
     });
+    deviceRegister();
+  }
+
+  Future<void> deviceRegister() async {
+    context.read<DeviceRegisterBloc>().add(DeviceRegisterEvent(
+        fcmToken: await sharedPreferenceManager.readString(CachingKey.DEVICE_TOKEN),
+        devicePlatform: "android")
+    );
   }
 
   Future<void> checkIfUserFirstLogin() async {

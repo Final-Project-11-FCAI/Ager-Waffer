@@ -1,7 +1,9 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Features/Orders/data/repositories/cancel_order_repository.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/cancel_order_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class CancelOrderBloc extends Bloc<AppEvent, CancelOrderState> {
 
@@ -34,14 +36,14 @@ class CancelOrderBloc extends Bloc<AppEvent, CancelOrderState> {
       else {
         emit(state.copyWith(
           status: cancelOrderStatus.failure,
-          failureMessage: response.messageAr ?? "فشل في إلغاء الطلب",
+          failureMessage: response.messageAr ?? kCancelOrderFailed.tr(),
         ));
       }
 
     } catch (e) {
       emit(state.copyWith(
         status: cancelOrderStatus.failure,
-        failureMessage: "فشل في إلغاء الطلب",
+        failureMessage: kCancelOrderFailed.tr(),
       ));
     }
   }
