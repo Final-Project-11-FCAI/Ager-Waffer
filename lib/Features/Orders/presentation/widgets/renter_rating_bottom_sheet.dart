@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Manage_Orders/data/models/orders_management_model.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class RenterRatingBottomSheet extends StatefulWidget {
   const RenterRatingBottomSheet({
@@ -33,6 +35,10 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
   double rating = 0;
   TextEditingController commentController = TextEditingController();
 
+  bool get isButtonEnabled {
+    return rating > 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,12 +61,12 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
           ),
           Gap(20.h),
           Text(
-            "كيف كانت تجربتك ؟",
+              kHowWasExperience.tr(),
             style: font20PrimaryMedium.copyWith(fontWeight: bold),
           ),
           Gap(5.h),
           Text(
-            "رأيك يهمنا ويساعدنا على التطوير",
+            kYourOpinionMatters.tr(),
             style: font20PrimaryMedium.copyWith(
               color: kLightPrimaryColor,
               fontSize: 15,
@@ -75,7 +81,7 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
                   const Icon(Icons.star, color: kPrimaryColor),
                   Gap(5.w),
                   Text(
-                    "تقييم ${widget.reviewType}",
+                    "${kRate.tr()} ${widget.reviewType}",
                     style: font20PrimaryMedium.copyWith(
                       fontWeight: bold,
                       fontSize: 16,
@@ -107,7 +113,7 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
             maxLines: 3,
             cursorColor: kPrimaryColor,
             decoration: InputDecoration(
-              hintText: ' تعليقك عن ${widget.hint} (اختياري)',
+              hintText:"${kCommentHint.tr()} ${widget.hint} (${kOptional.tr()})",
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: kPrimaryColor),
                 borderRadius: BorderRadius.circular(12),
@@ -123,13 +129,8 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
           SizedBox(
             width: double.infinity,
             child: ButtonApp(
-              onPressed: () {
-                if (rating == 0) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("من فضلك اختر تقييم ⭐")),
-                  );
-                  return;
-                }
+              onPressed: isButtonEnabled ?
+                  () {
                 context.read<AddReviewBloc>().add(
                   AddReviewEvent(
                     reviewType: 3,
@@ -139,8 +140,8 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
                     rate: rating.toInt(),
                   ),
                 );
-              },
-              text: "إرسال التقييم",
+              } : null,
+              text: kSubmitReview.tr(),
               color: kPrimaryColor,
               isReview: true,
             ),

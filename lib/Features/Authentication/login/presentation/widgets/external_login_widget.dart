@@ -9,7 +9,7 @@ import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:localize_and_translate/localize_and_translate.dart%20%20';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ExternalLoginWidget extends StatelessWidget {
   ExternalLoginWidget({super.key});

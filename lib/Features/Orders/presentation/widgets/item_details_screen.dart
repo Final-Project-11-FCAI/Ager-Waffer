@@ -11,7 +11,6 @@ class ItemDetailsScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: kWhiteColor,
 
-        /// 🔹 AppBar
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           elevation: 0,
@@ -22,7 +21,6 @@ class ItemDetailsScreen extends StatelessWidget {
           centerTitle: true,
         ),
 
-        /// 🔹 Body
         body: Column(
           children: [
             Expanded(
@@ -42,7 +40,6 @@ class ItemDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            /// 🔹 Bottom Buttons
             _buildBottomActions(),
           ],
         ),
@@ -50,7 +47,6 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// 📦 Product Card
   Widget _buildProductCard() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -87,7 +83,6 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// 📅 Date Card
   Widget _buildDateCard() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -110,7 +105,6 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// 👤 Renter Card
   Widget _buildRenterCard() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -148,7 +142,6 @@ class ItemDetailsScreen extends StatelessWidget {
 
           const SizedBox(height: 15),
 
-          /// زر تواصل
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -173,7 +166,6 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// 🔘 Bottom Buttons
   Widget _buildBottomActions() {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -223,7 +215,6 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// 🔹 Row عادي
   Widget _buildRow(String title, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -234,7 +225,6 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// ⭐ Row مع تقييم
   Widget _buildRowWithRate(String title, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -252,7 +242,6 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// 🎨 Card Decoration
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
       color: const Color.fromARGB(255, 240, 240, 240),

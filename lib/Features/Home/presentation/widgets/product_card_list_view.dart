@@ -23,153 +23,168 @@ class _ProductCardListViewState extends State<ProductCardListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: kWhiteColor,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color.fromRGBO(110, 122, 135, 1)),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 4)),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: LocalizeAndTranslate.getLanguageCode() == 'en'
-                        ? 0
-                        : 12.sp,
-                    left: LocalizeAndTranslate.getLanguageCode() == 'en'
-                        ? 12.sp
-                        : 0,
-                  ),
-                  child:
-                  widget.product.itemImages != null &&
-                      widget.product.itemImages!.isNotEmpty
-                      ? CachedNetworkImage(
-                    imageUrl: widget.product.itemImages!.first,
-                    width: 90.w,
-                    height: 90.h,
-                    fit: BoxFit.contain,
-                    placeholder: (context, url) =>
-                        Image.asset("assets/images/virtual_image.jpg"),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error),
-                  )
-                      : Image.asset(
-                    "assets/images/virtual_image.jpg",
-                    width: 90.w,
-                    height: 90.h,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isFavorite = !isFavorite;
-                    });
-                  },
-                  child: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite ? kRedColor : kGreyColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Gap(10.w),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: EdgeInsets.only(top: 8.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return InkWell(
+      onTap: (){
+        customAnimatedPushNavigation(
+          context,
+          ProductDetailsScreen(product: widget.product),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8.h),
+        padding: EdgeInsets.all(8.h),
+        decoration: BoxDecoration(
+          color: kWhiteColor,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color.fromRGBO(110, 122, 135, 1)),
+          boxShadow: const [
+            BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 4)),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Stack(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          widget.product.name!,
-                          style: font16BlackSemiBold,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Gap(8.w),
-                      Text(
-                        "${widget.product.price} ج/${widget.product.rentUnit}",
-                        style: font16BlackSemiBold.copyWith(fontSize: 10),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    widget.product.condition!,
-                    style: font16BlackSemiBold.copyWith(
-                      color: const Color.fromRGBO(85, 85, 85, 0.61),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: LocalizeAndTranslate.getLanguageCode() == 'en'
+                          ? 0
+                          : 12.sp,
+                      left: LocalizeAndTranslate.getLanguageCode() == 'en'
+                          ? 12.sp
+                          : 0,
                     ),
-                  ),
-                  Gap(5.h),
-                  Row(
-                    children: [
-                      Text(
-                        "${widget.product.averageRate}",
-                        style: font16BlackSemiBold.copyWith(
-                          fontSize: 10,
-                          color: const Color.fromRGBO(151, 151, 151, 1),
-                        ),
-                      ),
-                      Gap(5.w),
-                      ...List.generate(
-                        5,
-                            (index) => Icon(
-                          Icons.star,
-                          size: 14.sp,
-                          color: index < widget.product.averageRate!.floor()
-                              ? Colors.amber
-                              : Colors.grey.shade300,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    child: SizedBox(
-                      width: 74.w,
-                      height: 31.h,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kPrimaryColor,
-                          padding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14.sp),
+                    child:
+                    widget.product.itemImages != null &&
+                        widget.product.itemImages!.isNotEmpty
+                        ? CachedNetworkImage(
+                      imageUrl: widget.product.itemImages!.first,
+                      width: 95.w,
+                      height: 95.h,
+                      fit: BoxFit.contain,
+                      placeholder: (context, url) =>
+                          Image.asset("assets/images/virtual_image.jpg",
+                            width: 95.w,
+                            height: 95.h,
+                            fit: BoxFit.contain,
                           ),
-                        ),
-                        onPressed: () {
-                          customAnimatedPushNavigation(
-                            context,
-                            ProductDetailsScreen(product: widget.product),
-                          );
-                        },
-                        child: Text(
-                          kView.tr(),
-                          style: font16BlackSemiBold.copyWith(
-                            color: kWhiteColor,
-                          ),
-                        ),
-                      ),
+                      errorWidget: (context, url, error) =>
+                          Icon(Icons.error),
+                    )
+                        : Image.asset(
+                      "assets/images/virtual_image.jpg",
+                      width: 95.w,
+                      height: 95.h,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+            Gap(10.w),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.only(top: 8.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.product.name!,
+                            style: font16BlackSemiBold,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Gap(8.w),
+                        Text(
+                          "${widget.product.price} ج/${widget.product.rentUnit}",
+                          style: font16BlackSemiBold.copyWith(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      widget.product.condition!,
+                      style: font16BlackSemiBold.copyWith(
+                        color: const Color.fromRGBO(85, 85, 85, 0.61),
+                      ),
+                    ),
+                    Gap(5.h),
+                    Row(
+                      children: [
+                        Text(
+                          "${widget.product.averageRate}",
+                          style: font16BlackSemiBold.copyWith(
+                            fontSize: 10,
+                            color: const Color.fromRGBO(151, 151, 151, 1),
+                          ),
+                        ),
+                        Gap(5.w),
+                        ...List.generate(
+                          5,
+                              (index) => Icon(
+                            Icons.star,
+                            size: 14.sp,
+                            color: index < widget.product.averageRate!.floor()
+                                ? Colors.amber
+                                : Colors.grey.shade300,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child:                     GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isFavorite = !isFavorite;
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          height: 31.h,
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          decoration: BoxDecoration(
+                            color: isFavorite
+                                ? kRedColor.withOpacity(0.1)
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(14.sp),
+                            border: Border.all(
+                              color: isFavorite ? kRedColor : Colors.grey.shade300,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                isFavorite ? Icons.favorite : Icons.favorite_border,
+                                color: isFavorite ? kRedColor : kGreyColor,
+                                size: 16.sp,
+                              ),
+                              Gap(4.w),
+                              Text(
+                                isFavorite ? "Saved" : "Save",
+                                style: font16BlackSemiBold.copyWith(
+                                  fontSize: 12.sp,
+                                  color: isFavorite ? kRedColor : kGreyColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -83,6 +83,19 @@ class _RequestScreenState extends State<RequestScreen> {
     return DateFormat('yyyy/MM/dd').format(date);
   }
 
+  String period(String text) {
+    switch (text.toLowerCase()) {
+      case 'Daily':
+        return kDaily.tr();
+      case 'Weekly':
+        return kWeekly.tr();
+      case 'Monthly':
+        return kMonthly.tr();
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -158,20 +171,23 @@ class _RequestScreenState extends State<RequestScreen> {
                                     ? CachedNetworkImage(
                                         imageUrl:
                                             widget.product.itemImages!.first,
-                                        width: 90.w,
-                                        height: 90.h,
+                                  width: 95.w,
+                                  height: 95.h,
                                         fit: BoxFit.contain,
                                         placeholder: (context, url) =>
                                             Image.asset(
                                               "assets/images/virtual_image.jpg",
+                                              width: 95.w,
+                                              height: 95.h,
+                                              fit: BoxFit.contain,
                                             ),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       )
                                     : Image.asset(
                                         "assets/images/virtual_image.jpg",
-                                        width: 90.w,
-                                        height: 90.h,
+                                  width: 95.w,
+                                  height: 95.h,
                                         fit: BoxFit.contain,
                                       ),
                                 Gap(8.w),
@@ -193,7 +209,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                           ),
                                           Gap(8.w),
                                           Text(
-                                            "${widget.product.price} ${kPricePerUnit.tr()}/${widget.product.rentUnit}",
+                                            "${widget.product.price} ${kPricePerUnit.tr()}/${period(widget.product.rentUnit!)}",
                                             style: font16BlackSemiBold.copyWith(
                                               fontSize: 11,
                                             ),
@@ -404,7 +420,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                       ),
                                     ),
                                     Text(
-                                      totalDays > 0 ? "$totalPrice جنيه" : "--",
+                                      totalDays > 0 ? "$totalPrice ${kCurrency.tr()}" : "--",
                                       style: font14BlackBold.copyWith(
                                         fontSize: 13,
                                       ),
@@ -528,7 +544,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             );
                           }
                         : null,
-                    text: isRequestSent ? "تم الإرسال" : kConfirmRequest.tr(),
+                    text: isRequestSent ? kSent.tr() : kConfirmRequest.tr(),
                     color: kPrimaryColor,
                     borderRadius: Shared.width * 0.04.w,
                   ),

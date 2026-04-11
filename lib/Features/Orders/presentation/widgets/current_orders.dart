@@ -1,14 +1,18 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class CurrentOrders extends StatefulWidget {
   const CurrentOrders({super.key});
@@ -50,8 +54,8 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                     child: Center(
                       child: EmptyProducts(
                         image: 'assets/images/no_products.png',
-                        title: 'لا توجد طلبات جارية',
-                        subTitle: 'لم يتم العثور على اي طلبات جارية حتي الانً',
+                        title: kNoCurrentOrders.tr(),
+                        subTitle: kNoCurrentOrdersDesc.tr(),
                       ),
                     ),
                   ),
@@ -90,16 +94,18 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            currentOrders[index].itemImages == null ?
-                            Image.asset(
-                              'assets/images/virtual_image.jpg', width: 90.w,
-                              height: 90.h,
-                              fit: BoxFit.contain,)
-                                : Image.network(
-                              currentOrders[index].itemImages!.first,
+                            CachedNetworkImage(
+                              imageUrl: currentOrders[index].itemImages!.first,
                               width: 90.w,
                               height: 90.h,
                               fit: BoxFit.contain,
+                              placeholder: (context, url) => Image.asset(
+                                "assets/images/virtual_image.jpg",
+                                fit: BoxFit.contain,
+                              ),
+                              errorWidget: (context, url, error) {
+                                return Image.asset("assets/images/virtual_image.jpg");
+                              },
                             ),
                             Gap(20.h),
                             Column(
@@ -118,7 +124,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                     Image.asset('assets/images/owner.png'),
                                     Gap(5.w),
                                     Text(
-                                      "المالك: ${currentOrders[index].ownerName ?? ''}",
+                                      "${kOwner.tr()}: ${currentOrders[index].ownerName ?? ''}",
                                       style: font13kLightPrimaryColorMedium.copyWith(
                                         color: kBlackColor,
                                       ),
@@ -145,7 +151,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                     Image.asset('assets/images/remainder.png'),
                                     Gap(5.w),
                                     Text(
-                                      ' متبقي ${currentOrders[index].timeLeftInDays.toString() ?? ''} يوم',
+                                      "${kRemaining.tr()} ${currentOrders[index].timeLeftInDays} ${kDays.tr()}",
                                       style: font20PrimaryMedium.copyWith(
                                         fontSize: 13.sp,
                                         color: kOrangeColor,
@@ -173,7 +179,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'إجمالي المبلغ',
+                              kTotalAmount.tr(),
                               style: font13kLightPrimaryColorMedium.copyWith(
                                 color: kDarkGreyColor,
                               ),
@@ -206,7 +212,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             orderButton(
-                              text: 'عرض التفاصيل',
+                              text: kViewDetails.tr(),
                               icon: 'assets/images/refresh.png',
                               backgroundColor: kLightPrimaryColor,
                               textColor: kWhiteColor,
@@ -214,7 +220,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                               onTap: () {},
                             ),
                             orderButton(
-                              text: 'مراسلة المالك',
+                              text: kContactOwner.tr(),
                               icon: 'assets/images/contact_icon.png',
                               backgroundColor: kWhiteColor,
                               textColor: kPrimaryColor,
@@ -230,9 +236,16 @@ class _CurrentOrdersState extends State<CurrentOrders> {
             },
           );
     } else if (state.status == myOrdersStatus.failure) {
-          return Center(child: Text(state.failureMessage));
+          return CustomErrorWidget(
+            message: state.failureMessage,
+            onRetry: () {
+              context.read<MyOrdersBloc>().add(
+                GetMyOrdersEvent(),
+              );
+            },
+          );
         } else {
-          return Center(child: Text("No Data Yet"));
+          return Center(child: Text(kNoDataYet.tr()));
         }
       }
     );

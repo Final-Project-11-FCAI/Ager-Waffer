@@ -37,9 +37,11 @@
   "password_changed": "تم تغيير كلمة المرور",
   "login_now_desc": "يمكنك تسجيل الدخول الآن",
   "login_now": "تسجيل الدخول الآن",
-
-
-
+  "skip": "تخطي",
+  "next": "التالي",
+  "start_journey": "ابدأ رحلتك الآن",
+  "create_new_account": "إنشاء حساب جديد",
+  "have_account_login": "لديك حساب؟ تسجيل الدخول",
 
   "electronics": "إلكترونيات",
   "home_appliances": "أجهزة منزلية",
@@ -54,7 +56,53 @@
   "used": "مستخدم",
   "heavily_used": "مستخدم بشدة",
 
+  "sent": "تم الإرسال",
 
+  "no_current_orders": "لا توجد طلبات جارية",
+  "no_current_orders_desc": "لم يتم العثور على أي طلبات جارية حتى الآن",
+
+  "owner": "المالك",
+  "remaining": "متبقي",
+
+  "total_amount": "إجمالي المبلغ",
+
+  "view_details": "عرض التفاصيل",
+
+  "review_added_success": "تم إضافة التقييم بنجاح",
+
+  "no_previous_products": "لا توجد منتجات سابقة",
+  "no_previous_products_desc": "لم يتم العثور على أي منتجات سابقة حتى الآن",
+
+
+  "rate_product": "تقييم المنتج",
+  "rate_owner": "تقييم المالك",
+
+  "owner_key": "المالك",
+  "interaction": "التعامل",
+
+  "current": "الجارية",
+  "under_review": "قيد المراجعة",
+  "previous": "السابقة",
+  "how_was_experience": "كيف كانت تجربتك؟",
+  "your_opinion_matters": "رأيك يهمنا ويساعدنا على التطوير",
+
+  "rate": "تقييم",
+  "comment_hint": "تعليقك عن",
+  "optional": "اختياري",
+
+  "submit_review": "إرسال التقييم",
+
+  "no_under_review_orders": "لا توجد طلبات قيد المراجعة",
+  "no_under_review_orders_desc": "لم يتم العثور على طلبات قيد المراجعة حتى الآن",
+  "review_failed": "فشل في إرسال التقييم",
+
+  "cancel_order_failed": "فشل في إلغاء الطلب",
+  "cancel_order": "إلغاء الطلب",
+
+  "cancel_confirm_title": "تأكيد الإلغاء",
+  "cancel_confirm_desc": "هل أنت متأكد أنك تريد إلغاء الطلب؟",
+
+  "back": "رجوع",
 
 
   "add_product_success_title": "تم إضافة المنتج بنجاح",
@@ -151,7 +199,14 @@
   "term_4": "يتم استرداد مبلغ التأمين بعد فحص المنتج",
   "term_5": "يُستخدم المنتج للغرض المتفق عليه فقط ولا يسمح بإعادة تأجيره",
 
+  "onboarding_title_1": "مرحبًا بك في ",
+  "onboarding_subtitle_1": "اكتشف واستأجر كل ما تحتاجه من مجتمع موثوق به",
 
+  "onboarding_title_2": "كل اللي تحتاجه في مكان واحد",
+  "onboarding_subtitle_2": "بدّل الشراء بالتأجير.. واختر المنتج اللي يناسبك",
+
+  "onboarding_title_3": "تجربة آمنة وموثوقة",
+  "onboarding_subtitle_3": "نوفر لك بيئة موثوقة لضمان تعاملات سلسة وآمنة في كل مرة",
 
   "select_date": "اختر التاريخ",
 
@@ -208,6 +263,10 @@
   "insurance_only": "التأمين",
   "description": "الوصف",
   "currency": "جنيه",
+  "something_wrong": "حدث خطأ",
+  "server_error": "حدث خطأ في الاتصال بالسيرفر",
+  "unexpected_error": "حدث خطأ غير متوقع",
+  "no_internet": "لا يوجد اتصال بالإنترنت",
 
   "add_to_favorite": "إضافة للمفضلة",
   "rent_now": "استأجر الآن",

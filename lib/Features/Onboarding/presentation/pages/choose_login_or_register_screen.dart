@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
@@ -7,13 +8,12 @@ import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ChooseLoginOrRegisterScreen extends StatelessWidget {
   ChooseLoginOrRegisterScreen({super.key});
 
   final PageController _controller = PageController();
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/logo.png',),
                   Text(
-                    'أبدأ رحلتك الآن',
+                    kStartJourney.tr(),
                     style: GoogleFonts.notoSansArabic(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
@@ -46,7 +46,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
                       onPressed: () {
                         customAnimatedPushNavigation(context, RegisterScreen());
                       },
-                      text: 'إنشاء حساب جديد',
+                      text: kCreateNewAccount.tr(),
                       color: kPrimaryColor,
                     ),
                   ),
@@ -54,7 +54,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
                     onPressed: () {
                       customAnimatedPushNavigation(context, LoginScreen());
                     },
-                    text: 'لديك حساب؟ تسجيل الدخول',
+                    text: kHaveAccountLogin.tr(),
                     color: kWhiteColor,
                   ),
                 ],

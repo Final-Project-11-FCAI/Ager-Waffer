@@ -1,10 +1,14 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
+import 'package:ager_waffer/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
@@ -38,7 +42,16 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 Gap(Shared.height * 0.35),
                 ButtonApp(
                   isLanguageScreen: true,
-                    onPressed: () {
+                    onPressed: () async {
+                      await LocalizeAndTranslate.setLanguageCode(selectedLanguage);
+
+                      MyMaterial.setLocale(context, Locale(selectedLanguage));
+
+                      sharedPreferenceManager.writeData(
+                        CachingKey.APP_LANGUAGE,
+                        selectedLanguage,
+                      );
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -46,7 +59,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         ),
                       );
                     },
-                  text: 'استمرار',
+                  text: kContinue.tr(),
                   color: kPrimaryColor,
                 ),
               ],

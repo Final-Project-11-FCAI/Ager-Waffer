@@ -4,10 +4,10 @@ import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Features/Chat/presentation/manager/all_chats_bloc.dart';
 import 'package:ager_waffer/Features/Chat/presentation/manager/all_chats_state.dart';
 import 'package:ager_waffer/Features/Chat/presentation/widgets/chat_card.dart';
-import 'package:ager_waffer/Features/Chat/presentation/widgets/text_field.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:localize_and_translate/localize_and_translate.dart%20%20';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ConversationsScreen extends StatefulWidget {
   const ConversationsScreen({super.key});
@@ -56,7 +56,15 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
               ),
             );
           } else if (state.status == allChatsStatus.failure) {
-            return Center(child: Text(state.failureMessage));
+            return CustomErrorWidget(
+              message: state.failureMessage,
+              onRetry: () {
+                context.read<AllChatsBloc>().add(
+                  GetAllChatsEvent(),
+                );
+              },
+            );
+
           } else  {
             return Center(child: Text(kNoDataYet.tr()));
           }

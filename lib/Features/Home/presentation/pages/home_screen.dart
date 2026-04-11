@@ -20,6 +20,7 @@ import 'package:ager_waffer/Features/Home/presentation/widgets/category_item_lis
 import 'package:ager_waffer/Features/Home/presentation/widgets/custom_home_app_bar.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/drawer_details.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    allItemsBloc.add(GetAllItemsEvent());
+    context.read<AllItemsBloc>().add(GetAllItemsEvent());
   }
 
   Future<void> _refreshData() async {
@@ -49,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<LoginBloc>().add(
       LoginEvent(email: widget.email, password: widget.password),
     );
-    // optional delay (عشان يظهر animation)
     await Future.delayed(const Duration(seconds: 1));
   }
 
@@ -146,7 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(kSuggestedItems.tr(), style: font14BlackBold),
                     Gap(8.h),
                     BlocBuilder<AllItemsBloc, AllItemsState>(
-                      bloc: allItemsBloc,
                       builder: (context, state) {
                         if (state.status == allItemsStatus.loading) {
                           return const LoadingPlaceHolder(
@@ -185,7 +184,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                           );
                         } else if (state.status == allItemsStatus.failure) {
-                          return Center(child: Text(state.failureMessage));
+                          return LayoutBuilder(
+                            builder: (context, constraints) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: Shared.height * 0.3,
+                                child: Center(
+                                  child: CustomErrorWidget(
+                                    message: state.failureMessage,
+                                    onRetry: () {
+                                      context.read<AllItemsBloc>().add(
+                                        GetAllItemsEvent(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          );
                         } else {
                           return Center(child: Text(kNoDataYet.tr()));
                         }

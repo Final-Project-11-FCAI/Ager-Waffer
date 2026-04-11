@@ -1,3 +1,5 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
+
 class OnboardingDate {
   final String image;
   final String title;
@@ -10,18 +12,18 @@ class OnboardingDate {
 List<OnboardingDate> onboardingDate = [
   OnboardingDate(
     image: 'assets/images/onboarding_image1.png',
-    title: 'مرحبًا بك في ',
-    subTitle: 'اكتشف واستأجر كل ما تحتاجه من مجتمع موثوق به',
+    title: kOnboardingTitle1,
+    subTitle: kOnboardingSubTitle1,
   ),
   OnboardingDate(
     image: 'assets/images/onboarding_image2.png',
-    title: 'كل اللي تحتاجه في مكان واحد',
-    subTitle: 'بدّل الشراء بالتأجير..واختار المنتج اللي يناسبك',
+    title: kOnboardingTitle2,
+    subTitle: kOnboardingSubTitle2,
   ),
   OnboardingDate(
     image: 'assets/images/onboarding_image3.png',
-    title: 'تجربة آمنة وموثوقة',
-    subTitle: 'نوفر لك بيئة موثوق بها لضمان تعاملات سلسة وآمنة في كل مرة',
+    title: kOnboardingTitle3,
+    subTitle: kOnboardingSubTitle3,
   ),
 
 

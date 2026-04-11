@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Features/Orders/data/repositories/add_review_repository.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class AddReviewBloc extends Bloc<AppEvent, AddReviewState> {
 
@@ -40,22 +42,22 @@ class AddReviewBloc extends Bloc<AppEvent, AddReviewState> {
       } else {
         emit(state.copyWith(
           status: addReviewStatus.failure,
-          failureMessage: response.messageAr ?? "فشل في إرسال التقييم",
+          failureMessage: response.messageAr ?? kReviewFailed.tr(),
         ));
       }
 
     } catch (e) {
 
-      String message = "حدث خطأ غير متوقع";
+      String message = kUnexpectedError.tr();
 
       if (e is SocketException ||
           e.toString().contains("Network is unreachable")) {
-        message = "لا يوجد اتصال بالإنترنت";
+        message = kNoInternet.tr();
       }
 
       emit(state.copyWith(
         status: addReviewStatus.failure,
-        failureMessage: "فشل في إرسال التقييم",
+        failureMessage: message,
       ));
     }
   }}

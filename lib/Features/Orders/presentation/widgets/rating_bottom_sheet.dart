@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Manage_Orders/data/models/orders_management_model.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class RatingBottomSheet extends StatefulWidget {
   const RatingBottomSheet({
@@ -44,6 +46,10 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
     }
   }
 
+  bool get isButtonEnabled {
+    return rating > 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -66,12 +72,12 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
           ),
           Gap(20.h),
           Text(
-            "كيف كانت تجربتك ؟",
+            kHowWasExperience.tr(),
             style: font20PrimaryMedium.copyWith(fontWeight: bold),
           ),
           Gap(5.h),
           Text(
-            "رأيك يهمنا ويساعدنا على التطوير",
+            kYourOpinionMatters.tr(),
             style: font20PrimaryMedium.copyWith(
               color: kLightPrimaryColor,
               fontSize: 15,
@@ -86,7 +92,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                   const Icon(Icons.star, color: kPrimaryColor),
                   Gap(5.w),
                   Text(
-                    "تقييم ${widget.reviewType}",
+                    "${kRate.tr()} ${widget.reviewType}",
                     style: font20PrimaryMedium.copyWith(
                       fontWeight: bold,
                       fontSize: 16,
@@ -118,7 +124,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
             maxLines: 3,
             cursorColor: kPrimaryColor,
             decoration: InputDecoration(
-              hintText: ' تعليقك عن ${widget.hint} (اختياري)',
+              hintText: "${kCommentHint.tr()} ${widget.hint} (${kOptional.tr()})",
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: kPrimaryColor),
                 borderRadius: BorderRadius.circular(12),
@@ -134,21 +140,9 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
           SizedBox(
             width: double.infinity,
             child: ButtonApp(
-              onPressed: () {
-                if (rating == 0) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("من فضلك اختر تقييم ⭐")),
-                  );
-                  return;
-                }
+              onPressed: isButtonEnabled
+                  ? () {
                 final reviewTypeValue = getReviewTypeValue(widget.reviewType);
-
-                // if (order.itemId == null || order.renteeId == null) {
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     const SnackBar(content: Text("بيانات غير مكتملة")),
-                //   );
-                //   return;
-                // }
 
                 context.read<AddReviewBloc>().add(
                   AddReviewEvent(
@@ -159,8 +153,9 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                     rate: rating.toInt(),
                   ),
                 );
-              },
-              text: "إرسال التقييم",
+              }
+                  : null,
+              text: kSubmitReview.tr(),
               color: kPrimaryColor,
               isReview: true,
             ),

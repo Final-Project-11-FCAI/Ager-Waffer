@@ -144,6 +144,20 @@ class ExternalLoginEvent extends AppEvent {
   });
 }
 
+class DeviceRegisterEvent extends AppEvent {
+  final String fcmToken;
+  final String devicePlatform;
+
+  DeviceRegisterEvent({
+    required this.fcmToken,
+    required this.devicePlatform,
+  });
+}
+
+class GetOwnerRentalCountEvent extends AppEvent {
+  GetOwnerRentalCountEvent();
+}
+
 
 //Orders Events
 

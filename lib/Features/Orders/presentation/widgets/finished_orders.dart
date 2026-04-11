@@ -3,13 +3,14 @@ import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Orders/domain/entities/finished_orders_entity.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_state.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/rating_bottom_sheet.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,12 +44,13 @@ class _FinishedOrdersState extends State<FinishedOrders> {
             SnackBar(
               backgroundColor: kGreenColor,
               content: Text(
-                'تم اضافة التقييم بنجاح',
+                kReviewAddedSuccess.tr(),
               ),
             ),
           );
         } else if (state.status == addReviewStatus.failure) {
           Shared.dismissDialog(context: context);
+          Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.failureMessage ?? kSomethingWentWrong.tr()),
@@ -81,8 +83,8 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                       child: Center(
                         child: EmptyProducts(
                           image: 'assets/images/no_products.png',
-                          title: 'لا توجد منتجات سابقة',
-                          subTitle: 'لم يتم العثور على اي منتجات سابقةً',
+                          title: kNoPreviousProducts.tr(),
+                          subTitle: kNoPreviousProductsDesc.tr(),
                         ),
                       ),
                     ),
@@ -121,16 +123,18 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              completedOrders[index].itemImages == null ?
-                              Image.asset(
-                                'assets/images/virtual_image.jpg', width: 90.w,
-                                height: 90.h,
-                                fit: BoxFit.contain,)
-                                  : Image.network(
-                                completedOrders[index].itemImages!.first,
+                              CachedNetworkImage(
+                                imageUrl: completedOrders[index].itemImages!.first,
                                 width: 90.w,
                                 height: 90.h,
                                 fit: BoxFit.contain,
+                                placeholder: (context, url) => Image.asset(
+                                  "assets/images/virtual_image.jpg",
+                                  fit: BoxFit.contain,
+                                ),
+                                errorWidget: (context, url, error) {
+                                  return Image.asset("assets/images/virtual_image.jpg");
+                                },
                               ),
                               Gap(20.h),
                               Column(
@@ -149,7 +153,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                       Image.asset('assets/images/owner.png'),
                                       Gap(5.w),
                                       Text(
-                                        "المالك: ${completedOrders[index].ownerName ?? ''}",
+                                        "${kOwner.tr()}: ${completedOrders[index].ownerName ?? ''}",
                                         style: font13kLightPrimaryColorMedium
                                             .copyWith(color: kBlackColor),
                                       ),
@@ -191,7 +195,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'إجمالي المبلغ',
+                                kTotalAmount.tr(),
                                 style: font13kLightPrimaryColorMedium.copyWith(
                                   color: kDarkGreyColor,
                                 ),
@@ -224,7 +228,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               orderButton(
-                                text: 'تقييم المنتج',
+                                text: kRateProduct.tr(),
                                 icon: 'assets/images/star.png',
                                 backgroundColor: kLightPrimaryColor,
                                 textColor: kWhiteColor,
@@ -240,7 +244,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                           ),
                                           child: RatingBottomSheet(
                                             reviewType: 'المنتج',
-                                            hint: 'المنتج',
+                                            hint: kProduct.tr(),
                                             completedOrders: completedOrders,
                                             index: index,
                                           ),
@@ -251,7 +255,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                 },
                               ),
                               orderButton(
-                                text: 'تقييم المالك',
+                                text: kRateOwner.tr(),
                                 icon: 'assets/images/star.png',
                                 backgroundColor: kWhiteColor,
                                 textColor: kPrimaryColor,
@@ -267,7 +271,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                           ),
                                           child: RatingBottomSheet(
                                             reviewType: 'المالك',
-                                            hint: 'التعامل',
+                                            hint: kInteraction.tr(),
                                             completedOrders: completedOrders,
                                             index: index,
                                           ),
@@ -287,9 +291,16 @@ class _FinishedOrdersState extends State<FinishedOrders> {
               },
             );
           } else if (state.status == myOrdersStatus.failure) {
-            return Center(child: Text(state.failureMessage));
+            return CustomErrorWidget(
+              message: state.failureMessage,
+              onRetry: () {
+                context.read<MyOrdersBloc>().add(
+                  GetMyOrdersEvent(),
+                );
+              },
+            );
           } else {
-            return Center(child: Text("No Data Yet"));
+            return Center(child: Text(kNoDataYet.tr()));
           }
         },
       ),

@@ -61,7 +61,6 @@ class _ButtonAppState extends State<ButtonApp>
   void didUpdateWidget(covariant ButtonApp oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // If the page changed → restart animation
     if (oldWidget.currentPage != widget.currentPage) {
       _animController.forward(from: 0);
     }

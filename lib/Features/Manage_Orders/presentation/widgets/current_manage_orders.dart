@@ -4,7 +4,9 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_state.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -91,16 +93,18 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              currentOrdersManagement[index].itemImages == null ?
-                              Image.asset(
-                                'assets/images/virtual_image.jpg', width: 90.w,
-                                height: 90.h,
-                                fit: BoxFit.contain,)
-                                  : Image.network(
-                                currentOrdersManagement[index].itemImages!.first,
+                              CachedNetworkImage(
+                                imageUrl: currentOrdersManagement[index].itemImages!.first,
                                 width: 90.w,
                                 height: 90.h,
                                 fit: BoxFit.contain,
+                                placeholder: (context, url) => Image.asset(
+                                  "assets/images/virtual_image.jpg",
+                                  fit: BoxFit.contain,
+                                ),
+                                errorWidget: (context, url, error) {
+                                  return Image.asset("assets/images/virtual_image.jpg");
+                                },
                               ),
                               Gap(20.h),
                               Column(
@@ -242,7 +246,14 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
               },
             );
           } else if (state.status == ordersManagementStatus.failure) {
-            return Center(child: Text(state.failureMessage));
+            return CustomErrorWidget(
+              message: state.failureMessage,
+              onRetry: () {
+                context.read<OrdersManagementBloc>().add(
+                  GetOrdersManagementEvent(),
+                );
+              },
+            );
           } else {
             return Center(child: Text("No Data Yet"));
           }
