@@ -24,11 +24,10 @@ class AcceptOrderBloc extends Bloc<AppEvent, AcceptOrderState> {
       final response = await acceptOrderRepository.acceptOrder(
         orderId: event.orderId,
       );
-
+      print("Response success: ${response.isSuccess}");
+      print("Message: ${response.messageAr}");
       if (response.isSuccess == true) {
-        emit(state.copyWith(
-          status: acceptOrderStatus.success,
-        ));
+        emit(state.copyWith(status: acceptOrderStatus.success,));
       }
 
       else {

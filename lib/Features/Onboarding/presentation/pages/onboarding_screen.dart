@@ -52,7 +52,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: onboardingDate[index].title.tr(),
+                          text: onboardingDate[index].title,
                           style: font24LightPrimarySemiBold,
                         ),
                         _currentPage == 0
@@ -70,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       horizontal: Shared.width * 0.1,
                     ),
                     child: Text(
-                      onboardingDate[index].subTitle.tr(),
+                      onboardingDate[index].subTitle,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.notoSansArabic(
                         fontSize: 20,

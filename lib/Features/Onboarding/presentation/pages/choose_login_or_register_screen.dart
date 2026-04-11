@@ -7,6 +7,7 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/pages/reg
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -32,8 +33,9 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
                   Image.asset('assets/images/logo.png',),
                   Text(
                     kStartJourney.tr(),
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.notoSansArabic(
-                      fontSize: 32,
+                      fontSize: 26.sp,
                       fontWeight: FontWeight.w700,
                       color: kLightPrimaryColor,
                     ),

@@ -59,7 +59,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         ),
                       );
                     },
-                  text: kContinue.tr(),
+                  text: "استمرار",
                   color: kPrimaryColor,
                 ),
               ],

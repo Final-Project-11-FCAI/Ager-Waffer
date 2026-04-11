@@ -9,6 +9,8 @@ class AcceptOrderRepository {
   Future<AcceptOrderModel> acceptOrder({
     required int orderId,
   }) async {
+    print("URL: ${baseUrl}api/RentalRequests/$orderId/accept");
+    print("OrderId: $orderId");
     return NetworkUtil.internal().patch(
       AcceptOrderModel(),
       "${baseUrl}RentalRequests/$orderId/accept",
