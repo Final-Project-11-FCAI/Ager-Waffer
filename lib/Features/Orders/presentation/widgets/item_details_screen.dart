@@ -13,6 +13,7 @@ class ItemDetailsScreen extends StatelessWidget {
 
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
+
           elevation: 0,
           title: Text(
             "تفاصيل الطلب",
