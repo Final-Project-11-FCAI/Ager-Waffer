@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
+import '../../../../Base/common/navigtor.dart';
+import '../../../Orders/presentation/widgets/item_details_screen.dart';
+
 class CurrentManageOrders extends StatelessWidget {
   CurrentManageOrders({super.key});
 
@@ -180,7 +183,12 @@ class CurrentManageOrders extends StatelessWidget {
                         backgroundColor: kLightPrimaryColor,
                         textColor: kWhiteColor,
                         isNotIcon: true,
-                        onTap: () {},
+                        onTap: () {
+                          customAnimatedPushNavigation(
+                            context,
+                            ItemDetailsScreen(),
+                          );
+                        },
                       ),
                       orderButton(
                         text: 'مراسلة المستأجر',

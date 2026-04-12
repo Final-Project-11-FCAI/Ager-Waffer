@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
+import '../../../../Base/common/navigtor.dart';
+
 class CurrentOrders extends StatelessWidget {
   CurrentOrders({super.key});
 
@@ -182,6 +184,11 @@ class CurrentOrders extends StatelessWidget {
                         textColor: kWhiteColor,
                         isNotIcon: true,
                         onTap: () {
+                          customAnimatedPushNavigation(
+                            context,
+
+                            ItemDetailsScreen(),
+                          );
                         },
                       ),
                       orderButton(
@@ -223,7 +230,14 @@ class CurrentOrders extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isNotIcon ? SizedBox() : Image.asset(icon, color: kPrimaryColor, width: 20.w, height: 20.h),
+            isNotIcon
+                ? SizedBox()
+                : Image.asset(
+                    icon,
+                    color: kPrimaryColor,
+                    width: 20.w,
+                    height: 20.h,
+                  ),
             Gap(5),
             Text(
               text,
