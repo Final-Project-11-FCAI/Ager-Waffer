@@ -3,9 +3,6 @@ import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Authentication/login/data/external_services/auth_external_services.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_bloc.dart';
-import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_state.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_state.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/forget_password_bottom_sheet.dart';
@@ -16,7 +13,6 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/p
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
-import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -267,8 +263,10 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
                       ],
                     ),
-                    ExternalLoginWidget(),
-                    Gap(20.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: Shared.height * 0.025.h),
+                      child: ExternalLoginWidget(),
+                    ),
                     RichText(
                       text: TextSpan(
                         children: [

@@ -41,94 +41,96 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   _currentPage = index;
                 });
               },
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Image.asset(
-                    onboardingDate[index].image,
-                    width: Shared.width * 0.9,
-                  ),
-                  Gap(Shared.height * 0.02),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: onboardingDate[index].title,
-                          style: font24LightPrimarySemiBold,
-                        ),
-                        _currentPage == 0
-                            ? TextSpan(
-                                text: kAppName.tr(),
-                                style: font24PrimarySemiBold,
-                              )
-                            : const TextSpan(),
-                      ],
+              itemBuilder: (context, index) => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      onboardingDate[index].image,
+                      width: Shared.width * 0.9,
                     ),
-                  ),
-                  Gap(Shared.height * 0.01),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Shared.width * 0.1,
-                    ),
-                    child: Text(
-                      onboardingDate[index].subTitle,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.notoSansArabic(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: kPrimaryColor,
+                    Gap(Shared.height * 0.02),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: onboardingDate[index].title,
+                            style: font24LightPrimarySemiBold,
+                          ),
+                          _currentPage == 0
+                              ? TextSpan(
+                                  text: kAppName.tr(),
+                                  style: font24PrimarySemiBold,
+                                )
+                              : const TextSpan(),
+                        ],
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: Shared.height * 0.03,
+                    Gap(Shared.height * 0.01),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Shared.width * 0.1,
+                      ),
+                      child: Text(
+                        onboardingDate[index].subTitle,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.notoSansArabic(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: kPrimaryColor,
+                        ),
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        onboardingDate.length,
-                        (val) => Container(
-                          margin: const EdgeInsets.only(right: 7),
-                          height: Shared.height * 0.032,
-                          width: Shared.width * 0.032,
-                          decoration: BoxDecoration(
-                            color: _currentPage == val
-                                ? kPrimaryColor
-                                : Colors.grey.shade300,
-                            shape: BoxShape.circle,
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: Shared.height * 0.03,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          onboardingDate.length,
+                          (val) => Container(
+                            margin: const EdgeInsets.only(right: 7),
+                            height: Shared.height * 0.032,
+                            width: Shared.width * 0.032,
+                            decoration: BoxDecoration(
+                              color: _currentPage == val
+                                  ? kPrimaryColor
+                                  : Colors.grey.shade300,
+                              shape: BoxShape.circle,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Shared.width * 0.04,
-                      vertical: Shared.height * 0.015,
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Shared.width * 0.04,
+                        vertical: Shared.height * 0.015,
+                      ),
+                      child: ButtonApp(
+                        text: kNext.tr(),
+                        color: kPrimaryColor,
+                        onPressed: () {
+                          if (_currentPage == onboardingDate.length - 1) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (c) => ChooseLoginOrRegisterScreen(),
+                              ),
+                            );
+                          } else {
+                            _controller.nextPage(
+                              duration: const Duration(milliseconds: 350),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
+                        currentPage: _currentPage,
+                        controller: _controller,
+                      ),
                     ),
-                    child: ButtonApp(
-                      text: kNext.tr(),
-                      color: kPrimaryColor,
-                      onPressed: () {
-                        if (_currentPage == onboardingDate.length - 1) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (c) => ChooseLoginOrRegisterScreen(),
-                            ),
-                          );
-                        } else {
-                          _controller.nextPage(
-                            duration: const Duration(milliseconds: 350),
-                            curve: Curves.easeInOut,
-                          );
-                        }
-                      },
-                      currentPage: _currentPage,
-                      controller: _controller,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

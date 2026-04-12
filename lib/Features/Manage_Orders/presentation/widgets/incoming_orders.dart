@@ -43,7 +43,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: kGreenColor,
-              content: Text('تم قبول الطلب بنجاح'),
+              content: Text(kAcceptOrderSuccess.tr()),
             ),
           );
           context.read<OrdersManagementBloc>().add(
@@ -70,7 +70,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: kGreenColor,
-                content: Text('تم رفض الطلب بنجاح'),
+                content: Text(kDeclineOrderSuccess.tr()),
               ),
             );
             context.read<OrdersManagementBloc>().add(GetOrdersManagementEvent());
@@ -108,8 +108,8 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                         child: Center(
                           child: EmptyProducts(
                             image: 'assets/images/no_products.png',
-                            title: 'لا توجد طلبات واردة',
-                            subTitle: 'لم يتم العثور على اي طلبات تأًجير',
+                            title: kNoIncomingOrders.tr(),
+                            subTitle: kNoIncomingOrdersDesc.tr(),
                           ),
                         ),
                       ),
@@ -178,7 +178,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                         Image.asset('assets/images/owner.png'),
                                         Gap(5.w),
                                         Text(
-                                          "المالك: ${incomingOrders[index].renteeName}",
+                                            "${kOwner.tr()}: ${incomingOrders[index].renteeName}",
                                           style: font13kLightPrimaryColorMedium
                                               .copyWith(color: kBlackColor),
                                         ),
@@ -220,7 +220,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'إجمالي المبلغ',
+                                  kTotalAmount.tr(),
                                   style: font13kLightPrimaryColorMedium.copyWith(
                                     color: kDarkGreyColor,
                                   ),
@@ -253,7 +253,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 orderButton(
-                                  text: 'قبول الطلب',
+                                  text: kAcceptOrder.tr(),
                                   icon: 'assets/images/done.png',
                                   backgroundColor: kLightPrimaryColor,
                                   textColor: kWhiteColor,
@@ -266,7 +266,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                   },
                                 ),
                                 orderButton(
-                                  text: 'رفض',
+                                  text: kDecline.tr(),
                                   icon: 'assets/images/delete.png',
                                   backgroundColor: kWhiteColor,
                                   textColor: kPrimaryColor,
@@ -297,7 +297,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                 },
               );
             } else {
-              return Center(child: Text("No Data Yet"));
+              return Center(child: Text(kNoDataYet.tr()));
             }
           },
         ),

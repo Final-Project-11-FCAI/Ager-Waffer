@@ -263,6 +263,23 @@
 
   "back": "Back",
 
+  "accept_order_success": "Order accepted successfully",
+  "decline_order_success": "Order declined successfully",
+
+  "no_incoming_orders": "No incoming orders",
+  "no_incoming_orders_desc": "No rental requests found",
+
+
+  "no_previous_orders": "No previous orders",
+  "no_previous_orders_desc": "No completed orders found",
+
+
+  "rate_renter": "Rate renter",
+  "renter": "Renter",
+
+  "accept_order": "Accept order",
+  "decline": "Decline",
+
 
   "condition": "Condition",
   "insurance_only": "Insurance",
@@ -286,13 +303,22 @@
   "user_name": "User",
   "review_text": "No review",
   "date": "Date",
-
+  "accept_order_failed": "Failed to accept order",
   "delete_product_title": "Delete product?",
   "delete_product_desc": "Are you sure you want to delete this product? You won’t be able to restore it after deletion.",
   "enter_phone": "Please enter your phone number",
   "invalid_phone": "Enter a valid Egyptian phone number",
+  "press_back_again_to_exit": "Press back again to exit",
+  "or_register_with": "Or register with",
+  "decline_order_failed": "Failed to decline order",
+  "continue_with_google": "Continue with Google",
+  "google_sign_in_failed": "Google sign-in failed",
 
-
+  "continue_with_facebook": "Continue with Facebook",
+  "facebook_sign_in_failed": "Facebook sign-in failed",
+  "contact_renter": "Contact renter",
+  "incoming": "Incoming",
+  "my_orders1": "My orders",
   "password_required": "Password is required",
   "password_min_length": "Password must be at least 8 characters",
   "password_uppercase": "Must contain an uppercase letter",

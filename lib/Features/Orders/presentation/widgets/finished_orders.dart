@@ -245,6 +245,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                           child: RatingBottomSheet(
                                             reviewType: 'المنتج',
                                             hint: kProduct.tr(),
+                                            name: kProduct.tr(),
                                             completedOrders: completedOrders,
                                             index: index,
                                           ),
@@ -272,6 +273,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                           child: RatingBottomSheet(
                                             reviewType: 'المالك',
                                             hint: kInteraction.tr(),
+                                            name: kOwner.tr(),
                                             completedOrders: completedOrders,
                                             index: index,
                                           ),

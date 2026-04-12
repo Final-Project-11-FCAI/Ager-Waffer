@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/widgets/current_manage_orders.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/widgets/incoming_orders.dart';
@@ -5,6 +6,7 @@ import 'package:ager_waffer/Features/Manage_Orders/presentation/widgets/previous
 import 'package:ager_waffer/Features/Orders/presentation/widgets/finished_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ManageOrdersScreen extends StatefulWidget {
   const ManageOrdersScreen({super.key});
@@ -17,9 +19,9 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
   int selectedIndex = 0;
 
   final List<String> tabs = [
-    "الواردة",
-    "الجارية",
-    "السابقة",
+    kIncoming.tr(),
+    kCurrent.tr(),
+    kPrevious.tr(),
   ];
 
   @override
@@ -30,7 +32,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
           backgroundColor: kPrimaryColor,
           foregroundColor: kWhiteColor,
           title: Text(
-            'إدارة الطلبات',
+            kManageOrders.tr(),
             style: font16BlackSemiBold.copyWith(
               fontSize: 20,
               color: kWhiteColor,

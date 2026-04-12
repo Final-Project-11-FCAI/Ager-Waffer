@@ -45,7 +45,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
             SnackBar(
               backgroundColor: kGreenColor,
               content: Text(
-                'تم اضافة التقييم بنجاح',
+                kReviewAddedSuccess.tr(),
               ),
             ),
           );
@@ -84,8 +84,8 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                       child: Center(
                         child: EmptyProducts(
                           image: 'assets/images/no_products.png',
-                          title: 'لا توجد طلبات واردة',
-                          subTitle: 'لم يتم العثور على اي طلبات تأًجير',
+                          title: kNoPreviousOrders.tr(),
+                          subTitle: kNoPreviousOrdersDesc.tr(),
                         ),
                       ),
                     ),
@@ -155,7 +155,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                       Image.asset('assets/images/owner.png'),
                                       Gap(5.w),
                                       Text(
-                                        "المالك: ${previousOrders[index].renteeName}",
+                                        "${kOwner.tr()}: ${previousOrders[index].renteeName}",
                                         style: font13kLightPrimaryColorMedium.copyWith(
                                           color: kBlackColor,
                                         ),
@@ -196,7 +196,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'إجمالي المبلغ',
+                                kTotalAmount.tr(),
                                 style: font13kLightPrimaryColorMedium.copyWith(
                                   color: kDarkGreyColor,
                                 ),
@@ -226,7 +226,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                             vertical: Shared.height * 0.02.h,
                           ),
                           child: orderButton(
-                            text: 'تقييم المستأجر',
+                            text: kRateRenter.tr(),
                             icon: 'assets/images/star.png',
                             backgroundColor: kLightPrimaryColor,
                             textColor: kWhiteColor,
@@ -244,7 +244,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                               top: Radius.circular(25.r),
                                             ),
                                             child: RenterRatingBottomSheet(
-                                              reviewType: 'المستأجر',hint: 'التعامل',
+                                              reviewType: kRenter.tr(),hint: kInteraction.tr(),
                                               previousOrders: previousOrders,
                                               index: index,
                                             )
@@ -270,7 +270,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
               },
             );
           } else {
-            return Center(child: Text("No Data Yet"));
+            return Center(child: Text(kNoDataYet.tr()));
           }
         },
       ),

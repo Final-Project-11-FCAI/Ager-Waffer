@@ -10,6 +10,7 @@ import 'package:ager_waffer/Features/Authentication/login/domain/entities/regist
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
+import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/external_login_widget.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/coustom_showdialog.dart';
@@ -385,7 +386,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       Text(
-                        kloginWithKey.tr(),
+                        kOrRegisterWith.tr(),
                         style: TextStyle(
                           color: kPrimaryColor,
                           fontWeight: FontWeight.bold,
@@ -402,26 +403,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      LogoIcon(
-                        path: 'assets/images/Facebook.png',
-                        onTap: () {},
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Shared.width * 0.02,
-                        ),
-                        child: LogoIcon(
-                          path: 'assets/images/Apple.png',
-                          onTap: () {},
-                          height: 83.h,
-                          width: 83.w,
-                        ),
-                      ),
-                      LogoIcon(path: "assets/images/Google.png", onTap: () {}),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: Shared.height * 0.03.h),
+                    child: ExternalLoginWidget(),
                   ),
                   RichText(
                     text: TextSpan(
@@ -459,6 +443,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                   ),
+                  Gap(10.h)
                 ],
               ),
             ),

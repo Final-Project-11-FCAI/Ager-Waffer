@@ -31,7 +31,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
           title: Text(
-            'طلباتي',
+            kMyOrders1.tr(),
             style: font16BlackSemiBold.copyWith(
               fontSize: 20,
               color: kWhiteColor,

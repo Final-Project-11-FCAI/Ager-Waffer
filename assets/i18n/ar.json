@@ -174,6 +174,24 @@
   "enter_street": "ادخل شارعك",
 
 
+  "contact_renter": "مراسلة المستأجر",
+  "accept_order_success": "تم قبول الطلب بنجاح",
+  "decline_order_success": "تم رفض الطلب بنجاح",
+
+  "no_incoming_orders": "لا توجد طلبات واردة",
+  "no_incoming_orders_desc": "لم يتم العثور على أي طلبات تأجير",
+
+
+  "accept_order": "قبول الطلب",
+  "decline": "رفض",
+
+
+  "no_previous_orders": "لا توجد طلبات سابقة",
+  "no_previous_orders_desc": "لم يتم العثور على أي طلبات مكتملة",
+
+
+  "rate_renter": "تقييم المستأجر",
+  "renter": "المستأجر",
 
   "home": "الرئيسية",
   "favorite": "المفضلة",
@@ -181,7 +199,7 @@
   "my_chats": "محادثاتي",
   "my_account": "حسابي",
 
-
+  "my_orders1": "طلباتي",
   "categories": "الفئات",
   "suggested_items": "العناصر المقترحة",
   "no_data_yet": "لا توجد بيانات حتى الآن",
@@ -192,12 +210,24 @@
 
   "rental_terms_title": "شروط الإيجار",
   "agree": "موافق",
-
+  "accept_order_failed": "فشل في قبول الطلب",
   "term_1": "الالتزام بمدة الإيجار المحددة",
   "term_2": "إعادة المنتج بنفس حالته وقت الاستلام",
   "term_3": "يتحمل المستأجر تكلفة أي تلف ناتج عن سوء الاستخدام",
   "term_4": "يتم استرداد مبلغ التأمين بعد فحص المنتج",
   "term_5": "يُستخدم المنتج للغرض المتفق عليه فقط ولا يسمح بإعادة تأجيره",
+  "incoming": "الواردة",
+
+
+  "decline_order_failed": "فشل في رفض الطلب",
+
+  "or_register_with": "أو سجل من خلال",
+  "press_back_again_to_exit": "اضغط مرة أخرى للخروج",
+  "continue_with_google": "المتابعة باستخدام Google",
+  "google_sign_in_failed": "فشل تسجيل الدخول باستخدام Google",
+
+  "continue_with_facebook": "المتابعة باستخدام Facebook",
+  "facebook_sign_in_failed": "فشل تسجيل الدخول باستخدام Facebook",
 
   "onboarding_title_1": "مرحبًا بك في ",
   "onboarding_subtitle_1": "اكتشف واستأجر كل ما تحتاجه من مجتمع موثوق به",

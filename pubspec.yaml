@@ -102,6 +102,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   google_sign_in: ^7.2.0
   flutter_facebook_auth: ^7.1.6
+  signalr_netcore: ^1.4.4
 
 dev_dependencies:
   flutter_test:

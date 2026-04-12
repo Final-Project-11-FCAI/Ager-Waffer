@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class CurrentManageOrders extends StatefulWidget {
   const CurrentManageOrders({super.key});
@@ -53,8 +55,8 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                       child: Center(
                         child: EmptyProducts(
                           image: 'assets/images/no_products.png',
-                          title: 'لا توجد طلبات جارية',
-                          subTitle: 'لم يتم العثور على اي طلبات حالية',
+                          title: kNoCurrentOrders.tr(),
+                          subTitle: kNoCurrentOrdersDesc.tr(),
                         ),
                       ),
                     ),
@@ -124,8 +126,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                       Image.asset('assets/images/owner.png'),
                                       Gap(5.w),
                                       Text(
-                                        "المالك: ${currentOrdersManagement[index]
-                                            .renteeName}",
+                                        "${kOwner.tr()}: ${currentOrdersManagement[index].renteeName}",
                                         style: font13kLightPrimaryColorMedium
                                             .copyWith(
                                           color: kBlackColor,
@@ -158,9 +159,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                           'assets/images/remainder.png'),
                                       Gap(5.w),
                                       Text(
-                                        ' متبقي ${currentOrdersManagement[index]
-                                            .timeLeftInDays.toString() ??
-                                            ''} يوم',
+                                        "${kRemaining.tr()} ${currentOrdersManagement[index].timeLeftInDays} ${kDays.tr()}",
                                         style: font20PrimaryMedium.copyWith(
                                           fontSize: 13.sp,
                                           color: kOrangeColor,
@@ -188,7 +187,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'إجمالي المبلغ',
+                                kTotalAmount.tr(),
                                 style: font13kLightPrimaryColorMedium.copyWith(
                                   color: kDarkGreyColor,
                                 ),
@@ -222,7 +221,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               orderButton(
-                                text: 'عرض التفاصيل',
+                                text:  kViewDetails.tr(),
                                 icon: 'assets/images/refresh.png',
                                 backgroundColor: kLightPrimaryColor,
                                 textColor: kWhiteColor,
@@ -230,7 +229,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                 onTap: () {},
                               ),
                               orderButton(
-                                text: 'مراسلة المستأجر',
+                                text: kContactRenter.tr(),
                                 icon: 'assets/images/contact_icon.png',
                                 backgroundColor: kWhiteColor,
                                 textColor: kPrimaryColor,
@@ -255,7 +254,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
               },
             );
           } else {
-            return Center(child: Text("No Data Yet"));
+            return Center(child: Text(kNoDataYet.tr()));
           }
         }
     );

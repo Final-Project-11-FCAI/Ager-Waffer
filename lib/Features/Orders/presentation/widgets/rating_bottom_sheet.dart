@@ -20,10 +20,12 @@ class RatingBottomSheet extends StatefulWidget {
     required this.hint,
     required this.completedOrders,
     required this.index,
+    required this.name,
   });
 
   final String reviewType;
   final String hint;
+  final String name;
   final List<OrderData> completedOrders;
   final int index;
 
@@ -92,7 +94,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                   const Icon(Icons.star, color: kPrimaryColor),
                   Gap(5.w),
                   Text(
-                    "${kRate.tr()} ${widget.reviewType}",
+                    "${kRate.tr()} ${widget.name}",
                     style: font20PrimaryMedium.copyWith(
                       fontWeight: bold,
                       fontSize: 16,

@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Features/Manage_Orders/data/repositories/orders_management_repository.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class OrdersManagementBloc extends Bloc<AppEvent, OrdersManagementState> {
   OrdersManagementBloc()
@@ -38,7 +40,7 @@ class OrdersManagementBloc extends Bloc<AppEvent, OrdersManagementState> {
       else {
         emit(state.copyWith(
           status: ordersManagementStatus.failure,
-          failureMessage: response.messageAr ?? "حدث خطأ",
+          failureMessage: response.messageAr ?? kSomethingWrong.tr(),
           ordersManagement: [],
         ));
       }
@@ -47,11 +49,11 @@ class OrdersManagementBloc extends Bloc<AppEvent, OrdersManagementState> {
     catch (e) {
       print("ERROR: $e");
 
-      String message = "حدث خطأ غير متوقع";
+      String message = kUnexpectedError.tr();
 
       if (e is SocketException ||
           e.toString().contains("Network is unreachable")) {
-        message = "لا يوجد اتصال بالإنترنت";
+        message = kNoInternet.tr();
       }
 
       emit(state.copyWith(

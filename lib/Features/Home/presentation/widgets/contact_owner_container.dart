@@ -1,6 +1,8 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Chat/presentation/pages/signalR_chat_screen.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,13 +37,11 @@ class ContactOwnerContainer extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 24.r,
-            backgroundImage: product.ownerPictureUrl != null && product.ownerPictureUrl!.isNotEmpty
-                ? NetworkImage(
-              product.ownerPictureUrl!,
-            )
-                : AssetImage(
-              'assets/images/virtual_user.jpg',
-            )
+            backgroundImage:
+                product.ownerPictureUrl != null &&
+                    product.ownerPictureUrl!.isNotEmpty
+                ? NetworkImage(product.ownerPictureUrl!)
+                : AssetImage('assets/images/virtual_user.jpg'),
           ),
           Gap(12.w),
           Expanded(
@@ -60,14 +60,6 @@ class ContactOwnerContainer extends StatelessWidget {
                     ),
                     Gap(1.w),
                     Icon(Icons.star, size: 17.sp, color: Colors.amber),
-                    Gap(2.w),
-                    Text(
-                      "(15${kProduct.tr()})",
-                      style: font20PrimaryMedium.copyWith(
-                        fontSize: 11.sp,
-                        color: kPartGreyColor,
-                      ),
-                    ),
                   ],
                 ),
               ],
@@ -77,7 +69,16 @@ class ContactOwnerContainer extends StatelessWidget {
           SizedBox(
             height: 34.h,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                customAnimatedPushNavigation(
+                  context,
+                  SignalRChatScreen(
+                user: product.ownerId!,
+                    token: product.ownerId!,
+                    roomId: product.id!.toString(),
+                  ),
+                );
+              },
               style: OutlinedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                 backgroundColor: kBlueColor.withOpacity(0.12),

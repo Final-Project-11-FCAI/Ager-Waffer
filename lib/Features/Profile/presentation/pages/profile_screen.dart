@@ -53,22 +53,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final user = _user!;
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: kPrimaryColor,
-        floatingActionButton: CircleAvatar(
-          radius: 25.r,
-          child: FloatingActionButton(
-            tooltip: kAddProductTooltip.tr(),
-            onPressed: () {
-              customAnimatedPushNavigation(context, AddProductScreen());
-            },
-            elevation: 3.sp,
-            backgroundColor: kPrimaryColor,
-            child: Icon(Icons.add, color: kWhiteColor),
-          ),
+    return Scaffold(
+      backgroundColor: kPrimaryColor,
+      floatingActionButton: CircleAvatar(
+        radius: 25.r,
+        child: FloatingActionButton(
+          tooltip: kAddProductTooltip.tr(),
+          onPressed: () {
+            customAnimatedPushNavigation(context, AddProductScreen());
+          },
+          elevation: 3.sp,
+          backgroundColor: kPrimaryColor,
+          child: Icon(Icons.add, color: kWhiteColor),
         ),
-        body: Stack(
+      ),
+      body: SafeArea(
+        child: Stack(
           children: [
             Padding(
               padding: EdgeInsets.only(top: Shared.height * 0.22.h),
@@ -228,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       builder: (_) => EditProfileScreen(user: user, userData: userData,),
                     ),
                   );
-
+            
                   if (result == true) {
                     await _loadUser();
                   }

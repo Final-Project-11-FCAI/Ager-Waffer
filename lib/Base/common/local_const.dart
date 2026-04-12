@@ -231,16 +231,26 @@ String kRateOwner = 'rate_owner';
 String kProduct = 'product';
 String kOwnerKey = 'owner_key'; // للـ bottom sheet
 String kInteraction = 'interaction';
-
+String kPressBackAgainToExit = 'press_back_again_to_exit';
 String kHowWasExperience = 'how_was_experience';
 String kYourOpinionMatters = 'your_opinion_matters';
-
+String kAcceptOrderFailed = 'accept_order_failed';
 String kRate = 'rate';
 String kCommentHint = 'comment_hint';
 String kOptional = 'optional';
-
+String kDeclineOrderFailed = 'decline_order_failed';
 String kSubmitReview = 'submit_review';
+String kOrRegisterWith = 'or_register_with';
+String kIncoming = 'incoming';
+String kCurrent = 'current';
+String kPrevious = 'previous';
 
+String kManageOrders = 'manage_orders';
+String kContinueWithGoogle = 'continue_with_google';
+String kGoogleSignInFailed = 'google_sign_in_failed';
+
+String kContinueWithFacebook = 'continue_with_facebook';
+String kFacebookSignInFailed = 'facebook_sign_in_failed';
 String kCancelOrderSuccess = 'cancel_order_success';
 String kCancelOrderFailed = 'cancel_order_failed';
 String kNoUnderReviewOrders = 'no_under_review_orders';
@@ -256,9 +266,7 @@ String kCancelConfirmDesc = 'cancel_confirm_desc';
 String kBack = 'back';
 
 
-String kCurrent = 'current';
 String kUnderReview = 'under_review';
-String kPrevious = 'previous';
 
 
 String kRegisterSuccessTitle = 'register_success_title';
@@ -273,12 +281,31 @@ String kWhatDoYouWant = 'what_do_you_want';
 String kError = 'error';
 String kSearchHint = 'search_hint';
 String kView = 'view';
-
-String kManageOrders = 'manage_orders';
+String kMyOrders1 = 'my_orders1';
 String kLanguage = 'language';
 String kDarkMode = 'dark_mode';
 String kContactUs = 'contact_us';
 String kLogout = 'logout';
+
+String kAcceptOrderSuccess = 'accept_order_success';
+String kDeclineOrderSuccess = 'decline_order_success';
+
+String kNoIncomingOrders = 'no_incoming_orders';
+String kNoIncomingOrdersDesc = 'no_incoming_orders_desc';
+
+String kAcceptOrder = 'accept_order';
+String kDecline = 'decline';
+
+String kNoPreviousOrders = 'no_previous_orders';
+String kNoPreviousOrdersDesc = 'no_previous_orders_desc';
+
+
+String kRateRenter = 'rate_renter';
+String kRenter = 'renter';
+
+
+String kContactRenter = 'contact_renter';
+
 
 String kCondition = 'condition';
 String kInsuranceOnly = 'insurance_only';

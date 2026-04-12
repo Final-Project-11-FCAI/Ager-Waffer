@@ -1,7 +1,9 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Features/Manage_Orders/data/repositories/accept_order_repository.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/accept_order_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class AcceptOrderBloc extends Bloc<AppEvent, AcceptOrderState> {
 
@@ -33,14 +35,14 @@ class AcceptOrderBloc extends Bloc<AppEvent, AcceptOrderState> {
       else {
         emit(state.copyWith(
           status: acceptOrderStatus.failure,
-          failureMessage: response.messageAr ?? "فشل في قبول الطلب",
+          failureMessage: response.messageAr ?? kAcceptOrderFailed.tr(),
         ));
       }
 
     } catch (e) {
       emit(state.copyWith(
         status: acceptOrderStatus.failure,
-        failureMessage: "فشل في قبول الطلب",
+        failureMessage: kAcceptOrderFailed.tr(),
       ));
     }
   }
