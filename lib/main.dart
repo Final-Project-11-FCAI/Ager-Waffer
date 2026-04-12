@@ -232,7 +232,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             ],
 
             
-            home: ItemDetailsScreen(),
+            home: SplashScreen(),
             routes: {
               'LoginScreen': (context) => LoginScreen(),
               'RegisterScreen': (context) => RegisterScreen(),

@@ -28,7 +28,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       child: Scaffold(
         backgroundColor: kPrimaryColor,
         appBar: AppBar(
-          backgroundColor: kPrimaryColor, // kPrimaryColor
+          backgroundColor: kPrimaryColor,
           elevation: 0,
           title: Text(
             "تفاصيل الطلب",
@@ -77,4 +77,5 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     );
   }
 }
+
 

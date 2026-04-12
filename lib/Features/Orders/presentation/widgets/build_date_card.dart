@@ -3,7 +3,6 @@ import 'package:ager_waffer/Base/common/theme.dart';
 
 class BuildDateCard extends StatelessWidget {
   const BuildDateCard({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(

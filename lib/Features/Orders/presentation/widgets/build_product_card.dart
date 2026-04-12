@@ -14,7 +14,6 @@ class BuildProductCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // حاوية الصورة (أو الأيقونة حالياً)
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(

@@ -69,7 +69,6 @@ class BuildRenterInfoCard extends StatelessWidget {
     );
   }
 
-  // الدوال المساعدة خليناها داخل الكلاس عشان تكون محصورة فيه
   Widget _buildRow(String title, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -88,7 +87,6 @@ class BuildRenterInfoCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: font14BlackBold.copyWith(fontSize: 12)),
-        // لاحظ هنا: الـ Spacer أفضل من الـ SizedBox الثابت عشان يوزع المساحة صح
         const Spacer(),
         Row(
           children: const [
