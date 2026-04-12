@@ -4,11 +4,15 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/manager/e
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/category_pages/home_essentials_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/product_details_screen.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
+import 'package:ager_waffer/Features/Orders/presentation/widgets/item_details_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/add_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/delete_item_bloc.dart';
 import 'package:ager_waffer/Features/Profile/presentation/manager/my_listings_bloc.dart';
@@ -184,7 +188,6 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
       LocalizeAndTranslate.setLanguageCode(newLanguageCode);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -229,7 +232,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             ],
 
             
-            home: SplashScreen(),
+            home: ItemDetailsScreen(),
             routes: {
               'LoginScreen': (context) => LoginScreen(),
               'RegisterScreen': (context) => RegisterScreen(),

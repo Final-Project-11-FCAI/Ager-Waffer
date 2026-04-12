@@ -90,7 +90,8 @@ class _RequestScreenState extends State<RequestScreen> {
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25.r),
                       topRight: Radius.circular(25.r),
-                    ),                    color: kWhiteColor,
+                    ),
+                    color: kWhiteColor,
                   ),
                   padding: EdgeInsets.all(Shared.width * 0.04.w),
                   child: SingleChildScrollView(
@@ -272,7 +273,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                                   'assets/images/period.png',
                                                 ),
                                                 Gap(5.w),
-                                                Text("${kDuration.tr()}: $totalDays ${kDays.tr()}"),
+                                                Text(
+                                                  "${kDuration.tr()}: $totalDays ${kDays.tr()}",
+                                                ),
                                               ],
                                             )
                                           : SizedBox.shrink(),
@@ -360,7 +363,10 @@ class _RequestScreenState extends State<RequestScreen> {
                         ),
                         Gap(14.h),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12.w,
+                            vertical: 10.h,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(16.r),
@@ -388,29 +394,35 @@ class _RequestScreenState extends State<RequestScreen> {
                                       color: Colors.black87,
                                     ),
                                     children: [
-                                      TextSpan(text: "${kAgreeTermsPrefix.tr()} "),
+                                      TextSpan(
+                                        text: "${kAgreeTermsPrefix.tr()} ",
+                                      ),
                                       WidgetSpan(
                                         alignment: PlaceholderAlignment.middle,
                                         child: GestureDetector(
-                                            onTap: () async {
-                                              final result = await showModalBottomSheet<bool>(
-                                                context: context,
-                                                isScrollControlled: true,
-                                                builder: (context) {
-                                                  return const RentalTermsScreen();
-                                                },
-                                              );
-                                              if (result == true) {
-                                                setState(() {
-                                                  agree = true;
-                                                });
-                                              }
-                                            },
+                                          onTap: () async {
+                                            final result =
+                                                await showModalBottomSheet<
+                                                  bool
+                                                >(
+                                                  context: context,
+                                                  isScrollControlled: true,
+                                                  builder: (context) {
+                                                    return const RentalTermsScreen();
+                                                  },
+                                                );
+                                            if (result == true) {
+                                              setState(() {
+                                                agree = true;
+                                              });
+                                            }
+                                          },
                                           child: Text(
                                             kRentalTerms.tr(),
                                             style: font14BlackBold.copyWith(
                                               color: kLightPrimaryColor,
-                                              decoration: TextDecoration.underline,
+                                              decoration:
+                                                  TextDecoration.underline,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -468,13 +480,13 @@ class _RequestScreenState extends State<RequestScreen> {
                     }
 
                     Dialogs.showDialogSuccess(
-                        context,
-                        title: kRequestSuccessTitle.tr(),
-                        subTitle: kRequestSuccessDesc.tr(),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        textButton: kOk.tr(),
+                      context,
+                      title: kRequestSuccessTitle.tr(),
+                      subTitle: kRequestSuccessDesc.tr(),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      textButton: kOk.tr(),
                     );
                   },
                   text: kConfirmRequest.tr(),

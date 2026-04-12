@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Orders/domain/entities/current_orders_entity.dart';
 import 'package:ager_waffer/Features/Orders/domain/entities/finished_orders_entity.dart';
+import 'package:ager_waffer/Features/Orders/presentation/widgets/item_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -180,7 +181,8 @@ class CurrentOrders extends StatelessWidget {
                         backgroundColor: kLightPrimaryColor,
                         textColor: kWhiteColor,
                         isNotIcon: true,
-                        onTap: () {},
+                        onTap: () {
+                        },
                       ),
                       orderButton(
                         text: 'مراسلة المالك',
