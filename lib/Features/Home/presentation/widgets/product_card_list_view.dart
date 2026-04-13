@@ -139,7 +139,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                     ),
                     Align(
                       alignment: AlignmentDirectional.bottomEnd,
-                      child:                     GestureDetector(
+                      child: GestureDetector(
                         onTap: () {
                           setState(() {
                             isFavorite = !isFavorite;

@@ -1,39 +1,39 @@
+import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
 import '../../../../Base/common/theme.dart';
 
 class PublicViewScreen extends StatelessWidget {
-  const PublicViewScreen({super.key});
+  const PublicViewScreen({super.key, required this.product});
+
+  final ProductData product;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
-      // الـ AppBar هنا شفاف ومدمج مع الخلفية الكحلي
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        //elevation: 0,
-        leading: const Icon(
-          Icons.arrow_back_ios_new,
-          color: kWhiteColor,
-          size: 20,
-        ),
+        foregroundColor: kWhiteColor,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            color: kWhiteColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40.r),
-              topRight: Radius.circular(40.r),
-            ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          color: kWhiteColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40.r),
+            topRight: Radius.circular(40.r),
           ),
+        ),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               _buildHeader(),
               _buildUserInfo(),
-              _buildReviewsList(),
+              // ReviewItem(review: Data(),),
             ],
           ),
         ),
@@ -41,7 +41,6 @@ class PublicViewScreen extends StatelessWidget {
     );
   }
 
-  // 1. الجزء العلوي (الخلفية المنحنية وصورة البروفايل)
   Widget _buildHeader() {
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -66,8 +65,8 @@ class PublicViewScreen extends StatelessWidget {
             backgroundColor: kWhiteColor,
             child: CircleAvatar(
               radius: 65.r,
-              backgroundImage: const AssetImage(
-                'assets/images/user_profile.png',
+              backgroundImage: NetworkImage(
+                product.ownerPictureUrl!,
               ),
             ),
           ),
@@ -83,11 +82,11 @@ class PublicViewScreen extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "فارس أحمد",
+            product.ownerName!,
             style: font24PrimarySemiBold.copyWith(color: kBlackColor),
           ),
           Text(
-            "fares@gmail.com",
+            product.ownerId!,
             style: font24PrimarySemiBold.copyWith(
               color: kGreyColor,
               fontSize: 14,
@@ -167,12 +166,12 @@ class PublicViewScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
@@ -208,7 +207,7 @@ class PublicViewScreen extends StatelessWidget {
         border: Border.all(color: kOpacityGreyColor),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,7 +222,7 @@ class PublicViewScreen extends StatelessWidget {
               Row(
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(name, style: font14BlackBold),
                       Gap(2.h),
@@ -257,7 +256,7 @@ class PublicViewScreen extends StatelessWidget {
           Divider(thickness: 1),
           Gap(5.h),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _buildHelpfulAction(Icons.thumb_up_alt_rounded, "مفيد", "8"),
               Gap(15.w),

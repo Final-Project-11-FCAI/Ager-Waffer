@@ -1,11 +1,15 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/presentation/pages/coversations_screen.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/pages/favorite_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/widgets/ai_chat_screen.dart';
 import 'package:ager_waffer/Features/Orders/presentation/pages/my_orders_screen.dart';
+import 'package:ager_waffer/Features/Profile/presentation/pages/add_product_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/pages/profile_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';

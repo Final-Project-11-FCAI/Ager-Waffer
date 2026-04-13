@@ -1,19 +1,19 @@
 import 'package:ager_waffer/Base/network/network-mappers.dart';
 
-class MyOrdersModel extends BaseMappable {
+class MyOrdersModel extends BaseMappable{
   bool? isSuccess;
   Data? data;
   String? messageAr;
   String? messageEn;
   int? statusCode;
 
-  MyOrdersModel({
-    this.isSuccess,
-    this.data,
-    this.messageAr,
-    this.messageEn,
-    this.statusCode,
-  });
+  MyOrdersModel(
+      {this.isSuccess,
+        this.data,
+        this.messageAr,
+        this.messageEn,
+        this.statusCode,
+      });
 
   MyOrdersModel.fromJson(Map<String, dynamic> json) {
     isSuccess = json['isSuccess'];
@@ -42,13 +42,7 @@ class MyOrdersModel extends BaseMappable {
     messageAr = json['messageAr'];
     messageEn = json['messageEn'];
     statusCode = json['statusCode'];
-    return MyOrdersModel(
-      isSuccess: isSuccess,
-      data: data,
-      messageAr: messageAr,
-      messageEn: messageEn,
-      statusCode: statusCode,
-    );
+    return MyOrdersModel(isSuccess: isSuccess,data: data,messageAr: messageAr,messageEn: messageEn, statusCode: statusCode,);
   }
 }
 
@@ -89,55 +83,103 @@ class OrderData {
   int? itemId;
   List<String>? itemImages;
   String? itemName;
-  String? ownerName;
-  String? ownerId;
+  String? itemCondition;
+  String? avrageRate;
+  String? status;
   String? fromDate;
   String? toDate;
-  double? totalPrice;
   int? timeLeftInDays;
-  String? status;
+  double? price;
+  double? insurance;
+  String? rentUnit;
+  double? totalPrice;
+  String? ownerId;
+  String? ownerName;
+  String? email;
+  String? phoneNumber;
+  String? governorate;
+  String? city;
+  String? street;
 
-  OrderData({
-    this.requestId,
-    this.itemId,
-    this.itemImages,
-    this.itemName,
-    this.ownerName,
-    this.ownerId,
-    this.fromDate,
-    this.toDate,
-    this.totalPrice,
-    this.timeLeftInDays,
-    this.status,
-  });
+  OrderData(
+      {this.requestId,
+        this.itemId,
+        this.itemImages,
+        this.itemName,
+        this.itemCondition,
+        this.avrageRate,
+        this.status,
+        this.fromDate,
+        this.toDate,
+        this.timeLeftInDays,
+        this.price,
+        this.insurance,
+        this.rentUnit,
+        this.totalPrice,
+        this.ownerId,
+        this.ownerName,
+        this.email,
+        this.phoneNumber,
+        this.governorate,
+        this.city,
+        this.street});
 
   OrderData.fromJson(Map<String, dynamic> json) {
     requestId = json['requestId'];
     itemId = json['itemId'];
-    itemImages = json['itemImages'].cast<String>();
+
+    itemImages = json['itemImages'] != null
+        ? List<String>.from(json['itemImages'])
+        : [];
+
     itemName = json['itemName'];
-    ownerName = json['ownerName'];
-    ownerId = json['ownerId'];
+    itemCondition = json['itemCondition'];
+
+    avrageRate = json['avrageRate']?.toString();
+
+    status = json['status'];
     fromDate = json['fromDate'];
     toDate = json['toDate'];
-    totalPrice = (json['totalPrice'] as num?)?.toDouble();
-    timeLeftInDays = json['timeLeftInDays'];
-    status = json['status'];
-  }
 
+    timeLeftInDays = json['timeLeftInDays'] as int?;
+
+    price = (json['price'] as num?)?.toDouble();
+    insurance = (json['insurance'] as num?)?.toDouble();
+    totalPrice = (json['totalPrice'] as num?)?.toDouble();
+
+    rentUnit = json['rentUnit'];
+
+    ownerId = json['ownerId'];
+    ownerName = json['ownerName'];
+    email = json['email'];
+    phoneNumber = json['phoneNumber'];
+    governorate = json['governorate'];
+    city = json['city'];
+    street = json['street'];
+  }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['requestId'] = this.requestId;
     data['itemId'] = this.itemId;
     data['itemImages'] = this.itemImages;
     data['itemName'] = this.itemName;
-    data['ownerName'] = this.ownerName;
-    data['ownerId'] = this.ownerId;
+    data['itemCondition'] = this.itemCondition;
+    data['avrageRate'] = this.avrageRate;
+    data['status'] = this.status;
     data['fromDate'] = this.fromDate;
     data['toDate'] = this.toDate;
-    data['totalPrice'] = this.totalPrice;
     data['timeLeftInDays'] = this.timeLeftInDays;
-    data['status'] = this.status;
+    data['price'] = this.price;
+    data['insurance'] = this.insurance;
+    data['rentUnit'] = this.rentUnit;
+    data['totalPrice'] = this.totalPrice;
+    data['ownerId'] = this.ownerId;
+    data['ownerName'] = this.ownerName;
+    data['email'] = this.email;
+    data['phoneNumber'] = this.phoneNumber;
+    data['governorate'] = this.governorate;
+    data['city'] = this.city;
+    data['street'] = this.street;
     return data;
   }
 }

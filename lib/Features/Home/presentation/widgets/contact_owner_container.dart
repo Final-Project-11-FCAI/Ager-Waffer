@@ -4,6 +4,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/presentation/pages/signalR_chat_screen.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
+import 'package:ager_waffer/Features/Profile/presentation/pages/public_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -35,13 +36,18 @@ class ContactOwnerContainer extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 24.r,
-            backgroundImage:
-                product.ownerPictureUrl != null &&
-                    product.ownerPictureUrl!.isNotEmpty
-                ? NetworkImage(product.ownerPictureUrl!)
-                : AssetImage('assets/images/virtual_user.jpg'),
+          InkWell(
+            onTap: () {
+              customAnimatedPushNavigation(context, PublicViewScreen(product: product,));
+            },
+            child: CircleAvatar(
+              radius: 24.r,
+              backgroundImage:
+                  product.ownerPictureUrl != null &&
+                      product.ownerPictureUrl!.isNotEmpty
+                  ? NetworkImage(product.ownerPictureUrl!)
+                  : AssetImage('assets/images/virtual_user.jpg'),
+            ),
           ),
           Gap(12.w),
           Expanded(

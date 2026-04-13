@@ -15,7 +15,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Nabil"),
+            const Text("Name"),
             Text(
               "Last Seen 11:28 am",
               style: Theme.of(context).textTheme.labelLarge,

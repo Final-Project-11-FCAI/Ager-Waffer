@@ -28,6 +28,7 @@ const Color kInactiveSwitchColor = const Color(0xFF78788052);
 const Color kGreenColor = const Color(0xFF319F43);
 const Color kLightGreenColor = const Color(0xFFB4E8BC);
 const Color kBorderAuthColor = const Color(0xFF5588A3);
+const Color kDetailsColor = const Color(0xFFD9D9D966);
 
 const Color kBlueColor = const Color(0xFFF0C79D9);
 const Color kLightBlueColor = const Color(0xFF0C79D91F);

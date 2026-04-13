@@ -1,10 +1,12 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
+import 'package:ager_waffer/Features/Orders/presentation/pages/order_details_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -217,7 +219,9 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                               backgroundColor: kLightPrimaryColor,
                               textColor: kWhiteColor,
                               isNotIcon: true,
-                              onTap: () {},
+                              onTap: () {
+                                customAnimatedPushNavigation(context, OrderDetailsScreen(currentOrders: currentOrders[index],));
+                              },
                             ),
                             orderButton(
                               text: kContactOwner.tr(),
