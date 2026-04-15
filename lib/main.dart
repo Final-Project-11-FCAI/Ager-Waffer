@@ -4,8 +4,6 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/manager/e
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
-import 'package:ager_waffer/Features/Chat/presentation/manager/all_chats_bloc.dart';
-import 'package:ager_waffer/Features/Chat/presentation/manager/get_messages_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc.dart';
@@ -242,7 +240,6 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => ItemReviewBloc()),
             BlocProvider(create: (context) => UpdateAddressBloc()),
             BlocProvider(create: (context) => ExternalLoginBloc()),
-            BlocProvider(create: (context) => AllChatsBloc()),
             BlocProvider(create: (context) => SendRequestBloc()),
             BlocProvider(create: (context) => MyOrdersBloc()),
             BlocProvider(create: (context) => OrdersManagementBloc()),

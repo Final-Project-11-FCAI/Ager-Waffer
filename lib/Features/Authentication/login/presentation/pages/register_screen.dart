@@ -13,9 +13,13 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/e
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/external_login_widget.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/coustom_showdialog.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -301,71 +305,68 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     );
                                   }
 
-                                  // if (formKey.currentState!.validate()) {
-                                  //   try {
-                                  //     // إنشاء المستخدم في Firebase Auth
-                                  //     UserCredential userCredential = await FirebaseAuth
-                                  //         .instance
-                                  //         .createUserWithEmailAndPassword(
-                                  //           email: emailController.text,
-                                  //           password: passwordController.text,
-                                  //         );
-                                  //
-                                  //     User? user = userCredential.user;
-                                  //
-                                  //     if (user != null) {
-                                  //       // تحديث اسم المستخدم
-                                  //       if (firstNameController.text.isNotEmpty) {
-                                  //         await user.updateDisplayName(
-                                  //           "${firstNameController.text} ${lastNameController.text}",
-                                  //         );
-                                  //       }
-                                  //
-                                  //       // 🔥 حفظ المستخدم في Firestore
-                                  //       await FirebaseFirestore.instance
-                                  //           .collection('users')
-                                  //           .doc(user.uid)
-                                  //           .set({
-                                  //             "uid": user.uid,
-                                  //             "name":
-                                  //                 "${firstNameController.text} ${lastNameController.text}",
-                                  //             "email": emailController.text,
-                                  //             'about': "Hello! I'm ${firstNameController.text}",
-                                  //             'last_message_time':
-                                  //                 DateTime.now().millisecondsSinceEpoch,
-                                  //             'image': '',
-                                  //             "created_at":
-                                  //                 DateTime.now().millisecondsSinceEpoch,
-                                  //             'last_activated': user
-                                  //                 .metadata
-                                  //                 .lastSignInTime!
-                                  //                 .millisecondsSinceEpoch
-                                  //                 .toString(),
-                                  //             'push_token': '',
-                                  //             'online': false,
-                                  //             'my_users': [],
-                                  //           });
-                                  //     }
-                                  //
-                                  //     Navigator.pushAndRemoveUntil(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) => BlocProvider(
-                                  //           create: (_) => BottomNavCubit(),
-                                  //           child: const HomeLayoutScreen(),
-                                  //         ),
-                                  //       ),
-                                  //       (route) => false,
-                                  //     );
-                                  //   } catch (error) {
-                                  //     ScaffoldMessenger.of(context).showSnackBar(
-                                  //       SnackBar(content: Text(error.toString())),
-                                  //     );
-                                  //   }
-                                  // }
-                                  // Shared.dismissDialog(context: context);
+                                  if (formKey.currentState!.validate()) {
+                                    try {
+                                      UserCredential userCredential = await FirebaseAuth
+                                          .instance
+                                          .createUserWithEmailAndPassword(
+                                            email: emailController.text,
+                                            password: passwordController.text,
+                                          );
+
+                                      User? user = userCredential.user;
+
+                                      if (user != null) {
+                                        if (firstNameController.text.isNotEmpty) {
+                                          await user.updateDisplayName(
+                                            "${firstNameController.text} ${lastNameController.text}",
+                                          );
+                                        }
+
+                                        await FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(user.uid)
+                                            .set({
+                                              "uid": user.uid,
+                                              "name":
+                                                  "${firstNameController.text} ${lastNameController.text}",
+                                              "email": emailController.text,
+                                              'about': "Hello! I'm ${firstNameController.text}",
+                                              'last_message_time':
+                                                  DateTime.now().millisecondsSinceEpoch,
+                                              'image': '',
+                                              "created_at":
+                                                  DateTime.now().millisecondsSinceEpoch,
+                                              'last_activated': user
+                                                  .metadata
+                                                  .lastSignInTime!
+                                                  .millisecondsSinceEpoch
+                                                  .toString(),
+                                              'push_token': '',
+                                              'online': false,
+                                              'my_users': [],
+                                            });
+                                      }
+
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BlocProvider(
+                                            create: (_) => BottomNavCubit(),
+                                            child: const HomeLayoutScreen(),
+                                          ),
+                                        ),
+                                        (route) => false,
+                                      );
+                                    } catch (error) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text(error.toString())),
+                                      );
+                                    }
+                                  }
+                                  Shared.dismissDialog(context: context);
                                 }
-                              : null, // ❌ disabled لو false
+                              : null,
 
                           text: kCreateAccount.tr(),
                           color: kPrimaryColor,

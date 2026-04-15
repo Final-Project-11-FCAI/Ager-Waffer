@@ -154,7 +154,6 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  // 🔹 PRICE SECTION
   Widget _buildPriceSection() {
     return _sectionContainer(
       title: "ملخص السعر",
@@ -169,7 +168,6 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  // 🔹 USER SECTION
   Widget _buildUserSection() {
     return _sectionContainer(
       title: "بيانات المستأجر",
@@ -184,7 +182,6 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  // 🔹 COMMON SECTION CONTAINER
   Widget _sectionContainer({required String title, required Widget child}) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -204,7 +201,6 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  // 🔹 DECORATIONS
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
       color: kProductDataContainerColor.withOpacity(0.3),
@@ -226,7 +222,6 @@ class OrderDetailsScreen extends StatelessWidget {
   }
 }
 
-// 🔹 PRICE ROW
 class _PriceRow extends StatelessWidget {
   final String title;
   final String value;
