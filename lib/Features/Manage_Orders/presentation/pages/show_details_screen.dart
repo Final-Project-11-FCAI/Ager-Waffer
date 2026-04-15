@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Manage_Orders/data/models/orders_management_model.dart';
 import 'package:ager_waffer/Features/Orders/data/models/my_orders_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
-class OrderDetailsScreen extends StatelessWidget {
-  const OrderDetailsScreen({super.key, required this.currentOrders});
 
-  final OrderData currentOrders;
+class ShowDetailsScreen extends StatelessWidget {
+  const ShowDetailsScreen({super.key, required this.currentManageOrders});
+
+  final OrderManagementData currentManageOrders;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class OrderDetailsScreen extends StatelessWidget {
                         Gap(8.h),
                         _buildPriceSection(),
                         Gap(15.h),
-                        Text(kRenterData.tr(), style: font16BlackSemiBold,),
+                        Text(kOwnerData.tr(), style: font16BlackSemiBold,),
                         Gap(8.h),
                         _buildUserSection(),
                       ],
@@ -83,7 +85,7 @@ class OrderDetailsScreen extends StatelessWidget {
       child: Row(
         children: [
           CachedNetworkImage(
-            imageUrl: currentOrders.itemImages!.first,
+            imageUrl: currentManageOrders.itemImages!.first,
             width: 90.w,
             height: 90.h,
             fit: BoxFit.contain,
@@ -101,12 +103,12 @@ class OrderDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  currentOrders.itemName!,
+                  currentManageOrders.itemName!,
                   textAlign: TextAlign.right,
                   style: font16BlackSemiBold,
                 ),
                 Gap(5.h),
-                Text(currentOrders.itemCondition!, style: font16BlackSemiBold.copyWith(
+                Text(currentManageOrders.itemCondition!, style: font16BlackSemiBold.copyWith(
                   color: kBlueColor,
                 ),),
                 Gap(5.h),
@@ -118,14 +120,14 @@ class OrderDetailsScreen extends StatelessWidget {
                           (index) => Icon(
                         Icons.star,
                         size: 14.sp,
-                        color: index < (double.tryParse(currentOrders.avrageRate ?? '0')?.floor() ?? 0)
+                        color: index < (double.tryParse(currentManageOrders.avrageRate ?? '0')?.floor() ?? 0)
                             ? Colors.amber
                             : Colors.grey.shade300,
                       ),
                     ),
                     Gap(5.w),
                     Text(
-                      currentOrders.avrageRate.toString(),
+                      currentManageOrders.avrageRate.toString(),
                       style: font16BlackSemiBold.copyWith(
                         fontSize: 10,
                         color: const Color.fromRGBO(151, 151, 151, 1),
@@ -146,9 +148,9 @@ class OrderDetailsScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(child: _dateBox(kStartDate.tr(), currentOrders.fromDate!)),
+          Expanded(child: _dateBox(kStartDate.tr(), currentManageOrders.fromDate!)),
           Gap(10.w),
-          Expanded(child: _dateBox(kEndDate.tr(), currentOrders.toDate!)),
+          Expanded(child: _dateBox(kEndDate.tr(), currentManageOrders.toDate!)),
         ],
       ),
     );
@@ -180,10 +182,10 @@ class OrderDetailsScreen extends StatelessWidget {
     return _sectionContainer(
       child: Column(
         children: [
-          _PriceRow(kPricePerDay.tr(), "${currentOrders.price} ${kCurrency.tr()}"),
-          _PriceRow(kInsurance.tr(), "${currentOrders.insurance} ${kCurrency.tr()}"),
+          _PriceRow(kPricePerDay.tr(), "${currentManageOrders.price} ${kCurrency.tr()}"),
+          _PriceRow(kInsurance.tr(), "${currentManageOrders.insurance} ${kCurrency.tr()}"),
           Divider(),
-          _PriceRow(kTotal.tr(), "${currentOrders.totalPrice} ${kCurrency.tr()}", isTotal: true)
+          _PriceRow(kTotal.tr(), "${currentManageOrders.totalPrice} ${kCurrency.tr()}", isTotal: true)
         ],
       ),
     );
@@ -193,11 +195,11 @@ class OrderDetailsScreen extends StatelessWidget {
     return _sectionContainer(
       child: Column(
         children: [
-          _InfoRow(Icons.person, kName.tr(), currentOrders.ownerName!),
+          _InfoRow(Icons.person, kName.tr(), currentManageOrders.renteeName!),
           _InfoRow(Icons.location_on, kAddress.tr(),
-              "${currentOrders.city} ${currentOrders.governorate} ${currentOrders.street}"),
-          _InfoRow(Icons.phone, kPhone.tr(), currentOrders.phoneNumber!),
-          _InfoRow(Icons.email, kEmail.tr(), currentOrders.email!)
+              "${currentManageOrders.city} ${currentManageOrders.governorate} ${currentManageOrders.street}"),
+          _InfoRow(Icons.phone, kPhone.tr(), currentManageOrders.phoneNumber!),
+          _InfoRow(Icons.email, kEmail.tr(), currentManageOrders.email!)
         ],
       ),
     );
@@ -205,7 +207,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
   Widget _sectionContainer({required Widget child}) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(Shared.height * 0.02.h),
       decoration: _cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,10 +253,6 @@ class _PriceRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-            style: font13kLightPrimaryColorMedium.copyWith(color: kBlackColor,
-              fontWeight: isTotal ? bold : medium,),
-          ),
           Text(
             value,
             style: TextStyle(
@@ -262,6 +260,10 @@ class _PriceRow extends StatelessWidget {
               fontWeight: isTotal ? bold : medium,
               color: isTotal ? kPrimaryColor : kBlackColor,
             ),
+          ),
+          Text(title,
+          style: font13kLightPrimaryColorMedium.copyWith(color: kBlackColor,
+            fontWeight: isTotal ? bold : medium,),
           ),
         ],
       ),

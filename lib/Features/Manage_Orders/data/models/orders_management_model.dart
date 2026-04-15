@@ -89,26 +89,46 @@ class OrderManagementData {
   int? itemId;
   List<String>? itemImages;
   String? itemName;
-  String? renteeName;
-  String? renteeId;
+  String? itemCondition;
+  String? avrageRate;
+  String? status;
   String? fromDate;
   String? toDate;
-  double? totalPrice;
   int? timeLeftInDays;
-  String? status;
+  double? price;
+  double? insurance;
+  String? rentUnit;
+  double? totalPrice;
+  String? renteeId;
+  String? renteeName;
+  String? email;
+  String? phoneNumber;
+  String? governorate;
+  String? city;
+  String? street;
 
   OrderManagementData({
     this.requestId,
     this.itemId,
     this.itemImages,
     this.itemName,
-    this.renteeName,
-    this.renteeId,
+    this.itemCondition,
+    this.avrageRate,
+    this.status,
     this.fromDate,
     this.toDate,
-    this.totalPrice,
     this.timeLeftInDays,
-    this.status,
+    this.price,
+    this.insurance,
+    this.rentUnit,
+    this.totalPrice,
+    this.renteeId,
+    this.renteeName,
+    this.email,
+    this.phoneNumber,
+    this.governorate,
+    this.city,
+    this.street,
   });
 
   OrderManagementData.fromJson(Map<String, dynamic> json) {
@@ -116,13 +136,23 @@ class OrderManagementData {
     itemId = json['itemId'];
     itemImages = json['itemImages'].cast<String>();
     itemName = json['itemName'];
-    renteeName = json['renteeName'];
-    renteeId = json['renteeId'];
+    itemCondition = json['itemCondition'];
+    avrageRate = json['avrageRate'];
+    status = json['status'];
     fromDate = json['fromDate'];
     toDate = json['toDate'];
-    totalPrice = (json['totalPrice'] as num?)?.toDouble();
     timeLeftInDays = json['timeLeftInDays'];
-    status = json['status'];
+    price = json['price'];
+    insurance = json['insurance'];
+    rentUnit = json['rentUnit'];
+    totalPrice = (json['totalPrice'] as num?)?.toDouble();
+    renteeId = json['renteeId'];
+    renteeName = json['renteeName'];
+    email = json['email'];
+    phoneNumber = json['phoneNumber'];
+    governorate = json['governorate'];
+    city = json['city'];
+    street = json['street'];
   }
 
   Map<String, dynamic> toJson() {
@@ -131,13 +161,23 @@ class OrderManagementData {
     data['itemId'] = this.itemId;
     data['itemImages'] = this.itemImages;
     data['itemName'] = this.itemName;
-    data['renteeName'] = this.renteeName;
-    data['renteeId'] = this.renteeId;
+    data['itemCondition'] = this.itemCondition;
+    data['avrageRate'] = this.avrageRate;
+    data['status'] = this.status;
     data['fromDate'] = this.fromDate;
     data['toDate'] = this.toDate;
-    data['totalPrice'] = this.totalPrice;
     data['timeLeftInDays'] = this.timeLeftInDays;
-    data['status'] = this.status;
+    data['price'] = this.price;
+    data['insurance'] = this.insurance;
+    data['rentUnit'] = this.rentUnit;
+    data['totalPrice'] = this.totalPrice;
+    data['renteeId'] = this.renteeId;
+    data['renteeName'] = this.renteeName;
+    data['email'] = this.email;
+    data['phoneNumber'] = this.phoneNumber;
+    data['governorate'] = this.governorate;
+    data['city'] = this.city;
+    data['street'] = this.street;
     return data;
   }
 }

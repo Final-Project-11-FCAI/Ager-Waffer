@@ -1,10 +1,15 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
+import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
+import 'package:ager_waffer/Features/Chat/presentation/pages/chat_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_state.dart';
+import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/show_details_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -226,14 +231,47 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                 backgroundColor: kLightPrimaryColor,
                                 textColor: kWhiteColor,
                                 isNotIcon: true,
-                                onTap: () {},
+                                onTap: () {
+                                  customAnimatedPushNavigation(context, ShowDetailsScreen(
+                                    currentManageOrders: currentOrdersManagement[index],
+                                  ));
+                                },
                               ),
                               orderButton(
                                 text: kContactRenter.tr(),
                                 icon: 'assets/images/contact_icon.png',
                                 backgroundColor: kWhiteColor,
                                 textColor: kPrimaryColor,
-                                onTap: () {},
+                                onTap: () async{
+                                    final roomId = await FireData().createRoom(
+                                      currentOrdersManagement[index].email!,
+                                    );
+
+                                    if (roomId != null) {
+                                      customAnimatedPushNavigation(
+                                        context,
+                                        ChatScreen(
+                                          roomId: roomId,
+                                          chatUser: ChatUser(
+                                            id: currentOrdersManagement[index].renteeId,
+                                            name: currentOrdersManagement[index].renteeName,
+                                            image: currentOrdersManagement[index].itemImages![0],
+                                            about: "Hello I'm ${currentOrdersManagement[index].renteeName}",
+                                            email: currentOrdersManagement[index].email,
+                                            createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
+                                            lastActivated: DateTime.now().millisecondsSinceEpoch.toString(),
+                                            pushToken: '',
+                                            online: false,
+                                            myUsers: [],
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(SnackBar(content: Text("User not found")));
+                                    }
+                                },
                               ),
                             ],
                           ),

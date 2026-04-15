@@ -200,6 +200,14 @@
 
   "view_details": "View details",
 
+  "order_details": "Order details",
+
+  "price_per_day": "Rental price / day",
+  "owner_data": "Owner details",
+
+  "renter_data": "Renter data",
+  "name": "Name",
+  "address": "Address",
 
   "contact_owner": "Contact owner",
   "product": "Product",

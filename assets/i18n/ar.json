@@ -63,6 +63,16 @@
 
   "owner": "المالك",
   "remaining": "متبقي",
+  "order_details": "تفاصيل الطلب",
+
+  "owner_data": "بيانات المالك",
+  "price_per_day": "سعر الإيجار / اليوم",
+
+
+  "renter_data": "بيانات المستأجر",
+  "name": "الاسم",
+  "address": "العنوان",
+
 
   "total_amount": "إجمالي المبلغ",
 

@@ -4,6 +4,9 @@ import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
+import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
+import 'package:ager_waffer/Features/Chat/presentation/pages/chat_screen.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
 import 'package:ager_waffer/Features/Orders/presentation/pages/order_details_screen.dart';
@@ -228,7 +231,36 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                               icon: 'assets/images/contact_icon.png',
                               backgroundColor: kWhiteColor,
                               textColor: kPrimaryColor,
-                              onTap: () {},
+                              onTap: () async{
+                                final roomId = await FireData().createRoom(
+                                  currentOrders[index].email!,
+                                );
+
+                                if (roomId != null) {
+                                  customAnimatedPushNavigation(
+                                    context,
+                                    ChatScreen(
+                                      roomId: roomId,
+                                      chatUser: ChatUser(
+                                        id: currentOrders[index].ownerId,
+                                        name: currentOrders[index].ownerName,
+                                        image: currentOrders[index].itemImages![0],
+                                        about: "Hello I'm ${currentOrders[index].ownerName}",
+                                        email: currentOrders[index].email,
+                                        createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
+                                        lastActivated: DateTime.now().millisecondsSinceEpoch.toString(),
+                                        pushToken: '',
+                                        online: false,
+                                        myUsers: [],
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(
+                                    context,
+                                  ).showSnackBar(SnackBar(content: Text("User not found")));
+                                }
+                              },
                             ),
                           ],
                         ),

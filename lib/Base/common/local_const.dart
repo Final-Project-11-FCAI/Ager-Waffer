@@ -303,7 +303,15 @@ String kNoPreviousOrdersDesc = 'no_previous_orders_desc';
 String kRateRenter = 'rate_renter';
 String kRenter = 'renter';
 
+String kOrderDetails = 'order_details';
 
+String kOwnerData = 'owner_data';
+
+String kRenterData = 'renter_data';
+String kName = 'name';
+String kAddress = 'address';
+
+String kPricePerDay = 'price_per_day';
 String kContactRenter = 'contact_renter';
 
 
