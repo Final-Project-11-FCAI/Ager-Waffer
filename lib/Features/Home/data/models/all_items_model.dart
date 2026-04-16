@@ -95,11 +95,16 @@ class ProductData {
   bool? isAvailable;
   List<String>? itemImages;
   String? categoryName;
+  double? averageRate;
   String? ownerName;
   String? ownerPictureUrl;
+  String? ownerPhoneNumber;
+  String? ownerEmail;
   String? ownerId;
-  Null? governorate;
-  double? averageRate;
+  double? ownerRating;
+  String? governorate;
+  String? ownerCreatedAt;
+  int? numberOfReviews;
 
   ProductData({
     this.id,
@@ -112,11 +117,16 @@ class ProductData {
     this.isAvailable,
     this.itemImages,
     this.categoryName,
+    this.averageRate,
     this.ownerName,
     this.ownerPictureUrl,
+    this.ownerPhoneNumber,
+    this.ownerEmail,
     this.ownerId,
+    this.ownerRating,
     this.governorate,
-    this.averageRate,
+    this.ownerCreatedAt,
+    this.numberOfReviews,
   });
 
   ProductData.fromJson(Map<String, dynamic> json) {
@@ -130,11 +140,16 @@ class ProductData {
     isAvailable = json['isAvailable'];
     itemImages = json['itemImages'].cast<String>();
     categoryName = json['categoryName'];
+    averageRate = json['averageRate'];
     ownerName = json['ownerName'];
     ownerPictureUrl = json['ownerPictureUrl'];
+    ownerPhoneNumber = json['ownerPhoneNumber'];
+    ownerEmail = json['ownerEmail'];
     ownerId = json['ownerId'];
+    ownerRating = json['ownerRating'];
     governorate = json['governorate'];
-    averageRate = json['averageRate'];
+    ownerCreatedAt = json['ownerCreatedAt'];
+    numberOfReviews = json['numberOfReviews'];
   }
 
   Map<String, dynamic> toJson() {
@@ -149,11 +164,16 @@ class ProductData {
     data['isAvailable'] = this.isAvailable;
     data['itemImages'] = this.itemImages;
     data['categoryName'] = this.categoryName;
+    data['averageRate'] = this.averageRate;
     data['ownerName'] = this.ownerName;
     data['ownerPictureUrl'] = this.ownerPictureUrl;
+    data['ownerPhoneNumber'] = this.ownerPhoneNumber;
+    data['ownerEmail'] = this.ownerEmail;
     data['ownerId'] = this.ownerId;
+    data['ownerRating'] = this.ownerRating;
     data['governorate'] = this.governorate;
-    data['averageRate'] = this.averageRate;
+    data['ownerCreatedAt'] = this.ownerCreatedAt;
+    data['numberOfReviews'] = this.numberOfReviews;
     return data;
   }
 }
