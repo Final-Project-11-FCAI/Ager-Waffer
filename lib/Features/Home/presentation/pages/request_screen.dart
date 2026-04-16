@@ -209,7 +209,13 @@ class _RequestScreenState extends State<RequestScreen> {
                                           ),
                                           Gap(8.w),
                                           Text(
-                                            "${widget.product.price} ${kPricePerUnit.tr()}/${period(widget.product.rentUnit!)}",
+                                            "${widget.product.price} ${kPricePerUnit.tr()}/${
+                                                widget.product.rentUnit == kDay.tr() ?
+                                                kDay.tr() :
+                                            widget.product.rentUnit == kWeekly.tr() ?
+                                            kWeek.tr() :
+                                            widget.product.rentUnit == kMonthly.tr() ?
+                                            kMonth.tr() : ''}",
                                             style: font16BlackSemiBold.copyWith(
                                               fontSize: 11,
                                             ),
@@ -385,7 +391,14 @@ class _RequestScreenState extends State<RequestScreen> {
                                   ),
                                   buildPriceRow(
                                     Text(
-                                      kNumberOfDays.tr(),
+                                      "${kNumberOfDays.tr()} ${
+                                          widget.product.rentUnit == kDaily.tr() ?
+                                          kDayss.tr() :
+                                          widget.product.rentUnit == kWeekly.tr() ?
+                                          kWeeks.tr() :
+                                          widget.product.rentUnit == kMonthly.tr() ?
+                                          kMonths.tr() : ''
+                                      }",
                                       style: font15SomeBlackColorMedium
                                           .copyWith(
                                             fontSize: 13,

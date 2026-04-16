@@ -309,9 +309,22 @@ String kOwnerData = 'owner_data';
 
 String kRenterData = 'renter_data';
 String kName = 'name';
+
+
+String kDayss = 'dayss';
+String kWeeks = 'weeks';
+String kMonths = 'months';
+
+String kDay = 'day';
+String kWeek = 'week';
+String kMonth = 'month';
+
+
 String kAddress = 'address';
 
 String kPricePerDay = 'price_per_day';
+String kCurrencyPerWeek = 'currency_per_week';
+String kCurrencyPerMonth = 'currency_per_month';
 String kContactRenter = 'contact_renter';
 
 

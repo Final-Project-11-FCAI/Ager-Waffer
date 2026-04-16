@@ -103,7 +103,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         ),
                         Gap(8.w),
                         Text(
-                          "${widget.product.price} ج/${widget.product.rentUnit}",
+                          "${widget.product.price} ${kEgp.tr()}/${widget.product.rentUnit}",
                           style: font16BlackSemiBold.copyWith(fontSize: 10),
                         ),
                       ],

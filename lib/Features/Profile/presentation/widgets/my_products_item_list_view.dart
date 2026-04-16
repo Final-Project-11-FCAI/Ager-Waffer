@@ -76,7 +76,13 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           overflow: TextOverflow.ellipsis,
                           style: font14BlackBold.copyWith(fontSize: 12.sp))),
                       Text(
-                        "${widget.myListings.price}${kCurrencyPerDay.tr()}",
+                        "${widget.myListings.price}${
+                            widget.myListings.rentUnit == kDaily.tr() ?
+                            kCurrencyPerDay.tr() :
+                            widget.myListings.rentUnit == kWeekly.tr() ?
+                            kCurrencyPerWeek.tr() :
+                            widget.myListings.rentUnit == kMonthly.tr() ?
+                        kCurrencyPerMonth.tr() : ''}",
                         style: font16BlackSemiBold.copyWith(fontSize: 11,),
                       ),
                     ],

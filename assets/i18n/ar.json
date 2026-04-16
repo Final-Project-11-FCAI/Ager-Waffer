@@ -114,6 +114,9 @@
 
   "back": "رجوع",
 
+  "day": "يوم",
+  "week": "أسبوع",
+  "month": "شهر",
 
   "add_product_success_title": "تم إضافة المنتج بنجاح",
   "add_product_success_desc": "أصبح منتجك الآن متاحًا للإيجار",
@@ -163,6 +166,8 @@
 
   "delete": "حذف",
   "currency_per_day": " جنيه/اليوم",
+  "currency_per_week": " جنيه/الأسبوع",
+  "currency_per_month": " جنيه/الشهر",
 
   "max_images": "الحد الأقصى 5 صور",
   "min_images": "يجب اختيار 3 صور على الأقل",
@@ -259,6 +264,14 @@
   "price_summary": "ملخص السعر",
   "price_per_unit": "سعر",
   "number_of_days": "عدد الأيام",
+
+  "dayss": "الأيام",
+  "weeks": "الأسابيع",
+  "months": "الأشهر",
+
+
+
+
   "total": "الإجمالي",
 
   "agree_terms_prefix": "بإرسال الطلب أنت توافق على",
