@@ -2,10 +2,11 @@ import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
 import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
 import 'package:ager_waffer/Features/Chat/presentation/pages/chat_screen.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
-import 'package:ager_waffer/Features/Profile/presentation/pages/public_view_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/public_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -79,37 +80,38 @@ class ContactOwnerContainer extends StatelessWidget {
           SizedBox(
             height: 34.h,
             child: OutlinedButton(
-              onPressed: () {},
-              // onPressed: () async {
-              //   final roomId = await FireData().createRoomAndGetId(
-              //     product.ownerEmail,
-              //   );
-              //
-              //   if (roomId != null) {
-              //     customAnimatedPushNavigation(
-              //       context,
-              //       ChatScreen(
-              //         roomId: roomId,
-              //         chatUser: ChatUser(
-              //           id: product.ownerId,
-              //           name: product.ownerName,
-              //           image: product.ownerPictureUrl,
-              //           about: "Hello I'm ${product.ownerName}",
-              //           email: product.ownerEmail,
-              //           createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
-              //           lastActivated: DateTime.now().millisecondsSinceEpoch.toString(),
-              //           pushToken: '',
-              //           online: false,
-              //           myUsers: [],
-              //         ),
-              //       ),
-              //     );
-              //   } else {
-              //     ScaffoldMessenger.of(
-              //       context,
-              //     ).showSnackBar(SnackBar(content: Text("User not found")));
-              //   }
-              // },
+              onPressed: () async {
+                final roomId = await FireData().createRoom(
+                  product.ownerEmail!,
+                );
+
+                if (roomId != null) {
+                  customAnimatedPushNavigation(
+                    context,
+                    ChatScreen(
+                      roomId: roomId,
+                      chatUser: ChatUser(
+                        id: product.ownerId,
+                        name: product.ownerName,
+                        image: product.ownerPictureUrl,
+                        about: "Hello I'm ${product.ownerName}",
+                        email: product.ownerEmail,
+                        createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
+                        lastActivated: DateTime.now().millisecondsSinceEpoch.toString(),
+                        pushToken: '',
+                        online: false,
+                        myUsers: [],
+                      ),
+                    ),
+                  );
+                } else {
+                  print("EMAIL: ${product.ownerEmail}");
+                  print("ID: ${product.ownerId}");
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text("User not found")));
+                }
+              },
               style: OutlinedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                 backgroundColor: kBlueColor.withOpacity(0.12),

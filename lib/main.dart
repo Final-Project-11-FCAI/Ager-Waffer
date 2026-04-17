@@ -7,6 +7,7 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/pages/reg
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/reviews_about_user_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/send_request_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/accept_order_bloc.dart';
@@ -247,6 +248,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => AcceptOrderBloc()),
             BlocProvider(create: (context) => DeclineOrderBloc()),
             BlocProvider(create: (context) => DeviceRegisterBloc()),
+            BlocProvider(create: (context) => ReviewsAboutUserBloc()),
             // BlocProvider(create: (context) => GetMessagesBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),

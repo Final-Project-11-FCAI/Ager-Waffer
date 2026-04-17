@@ -112,6 +112,12 @@ class AddReviewEvent extends AppEvent {
   });
 }
 
+class GetReviewsAboutUserEvent extends AppEvent {
+  final String userId;
+
+  GetReviewsAboutUserEvent({required this.userId});
+}
+
 
 class GetItemReviewEvent extends AppEvent {
   final int itemId;

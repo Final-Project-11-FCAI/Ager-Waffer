@@ -1,15 +1,16 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Home/data/models/item_reviews_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ager_waffer/Features/Home/data/models/reviews_about_user_model.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class OwnerReviewItem extends StatelessWidget {
+  const OwnerReviewItem({super.key, required this.reviews,});
 
-  const OwnerReviewItem({super.key,});
+  final Data reviews;
 
   String formatDateSmart(String date) {
     try {
@@ -63,10 +64,9 @@ class OwnerReviewItem extends StatelessWidget {
               CircleAvatar(
                 radius: 20.r,
                 backgroundColor: kOpacityGreyColor,
-                backgroundImage: AssetImage('assets/images/virtual_user.jpg')
-                // NetworkImage(
-                //   review.authorImageUrl ?? 'assets/images/virtual_user.jpg',
-                // ),
+                backgroundImage: reviews.authorImageUrl == null ?
+                AssetImage('assets/images/virtual_user.jpg')
+                : NetworkImage(reviews.authorImageUrl!,),
               ),
               Gap(10.w),
               Expanded(
@@ -78,16 +78,14 @@ class OwnerReviewItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            // review.authorName ??
-                                kUserName.tr(),
+                             reviews.authorName ?? kUserName.tr(),
                             style: font16BlackSemiBold.copyWith(
                               fontSize: 13.sp,
                             ),
                           ),
                         ),
                         Text(
-                          //formatDateSmart(review.createAt!) ??
-                              kDate.tr(),
+                          formatDateSmart(reviews.createAt!) ?? kDate.tr(),
                           style: font14GreyRegular.copyWith(fontSize: 11.sp),
                         ),
                       ],
@@ -96,8 +94,7 @@ class OwnerReviewItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                        //  review.rate.toString() ??
-                              '0.0',
+                          reviews.rate.toString() ??'0.0',
                           style: font20PrimaryMedium.copyWith(
                             fontSize: 12.sp,
                             color: kPartGreyColor,
@@ -114,8 +111,7 @@ class OwnerReviewItem extends StatelessWidget {
           ),
           Gap(6.h),
           Text(
-           // review.reviewText ??
-                kReviewText.tr(),
+           reviews.reviewText ??kReviewText.tr(),
             style: font14GreyRegular.copyWith(
               fontSize: 12.sp,
               color: kBlackColor,

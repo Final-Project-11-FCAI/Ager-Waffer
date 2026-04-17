@@ -310,6 +310,9 @@ String kOwnerData = 'owner_data';
 String kRenterData = 'renter_data';
 String kName = 'name';
 
+String kJoinDate = 'join_date';
+String kMemberSince = 'member_since';
+
 
 String kDayss = 'dayss';
 String kWeeks = 'weeks';

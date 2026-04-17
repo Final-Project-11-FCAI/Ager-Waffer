@@ -175,6 +175,10 @@
   "create_new_account": "Create a new account",
   "have_account_login": "Already have an account? Login",
 
+  "join_date": "Join date",
+  "member_since": "Member since",
+
+
   "price_summary": "Price summary",
   "price_per_unit": "Price",
   "number_of_days": "Number of",

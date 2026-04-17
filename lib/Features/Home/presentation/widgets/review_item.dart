@@ -64,8 +64,10 @@ class ReviewItem extends StatelessWidget {
               CircleAvatar(
                 radius: 20.r,
                 backgroundColor: kOpacityGreyColor,
-                backgroundImage: NetworkImage(
-                  review.authorImageUrl ?? 'assets/images/virtual_user.jpg',
+                backgroundImage: review.authorImageUrl == null ?
+                AssetImage('assets/images/virtual_user.jpg')
+                    : NetworkImage(
+                  review.authorImageUrl!,
                 ),
               ),
               Gap(10.w),

@@ -303,16 +303,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         ),
                                       ),
                                     );
-                                  }
 
-                                  if (formKey.currentState!.validate()) {
                                     try {
                                       UserCredential userCredential = await FirebaseAuth
                                           .instance
                                           .createUserWithEmailAndPassword(
-                                            email: emailController.text,
-                                            password: passwordController.text,
-                                          );
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                      );
 
                                       User? user = userCredential.user;
 
@@ -327,45 +325,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             .collection('users')
                                             .doc(user.uid)
                                             .set({
-                                              "uid": user.uid,
-                                              "name":
-                                                  "${firstNameController.text} ${lastNameController.text}",
-                                              "email": emailController.text,
-                                              'about': "Hello! I'm ${firstNameController.text}",
-                                              'last_message_time':
-                                                  DateTime.now().millisecondsSinceEpoch,
-                                              'image': '',
-                                              "created_at":
-                                                  DateTime.now().millisecondsSinceEpoch,
-                                              'last_activated': user
-                                                  .metadata
-                                                  .lastSignInTime!
-                                                  .millisecondsSinceEpoch
-                                                  .toString(),
-                                              'push_token': '',
-                                              'online': false,
-                                              'my_users': [],
-                                            });
+                                          "uid": user.uid,
+                                          "name":
+                                          "${firstNameController.text} ${lastNameController.text}",
+                                          "email": emailController.text,
+                                          'about': "Hello! I'm ${firstNameController.text}",
+                                          'last_message_time':
+                                          DateTime.now().millisecondsSinceEpoch,
+                                          'image': '',
+                                          "created_at":
+                                          DateTime.now().millisecondsSinceEpoch,
+                                          'last_activated': user
+                                              .metadata
+                                              .lastSignInTime!
+                                              .millisecondsSinceEpoch
+                                              .toString(),
+                                          'push_token': '',
+                                          'online': false,
+                                          'my_users': [],
+                                        });
                                       }
-
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => BlocProvider(
-                                            create: (_) => BottomNavCubit(),
-                                            child: const HomeLayoutScreen(),
-                                          ),
-                                        ),
-                                        (route) => false,
-                                      );
                                     } catch (error) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text(error.toString())),
                                       );
                                     }
                                   }
-                                  Shared.dismissDialog(context: context);
-                                }
+                           }
                               : null,
 
                           text: kCreateAccount.tr(),

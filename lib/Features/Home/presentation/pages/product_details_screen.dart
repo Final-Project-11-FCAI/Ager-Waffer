@@ -115,8 +115,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               subTitle: '',
                               titleFontSize: 19.sp,
                             ));
-                          }
-                          else if (state.status == itemReviewStatus.failure) {
+                          } else if (state.status == itemReviewStatus.failure) {
                             return Center(child: Text(state.failureMessage));
                           } else  {
                             return Center(child: Text(kNoDataYet.tr()));

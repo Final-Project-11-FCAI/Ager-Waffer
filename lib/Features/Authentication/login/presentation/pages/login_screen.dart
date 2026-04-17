@@ -197,35 +197,33 @@ class _LoginScreenState extends State<LoginScreen>
                                       );
                                     }
 
-                                    if (formKey.currentState!.validate()) {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
                                             email: emailController.text,
                                             password: passwordController.text,
-                                          )
-                                          .then(
-                                            (value) => Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => BlocProvider(
-                                                  create: (_) => BottomNavCubit(),
-                                                  child: const HomeLayoutScreen(),
-                                                ),
-                                              ),
-                                              (route) => false,
-                                            ),
-                                          )
-                                          .onError(
-                                            (error, stackTrace) =>
-                                                ScaffoldMessenger.of(
-                                                  context,
-                                                ).showSnackBar(
-                                                  SnackBar(
-                                                    content: Text('There is a problem with the password or email. Please try again'),
-                                                  ),
-                                                ),
                                           );
-                                    }
+                                          // .then(
+                                          //   (value) => Navigator.pushAndRemoveUntil(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //       builder: (context) => BlocProvider(
+                                          //         create: (_) => BottomNavCubit(),
+                                          //         child: const HomeLayoutScreen(),
+                                          //       ),
+                                          //     ),
+                                          //     (route) => false,
+                                          //   ),
+                                          // )
+                                          // .onError(
+                                          //   (error, stackTrace) =>
+                                          //       ScaffoldMessenger.of(
+                                          //         context,
+                                          //       ).showSnackBar(
+                                          //         SnackBar(
+                                          //           content: Text('There is a problem with the password or email. Please try again'),
+                                          //         ),
+                                          //       ),
+                                          // );
                                     Shared.dismissDialog(context: context);
                                   }
                                 : null,
