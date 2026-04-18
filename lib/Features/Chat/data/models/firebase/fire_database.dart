@@ -11,12 +11,13 @@ class FireData {
   String? get myUid => FirebaseAuth.instance.currentUser?.uid;
   String now = DateTime.now().millisecondsSinceEpoch.toString();
 
-  Future createRoom(String email) async {
+
+  Future<String?> createRoom(String email) async {
     print("START createRoom");
 
     if (myUid == null) {
       print("ERROR: myUid is null");
-      return;
+      return null;
     }
 
     QuerySnapshot userEmail = await firestore
@@ -24,27 +25,20 @@ class FireData {
         .where('email', isEqualTo: email)
         .get();
 
-    print("Users found: ${userEmail.docs.length}");
-
     if (userEmail.docs.isEmpty) {
       print("ERROR: No user with this email");
-      return;
+      return null;
     }
 
     String userId = userEmail.docs.first.id;
 
     List<String> members = [myUid!, userId]..sort();
-
     String roomId = members.join("_");
 
     DocumentSnapshot room =
     await firestore.collection('rooms').doc(roomId).get();
 
-    print("Room exists: ${room.exists}");
-
     if (!room.exists) {
-      print("Creating room...");
-
       await firestore.collection('rooms').doc(roomId).set({
         "id": roomId,
         "members": members,
@@ -52,14 +46,61 @@ class FireData {
         "lastMessage": '',
         "lastMessageTime": DateTime.now().millisecondsSinceEpoch,
       });
-
-      print("Room created successfully ✅");
-    } else {
-      print("Room already exists ⚠️");
     }
 
-    print("END createRoom");
+    print("ROOM ID: $roomId");
+    return roomId; // 🔥 أهم سطر
   }
+
+  // Future createRoom(String email) async {
+  //   print("START createRoom");
+  //
+  //   if (myUid == null) {
+  //     print("ERROR: myUid is null");
+  //     return;
+  //   }
+  //
+  //   QuerySnapshot userEmail = await firestore
+  //       .collection('users')
+  //       .where('email', isEqualTo: email)
+  //       .get();
+  //
+  //   print("Users found: ${userEmail.docs.length}");
+  //
+  //   if (userEmail.docs.isEmpty) {
+  //     print("ERROR: No user with this email");
+  //     return;
+  //   }
+  //
+  //   String userId = userEmail.docs.first.id;
+  //
+  //   List<String> members = [myUid!, userId]..sort();
+  //
+  //   String roomId = members.join("_");
+  //
+  //   DocumentSnapshot room =
+  //   await firestore.collection('rooms').doc(roomId).get();
+  //
+  //   print("Room exists: ${room.exists}");
+  //
+  //   if (!room.exists) {
+  //     print("Creating room...");
+  //
+  //     await firestore.collection('rooms').doc(roomId).set({
+  //       "id": roomId,
+  //       "members": members,
+  //       "createdAt": DateTime.now().millisecondsSinceEpoch,
+  //       "lastMessage": '',
+  //       "lastMessageTime": DateTime.now().millisecondsSinceEpoch,
+  //     });
+  //
+  //     print("Room created successfully ✅");
+  //   } else {
+  //     print("Room already exists ⚠️");
+  //   }
+  //
+  //   print("END createRoom");
+  // }
 
   // Future createRoom(String email) async {
   //   if (myUid == null) return;
