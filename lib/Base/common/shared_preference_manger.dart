@@ -119,6 +119,9 @@ class CachingKey extends Enum<String> {
 
 
 
+  static const CachingKey FIREBASE_USER_ID = const CachingKey('FIREBASE_USER_ID');
+
+
 
 
 

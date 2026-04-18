@@ -12,6 +12,7 @@ class CategoryItemListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
         width: Shared.width * 0.31.w,
       child: Padding(
@@ -20,15 +21,15 @@ class CategoryItemListView extends StatelessWidget {
           elevation: 3.sp,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.sp)),
             margin: const EdgeInsets.symmetric(horizontal: 0,),
-            color: kWhiteColor,
+            color: isDark ? kLightDarkModeColor : kWhiteColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(category.image, scale: 1,),
+              Image.asset(category.image, scale: 1,color: isDark ? kWhiteColor : null,),
               Text(
                 category.title,
                 textAlign: TextAlign.center,
-              style: font14BlackBold.copyWith(fontWeight: medium,),
+              style: font14BlackBold.copyWith(fontWeight: medium,color: isDark ? kWhiteColor : kBlackColor,),
               ),
             ],
           ),

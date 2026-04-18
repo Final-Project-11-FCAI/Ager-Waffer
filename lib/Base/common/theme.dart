@@ -5,8 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 double defaultMargin = 24.0;
 double defaultRadius = 10.0;
 
+
 const Color kPrimaryColor = Color(0xff00334E);
 const Color kLightPrimaryColor = Color(0xff145374);
+
+const Color kDarkModeColor = Color(0xff0a1628);
+const Color kLightDarkModeColor = Color(0xff1e3a5f);
+
 const Color kMoreLightPrimaryColor = Color(0xff1D5687);
 const Color kWhiteColor = const Color(0xffFFFFFF);
 const Color kBlackColor = Color.fromARGB(255, 0, 0, 0);
@@ -40,6 +45,7 @@ const Color kOpacityGreyColor = const Color(0xffF1F1F3);
 const Color kBoldGreyColor = const Color(0xff00334EBD);
 const Color kRedColor = Colors.red;
 const Color kMoreGreyColor = const Color(0xff6F7384);
+
 
 
 TextStyle font15BlackRegular = GoogleFonts.notoSansArabic(

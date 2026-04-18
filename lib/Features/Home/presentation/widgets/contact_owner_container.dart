@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
 import 'package:ager_waffer/Features/Chat/data/models/user_model.dart';
@@ -81,10 +82,15 @@ class ContactOwnerContainer extends StatelessWidget {
             height: 34.h,
             child: OutlinedButton(
               onPressed: () async {
+                print("ownerEmail: ${product.ownerEmail}");
                 final roomId = await FireData().createRoom(
-                  product.ownerEmail!,
-                );
-
+                   product.ownerEmail!,
+                 // "raghadnour05@gmail.com"
+                ).onError((error, stackTrace) {
+                  print("error: ${error}");
+                  print("stackTrace: ${stackTrace}");
+                },);
+                print("roomId: ${roomId}");
                 if (roomId != null) {
                   customAnimatedPushNavigation(
                     context,

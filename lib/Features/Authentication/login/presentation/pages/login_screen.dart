@@ -61,9 +61,9 @@ class _LoginScreenState extends State<LoginScreen>
   void checkFields() {
     final isValid =
         emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        InputValidation.isValidEmail(emailController.text) &&
-        InputValidation.passwordValidator(passwordController.text) == null;
+            passwordController.text.isNotEmpty &&
+            InputValidation.isValidEmail(emailController.text) &&
+            InputValidation.passwordValidator(passwordController.text) == null;
 
     setState(() {
       isButtonEnabled = isValid;
@@ -94,13 +94,16 @@ class _LoginScreenState extends State<LoginScreen>
               Shared.showLoadingDialog(context: context);
             } else if (state.status == loginStatus.success) {
               Shared.dismissDialog(context: context);
+              // loginByFirebase();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (c) => BlocProvider(
-                    create: (_) => BottomNavCubit(),
-                    child: HomeLayoutScreen(email: emailController.text,password: passwordController.text,),
-                  ),
+                  builder: (c) =>
+                      BlocProvider(
+                        create: (_) => BottomNavCubit(),
+                        child: HomeLayoutScreen(email: emailController.text,
+                          password: passwordController.text,),
+                      ),
                 ),
               );
             } else if (state.status == loginStatus.failure) {
@@ -188,44 +191,20 @@ class _LoginScreenState extends State<LoginScreen>
                           ButtonApp(
                             onPressed: isButtonEnabled
                                 ? () async {
-                                    if (formKey.currentState!.validate()) {
-                                      loginBloc.add(
-                                        LoginEvent(
-                                          email: emailController.text,
-                                          password: passwordController.text,
-                                        ),
-                                      );
-                                    }
-
-                                      await FirebaseAuth.instance
-                                          .signInWithEmailAndPassword(
-                                            email: emailController.text,
-                                            password: passwordController.text,
-                                          );
-                                          // .then(
-                                          //   (value) => Navigator.pushAndRemoveUntil(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //       builder: (context) => BlocProvider(
-                                          //         create: (_) => BottomNavCubit(),
-                                          //         child: const HomeLayoutScreen(),
-                                          //       ),
-                                          //     ),
-                                          //     (route) => false,
-                                          //   ),
-                                          // )
-                                          // .onError(
-                                          //   (error, stackTrace) =>
-                                          //       ScaffoldMessenger.of(
-                                          //         context,
-                                          //       ).showSnackBar(
-                                          //         SnackBar(
-                                          //           content: Text('There is a problem with the password or email. Please try again'),
-                                          //         ),
-                                          //       ),
-                                          // );
-                                    Shared.dismissDialog(context: context);
-                                  }
+                              if (formKey.currentState!.validate()) {
+                                loginBloc.add(
+                                  LoginEvent(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  ),
+                                );
+                                await FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                              }
+                            }
                                 : null,
                             text: kLogin.tr(),
                             color: kPrimaryColor,
@@ -263,7 +242,8 @@ class _LoginScreenState extends State<LoginScreen>
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: Shared.height * 0.025.h),
+                      padding: EdgeInsets.symmetric(
+                          vertical: Shared.height * 0.025.h),
                       child: ExternalLoginWidget(),
                     ),
                     RichText(
@@ -285,12 +265,12 @@ class _LoginScreenState extends State<LoginScreen>
                               },
                           ),
                           TextSpan(
-                            text: kcreateAccountNowKey.tr(),
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                              text: kcreateAccountNowKey.tr(),
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.pushReplacementNamed(
@@ -312,3 +292,4 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 }
+

@@ -19,6 +19,7 @@ class HomeLayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final List<Widget> screens = [
       HomeScreen(email: email, password: password),
       FavoriteScreen(),

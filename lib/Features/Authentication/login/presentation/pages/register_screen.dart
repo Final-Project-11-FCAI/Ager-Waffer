@@ -5,6 +5,7 @@ import 'package:ager_waffer/Base/Helper/app_state.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/authentication_bloc.dart';
@@ -117,48 +118,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             if (state is RegisterLoading) {
               Shared.showLoadingDialog(context: context);
             } else if (state is RegisterDoneState) {
-              CustomShowDialog.show(
-                context: context,
-                title: Text(
-                  kRegisterSuccessTitle.tr(),
-                  textAlign: TextAlign.center,
-                  style: font14BlackBold.copyWith(
-                    fontSize: 24,
-                    color: kPrimaryColor,
-                  ),
-                ),
-                description: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: kWelcomePrefix.tr(),
-                        style: font20PrimaryMedium.copyWith(fontSize: 16),
-                      ),
-                      TextSpan(
-                        text: kAppName.tr(),
-                        style: font16BlackSemiBold.copyWith(
-                          color: kBlueColor,
-                          fontSize: 16,
-                        ),
-                      ),
-                      TextSpan(
-                        text:
-                        kWelcomeDesc.tr(),
-                        style: font20PrimaryMedium.copyWith(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ),
-                buttonText: kLoginNowArrow.tr(),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (c) => LoginScreen()),
-                  );
-                },
-              );
-              // Shared.dismissDialog(context: context);
+              registerUserInFirebase(context);
+
 
             } else if (state is RegisterErrorLoadingState) {
               Shared.dismissDialog(context: context);
@@ -303,53 +264,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         ),
                                       ),
                                     );
-
-                                    try {
-                                      UserCredential userCredential = await FirebaseAuth
-                                          .instance
-                                          .createUserWithEmailAndPassword(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                      );
-
-                                      User? user = userCredential.user;
-
-                                      if (user != null) {
-                                        if (firstNameController.text.isNotEmpty) {
-                                          await user.updateDisplayName(
-                                            "${firstNameController.text} ${lastNameController.text}",
-                                          );
-                                        }
-
-                                        await FirebaseFirestore.instance
-                                            .collection('users')
-                                            .doc(user.uid)
-                                            .set({
-                                          "uid": user.uid,
-                                          "name":
-                                          "${firstNameController.text} ${lastNameController.text}",
-                                          "email": emailController.text,
-                                          'about': "Hello! I'm ${firstNameController.text}",
-                                          'last_message_time':
-                                          DateTime.now().millisecondsSinceEpoch,
-                                          'image': '',
-                                          "created_at":
-                                          DateTime.now().millisecondsSinceEpoch,
-                                          'last_activated': user
-                                              .metadata
-                                              .lastSignInTime!
-                                              .millisecondsSinceEpoch
-                                              .toString(),
-                                          'push_token': '',
-                                          'online': false,
-                                          'my_users': [],
-                                        });
-                                      }
-                                    } catch (error) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text(error.toString())),
-                                      );
-                                    }
                                   }
                            }
                               : null,
@@ -438,5 +352,103 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void successDialog(BuildContext context) {
+    CustomShowDialog.show(
+      context: context,
+      title: Text(
+        kRegisterSuccessTitle.tr(),
+        textAlign: TextAlign.center,
+        style: font14BlackBold.copyWith(
+          fontSize: 24,
+          color: kPrimaryColor,
+        ),
+      ),
+      description: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+              text: kWelcomePrefix.tr(),
+              style: font20PrimaryMedium.copyWith(fontSize: 16),
+            ),
+            TextSpan(
+              text: kAppName.tr(),
+              style: font16BlackSemiBold.copyWith(
+                color: kBlueColor,
+                fontSize: 16,
+              ),
+            ),
+            TextSpan(
+              text:
+              kWelcomeDesc.tr(),
+              style: font20PrimaryMedium.copyWith(fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+      buttonText: kLoginNowArrow.tr(),
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (c) => LoginScreen()),
+        );
+      },
+    );
+  }
+
+  Future<void> registerUserInFirebase(BuildContext context) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth
+          .instance
+          .createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        sharedPreferenceManager.writeData(CachingKey.FIREBASE_USER_ID, user.uid.toString());
+        if (firstNameController.text.isNotEmpty) {
+          await user.updateDisplayName(
+            "${firstNameController.text} ${lastNameController.text}",
+          );
+        }
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .set({
+          "uid": user.uid,
+          "name":
+          "${firstNameController.text} ${lastNameController.text}",
+          "email": emailController.text,
+          'about': "Hello! I'm ${firstNameController.text}",
+          'last_message_time':
+          DateTime.now().millisecondsSinceEpoch,
+          'image': _selectedImage,
+          "created_at":
+          DateTime.now().millisecondsSinceEpoch,
+          'last_activated': user
+              .metadata
+              .lastSignInTime!
+              .millisecondsSinceEpoch
+              .toString(),
+          'push_token': '',
+          'online': false,
+          'my_users': [],
+        }).whenComplete(() {
+          // Shared.dismissDialog(context: context);
+          successDialog(context);
+        });
+
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.toString())),
+      );
+    }
   }
 }

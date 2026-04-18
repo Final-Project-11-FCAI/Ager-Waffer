@@ -38,6 +38,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final List<CategoryEntity> categories = [
       CategoryEntity(
         image: 'assets/images/electronics.png',
@@ -105,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SafeArea(
         child: Scaffold(
           drawer: Drawer(width: Shared.width * 0.8, child: DrawerDetails()),
-          backgroundColor: kWhiteColor,
+          backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
           appBar: CustomHomeAppBar(),
           body: RefreshIndicator(
             color: kPrimaryColor,
@@ -123,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: CarouselSliderContainer(),
                     ),
                     Gap(14.h),
-                    Text(kCategories.tr(), style: font14BlackBold),
+                    Text(kCategories.tr(), style: font14BlackBold.copyWith(color: isDark ? kWhiteColor : kBlackColor,)),
                     Gap(10.h),
                     SizedBox(
                       height: Shared.height * 0.2.h,
@@ -143,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Gap(18.h),
-                    Text(kSuggestedItems.tr(), style: font14BlackBold),
+                    Text(kSuggestedItems.tr(), style: font14BlackBold.copyWith(color: isDark ? kWhiteColor : kBlackColor,)),
                     Gap(8.h),
                     BlocBuilder<AllItemsBloc, AllItemsState>(
                       builder: (context, state) {

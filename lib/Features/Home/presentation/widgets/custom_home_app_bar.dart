@@ -20,6 +20,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return FutureBuilder<Data?>(
       future: sharedPreferenceManager.getUser(),
       builder: (context, snapshot) {
@@ -32,7 +34,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
         final user = snapshot.data;
         return AppBar(
-          backgroundColor: kWhiteColor,
+          backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
           automaticallyImplyLeading: false,
           title: Row(
             children: [
@@ -54,7 +56,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                           Text(
                             "${kHello.tr()}, ${user!.firstName}",
                             overflow: TextOverflow.ellipsis,
-                            style: font15BlackRegular,
+                            style: font15BlackRegular.copyWith(color: isDark ? kWhiteColor : kBlackColor,),
                           ),
                           Gap(2),
                           Text(
@@ -77,6 +79,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Image.asset(
                       'assets/images/search_icon.png',
                       width: 19.sp,
+                      color: isDark ? kWhiteColor : kBlackColor,
                     ),
                   ),
                   Padding(
@@ -93,6 +96,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Image.asset(
                         'assets/images/notification_icon.png',
                         width: Shared.width * 0.06.w,
+                        color: isDark ? kWhiteColor : kBlackColor,
                       ),
                     ),
                   ),
@@ -100,7 +104,9 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     onTap: () {
                       Scaffold.of(context).openDrawer();
                     },
-                    child: Icon(Icons.menu, size: 26.sp),
+                    child: Icon(Icons.menu, size: 26.sp,
+                      color: isDark ? kWhiteColor : kBlackColor,
+                    ),
                   ),
                 ],
               ),

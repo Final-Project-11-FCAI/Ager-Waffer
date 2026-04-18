@@ -179,7 +179,7 @@ class ChatCard extends StatelessWidget {
                       ),
                     )
                   : CircleAvatar(
-                      backgroundImage: NetworkImage(chatUser.image!),
+                      backgroundImage: NetworkImage(chatUser.image ?? "assets/images/virtual_user.jpg"),
                     ),
               title: Text(
                 chatUser.name ?? '',
