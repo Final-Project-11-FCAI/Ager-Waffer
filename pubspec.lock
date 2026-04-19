@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.13.0"
-  awesome_dialog:
-    dependency: "direct main"
-    description:
-      name: awesome_dialog
-      sha256: "4c5821a0a637ceee022084e78c1b8237dd4b8bfca4dd24ac2484662a56707338"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.0"
   bloc:
     dependency: "direct main"
     description:
@@ -377,6 +369,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+5"
+  firebase_app_check:
+    dependency: "direct main"
+    description:
+      name: firebase_app_check
+      sha256: cc0bfeb003c5747e963f4f378e72c8c5c5f91a243f2e85b7da29ff42f4709996
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1+5"
+  firebase_app_check_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_app_check_platform_interface
+      sha256: "54166319f9121bd94b2374864e84dd54507438095fc2d42ca49f23957b16b0d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1+5"
+  firebase_app_check_web:
+    dependency: transitive
+    description:
+      name: firebase_app_check_web
+      sha256: f8dddba09bd7786e017b58e74455886106ac7ca9e798769e2cac3e988fc2d146
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2+3"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -1438,21 +1454,21 @@ packages:
     source: hosted
     version: "0.6.0"
   rive:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: rive
-      sha256: fc0abf65d03d1c9afaeb35be9e71c7cf04d2d1f76e94e69d2af1b3ba413cddf9
+      sha256: "2551a44fa766a7ed3f52aa2b94feda6d18d00edc25dee5f66e72e9b365bb6d6c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.0-dev.14"
-  rive_native:
+    version: "0.13.20"
+  rive_common:
     dependency: transitive
     description:
-      name: rive_native
-      sha256: e9c7d36f19eb6d32f563825d4e9d5032b19a36d3ca3341641431035bca022d19
+      name: rive_common
+      sha256: "2ba42f80d37a4efd0696fb715787c4785f8a13361e8aea9227c50f1e78cf763a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.17"
+    version: "0.4.15"
   rxdart:
     dependency: "direct main"
     description:

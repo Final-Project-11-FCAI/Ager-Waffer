@@ -21,6 +21,7 @@ import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -416,26 +417,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
             "${firstNameController.text} ${lastNameController.text}",
           );
         }
+        // String imageUrl = '';
+        //
+        // if (_selectedImage != null) {
+        //   imageUrl = await uploadImageToStorage(_selectedImage!, user.uid);
+        // }
 
         await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
             .set({
           "uid": user.uid,
-          "name":
-          "${firstNameController.text} ${lastNameController.text}",
+          "name": "${firstNameController.text} ${lastNameController.text}",
           "email": emailController.text,
           'about': "Hello! I'm ${firstNameController.text}",
-          'last_message_time':
-          DateTime.now().millisecondsSinceEpoch,
-          'image': _selectedImage,
-          "created_at":
-          DateTime.now().millisecondsSinceEpoch,
-          'last_activated': user
-              .metadata
-              .lastSignInTime!
-              .millisecondsSinceEpoch
-              .toString(),
+          'last_message_time': DateTime.now().millisecondsSinceEpoch,
+         // 'image': imageUrl,
+          "created_at": DateTime.now().millisecondsSinceEpoch,
+          'last_activated': user.metadata.lastSignInTime?.millisecondsSinceEpoch.toString() ?? '',
           'push_token': '',
           'online': false,
           'my_users': [],
@@ -450,5 +449,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         SnackBar(content: Text(error.toString())),
       );
     }
+  }
+
+  Future<String> uploadImageToStorage(File imageFile, String uid) async {
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('user_images')
+        .child('$uid.jpg');
+
+    await ref.putFile(imageFile);
+
+    return await ref.getDownloadURL();
   }
 }

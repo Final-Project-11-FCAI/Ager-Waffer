@@ -9,7 +9,6 @@ import 'package:ager_waffer/Features/Home/presentation/manager/send_request_bloc
 import 'package:ager_waffer/Features/Home/presentation/manager/send_request_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/renatl_terms_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
