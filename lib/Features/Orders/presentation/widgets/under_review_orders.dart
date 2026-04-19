@@ -268,7 +268,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
   }) {
     showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
@@ -277,22 +277,26 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
           title: Text(kCancelConfirmTitle.tr()),
           content: Text(kCancelConfirmDesc.tr()),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text(kBack.tr()),
+              child: Text(kBack.tr(),
+              style: font15SomeBlackColorMedium.copyWith(color: kBlackColor),
+              ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: kPrimaryColor,
               ),
               onPressed: () {
-                Navigator.pop(context); // close dialog
+                Navigator.pop(context);
 
                 onConfirm();
               },
-              child: Text(kConfirm.tr()),
+              child: Text(kConfirm.tr(),
+              style: font15SomeBlackColorMedium.copyWith(color: kWhiteColor),
+              ),
             ),
           ],
         );

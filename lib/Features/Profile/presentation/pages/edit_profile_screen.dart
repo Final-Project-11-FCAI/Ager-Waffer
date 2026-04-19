@@ -62,13 +62,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           _isPhoneValid;
 
   bool get _isPhoneValid {
-    // لو المستخدم ما غيّرش الرقم → اعتبره valid
     if (phoneController.text == _originalPhone) return true;
 
-    // لو فاضي → اعتبره valid (عشان انت بتبعت null)
     if (phoneController.text.isEmpty) return true;
 
-    // لو كتب رقم → لازم يكون valid
     return InputValidation.isValidEditEgyptianPhone(
         phoneController.text) ==
         null;

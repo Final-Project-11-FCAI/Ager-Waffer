@@ -57,6 +57,8 @@
   "heavily_used": "مستخدم بشدة",
 
   "sent": "تم الإرسال",
+  "number_of_months": "عدد الشهور",
+  "number_of_weeks": "عدد الأسابيع",
 
   "no_current_orders": "لا توجد طلبات جارية",
   "no_current_orders_desc": "لم يتم العثور على أي طلبات جارية حتى الآن",

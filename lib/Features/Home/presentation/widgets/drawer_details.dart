@@ -4,6 +4,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/contact_us_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
 import 'package:ager_waffer/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,29 +47,35 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(user?.imageUrl ?? 'assets/images/virtual_user.jpg'),
-                            ),
-                            Gap(8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
-                                  style: font15BlackRegular.copyWith(fontWeight: semiBold),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(user?.imageUrl ?? 'assets/images/virtual_user.jpg'),
+                              ),
+                              Gap(8),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: font15BlackRegular.copyWith(fontWeight: semiBold),
+                                    ),
+                                    Gap(2),
+                                    Text(
+                                      user?.email ?? '',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: font13kLightPrimaryColorMedium.copyWith(
+                                        color: kGreyColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Gap(2),
-                                Text(
-                                  user?.email ?? '',
-                                  style: font13kLightPrimaryColorMedium.copyWith(
-                                    color: kGreyColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
                         CircleAvatar(
                           backgroundColor: kBorderColor.withOpacity(0.09),
@@ -112,6 +119,9 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 ),
                 Gap(2.h),
                 drawerItem(
+                  onTap: (){
+                    customAnimatedPushNavigation(context, ContactUsScreen());
+                  },
                   title: kContactUs.tr(),
                   icon: 'assets/images/contact_us.png',
                 ),

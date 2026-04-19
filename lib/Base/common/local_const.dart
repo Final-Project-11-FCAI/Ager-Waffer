@@ -15,6 +15,9 @@ String kHaveAccountLogin = 'have_account_login';
 String kAppName = 'app_name';
 String kNext = 'next';
 
+String kNumberOfMonths = 'number_of_months';
+String kNumberOfWeeks = 'number_of_weeks';
+
 String kOnboardingTitle1 = 'onboarding_title_1';
 String kOnboardingSubTitle1 = 'onboarding_subtitle_1';
 

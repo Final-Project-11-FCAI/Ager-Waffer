@@ -30,6 +30,8 @@ class _RequestScreenState extends State<RequestScreen> {
   DateTime? startDate;
   DateTime? endDate;
 
+  int periodCount = 1; // عدد الأسابيع أو الشهور
+
   int dailyPrice = 50;
   bool agree = false;
 
@@ -48,7 +50,48 @@ class _RequestScreenState extends State<RequestScreen> {
     return 0;
   }
 
-  double get totalPrice => totalDays * widget.product.price!;
+  int calculateMonths(DateTime start, DateTime end) {
+    int months = (end.year - start.year) * 12 + (end.month - start.month);
+
+    if (end.day >= start.day) {
+      months += 1;
+    }
+
+    return months;
+  }
+
+  double get totalPrice {
+    if (startDate == null) return 0;
+
+    if (widget.product.rentUnit == kWeekly.tr()) {
+      return periodCount * widget.product.price!;
+    }
+
+    if (widget.product.rentUnit == kMonthly.tr()) {
+      return periodCount * widget.product.price!;
+    }
+
+    return totalDays * widget.product.price!;
+  }
+
+  void updateEndDate() {
+    if (startDate == null) return;
+
+    bool isWeekly = widget.product.rentUnit == kWeekly.tr();
+    bool isMonthly = widget.product.rentUnit == kMonthly.tr();
+
+    setState(() {
+      if (isWeekly) {
+        endDate = startDate!.add(Duration(days: (7 * periodCount) - 1));
+      } else if (isMonthly) {
+        endDate = DateTime(
+          startDate!.year,
+          startDate!.month + periodCount,
+          startDate!.day,
+        ).subtract(const Duration(days: 1));
+      }
+    });
+  }
 
   Future<void> _selectDate(bool isStart) async {
     final picked = await showDatePicker(
@@ -60,16 +103,29 @@ class _RequestScreenState extends State<RequestScreen> {
 
     if (picked != null) {
       setState(() {
+        bool isWeekly = widget.product.rentUnit == kWeekly.tr();
+        bool isMonthly = widget.product.rentUnit == kMonthly.tr();
+
         if (isStart) {
           startDate = picked;
 
-          if (endDate != null && endDate!.isBefore(startDate!)) {
-            endDate = null;
+          if (isWeekly) {
+            endDate = startDate!.add(Duration(days: (7 * periodCount) - 1));
+          } else if (isMonthly) {
+            endDate = DateTime(
+              startDate!.year,
+              startDate!.month + periodCount,
+              startDate!.day,
+            ).subtract(const Duration(days: 1));
+          } else {
+            if (endDate != null && endDate!.isBefore(startDate!)) {
+              endDate = null;
+            }
           }
         } else {
-          if (startDate != null && picked.isBefore(startDate!)) {
-            return;
-          }
+          if (isWeekly || isMonthly) return;
+
+          if (startDate != null && picked.isBefore(startDate!)) return;
 
           endDate = picked;
         }
@@ -170,8 +226,8 @@ class _RequestScreenState extends State<RequestScreen> {
                                     ? CachedNetworkImage(
                                         imageUrl:
                                             widget.product.itemImages!.first,
-                                  width: 95.w,
-                                  height: 95.h,
+                                        width: 95.w,
+                                        height: 95.h,
                                         fit: BoxFit.contain,
                                         placeholder: (context, url) =>
                                             Image.asset(
@@ -185,8 +241,8 @@ class _RequestScreenState extends State<RequestScreen> {
                                       )
                                     : Image.asset(
                                         "assets/images/virtual_image.jpg",
-                                  width: 95.w,
-                                  height: 95.h,
+                                        width: 95.w,
+                                        height: 95.h,
                                         fit: BoxFit.contain,
                                       ),
                                 Gap(8.w),
@@ -208,13 +264,13 @@ class _RequestScreenState extends State<RequestScreen> {
                                           ),
                                           Gap(8.w),
                                           Text(
-                                            "${widget.product.price} ${kPricePerUnit.tr()}/${
-                                                widget.product.rentUnit == kDay.tr() ?
-                                                kDay.tr() :
-                                            widget.product.rentUnit == kWeekly.tr() ?
-                                            kWeek.tr() :
-                                            widget.product.rentUnit == kMonthly.tr() ?
-                                            kMonth.tr() : ''}",
+                                            "${widget.product.price} ${kPricePerUnit.tr()}/${widget.product.rentUnit == kDay.tr()
+                                                ? kDay.tr()
+                                                : widget.product.rentUnit == kWeekly.tr()
+                                                ? kWeek.tr()
+                                                : widget.product.rentUnit == kMonthly.tr()
+                                                ? kMonth.tr()
+                                                : ''}",
                                             style: font16BlackSemiBold.copyWith(
                                               fontSize: 11,
                                             ),
@@ -325,32 +381,70 @@ class _RequestScreenState extends State<RequestScreen> {
                                     ],
                                   ),
                                   Gap(10.h),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(8.w),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            16.r,
-                                          ),
-                                          color: Colors.blue[50],
+                                  widget.product.rentUnit == kWeekly.tr() ||
+                                          widget.product.rentUnit ==
+                                              kMonthly.tr()
+                                      ? Row(
+                                          children: [
+                                            Text(
+                                              widget.product.rentUnit ==
+                                                      kWeekly.tr()
+                                                  ? kNumberOfWeeks.tr()
+                                                  : kNumberOfMonths.tr(),
+                                              style: font15SomeBlackColorMedium.copyWith(color: kgreyColor),
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {
+                                                if (periodCount > 1) {
+                                                  setState(() {
+                                                    periodCount--;
+                                                  });
+                                                  updateEndDate();
+                                                }
+                                              },
+                                              icon: const Icon(Icons.remove),
+                                            ),
+                                            CircleAvatar(
+                                                radius: 15.r,
+                                                backgroundColor: kSomeGreyColor,
+                                                child: Text("$periodCount",style: font14GreyRegular.copyWith(color: kPrimaryColor, fontWeight: bold),)),
+                                            IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  periodCount++;
+                                                });
+                                                updateEndDate();
+                                              },
+                                              icon: const Icon(Icons.add),
+                                            ),
+                                          ],
+                                        )
+                                      : Row(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(8.w),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(16.r),
+                                                color: Colors.blue[50],
+                                              ),
+                                              child: totalDays > 0
+                                                  ? Row(
+                                                      children: [
+                                                        Image.asset(
+                                                          'assets/images/period.png',
+                                                        ),
+                                                        Gap(5.w),
+                                                        Text(
+                                                          "${kDuration.tr()}: $totalDays ${kDays.tr()}",
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : SizedBox.shrink(),
+                                            ),
+                                          ],
                                         ),
-                                        child: totalDays > 0
-                                            ? Row(
-                                                children: [
-                                                  Image.asset(
-                                                    'assets/images/period.png',
-                                                  ),
-                                                  Gap(5.w),
-                                                  Text(
-                                                    "${kDuration.tr()}: $totalDays ${kDays.tr()}",
-                                                  ),
-                                                ],
-                                              )
-                                            : SizedBox.shrink(),
-                                      ),
-                                    ],
-                                  ),
                                 ],
                               ),
                             ),
@@ -390,14 +484,13 @@ class _RequestScreenState extends State<RequestScreen> {
                                   ),
                                   buildPriceRow(
                                     Text(
-                                      "${kNumberOfDays.tr()} ${
-                                          widget.product.rentUnit == kDaily.tr() ?
-                                          kDayss.tr() :
-                                          widget.product.rentUnit == kWeekly.tr() ?
-                                          kWeeks.tr() :
-                                          widget.product.rentUnit == kMonthly.tr() ?
-                                          kMonths.tr() : ''
-                                      }",
+                                      "${kNumberOfDays.tr()} ${widget.product.rentUnit == kDaily.tr()
+                                          ? kDayss.tr()
+                                          : widget.product.rentUnit == kWeekly.tr()
+                                          ? kWeeks.tr()
+                                          : widget.product.rentUnit == kMonthly.tr()
+                                          ? kMonths.tr()
+                                          : ''}",
                                       style: font15SomeBlackColorMedium
                                           .copyWith(
                                             fontSize: 13,
@@ -405,7 +498,15 @@ class _RequestScreenState extends State<RequestScreen> {
                                           ),
                                     ),
                                     Text(
-                                      totalDays > 0 ? "$totalDays" : "--",
+                                      totalDays > 0
+                                          ? widget.product.rentUnit ==
+                                                    kWeekly.tr()
+                                                ? "$periodCount"
+                                                : widget.product.rentUnit ==
+                                                      kMonthly.tr()
+                                                ? "$periodCount"
+                                                : "$totalDays"
+                                          : "--",
                                       style: font15SomeBlackColorMedium
                                           .copyWith(
                                             fontSize: 13,
@@ -432,7 +533,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                       ),
                                     ),
                                     Text(
-                                      totalDays > 0 ? "$totalPrice ${kCurrency.tr()}" : "--",
+                                      totalDays > 0
+                                          ? "$totalPrice ${kCurrency.tr()}"
+                                          : "--",
                                       style: font14BlackBold.copyWith(
                                         fontSize: 13,
                                       ),
