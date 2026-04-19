@@ -82,73 +82,90 @@ class ContactOwnerContainer extends StatelessWidget {
           Gap(8.w),
           SizedBox(
             height: 34.h,
-            child: OutlinedButton(
-                    onPressed: () async {
-                      print("ownerEmail: ${product.ownerEmail}");
-                      final roomId = await FireData().createRoom(
-                        product.ownerEmail!,
-                      ).onError((error, stackTrace) {
-                        print("error: ${error}");
-                        print("stackTrace: ${stackTrace}");
-                      },);
-                      print("roomId: ${roomId}");
-                      if (roomId != null) {
-                        customAnimatedPushNavigation(
-                          context,
-                          ChatScreen(
-                            roomId: roomId,
-                            chatUser: ChatUser(
-                              id: "8yPjoX3En2g1N2itZIu2OB21vm53",
-                              name: product.ownerName,
-                              image: product.ownerPictureUrl,
-                              about: "Hello I'm ${product.ownerName}",
-                              email: product.ownerEmail,
-                              createdAt: DateTime
-                                  .now()
-                                  .millisecondsSinceEpoch
-                                  .toString(),
-                              lastActivated: DateTime
-                                  .now()
-                                  .millisecondsSinceEpoch
-                                  .toString(),
-                              pushToken: '',
-                              online: false,
-                              myUsers: [],
-                            ),
-                          ),
-                        );
-                      } else {
-                        print("EMAIL: ${product.ownerEmail}");
-                        print("ID: ${product.ownerId}");
-                        ScaffoldMessenger.of(
-                          context,
-                        ).showSnackBar(
-                            SnackBar(content: Text("User not found")));
-                      }
-                    },
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 6.h),
-                      backgroundColor: kBlueColor.withOpacity(0.12),
-                      side: const BorderSide(color: kLightBlueColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.r),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          kContactOwner.tr(),
-                          style: font16BlackSemiBold.copyWith(
-                            fontSize: 12.sp,
-                            color: kBlueColor,
-                          ),
-                        ),
-                        Gap(5.w),
-                        Image.asset('assets/images/contact_icon.png'),
-                      ],
-                    ),
-                  ),
+            child: StreamBuilder(
+    stream: FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: product.ownerEmail)
+        .snapshots(),
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return const Center(child: CircularProgressIndicator());
+    }
+
+
+
+    final uid = snapshot.data!.docs.first.id;
+    print("##uid : ${uid}");
+    return  OutlinedButton(
+      onPressed: () async {
+        print("ownerEmail: ${product.ownerEmail}");
+        final roomId = await FireData().createRoom(
+          product.ownerEmail!,
+        ).onError((error, stackTrace) {
+          print("error: ${error}");
+          print("stackTrace: ${stackTrace}");
+        },);
+        print("roomId: ${roomId}");
+        if (roomId != null) {
+          customAnimatedPushNavigation(
+            context,
+            ChatScreen(
+              roomId: roomId,
+              chatUser: ChatUser(
+                id: uid,
+                name: product.ownerName,
+                image: product.ownerPictureUrl,
+                about: "Hello I'm ${product.ownerName}",
+                email: product.ownerEmail,
+                createdAt: DateTime
+                    .now()
+                    .millisecondsSinceEpoch
+                    .toString(),
+                lastActivated: DateTime
+                    .now()
+                    .millisecondsSinceEpoch
+                    .toString(),
+                pushToken: '',
+                online: false,
+                myUsers: [],
+              ),
+            ),
+          );
+        } else {
+          print("EMAIL: ${product.ownerEmail}");
+          print("ID: ${product.ownerId}");
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(
+              SnackBar(content: Text("User not found")));
+        }
+      },
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+            horizontal: 10.w, vertical: 6.h),
+        backgroundColor: kBlueColor.withOpacity(0.12),
+        side: const BorderSide(color: kLightBlueColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.r),
+        ),
+      ),
+      child: Row(
+        children: [
+          Text(
+            kContactOwner.tr(),
+            style: font16BlackSemiBold.copyWith(
+              fontSize: 12.sp,
+              color: kBlueColor,
+            ),
+          ),
+          Gap(5.w),
+          Image.asset('assets/images/contact_icon.png'),
+        ],
+      ),
+    );
+    },
+    )
+
           ),
         ],
       ),
