@@ -82,19 +82,7 @@ class ContactOwnerContainer extends StatelessWidget {
           Gap(8.w),
           SizedBox(
             height: 34.h,
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .where('email', isEqualTo: "mohamed.kamal.fci123@gmail.com")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  final uId = snapshot.data!.docs.first.id;
-                  print("uId: ${uId}");
-
-                  return OutlinedButton(
+            child: OutlinedButton(
                     onPressed: () async {
                       print("ownerEmail: ${product.ownerEmail}");
                       final roomId = await FireData().createRoom(
@@ -160,9 +148,7 @@ class ContactOwnerContainer extends StatelessWidget {
                         Image.asset('assets/images/contact_icon.png'),
                       ],
                     ),
-                  );
-                }
-            ),
+                  ),
           ),
         ],
       ),

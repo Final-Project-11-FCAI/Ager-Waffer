@@ -54,115 +54,136 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
       padding: EdgeInsets.only(
-        left: Shared.width * 0.04.w,
-        right: Shared.width * 0.04.w,
-        top: Shared.height * 0.02.h,
-        bottom: Shared.height * 0.02.h,
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 50,
-            height: 5,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(10),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: Shared.width * 0.04.w,
+              right: Shared.width * 0.04.w,
+              top: Shared.height * 0.02.h,
+              bottom: Shared.height * 0.02.h,
             ),
-          ),
-          Gap(20.h),
-          Text(
-            kHowWasExperience.tr(),
-            style: font20PrimaryMedium.copyWith(fontWeight: bold),
-          ),
-          Gap(5.h),
-          Text(
-            kYourOpinionMatters.tr(),
-            style: font20PrimaryMedium.copyWith(
-              color: kLightPrimaryColor,
-              fontSize: 15,
-            ),
-          ),
-          Gap(15.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.star, color: kPrimaryColor),
-                  Gap(5.w),
-                  Text(
-                    "${kRate.tr()} ${widget.name}",
-                    style: font20PrimaryMedium.copyWith(
-                      fontWeight: bold,
-                      fontSize: 16,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 50,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                Gap(20.h),
+
+                Text(
+                  kHowWasExperience.tr(),
+                  style: font20PrimaryMedium.copyWith(fontWeight: bold),
+                ),
+                Gap(5.h),
+
+                Text(
+                  kYourOpinionMatters.tr(),
+                  style: font20PrimaryMedium.copyWith(
+                    color: kLightPrimaryColor,
+                    fontSize: 15,
+                  ),
+                ),
+
+                Gap(15.h),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.star, color: kPrimaryColor),
+                        Gap(5.w),
+                        Text(
+                          "${kRate.tr()} ${widget.name}",
+                          style: font20PrimaryMedium.copyWith(
+                            fontWeight: bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    RatingBar.builder(
+                      initialRating: rating,
+                      minRating: 1,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 30,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
+                      itemBuilder: (context, _) =>
+                      const Icon(Icons.star, color: Colors.amber),
+                      onRatingUpdate: (value) {
+                        setState(() {
+                          rating = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+
+                Gap(15),
+
+                TextField(
+                  controller: commentController,
+                  maxLines: 3,
+                  cursorColor: kPrimaryColor,
+                  decoration: InputDecoration(
+                    hintText:
+                    "${kCommentHint.tr()} ${widget.hint} (${kOptional.tr()})",
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: kPrimaryColor),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: kPrimaryColor),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                ],
-              ),
-              RatingBar.builder(
-                initialRating: rating,
-                minRating: 1,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemSize: 30,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.w),
-                itemBuilder: (context, _) =>
-                    const Icon(Icons.star, color: Colors.amber),
-                onRatingUpdate: (value) {
-                  setState(() {
-                    rating = value;
-                  });
-                },
-              ),
-            ],
-          ),
+                ),
 
-          Gap(15),
-          TextField(
-            controller: commentController,
-            maxLines: 3,
-            cursorColor: kPrimaryColor,
-            decoration: InputDecoration(
-              hintText: "${kCommentHint.tr()} ${widget.hint} (${kOptional.tr()})",
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: kPrimaryColor),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(color: kPrimaryColor),
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-          Gap(20.h),
+                Gap(20.h),
 
-          SizedBox(
-            width: double.infinity,
-            child: ButtonApp(
-              onPressed: isButtonEnabled
-                  ? () {
-                final reviewTypeValue = getReviewTypeValue(widget.reviewType);
+                SizedBox(
+                  width: double.infinity,
+                  child: ButtonApp(
+                    onPressed: isButtonEnabled
+                        ? () {
+                      final reviewTypeValue =
+                      getReviewTypeValue(widget.reviewType);
 
-                context.read<AddReviewBloc>().add(
-                  AddReviewEvent(
-                    reviewType: reviewTypeValue,
-                    itemId: widget.completedOrders[widget.index].itemId!,
-                    reviewedUserId: widget.completedOrders[widget.index].ownerId,
-                    reviewText: commentController.text,
-                    rate: rating.toInt(),
+                      context.read<AddReviewBloc>().add(
+                        AddReviewEvent(
+                          reviewType: reviewTypeValue,
+                          itemId: widget
+                              .completedOrders[widget.index].itemId!,
+                          reviewedUserId: widget
+                              .completedOrders[widget.index].ownerId,
+                          reviewText: commentController.text,
+                          rate: rating.toInt(),
+                        ),
+                      );
+                    }
+                        : null,
+                    text: kSubmitReview.tr(),
+                    color: kPrimaryColor,
+                    isReview: true,
                   ),
-                );
-              }
-                  : null,
-              text: kSubmitReview.tr(),
-              color: kPrimaryColor,
-              isReview: true,
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

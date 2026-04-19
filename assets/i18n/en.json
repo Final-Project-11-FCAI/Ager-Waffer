@@ -56,8 +56,9 @@
   "used": "Used",
   "heavily_used": "HeavilyUsed",
 
-  "sent": "تم الإرسال",
-
+  "sent": "Sent",
+  "number_of_months": "Number of months",
+  "number_of_weeks": "Number of weeks",
   "add_product_success_title": "Product added successfully",
   "add_product_success_desc": "Your product is now available for rent",
   "show_my_products": "View my products",
