@@ -1,14 +1,15 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Favorite/data/models/all_favorite_items_model.dart';
 import 'package:ager_waffer/Features/Favorite/domain/entities/favorite_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class FavoriteItemGideView extends StatelessWidget {
-  const FavoriteItemGideView({super.key, required this.favoriteEntity});
+  const FavoriteItemGideView({super.key, required this.allFavoriteItems});
 
-  final FavoriteEntity favoriteEntity;
+  final FavoriteData allFavoriteItems;
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +21,17 @@ class FavoriteItemGideView extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            height: Shared.height * 0.22.h,
+            height: 160.h,
             decoration: BoxDecoration(
               color: kFavoriteColor,
               borderRadius: BorderRadius.circular(25.r),
             ),
             child: Stack(
               children: [
-                Center(child: Image.asset(favoriteEntity.image)),
+                Center(child: allFavoriteItems.imageUrls != null ?
+                Image.network(allFavoriteItems.imageUrls!.first)
+              : Image.asset('assets/images/virtual_image.jpg')
+          ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: CircleAvatar(
@@ -51,13 +55,13 @@ class FavoriteItemGideView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      favoriteEntity.title,
+                      allFavoriteItems.name ?? "",
                       overflow: TextOverflow.ellipsis,
                       style: font14BlackBold.copyWith(fontWeight: semiBold),
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: favoriteEntity.isAvailable ? kLightGreenColor : kNotAvailableColor,
+                        color: allFavoriteItems.isAvailable! ? kLightGreenColor : kNotAvailableColor,
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Padding(
@@ -66,9 +70,9 @@ class FavoriteItemGideView extends StatelessWidget {
                           vertical: Shared.height * 0.003.h,
                         ),
                         child: Text(
-                          favoriteEntity.isAvailable ? 'متاح' : 'غير متاح',
+                          allFavoriteItems.isAvailable! ? 'متاح' : 'غير متاح',
                           style: font20PrimaryMedium.copyWith(
-                            color: favoriteEntity.isAvailable ? kGreenColor : kPartGreyColor,
+                            color: allFavoriteItems.isAvailable! ? kGreenColor : kPartGreyColor,
                             fontSize: 10.sp,
                           ),
                         ),
@@ -79,7 +83,7 @@ class FavoriteItemGideView extends StatelessWidget {
                 Gap(5.h),
                 RichText(
                   text: TextSpan(
-                    text: favoriteEntity.price,
+                    text: allFavoriteItems.price.toString(),
                     style: font16BlackSemiBold.copyWith(
                       fontSize: 13,
                       color: kBlueColor,
@@ -99,7 +103,7 @@ class FavoriteItemGideView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      favoriteEntity.rating.toString(),
+                      allFavoriteItems.averageRate.toString(),
                       style: font20PrimaryMedium.copyWith(fontSize: 15.sp),
                     ),
                     Gap(3.w),
