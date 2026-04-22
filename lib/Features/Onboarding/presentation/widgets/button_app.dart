@@ -78,10 +78,7 @@ class _ButtonAppState extends State<ButtonApp>
             onPressed: widget.onPressed,
             style:
                 ElevatedButton.styleFrom(
-                  // استخدمنا backgroundColor بشكل صريح مع التأكد من الـ Elevation
                   backgroundColor: widget.color,
-                  //elevation: 0,
-                  // foregroundColor بيتحكم في لون المحتوى (Text & Icons) بشكل تلقائي لو محددتوش
                   foregroundColor:
                       widget.color == kPrimaryColor ||
                           widget.color == kDoneColor
@@ -96,18 +93,16 @@ class _ButtonAppState extends State<ButtonApp>
                     borderRadius: BorderRadius.circular(
                       widget.borderRadius ?? Shared.width * 0.07.w,
                     ),
-                    // هنا بنخلي الـ border بنفس لون الزرار عشان ميبقاش فيه حواف غريبة
                     side: BorderSide(color: widget.color, width: 1),
                   ),
                 ).copyWith(
-                  // ده "السر" عشان تجبر فلاتر تستخدم اللون بتاعك حتى لو الثيم العام مختلف
                   backgroundColor: WidgetStateProperty.resolveWith<Color?>((
                     states,
                   ) {
                     if (states.contains(WidgetState.disabled)) {
-                      return widget.color ; // لون باهت لو الزرار معطل
+                      return widget.color ;
                     }
-                    return widget.color; // اللون اللي أنت باعته في الحالة العادية
+                    return widget.color;
                   }),
                 ),
             child: Row(
@@ -118,7 +113,6 @@ class _ButtonAppState extends State<ButtonApp>
                   style: GoogleFonts.notoSansArabic(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
-                    // استخدمنا نفس المنطق للتأكد من تناسق لون النص مع الخلفية
                     color: kWhiteColor,
                   ),
                 ),

@@ -54,6 +54,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return AnimatedPadding(
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeOut,
@@ -176,7 +177,9 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                     }
                         : null,
                     text: kSubmitReview.tr(),
-                    color: kPrimaryColor,
+                    color: isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.5) :
+                    isDark && isButtonEnabled ?
+                    kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                     isReview: true,
                   ),
                 ),

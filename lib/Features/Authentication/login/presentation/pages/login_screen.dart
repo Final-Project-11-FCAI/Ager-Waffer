@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen>
         appBar: AppBar(
           toolbarHeight: 90,
           backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
-          foregroundColor: isDark ? kDarkModeColor : kWhiteColor,
+          foregroundColor: isDark ? kWhiteColor : kWhiteColor,
           title: Container(
             alignment: Alignment.centerLeft,
             child: LogoAsText(),
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen>
           child: Container(
             height: double.infinity,
             decoration: BoxDecoration(
-              color: isDark ? kDarkModeColor : kPrimaryColor,
+              color: isDark ? Color(0xFF1E1E1E) : kWhiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25.r),
                 topRight: Radius.circular(25.r),
@@ -208,7 +208,9 @@ class _LoginScreenState extends State<LoginScreen>
                             }
                                 : null,
                             text: kLogin.tr(),
-                            color: isDark ? kButtonColor : kPrimaryColor,
+                            color: isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.5) :
+                            isDark && isButtonEnabled ?
+                            kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                           ),
                         ],
                       ),

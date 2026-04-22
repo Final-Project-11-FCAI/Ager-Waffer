@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/external_services/auth_external_services.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_bloc.dart';
@@ -91,8 +92,8 @@ class ExternalLoginWidget extends StatelessWidget {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 width: double.infinity,
-                height: 58,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                height: Shared.height * 0.078.h,
+                padding: EdgeInsets.symmetric(horizontal: 16.w,),
                 decoration: BoxDecoration(
                   color: isDark ? kButtonColor : kWhiteColor,
                   borderRadius: BorderRadius.circular(14),

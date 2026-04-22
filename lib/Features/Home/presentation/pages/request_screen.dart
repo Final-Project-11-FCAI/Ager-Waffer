@@ -30,7 +30,7 @@ class _RequestScreenState extends State<RequestScreen> {
   DateTime? startDate;
   DateTime? endDate;
 
-  int periodCount = 1; // عدد الأسابيع أو الشهور
+  int periodCount = 1;
 
   int dailyPrice = 50;
   bool agree = false;
@@ -221,7 +221,6 @@ class _RequestScreenState extends State<RequestScreen> {
                             ),
                             child: Row(
                               children: [
-                                // Image.asset(widget.product.itemImages![0], width: 90),
                                 widget.product.itemImages != null &&
                                         widget.product.itemImages!.isNotEmpty
                                     ? CachedNetworkImage(
@@ -260,9 +259,12 @@ class _RequestScreenState extends State<RequestScreen> {
                                             child: Text(
                                               widget.product.name!,
                                               overflow: TextOverflow.ellipsis,
-                                              style: font16BlackSemiBold.copyWith(
-                                                color: isDark ? kWhiteColor : kBlackColor,
-                                              ),
+                                              style: font16BlackSemiBold
+                                                  .copyWith(
+                                                    color: isDark
+                                                        ? kWhiteColor
+                                                        : kBlackColor,
+                                                  ),
                                             ),
                                           ),
                                           Gap(8.w),
@@ -276,7 +278,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                                 : ''}",
                                             style: font16BlackSemiBold.copyWith(
                                               fontSize: 11,
-                                              color: isDark ? kWhiteColor : kBlackColor,
+                                              color: isDark
+                                                  ? kWhiteColor
+                                                  : kBlackColor,
                                             ),
                                           ),
                                         ],
@@ -337,14 +341,18 @@ class _RequestScreenState extends State<RequestScreen> {
                           Gap(10.h),
                           Text(
                             kRentalPeriod.tr(),
-                            style: font16BlackSemiBold.copyWith(fontSize: 16,
-                            color: isDark ? kWhiteColor : kBlackColor,),
+                            style: font16BlackSemiBold.copyWith(
+                              fontSize: 16,
+                              color: isDark ? kWhiteColor : kBlackColor,
+                            ),
                           ),
                           Gap(10.h),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
-                              color: isDark ? kSomeDarkModeColor : Color.fromARGB(255, 240, 240, 240),
+                              color: isDark
+                                  ? kSomeDarkModeColor
+                                  : Color.fromARGB(255, 240, 240, 240),
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(Shared.width * 0.05),
@@ -357,12 +365,20 @@ class _RequestScreenState extends State<RequestScreen> {
                                       Text(
                                         kStartDate.tr(),
                                         style: font15SomeBlackColorMedium
-                                            .copyWith(color: isDark ? kWhiteColor : kgreyColor),
+                                            .copyWith(
+                                              color: isDark
+                                                  ? kWhiteColor
+                                                  : kgreyColor,
+                                            ),
                                       ),
                                       Text(
                                         kEndDate.tr(),
                                         style: font15SomeBlackColorMedium
-                                            .copyWith(color: isDark ? kWhiteColor : kgreyColor),
+                                            .copyWith(
+                                              color: isDark
+                                                  ? kWhiteColor
+                                                  : kgreyColor,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -397,7 +413,8 @@ class _RequestScreenState extends State<RequestScreen> {
                                                       kWeekly.tr()
                                                   ? kNumberOfWeeks.tr()
                                                   : kNumberOfMonths.tr(),
-                                              style: font15SomeBlackColorMedium.copyWith(color: kgreyColor),
+                                              style: font15SomeBlackColorMedium
+                                                  .copyWith(color: kgreyColor),
                                             ),
                                             const Spacer(),
                                             IconButton(
@@ -412,9 +429,17 @@ class _RequestScreenState extends State<RequestScreen> {
                                               icon: const Icon(Icons.remove),
                                             ),
                                             CircleAvatar(
-                                                radius: 15.r,
-                                                backgroundColor: kSomeGreyColor,
-                                                child: Text("$periodCount",style: font14GreyRegular.copyWith(color: kPrimaryColor, fontWeight: bold),)),
+                                              radius: 15.r,
+                                              backgroundColor: kSomeGreyColor,
+                                              child: Text(
+                                                "$periodCount",
+                                                style: font14GreyRegular
+                                                    .copyWith(
+                                                      color: kPrimaryColor,
+                                                      fontWeight: bold,
+                                                    ),
+                                              ),
+                                            ),
                                             IconButton(
                                               onPressed: () {
                                                 setState(() {
@@ -666,7 +691,13 @@ class _RequestScreenState extends State<RequestScreen> {
                           }
                         : null,
                     text: isRequestSent ? kSent.tr() : kConfirmRequest.tr(),
-                    color: kPrimaryColor,
+                    color: isDark && !(isValid && !isRequestSent)
+                        ? kGreyColor.withOpacity(0.5)
+                        : isDark && (isValid && !isRequestSent)
+                        ? kButtonColor
+                        : !isDark && !(isValid && !isRequestSent)
+                        ? kGreyColor.withOpacity(0.35)
+                        : kPrimaryColor,
                     borderRadius: Shared.width * 0.04.w,
                   ),
                 ),

@@ -56,6 +56,7 @@ class _UserInformationState extends State<UserInformation> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<UpdateAddressBloc, UpdateAddressState>(
       listener: (context, state) {
         if (state.status == updateAddressStatus.loading) {
@@ -171,7 +172,9 @@ class _UserInformationState extends State<UserInformation> {
                     }
                         : null,
                     text: kSave.tr(),
-                    color: kPrimaryColor,
+                    color: isDark && !isFormValid ? kGreyColor.withOpacity(0.5) :
+                    isDark && isFormValid ?
+                    kButtonColor : !isDark && !isFormValid ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                   ),
                     ],
                   ),

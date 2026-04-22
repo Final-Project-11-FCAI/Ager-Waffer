@@ -120,7 +120,9 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                         : null,
 
                     text: kContinue.tr(),
-                    color: isDark ? kButtonColor : kPrimaryColor,
+                    color: isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.5) :
+                    isDark && isButtonEnabled ?
+                    kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                     borderRadius: Shared.width * 0.04.h,
                   ),
                   Gap(20.h),

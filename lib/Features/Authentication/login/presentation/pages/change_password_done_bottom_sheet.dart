@@ -25,6 +25,7 @@ class ChangePasswordDoneBottomSheet extends StatelessWidget {
               Gap(20.h),
               Text(
                   kPasswordChanged.tr(),
+                textAlign: TextAlign.center,
                 style: font24PrimarySemiBold.copyWith(fontWeight: bold, color: isDark ? kWhiteColor : kPrimaryColor)
               ),
               Text(

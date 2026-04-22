@@ -184,61 +184,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             }
                           : null,
                       text: kUpdatePassword.tr(),
-                      color: isDark ? kButtonColor : kPrimaryColor,
+                      color: isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.5) :
+                      isDark && isButtonEnabled ?
+                      kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                     ),
                     Gap(10.h),
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //       child: Divider(
-                    //         thickness: 1,
-                    //         color: kLightBlackColor,
-                    //         endIndent: 20,
-                    //         indent: 20,
-                    //       ),
-                    //     ),
-                    //     Text(
-                    //       kloginWithKey.tr(),
-                    //       style: TextStyle(
-                    //         color: kPrimaryColor,
-                    //         fontWeight: FontWeight.bold,
-                    //         fontSize: 16,
-                    //       ),
-                    //     ),
-                    //     Expanded(
-                    //       child: Divider(
-                    //         thickness: 1,
-                    //         color: kLightBlackColor,
-                    //         indent: 20,
-                    //         endIndent: 20,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     LogoIcon(
-                    //       path: 'assets/images/Facebook.png',
-                    //       onTap: () {},
-                    //     ),
-                    //     Padding(
-                    //       padding: EdgeInsets.symmetric(
-                    //         horizontal: Shared.width * 0.02,
-                    //       ),
-                    //       child: LogoIcon(
-                    //         path: 'assets/images/Apple.png',
-                    //         onTap: () {},
-                    //         height: 83,
-                    //         width: 83,
-                    //       ),
-                    //     ),
-                    //     LogoIcon(
-                    //       path: "assets/images/Google.png",
-                    //       onTap: () {},
-                    //     ),
-                    //   ],
-                    // ),
                     Gap(20.h),
                     Align(
                       alignment: Alignment.center,
@@ -263,7 +213,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 },
                             ),
                             TextSpan(
-                              text: kcreateAccountNowKey.tr(),
+                              text: " ${kcreateAccountNowKey.tr()}",
                               style: TextStyle(
                                 color: isDark ? kWhiteColor : kPrimaryColor,
                                 fontSize: 16,

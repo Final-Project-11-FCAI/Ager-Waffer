@@ -271,7 +271,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               : null,
 
                           text: kCreateAccount.tr(),
-                          color: isDark ? kButtonColor : kPrimaryColor,
+                          color: isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.5) :
+                          isDark && isButtonEnabled ?
+                          kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                         ),
                         Gap(10.h),
                       ],

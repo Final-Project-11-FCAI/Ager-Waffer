@@ -65,9 +65,6 @@ class FavoriteItemGideView extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: favoriteEntity.isAvailable
-                            ? kLightGreenColor
-                            : kNotAvailableColor,
                         color: allFavoriteItems.isAvailable! ? kLightGreenColor : kNotAvailableColor,
                         borderRadius: BorderRadius.circular(12.r),
                       ),
@@ -79,9 +76,6 @@ class FavoriteItemGideView extends StatelessWidget {
                         child: Text(
                           allFavoriteItems.isAvailable! ? 'متاح' : 'غير متاح',
                           style: font20PrimaryMedium.copyWith(
-                            color: favoriteEntity.isAvailable
-                                ? kGreenColor
-                                : kPartGreyColor,
                             color: allFavoriteItems.isAvailable! ? kGreenColor : kPartGreyColor,
                             fontSize: 10.sp,
                           ),
@@ -113,10 +107,8 @@ class FavoriteItemGideView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      favoriteEntity.rating.toString(),
-                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp,color: isDark ? kWhiteColor : kPrimaryColor),
                       allFavoriteItems.averageRate.toString(),
-                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp),
+                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp,color: isDark ? kWhiteColor : kPrimaryColor),
                     ),
                     Gap(3.w),
                     Icon(Icons.star, size: 17.sp, color: Colors.amber),

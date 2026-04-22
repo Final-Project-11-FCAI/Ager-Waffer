@@ -108,6 +108,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -308,7 +309,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         }
                       : null,
                   text: kAddProduct.tr(),
-                  color: kPrimaryColor,
+                  color: isDark && !isFormValid ? kGreyColor.withOpacity(0.5) :
+                  isDark && isFormValid ?
+                  kButtonColor : !isDark && !isFormValid ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                 ),
               ),
             ],
