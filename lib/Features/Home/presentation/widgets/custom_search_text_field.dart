@@ -14,16 +14,25 @@ class CustomSearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
     return TextField(
       cursorColor: kPrimaryColor,
       onChanged: onChanged,
       decoration: InputDecoration(
-        enabledBorder: buildOutlineInputBorder(),
-        focusedBorder: buildOutlineInputBorder(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: isDark ? kGreyColor : kPrimaryColor),
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: isDark ? kGreyColor : kPrimaryColor),
+          borderRadius: BorderRadius.circular(16.r),
+        ),
         hintText: kSearchHint.tr(),
         hintStyle: font15BlackRegular.copyWith(
           fontSize: 18.sp,
-          color: Color.fromRGBO(0, 51, 78, 0.74),
+          color: isDark ? kGreyColor : Color.fromRGBO(0, 51, 78, 0.74),
         ),
         suffixIcon: IconButton(
           onPressed: () {},
@@ -31,19 +40,11 @@ class CustomSearchTextField extends StatelessWidget {
             opacity: 0.8,
             child: Icon(
               Icons.search,
-              color: kPrimaryColor,
+              color: isDark ? kGreyColor : kPrimaryColor,
               size: 26.sp,
             ),
           ),
         ),
       ),
     );
-  }
-
-  OutlineInputBorder buildOutlineInputBorder() {
-    return OutlineInputBorder(
-      borderSide: const BorderSide(color: kPrimaryColor),
-      borderRadius: BorderRadius.circular(16.r),
-    );
-  }
-}
+  }}

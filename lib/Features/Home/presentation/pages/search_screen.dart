@@ -28,17 +28,18 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: kWhiteColor,
+        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
         body: CustomScrollView(
       slivers: [
       SliverAppBar(
       pinned: true,
-        backgroundColor: kWhiteColor,
+        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
         elevation: 0,
         automaticallyImplyLeading: false,
         toolbarHeight: 80.h,

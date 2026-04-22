@@ -153,14 +153,15 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
         appBar: AppBar(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
           elevation: 0,
           iconTheme: const IconThemeData(color: kWhiteColor),
         ),
@@ -205,7 +206,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         topLeft: Radius.circular(25.r),
                         topRight: Radius.circular(25.r),
                       ),
-                      color: kWhiteColor,
+                      color: isDark ? kDarkModeColor : kWhiteColor,
                     ),
                     padding: EdgeInsets.all(Shared.width * 0.04.w),
                     child: SingleChildScrollView(
@@ -215,7 +216,7 @@ class _RequestScreenState extends State<RequestScreen> {
                           Container(
                             padding: EdgeInsets.all(Shared.width * 0.04),
                             decoration: BoxDecoration(
-                              color: kWhiteColor,
+                              color: isDark ? kSomeDarkModeColor : kWhiteColor,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
@@ -259,7 +260,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                             child: Text(
                                               widget.product.name!,
                                               overflow: TextOverflow.ellipsis,
-                                              style: font16BlackSemiBold,
+                                              style: font16BlackSemiBold.copyWith(
+                                                color: isDark ? kWhiteColor : kBlackColor,
+                                              ),
                                             ),
                                           ),
                                           Gap(8.w),
@@ -273,6 +276,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                                 : ''}",
                                             style: font16BlackSemiBold.copyWith(
                                               fontSize: 11,
+                                              color: isDark ? kWhiteColor : kBlackColor,
                                             ),
                                           ),
                                         ],
@@ -322,23 +326,25 @@ class _RequestScreenState extends State<RequestScreen> {
                               ],
                             ),
                           ),
+                          Gap(15.h),
                           Divider(
                             height: 1,
-                            color: kBlackColor,
+                            color: isDark ? kGreyColor : kBlackColor,
                             indent: 50,
                             endIndent: 50,
                             thickness: 1,
                           ),
-                          Gap(20.h),
+                          Gap(10.h),
                           Text(
                             kRentalPeriod.tr(),
-                            style: font16BlackSemiBold.copyWith(fontSize: 16),
+                            style: font16BlackSemiBold.copyWith(fontSize: 16,
+                            color: isDark ? kWhiteColor : kBlackColor,),
                           ),
                           Gap(10.h),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
-                              color: Color.fromARGB(255, 240, 240, 240),
+                              color: isDark ? kSomeDarkModeColor : Color.fromARGB(255, 240, 240, 240),
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(Shared.width * 0.05),
@@ -351,12 +357,12 @@ class _RequestScreenState extends State<RequestScreen> {
                                       Text(
                                         kStartDate.tr(),
                                         style: font15SomeBlackColorMedium
-                                            .copyWith(color: kgreyColor),
+                                            .copyWith(color: isDark ? kWhiteColor : kgreyColor),
                                       ),
                                       Text(
                                         kEndDate.tr(),
                                         style: font15SomeBlackColorMedium
-                                            .copyWith(color: kgreyColor),
+                                            .copyWith(color: isDark ? kWhiteColor : kgreyColor),
                                       ),
                                     ],
                                   ),
@@ -673,6 +679,7 @@ class _RequestScreenState extends State<RequestScreen> {
   }
 
   Widget buildDateBox(DateTime? date, VoidCallback onTap) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
       onTap: onTap,
 
@@ -680,7 +687,7 @@ class _RequestScreenState extends State<RequestScreen> {
         padding: const EdgeInsets.all(12),
 
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: isDark ? Color(0xffC0C0C0) : kWhiteColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: kPartGreyColor),
         ),

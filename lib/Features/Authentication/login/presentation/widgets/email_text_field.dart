@@ -50,6 +50,8 @@ class _EmailTextFieldState extends State<EmailTextField> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -62,6 +64,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
             prefixIcon: widget.icon,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22.r),
+              borderSide: isDark ? BorderSide(color: kGreyColor) : BorderSide(color: kBorderAuthColor),
             ),
             contentPadding: EdgeInsets.all(Shared.width * 0.05.w),
             floatingLabelStyle: TextStyle(color: kBorderAuthColor),

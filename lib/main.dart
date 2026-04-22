@@ -12,6 +12,7 @@ import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc
 import 'package:ager_waffer/Features/Home/presentation/manager/reviews_about_user_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/send_request_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/accept_order_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/decline_order_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_bloc.dart';
@@ -45,6 +46,16 @@ import 'Base/Notifications/local_notification_service.dart';
 import 'Base/common/shared.dart';
 import 'Base/common/shared_preference_manger.dart';
 import 'Features/Authentication/login/presentation/manager/authentication_bloc.dart';
+import 'Features/Authentication/login/presentation/pages/change_password_done_bottom_sheet.dart';
+import 'Features/Authentication/login/presentation/pages/forget_password_bottom_sheet.dart';
+import 'Features/Authentication/login/presentation/pages/reset_password_screen.dart';
+import 'Features/Authentication/login/presentation/pages/verification_code_screen.dart';
+import 'Features/Home/data/models/all_items_model.dart';
+import 'Features/Home/presentation/pages/request_screen.dart';
+import 'Features/Home/presentation/pages/search_screen.dart';
+import 'Features/Onboarding/presentation/pages/choose_login_or_register_screen.dart';
+import 'Features/Onboarding/presentation/pages/language_screen.dart';
+import 'Features/Onboarding/presentation/pages/onboarding_screen.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -277,7 +288,7 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
               CountryLocalizations.delegate,
             ],
 
-            
+
             home: SplashScreen(),
             routes: {
               'LoginScreen': (context) => LoginScreen(),
