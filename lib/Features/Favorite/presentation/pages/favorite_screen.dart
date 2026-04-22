@@ -1,44 +1,32 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
+import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Favorite/domain/entities/favorite_entity.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/all_favorite_items_bloc.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/all_favorite_items_state.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/widgets/empty_favorite.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/widgets/favorite_item_gide_view.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
-class FavoriteScreen extends StatelessWidget {
-  FavoriteScreen({super.key});
+class FavoriteScreen extends StatefulWidget {
+  const FavoriteScreen({super.key});
 
-  final List<FavoriteEntity> favorites = [
-    FavoriteEntity(
-      title: 'بروجيكتور محمول',
-      price: '100ج',
-      image: 'assets/images/portable_projector.png',
-      rating: 4.5,
-      isAvailable: true,
-    ),
-    FavoriteEntity(
-      title: 'سكوتر كهربائي',
-      price: '120ج',
-      image: 'assets/images/electric_scooter.png',
-      rating: 4.7,
-      isAvailable: true,
-    ),
-    FavoriteEntity(
-      title: 'ميزان 60 كيلو',
-      price: '60ج',
-      image: 'assets/images/balance.png',
-      rating: 4.0,
-      isAvailable: false,
-    ),
-    FavoriteEntity(
-      title: 'جهاز بخار للتعقيم',
-      price: '60ج',
-      image: 'assets/images/steam_sterilizer.png',
-      rating: 5.0,
-      isAvailable: true,
-    ),
-  ];
+  @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AllFavoriteItemsBloc>().add(GetAllFavoriteItemsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,18 +57,45 @@ class FavoriteScreen extends StatelessWidget {
             horizontal: Shared.width * 0.04.w,
             vertical: Shared.height * 0.025.h,
           ),
-          child:
-          //FavoriteEmpty()
-          GridView.builder(
-            itemCount: favorites.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 15.w,
-              crossAxisSpacing: 15.w,
-              childAspectRatio: 2 / 3.1,
-            ),
-            itemBuilder: (context, index) {
-              return FavoriteItemGideView(favoriteEntity: favorites[index]);
+          child: BlocBuilder<AllFavoriteItemsBloc, AllFavoriteItemsState>(
+            builder: (context, state) {
+              if(state.status == allFavoriteItemsStatus.loading) {
+                return const LoadingPlaceHolder(
+                  shimmerType: ShimmerType.list,
+                  cellShimmerHeight: 50,
+                  shimmerCount: 10,
+                );
+              } else if (state.status == allFavoriteItemsStatus.success){
+                final allFavoriteItems = state.favoriteItems;
+
+                if(allFavoriteItems.isEmpty) {
+                  return EmptyFavorite();
+                }
+
+                return GridView.builder(
+                  itemCount: allFavoriteItems.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15.w,
+                    crossAxisSpacing: 15.w,
+                    childAspectRatio: 2 / 3.2,
+                  ),
+                  itemBuilder: (context, index) {
+                    return FavoriteItemGideView(allFavoriteItems: allFavoriteItems[index]);
+                  },
+                );
+              } else if (state.status == allFavoriteItemsStatus.failure) {
+                return CustomErrorWidget(
+                  message: state.failureMessage,
+                  onRetry: () {
+                    context.read<AllFavoriteItemsBloc>().add(
+                      GetAllFavoriteItemsEvent(),
+                    );
+                  },
+                );
+              } else {
+                return Center(child: Text(kNoDataYet.tr()));
+              }
             },
           ),
         ),

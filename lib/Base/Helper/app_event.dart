@@ -95,6 +95,19 @@ class ToggleAvailabilityEvent extends AppEvent {
   });
 }
 
+class ToggleFavoriteEvent extends AppEvent {
+  final int itemId;
+
+  ToggleFavoriteEvent({required this.itemId});
+}
+
+class GetAllFavoriteItemsEvent extends AppEvent {
+  GetAllFavoriteItemsEvent();
+}
+
+class GetNotificationsEvent extends AppEvent {
+  GetNotificationsEvent();
+}
 
 class AddReviewEvent extends AppEvent {
   final int reviewType;

@@ -4,6 +4,8 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/manager/e
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/register_screen.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/all_favorite_items_bloc.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/favorite_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/item_reviews_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:ager_waffer/Features/Home/presentation/pages/home_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/accept_order_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/decline_order_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_bloc.dart';
+import 'package:ager_waffer/Features/Notification/presentation/manager/notifications_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/cancel_order_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
@@ -260,6 +263,9 @@ class MyMaterialState extends State<MyMaterial> with WidgetsBindingObserver {
             BlocProvider(create: (context) => DeclineOrderBloc()),
             BlocProvider(create: (context) => DeviceRegisterBloc()),
             BlocProvider(create: (context) => ReviewsAboutUserBloc()),
+            BlocProvider(create: (context) => FavoriteBloc()),
+            BlocProvider(create: (context) => NotificationsBloc()),
+            BlocProvider(create: (context) => AllFavoriteItemsBloc()),
             // BlocProvider(create: (context) => GetMessagesBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),
             //   BlocProvider.value(value: CreateOrderBloc()),

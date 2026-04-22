@@ -1,12 +1,19 @@
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Notification/data/models/notifications_model.dart';
 import 'package:ager_waffer/Features/Notification/domain/entities/notification_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class NotificationItem extends StatelessWidget {
-  const NotificationItem({super.key, required this.notification});
+  const NotificationItem({super.key, required this.notifications});
 
-  final NotificationEntity notification;
+  final NotificationsData notifications;
+
+  String formatTime(String date) {
+    final DateTime parsed = DateTime.parse(date).toLocal();
+    return DateFormat('hh:mm a').format(parsed);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +24,17 @@ class NotificationItem extends StatelessWidget {
         width: 45.w,
         height: 45.w,
         decoration: BoxDecoration(
-          color: notification.color.withOpacity(.15),
+          color: kGreyColor,
           shape: BoxShape.circle,
         ),
-        child: Icon(notification.icon, color: notification.color),
+        child: Icon(Icons.not_accessible, color: kPrimaryColor),
       ),
       title: Text(
-        notification.title,
+        notifications.title!,
         style: font20PrimaryMedium,
       ),
-      subtitle: Text(notification.message, style: font13kLightPrimaryColorMedium.copyWith(fontSize: 15),),
-      trailing: Text(notification.time, style: font13kLightPrimaryColorMedium.copyWith(color: kTextColor,),),
+      subtitle: Text(notifications.body!, style: font13kLightPrimaryColorMedium.copyWith(fontSize: 15),),
+      trailing: Text(formatTime(notifications.createdAt!), style: font13kLightPrimaryColorMedium.copyWith(color: kTextColor,),),
     );;
   }
 }
