@@ -77,7 +77,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 15.w,
                     crossAxisSpacing: 15.w,
-                    childAspectRatio: 2 / 3.2,
+                    childAspectRatio: 2.h / 3.2.h,
                   ),
                   itemBuilder: (context, index) {
                     return FavoriteItemGideView(allFavoriteItems: allFavoriteItems[index]);
