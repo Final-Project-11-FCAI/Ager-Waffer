@@ -72,16 +72,17 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
         appBar: AppBar(
           toolbarHeight: 90,
-          backgroundColor: kPrimaryColor,
-          foregroundColor: kWhiteColor,
+          backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+          foregroundColor: isDark ? kDarkModeColor : kWhiteColor,
           title: Container(
             alignment: Alignment.centerLeft,
             child: LogoAsText(),
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen>
           child: Container(
             height: double.infinity,
             decoration: BoxDecoration(
-              color: kWhiteColor,
+              color: isDark ? kDarkModeColor : kPrimaryColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25.r),
                 topRight: Radius.circular(25.r),
@@ -180,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 child: Text(
                                   kforgotPasswordKey.tr(),
                                   style: TextStyle(
-                                    color: kPrimaryColor,
+                                    color: isDark ? kWhiteColor : kPrimaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -207,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen>
                             }
                                 : null,
                             text: kLogin.tr(),
-                            color: kPrimaryColor,
+                            color: isDark ? kButtonColor : kPrimaryColor,
                           ),
                         ],
                       ),
@@ -218,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen>
                         Expanded(
                           child: Divider(
                             thickness: 1,
-                            color: kLightBlackColor,
+                            color: isDark ? kGreyColor : kLightBlackColor,
                             endIndent: 20,
                             indent: 20,
                           ),
@@ -226,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen>
                         Text(
                           kloginWithKey.tr(),
                           style: TextStyle(
-                            color: kPrimaryColor,
+                            color: isDark ? kWhiteColor : kPrimaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
@@ -234,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen>
                         Expanded(
                           child: Divider(
                             thickness: 1,
-                            color: kLightBlackColor,
+                            color: isDark ? kGreyColor : kLightBlackColor,
                             indent: 20,
                             endIndent: 20,
                           ),
@@ -252,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen>
                           TextSpan(
                             text: "${knoAccountKey.tr()} ",
                             style: TextStyle(
-                              color: Color(0xff5588A3),
+                              color: isDark ? kButtonColor : Color(0xff5588A3),
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -267,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen>
                           TextSpan(
                               text: kcreateAccountNowKey.tr(),
                               style: TextStyle(
-                                color: kPrimaryColor,
+                                color: isDark ? kWhiteColor : kPrimaryColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                               ),

@@ -47,6 +47,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,6 +74,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22.r),
+              borderSide: isDark ? BorderSide(color: kGreyColor) : BorderSide(color: kBorderAuthColor),
             ),
 
             focusedBorder: OutlineInputBorder(

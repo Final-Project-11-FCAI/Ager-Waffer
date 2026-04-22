@@ -76,20 +76,40 @@ class _ButtonAppState extends State<ButtonApp>
           width: double.infinity,
           child: ElevatedButton(
             onPressed: widget.onPressed,
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(
-                vertical: widget.isLanguageScreen
-                    ? Shared.height * 0.024.h
-                    : Shared.height * 0.02.h,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  widget.borderRadius ?? Shared.width * 0.07.w,
+            style:
+                ElevatedButton.styleFrom(
+                  // استخدمنا backgroundColor بشكل صريح مع التأكد من الـ Elevation
+                  backgroundColor: widget.color,
+                  //elevation: 0,
+                  // foregroundColor بيتحكم في لون المحتوى (Text & Icons) بشكل تلقائي لو محددتوش
+                  foregroundColor:
+                      widget.color == kPrimaryColor ||
+                          widget.color == kDoneColor
+                      ? kWhiteColor
+                      : kPrimaryColor,
+                  padding: EdgeInsets.symmetric(
+                    vertical: widget.isLanguageScreen
+                        ? Shared.height * 0.024.h
+                        : Shared.height * 0.02.h,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? Shared.width * 0.07.w,
+                    ),
+                    // هنا بنخلي الـ border بنفس لون الزرار عشان ميبقاش فيه حواف غريبة
+                    side: BorderSide(color: widget.color, width: 1),
+                  ),
+                ).copyWith(
+                  // ده "السر" عشان تجبر فلاتر تستخدم اللون بتاعك حتى لو الثيم العام مختلف
+                  backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                    states,
+                  ) {
+                    if (states.contains(WidgetState.disabled)) {
+                      return widget.color ; // لون باهت لو الزرار معطل
+                    }
+                    return widget.color; // اللون اللي أنت باعته في الحالة العادية
+                  }),
                 ),
-                side: BorderSide(color: kPrimaryColor, width: 1),
-              ),
-              backgroundColor: widget.color,
-            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -98,24 +118,14 @@ class _ButtonAppState extends State<ButtonApp>
                   style: GoogleFonts.notoSansArabic(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
-                    color:
-                        widget.color == kPrimaryColor || widget.color == kDoneColor
-                        ? kWhiteColor
-                        : kPrimaryColor,
+                    // استخدمنا نفس المنطق للتأكد من تناسق لون النص مع الخلفية
+                    color: kWhiteColor,
                   ),
                 ),
-                widget.isReview ?
-                Row(
-                  children: [
-                    Gap(10.w),
-                    const Icon(
-                      Icons.send,
-                      color: kWhiteColor,
-                      size: 20,
-                    ),
-                  ],
-                )
-                : const SizedBox.shrink(),
+                if (widget.isReview) ...[
+                  Gap(10.w),
+                  const Icon(Icons.send, color: kWhiteColor, size: 20),
+                ],
               ],
             ),
           ),

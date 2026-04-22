@@ -11,6 +11,7 @@ class SkipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04),
       child: Align(
@@ -26,9 +27,9 @@ class SkipButton extends StatelessWidget {
             height: Shared.height * 0.05,
             width: Shared.width * 0.22,
             decoration: BoxDecoration(
-              color: kWhiteColor,
+              color: isDark ? kTransparentColor : kWhiteColor,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: kPrimaryColor, width: 2),
+              border: Border.all(color: isDark ? kGreyColor : kPrimaryColor, width: 2),
             ),
             child: Center(
               child: Text(
@@ -36,7 +37,7 @@ class SkipButton extends StatelessWidget {
                 style: GoogleFonts.notoSansArabic(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
-                  color: kBlackColor,
+                  color: isDark ? kGreyColor : kPrimaryColor,
                 ),
               ),
             ),

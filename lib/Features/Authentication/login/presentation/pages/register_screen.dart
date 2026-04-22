@@ -98,16 +98,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
         appBar: AppBar(
           toolbarHeight: 90,
-          backgroundColor: kPrimaryColor,
-          foregroundColor: kWhiteColor,
+          backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+          foregroundColor: isDark ? kDarkModeColor : kWhiteColor,
           title: Container(
             alignment: Alignment.centerLeft,
             child: LogoAsText(),
@@ -134,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Container(
             height: double.infinity,
             decoration: BoxDecoration(
-              color: kWhiteColor,
+              color: isDark ? kDarkModeColor : kWhiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25.r),
                 topRight: Radius.circular(25.r),
@@ -200,10 +201,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  // Gap(10.h),
+                   Gap(5.h),
                   Text(
                     kAddImage.tr(),
-                    style: font16BlackSemiBold.copyWith(fontWeight: medium),
+                    style: font16BlackSemiBold.copyWith(fontWeight: medium,color: isDark ? kWhiteColor : kBlackColor),
                   ),
                   Gap(30.h),
                   Form(
@@ -270,7 +271,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               : null,
 
                           text: kCreateAccount.tr(),
-                          color: kPrimaryColor,
+                          color: isDark ? kButtonColor : kPrimaryColor,
                         ),
                         Gap(10.h),
                       ],
@@ -282,7 +283,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Expanded(
                         child: Divider(
                           thickness: 1,
-                          color: kLightBlackColor,
+                          color: isDark ? kGreyColor : kBlackColor,
                           endIndent: 20,
                           indent: 20,
                         ),
@@ -290,7 +291,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Text(
                         kOrRegisterWith.tr(),
                         style: TextStyle(
-                          color: kPrimaryColor,
+                          color: isDark ? kWhiteColor  : kPrimaryColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -298,7 +299,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Expanded(
                         child: Divider(
                           thickness: 1,
-                          color: kLightBlackColor,
+                          color: isDark ? kGreyColor : kBlackColor,
                           indent: 20,
                           endIndent: 20,
                         ),
@@ -315,7 +316,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextSpan(
                           text: '${kHaveAccount.tr()} ',
                           style: TextStyle(
-                            color: Color(0xff5588A3),
+                            color: isDark ? kButtonColor : Color(0xff5588A3),
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -330,7 +331,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextSpan(
                           text: "${kLogin.tr()} ${know.tr()}",
                           style: TextStyle(
-                            color: kPrimaryColor,
+                            color: isDark ? kWhiteColor : kPrimaryColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),

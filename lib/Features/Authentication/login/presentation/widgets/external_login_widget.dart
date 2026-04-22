@@ -73,6 +73,7 @@ class ExternalLoginWidget extends StatelessWidget {
     required String icon,
     required VoidCallback onTap,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocBuilder<ExternalLoginBloc, ExternalLoginState>(
       builder: (context, state) {
         final isLoading =
@@ -86,16 +87,16 @@ class ExternalLoginWidget extends StatelessWidget {
             child: InkWell(
               onTap: isLoading ? null : onTap,
               borderRadius: BorderRadius.circular(14),
-              splashColor: kWhiteColor,
+              splashColor: isDark ? kButtonColor : kWhiteColor,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 width: double.infinity,
                 height: 58,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: kWhiteColor,
+                  color: isDark ? kButtonColor : kWhiteColor,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: isDark ? kButtonColor : Colors.grey.shade300),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.04),
@@ -124,7 +125,7 @@ class ExternalLoginWidget extends StatelessWidget {
                         Gap(10.h),
                         Text(
                           text,
-                          style: font16BlackSemiBold
+                          style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor)
                         ),
                       ],
                     ),

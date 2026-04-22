@@ -51,7 +51,9 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
+      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -90,7 +92,7 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                   Text(
                     kForgetPasswordDesc.tr(),
                     textAlign: TextAlign.center,
-                    style: font24PrimarySemiBold.copyWith(fontWeight: medium),
+                    style: font24PrimarySemiBold.copyWith(fontWeight: medium,color: isDark ? kWhiteColor : kPrimaryColor),
                   ),
                   Gap(40.h),
                   EmailTextField(
@@ -118,7 +120,7 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                         : null,
 
                     text: kContinue.tr(),
-                    color: kPrimaryColor,
+                    color: isDark ? kButtonColor : kPrimaryColor,
                     borderRadius: Shared.width * 0.04.h,
                   ),
                   Gap(20.h),
@@ -127,7 +129,7 @@ class _ForgetPasswordBottomSheetState extends State<ForgetPasswordBottomSheet> {
                       Navigator.pop(context);
                     },
                     text: kCancel.tr(),
-                    color: kPrimaryColor,
+                    color: isDark ? kButtonColor : kPrimaryColor,
                     borderRadius: Shared.width * 0.04.h,
                   ),
                 ],
