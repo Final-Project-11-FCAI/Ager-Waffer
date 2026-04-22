@@ -36,6 +36,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocBuilder<MyOrdersBloc, MyOrdersState>(
       builder: (context, state) {
         if (state.status == myOrdersStatus.loading) {
@@ -82,7 +83,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: kWhiteColor,
+                    color:isDark  ? kDarkModeColor : kWhiteColor,
                     borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(
                       color: kBlackColor.withOpacity(0.2),

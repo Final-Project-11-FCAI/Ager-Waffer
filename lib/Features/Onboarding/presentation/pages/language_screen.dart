@@ -22,45 +22,62 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.035, vertical: Shared.height * 0.14),
+            padding: EdgeInsets.symmetric(
+              horizontal: Shared.width * 0.035,
+              vertical: Shared.height * 0.14,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "اختيار اللغة",
-                  style: font14BlackBold.copyWith(fontSize: 24),
+                  style: font14BlackBold.copyWith(
+                    fontSize: 24,
+                    color: isDark ? kWhiteColor : kBlackColor,
+                  ),
                 ),
                 Gap(14.h),
-                _buildLanguageButton(title: "العربية", flag: "assets/images/egypt_flag.png", value: "ar"),
+                _buildLanguageButton(
+                  title: "العربية",
+                  flag: "assets/images/egypt_flag.png",
+                  value: "ar",
+                ),
                 Gap(20.h),
-                _buildLanguageButton(title: "English", flag: "assets/images/english_flag.png", value: "en"),
+                _buildLanguageButton(
+                  title: "English",
+                  flag: "assets/images/english_flag.png",
+                  value: "en",
+                ),
                 Gap(Shared.height * 0.35),
                 ButtonApp(
                   isLanguageScreen: true,
-                    onPressed: () async {
-                      await LocalizeAndTranslate.setLanguageCode(selectedLanguage);
+                  onPressed: () async {
+                    await LocalizeAndTranslate.setLanguageCode(
+                      selectedLanguage,
+                    );
 
-                      MyMaterial.setLocale(context, Locale(selectedLanguage));
+                    MyMaterial.setLocale(context, Locale(selectedLanguage));
 
-                      sharedPreferenceManager.writeData(
-                        CachingKey.APP_LANGUAGE,
-                        selectedLanguage,
-                      );
+                    sharedPreferenceManager.writeData(
+                      CachingKey.APP_LANGUAGE,
+                      selectedLanguage,
+                    );
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OnboardingScreen(),
-                        ),
-                      );
-                    },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OnboardingScreen(),
+                      ),
+                    );
+                  },
                   text: "استمرار",
-                  color: kPrimaryColor,
+                  color: isDark ? kButtonColor : kPrimaryColor,
                 ),
               ],
             ),
@@ -75,6 +92,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     required String flag,
     required String value,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final bool isSelected = selectedLanguage == value;
 
     return GestureDetector(
@@ -87,8 +105,23 @@ class _LanguageScreenState extends State<LanguageScreen> {
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         height: 70.h,
         decoration: BoxDecoration(
-          color: isSelected ? kMoreLightPrimaryColor : Colors.grey.shade200,
+          color: isSelected
+              ? isDark
+                    ? kMoreLightPrimaryColor
+                    : kPrimaryColor
+              : isDark
+              ? kTransparentColor
+              : Colors.grey.shade200,
           borderRadius: BorderRadius.circular(25.sp),
+          border: Border.all(
+            color: isSelected
+                ? isDark
+                    ? kMoreLightPrimaryColor
+                    : kPrimaryColor
+                : isDark
+                ? kSomeDarkModeColor
+                : Colors.grey.shade200,
+          )
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +133,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 Text(
                   title,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.black,
+                    color: isSelected
+                        ? isDark
+                              ? kWhiteColor
+                              : kWhiteColor
+                        : isDark
+                        ? kGreyColor
+                        : kBlackColor,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
@@ -108,7 +147,10 @@ class _LanguageScreenState extends State<LanguageScreen> {
               ],
             ),
             if (isSelected)
-              const Icon(Icons.check_circle, color: Colors.white)
+              Icon(
+                Icons.check_circle,
+                color: isDark ? kButtonColor : kWhiteColor,
+              )
             else
               const SizedBox(width: 10),
           ],

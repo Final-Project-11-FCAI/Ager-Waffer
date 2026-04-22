@@ -24,8 +24,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       body: Column(
         children: [
           buildDesign(isTopLeft: true),
@@ -54,12 +55,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         children: [
                           TextSpan(
                             text: onboardingDate[index].title,
-                            style: font24LightPrimarySemiBold,
+                            style: font24LightPrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kPrimaryColor),
                           ),
                           _currentPage == 0
                               ? TextSpan(
                                   text: kAppName.tr(),
-                                  style: font24PrimarySemiBold,
+                                  style: font24PrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kPrimaryColor),
                                 )
                               : const TextSpan(),
                         ],
@@ -76,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         style: GoogleFonts.notoSansArabic(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          color: kPrimaryColor,
+                          color: isDark ? kGreyColor : kPrimaryColor,
                         ),
                       ),
                     ),
@@ -94,8 +95,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             width: Shared.width * 0.032,
                             decoration: BoxDecoration(
                               color: _currentPage == val
-                                  ? kPrimaryColor
-                                  : Colors.grey.shade300,
+                                  ? isDark ? kButtonColor : kPrimaryColor
+                                  : isDark ? kGreyColor : Colors.grey.shade300,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -109,7 +110,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       child: ButtonApp(
                         text: kNext.tr(),
-                        color: kPrimaryColor,
+                        color: isDark ? kButtonColor : kPrimaryColor,
                         onPressed: () {
                           if (_currentPage == onboardingDate.length - 1) {
                             Navigator.pushReplacement(

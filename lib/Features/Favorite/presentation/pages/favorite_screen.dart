@@ -42,10 +42,11 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor:isDark ? kMoreDarkModeColor : kPrimaryColor,
         title: Text(
           'العناصر المفضلة',
           style: font16BlackSemiBold.copyWith(
@@ -57,7 +58,7 @@ class FavoriteScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: isDark ? kDarkModeColor : kWhiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25.r),
             topRight: Radius.circular(25.r),

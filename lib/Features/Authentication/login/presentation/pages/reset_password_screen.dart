@@ -38,9 +38,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   void checkFields() {
     final isValid =
         passwordController.text.isNotEmpty &&
-            confirmPasswordController.text.isNotEmpty &&
-            InputValidation.passwordValidator(passwordController.text) == null &&
-            passwordController.text == confirmPasswordController.text;
+        confirmPasswordController.text.isNotEmpty &&
+        InputValidation.passwordValidator(passwordController.text) == null &&
+        passwordController.text == confirmPasswordController.text;
 
     setState(() {
       isButtonEnabled = isValid;
@@ -65,12 +65,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor: kPrimaryColor,
-        foregroundColor: kWhiteColor,
+        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+        foregroundColor: isDark ? kDarkModeColor : kWhiteColor,
         title: Container(alignment: Alignment.centerLeft, child: LogoAsText()),
       ),
       body: BlocListener<AuthenticationBloc, AppState>(
@@ -99,9 +100,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             Shared.dismissDialog(context: context);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(
-                  state.message ?? kSomethingWentWrong.tr(),
-                ),
+                content: Text(state.message ?? kSomethingWentWrong.tr()),
               ),
             );
           }
@@ -109,7 +108,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: Container(
           height: double.infinity,
           decoration: BoxDecoration(
-            color: kWhiteColor,
+            color: isDark ? kDarkModeColor : kWhiteColor,
             borderRadius: BorderRadius.circular(25.r),
           ),
           child: SingleChildScrollView(
@@ -128,7 +127,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
-                        color: kPrimaryColor,
+                        color: isDark ? kWhiteColor : kPrimaryColor,
                       ),
                     ),
                     Gap(10.h),
@@ -146,7 +145,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
-                        color: kPrimaryColor,
+                        color: isDark ? kWhiteColor : kPrimaryColor,
                       ),
                     ),
                     Gap(10.h),
@@ -170,75 +169,76 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                     Gap(50.h),
                     ButtonApp(
-                        onPressed: isButtonEnabled
-                            ? () {
-                          if (formKey.currentState!.validate() &&
-                              passwordController.text == confirmPasswordController.text) {
-                            authenticationBloc.add(
-                              ResetPasswordEvent(
-                                email: widget.email,
-                                newPassword: passwordController.text,
-                              ),
-                            );
-                          }
-                        }
-                            : null,
+                      onPressed: isButtonEnabled
+                          ? () {
+                              if (formKey.currentState!.validate() &&
+                                  passwordController.text ==
+                                      confirmPasswordController.text) {
+                                authenticationBloc.add(
+                                  ResetPasswordEvent(
+                                    email: widget.email,
+                                    newPassword: passwordController.text,
+                                  ),
+                                );
+                              }
+                            }
+                          : null,
                       text: kUpdatePassword.tr(),
-                      color: kPrimaryColor,
+                      color: isDark ? kButtonColor : kPrimaryColor,
                     ),
                     Gap(10.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 1,
-                            color: kLightBlackColor,
-                            endIndent: 20,
-                            indent: 20,
-                          ),
-                        ),
-                        Text(
-                          kloginWithKey.tr(),
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 1,
-                            color: kLightBlackColor,
-                            indent: 20,
-                            endIndent: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        LogoIcon(
-                          path: 'assets/images/Facebook.png',
-                          onTap: () {},
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.02,
-                          ),
-                          child: LogoIcon(
-                            path: 'assets/images/Apple.png',
-                            onTap: () {},
-                            height: 83,
-                            width: 83,
-                          ),
-                        ),
-                        LogoIcon(
-                          path: "assets/images/Google.png",
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Divider(
+                    //         thickness: 1,
+                    //         color: kLightBlackColor,
+                    //         endIndent: 20,
+                    //         indent: 20,
+                    //       ),
+                    //     ),
+                    //     Text(
+                    //       kloginWithKey.tr(),
+                    //       style: TextStyle(
+                    //         color: kPrimaryColor,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontSize: 16,
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Divider(
+                    //         thickness: 1,
+                    //         color: kLightBlackColor,
+                    //         indent: 20,
+                    //         endIndent: 20,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     LogoIcon(
+                    //       path: 'assets/images/Facebook.png',
+                    //       onTap: () {},
+                    //     ),
+                    //     Padding(
+                    //       padding: EdgeInsets.symmetric(
+                    //         horizontal: Shared.width * 0.02,
+                    //       ),
+                    //       child: LogoIcon(
+                    //         path: 'assets/images/Apple.png',
+                    //         onTap: () {},
+                    //         height: 83,
+                    //         width: 83,
+                    //       ),
+                    //     ),
+                    //     LogoIcon(
+                    //       path: "assets/images/Google.png",
+                    //       onTap: () {},
+                    //     ),
+                    //   ],
+                    // ),
                     Gap(20.h),
                     Align(
                       alignment: Alignment.center,
@@ -248,7 +248,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             TextSpan(
                               text: knoAccountKey.tr(),
                               style: TextStyle(
-                                color: Color(0xff5588A3),
+                                color: isDark
+                                    ? kButtonColor
+                                    : Color(0xff5588A3),
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -263,7 +265,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             TextSpan(
                               text: kcreateAccountNowKey.tr(),
                               style: TextStyle(
-                                color: kPrimaryColor,
+                                color: isDark ? kWhiteColor : kPrimaryColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                               ),

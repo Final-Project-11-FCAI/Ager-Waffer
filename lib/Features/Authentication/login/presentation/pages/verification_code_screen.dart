@@ -69,6 +69,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultPinTheme = PinTheme(
       width: 60.w,
       height: 60.h,
@@ -80,6 +81,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     );
 
     return Scaffold(
+      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       resizeToAvoidBottomInset: true,
       body: BlocListener<AuthenticationBloc, AppState>(
         bloc: authenticationBloc,
@@ -122,7 +124,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                         Icon(
                           Icons.lock,
                           size: Shared.width * 0.25.w,
-                          color: kDoneColor,
+                          color: isDark ? kLightPrimaryColor : kDoneColor,
                         ),
                         Gap(20.h),
                         Text(
@@ -130,14 +132,14 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                           textAlign: TextAlign.center,
                           style: font24PrimarySemiBold.copyWith(
                             fontWeight: bold,
-                            color: kDoneColor,
+                            color: isDark ? kWhiteColor : kDoneColor,
                           ),
                         ),
                         Gap(10.h),
                         Text(
                           kVerifyEmailDesc.tr(),
                           textAlign: TextAlign.center,
-                          style: font20PrimaryMedium.copyWith(color: kDoneColor),
+                          style: font20PrimaryMedium.copyWith(color: isDark ? kGreyColor : kDoneColor),
                         ),
                         Gap(5.h),
                         Text(
@@ -153,7 +155,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                           focusedPinTheme: defaultPinTheme.copyWith(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(color: kBlueColor),
+                              border: Border.all(color: isDark ? kGreyColor : kBlueColor),
                             ),
                           ),
                         ),
@@ -172,7 +174,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             }
                                 : null,
                           text: kConfirm.tr(),
-                          color: kPrimaryColor,
+                          color: isDark ? kButtonColor : kPrimaryColor,
                           borderRadius: Shared.width * 0.04.h,
                         ),
                         Gap(10.h),
@@ -182,7 +184,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                                 child: Text(
                                   kResendCode.tr(),
                                   style: font20PrimaryMedium.copyWith(
-                                    color: kBlackColor,
+                                    color: isDark ? kWhiteColor : kBlackColor,
                                   ),
                                 ),
                               )

@@ -12,8 +12,9 @@ class FavoriteItemGideView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Card(
-      color: kWhiteColor,
+      color: isDark ? kDarkModeColor : kWhiteColor,
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
       child: Column(
@@ -22,7 +23,7 @@ class FavoriteItemGideView extends StatelessWidget {
             width: double.infinity,
             height: Shared.height * 0.22.h,
             decoration: BoxDecoration(
-              color: kFavoriteColor,
+              color: isDark ? kSomeGreyDarkModeColor : kFavoriteColor,
               borderRadius: BorderRadius.circular(25.r),
             ),
             child: Stack(
@@ -53,11 +54,16 @@ class FavoriteItemGideView extends StatelessWidget {
                     Text(
                       favoriteEntity.title,
                       overflow: TextOverflow.ellipsis,
-                      style: font14BlackBold.copyWith(fontWeight: semiBold),
+                      style: font14BlackBold.copyWith(
+                        fontWeight: semiBold,
+                        color: isDark ? kWhiteColor : kBlackColor,
+                      ),
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: favoriteEntity.isAvailable ? kLightGreenColor : kNotAvailableColor,
+                        color: favoriteEntity.isAvailable
+                            ? kLightGreenColor
+                            : kNotAvailableColor,
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Padding(
@@ -68,7 +74,9 @@ class FavoriteItemGideView extends StatelessWidget {
                         child: Text(
                           favoriteEntity.isAvailable ? 'متاح' : 'غير متاح',
                           style: font20PrimaryMedium.copyWith(
-                            color: favoriteEntity.isAvailable ? kGreenColor : kPartGreyColor,
+                            color: favoriteEntity.isAvailable
+                                ? kGreenColor
+                                : kPartGreyColor,
                             fontSize: 10.sp,
                           ),
                         ),
@@ -89,7 +97,7 @@ class FavoriteItemGideView extends StatelessWidget {
                         text: '/اليوم',
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 13,
-                          color: kBlackColor.withOpacity(0.63),
+                          color: isDark ? kWhiteColor : kBlackColor,
                         ),
                       ),
                     ],
@@ -100,7 +108,7 @@ class FavoriteItemGideView extends StatelessWidget {
                   children: [
                     Text(
                       favoriteEntity.rating.toString(),
-                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp),
+                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp,color: isDark ? kWhiteColor : kPrimaryColor),
                     ),
                     Gap(3.w),
                     Icon(Icons.star, size: 17.sp, color: Colors.amber),
