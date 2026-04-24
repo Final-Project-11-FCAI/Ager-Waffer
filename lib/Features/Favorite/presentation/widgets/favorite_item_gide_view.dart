@@ -1,10 +1,11 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Favorite/data/models/all_favorite_items_model.dart';
-import 'package:ager_waffer/Features/Favorite/domain/entities/favorite_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class FavoriteItemGideView extends StatelessWidget {
   const FavoriteItemGideView({super.key, required this.allFavoriteItems});
@@ -55,12 +56,14 @@ class FavoriteItemGideView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      allFavoriteItems.name ?? "",
-                      overflow: TextOverflow.ellipsis,
-                      style: font14BlackBold.copyWith(
-                        fontWeight: semiBold,
-                        color: isDark ? kWhiteColor : kBlackColor,
+                    Expanded(
+                      child: Text(
+                        allFavoriteItems.name ?? "",
+                        overflow: TextOverflow.ellipsis,
+                        style: font14BlackBold.copyWith(
+                          fontWeight: semiBold,
+                          color: isDark ? kWhiteColor : kBlackColor,
+                        ),
                       ),
                     ),
                     Container(
@@ -74,7 +77,7 @@ class FavoriteItemGideView extends StatelessWidget {
                           vertical: Shared.height * 0.003.h,
                         ),
                         child: Text(
-                          allFavoriteItems.isAvailable! ? 'متاح' : 'غير متاح',
+                          allFavoriteItems.isAvailable! ? kAvailable.tr() : kNotAvailable.tr(),
                           style: font20PrimaryMedium.copyWith(
                             color: allFavoriteItems.isAvailable! ? kGreenColor : kPartGreyColor,
                             fontSize: 10.sp,
@@ -94,7 +97,13 @@ class FavoriteItemGideView extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: '/اليوم',
+                        text: ' / ${allFavoriteItems.rentUnit == kDaily.tr()
+                            ? kDay.tr()
+                            : allFavoriteItems.rentUnit == kWeekly.tr()
+                            ? kWeek.tr()
+                            : allFavoriteItems.rentUnit == kMonthly.tr()
+                            ? kMonth.tr()
+                            : ''}',
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 13,
                           color: isDark ? kWhiteColor : kBlackColor,

@@ -13,6 +13,7 @@ import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/show_detai
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -237,40 +238,63 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                   ));
                                 },
                               ),
-                              orderButton(
-                                text: kContactRenter.tr(),
-                                icon: 'assets/images/contact_icon.png',
-                                backgroundColor: kWhiteColor,
-                                textColor: kPrimaryColor,
-                                onTap: () async{
-                                    final roomId = await FireData().createRoom(
-                                      currentOrdersManagement[index].email!,
-                                    );
+                              StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .where('email', isEqualTo: currentOrdersManagement[index].email)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return const Center(child: CircularProgressIndicator());
+                                  }
 
-                                    if (roomId != null) {
-                                      customAnimatedPushNavigation(
-                                        context,
-                                        ChatScreen(
-                                          roomId: roomId,
-                                          chatUser: ChatUser(
-                                            id: currentOrdersManagement[index].renteeId,
-                                            name: currentOrdersManagement[index].renteeName,
-                                            image: currentOrdersManagement[index].itemImages![0],
-                                            about: "Hello I'm ${currentOrdersManagement[index].renteeName}",
-                                            email: currentOrdersManagement[index].email,
-                                            createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
-                                            lastActivated: DateTime.now().millisecondsSinceEpoch.toString(),
-                                            pushToken: '',
-                                            online: false,
-                                            myUsers: [],
+                                  final uid = snapshot.data!.docs.first.id;
+                                  print("##uid : ${uid}");
+
+                                  return orderButton(
+                                    text: kContactRenter.tr(),
+                                    icon: 'assets/images/contact_icon.png',
+                                    backgroundColor: kWhiteColor,
+                                    textColor: kPrimaryColor,
+                                    onTap: () async {
+                                      print("ownerEmail: ${currentOrdersManagement[index].email}");
+                                      final roomId = await FireData()
+                                          .createRoom(currentOrdersManagement[index].email!)
+                                          .onError((error, stackTrace) {
+                                        print("error: ${error}");
+                                        print("stackTrace: ${stackTrace}");
+                                      });
+                                      print("roomId: ${roomId}");
+                                      if (roomId != null) {
+                                        customAnimatedPushNavigation(
+                                          context,
+                                          ChatScreen(
+                                            roomId: roomId,
+                                            chatUser: ChatUser(
+                                              id: uid,
+                                              name: currentOrdersManagement[index].renteeName,
+                                              image: "assets/images/virtual_user.jpg",
+                                              about: "Hello I'm ${currentOrdersManagement[index].renteeName}",
+                                              email: currentOrdersManagement[index].email,
+                                              createdAt: DateTime.now().millisecondsSinceEpoch
+                                                  .toString(),
+                                              lastActivated: DateTime.now().millisecondsSinceEpoch
+                                                  .toString(),
+                                              pushToken: '',
+                                              online: false,
+                                              myUsers: [],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    } else {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(SnackBar(content: Text("User not found")));
-                                    }
+                                        );
+                                      } else {
+                                        print("EMAIL: ${currentOrdersManagement[index].email}");
+                                        print("ID: ${currentOrdersManagement[index].renteeId}");
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(SnackBar(content: Text("User not found")));
+                                      }
+                                    },
+                                  );
                                 },
                               ),
                             ],

@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../../Base/common/shared_preference_manger.dart';
 import '../../data/repositories/authentication_repository.dart';
@@ -28,6 +29,11 @@ class LoginBloc extends Bloc<AppEvent , LoginState> {
       // sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, response.data?.imageUrl);
 
       sharedPreferenceManager.saveUser(response.data!);
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      );
 
       emit(state.copyWith(status: loginStatus.success,user: response.data));
     } else {

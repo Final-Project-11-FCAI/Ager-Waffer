@@ -175,6 +175,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -203,214 +204,218 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
             backgroundColor: kPrimaryColor,
             foregroundColor: kWhiteColor,
           ),
-          body: BlocListener<UpdateItemBloc, UpdateItemState>(
-            listener: (context, state) {
-              if (state.status == updateItemStatus.loading) {
-                Shared.showLoadingDialog(context: context);
-              } else if (state.status == updateItemStatus.success) {
-                Shared.dismissDialog(context: context);
-                context.read<MyListingsBloc>().add(GetMyListingsEvent());
-                Navigator.of(context).pop();
-              } else if (state.status == updateItemStatus.failure) {
-                Shared.dismissDialog(context: context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      state.failureMessage ?? kSomethingWentWrong.tr(),
+          body: SafeArea(
+            child: BlocListener<UpdateItemBloc, UpdateItemState>(
+              listener: (context, state) {
+                if (state.status == updateItemStatus.loading) {
+                  Shared.showLoadingDialog(context: context);
+                } else if (state.status == updateItemStatus.success) {
+                  Shared.dismissDialog(context: context);
+                  context.read<MyListingsBloc>().add(GetMyListingsEvent());
+                  Navigator.of(context).pop();
+                } else if (state.status == updateItemStatus.failure) {
+                  Shared.dismissDialog(context: context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        state.failureMessage ?? kSomethingWentWrong.tr(),
+                      ),
                     ),
+                  );
+                }
+              },
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: kWhiteColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.r),
+                    topRight: Radius.circular(25.r),
                   ),
-                );
-              }
-            },
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: kWhiteColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.r),
-                  topRight: Radius.circular(25.r),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Shared.width * 0.04.w,
-                          vertical: Shared.height * 0.025.h,
-                        ),
-                        child: Form(
-                          key: formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              UpdateUploadImages(
-                                initialImage:
-                                    widget.product.itemImages?.isNotEmpty ==
-                                        true
-                                    ? widget.product.itemImages!.first
-                                    : null,
-                                onImagesSelected: (files) {
-                                  images = files;
-                                  validateForm();
-                                },
-                              ),
-                              Gap(50.h),
-                              UpdateProductDataContainer(
-                                hintText: kProductName.tr(),
-                                keyboardType: TextInputType.name,
-                                controller: nameController,
-                              ),
-                              Gap(20.h),
-                              UpdateProductDataContainer(
-                                hintText: kCategory.tr(),
-                                isOptions: true,
-                                options: categoryOptions,
-                                initialValue: selectedCategory,
-                                optionsLength: categoryOptions.length,
-                                onItemSelected: (value) {
-                                  selectedCategory = value;
-                                  validateForm();
-                                },
-                              ),
-                              Gap(20.h),
-                              UpdateProductDataContainer(
-                                hintText: kProductDescription.tr(),
-                                isDescription: true,
-                                keyboardType: TextInputType.text,
-                                controller: descriptionController,
-                              ),
-                              Gap(20.h),
-                              UpdateProductDataContainer(
-                                hintText: kProductCondition.tr(),
-                                isOptions: true,
-                                options: productStatesOptions,
-                                initialValue: selectedCondition,
-                                optionsLength: productStatesOptions.length,
-                                onItemSelected: (value) {
-                                  selectedCondition = value;
-                                  validateForm();
-                                },
-                              ),
-                              Gap(30.h),
-                              Text(
-                                kRentalType.tr(),
-                                style: font16BlackSemiBold.copyWith(
-                                  color: kSomeBlackColor,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Shared.width * 0.04.w,
+                            vertical: Shared.height * 0.025.h,
+                          ),
+                          child: Form(
+                            key: formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                UpdateUploadImages(
+                                  initialImage:
+                                      widget.product.itemImages?.isNotEmpty ==
+                                          true
+                                      ? widget.product.itemImages!.first
+                                      : null,
+                                  onImagesSelected: (files) {
+                                    images = files;
+                                    validateForm();
+                                  },
                                 ),
-                              ),
-                              Gap(10.h),
-                              UpdateRentalTypeContainer(
-                                initialValue: rentalType,
-                                onChanged: (value) {
-                                  setState(() {
-                                    rentalType = value;
-                                  });
-                                  validateForm();
-                                },
-                              ),
-                              Gap(20.h),
-                              UpdateProductDataContainer(
-                                hintText: "${kRentalPrice.tr()} (${kCurrencyPer.tr().replaceAll('{unit}', rentalType)})",
-                                keyboardType: TextInputType.number,
-                                controller: priceController,
-                              ),
-                              Gap(20.h),
-                              UpdateProductDataContainer(
-                                hintText: kInsurance.tr(),
-                                keyboardType: TextInputType.number,
-                                controller: insuranceController,
-                              ),
-                              Gap(20.h),
-                              UpdateProductDataContainer(
-                                hintText: kCity.tr(),
-                                isOptions: true,
-                                options: governmentOptions,
-                                initialValue: selectedCity,
-                                optionsLength: governmentOptions.length,
-                                onItemSelected: (value) {
-                                  selectedCity = value;
-                                  validateForm();
-                                },
-                              ),
-                              Gap(30.h),
-                              BlocBuilder<
-                                ToggleAvailabilityBloc,
-                                ToggleAvailabilityState
-                              >(
-                                builder: (context, state) {
-                                  return buildSwitchRow(
-                                    title: kProductAvailable.tr(),
-                                    value: isAvailable,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        isAvailable = val;
-                                      });
-                                      validateForm();
-
-                                      context
-                                          .read<ToggleAvailabilityBloc>()
-                                          .add(
-                                            ToggleAvailabilityEvent(
-                                              id: widget.product.id!,
-                                              isAvailable: val,
-                                            ),
-                                          );
-                                    },
-                                  );
-                                },
-                              ),
-                              // Gap(20.h),
-                            ],
+                                Gap(50.h),
+                                UpdateProductDataContainer(
+                                  hintText: kProductName.tr(),
+                                  keyboardType: TextInputType.name,
+                                  controller: nameController,
+                                ),
+                                Gap(20.h),
+                                UpdateProductDataContainer(
+                                  hintText: kCategory.tr(),
+                                  isOptions: true,
+                                  options: categoryOptions,
+                                  initialValue: selectedCategory,
+                                  optionsLength: categoryOptions.length,
+                                  onItemSelected: (value) {
+                                    selectedCategory = value;
+                                    validateForm();
+                                  },
+                                ),
+                                Gap(20.h),
+                                UpdateProductDataContainer(
+                                  hintText: kProductDescription.tr(),
+                                  isDescription: true,
+                                  keyboardType: TextInputType.text,
+                                  controller: descriptionController,
+                                ),
+                                Gap(20.h),
+                                UpdateProductDataContainer(
+                                  hintText: kProductCondition.tr(),
+                                  isOptions: true,
+                                  options: productStatesOptions,
+                                  initialValue: selectedCondition,
+                                  optionsLength: productStatesOptions.length,
+                                  onItemSelected: (value) {
+                                    selectedCondition = value;
+                                    validateForm();
+                                  },
+                                ),
+                                Gap(30.h),
+                                Text(
+                                  kRentalType.tr(),
+                                  style: font16BlackSemiBold.copyWith(
+                                    color: kSomeBlackColor,
+                                  ),
+                                ),
+                                Gap(10.h),
+                                UpdateRentalTypeContainer(
+                                  initialValue: rentalType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      rentalType = value;
+                                    });
+                                    validateForm();
+                                  },
+                                ),
+                                Gap(20.h),
+                                UpdateProductDataContainer(
+                                  hintText: "${kRentalPrice.tr()} (${kCurrencyPer.tr().replaceAll('{unit}', rentalType)})",
+                                  keyboardType: TextInputType.number,
+                                  controller: priceController,
+                                ),
+                                Gap(20.h),
+                                UpdateProductDataContainer(
+                                  hintText: kInsurance.tr(),
+                                  keyboardType: TextInputType.number,
+                                  controller: insuranceController,
+                                ),
+                                Gap(20.h),
+                                UpdateProductDataContainer(
+                                  hintText: kCity.tr(),
+                                  isOptions: true,
+                                  options: governmentOptions,
+                                  initialValue: selectedCity,
+                                  optionsLength: governmentOptions.length,
+                                  onItemSelected: (value) {
+                                    selectedCity = value;
+                                    validateForm();
+                                  },
+                                ),
+                                Gap(30.h),
+                                BlocBuilder<
+                                  ToggleAvailabilityBloc,
+                                  ToggleAvailabilityState
+                                >(
+                                  builder: (context, state) {
+                                    return buildSwitchRow(
+                                      title: kProductAvailable.tr(),
+                                      value: isAvailable,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          isAvailable = val;
+                                        });
+                                        validateForm();
+            
+                                        context
+                                            .read<ToggleAvailabilityBloc>()
+                                            .add(
+                                              ToggleAvailabilityEvent(
+                                                id: widget.product.id!,
+                                                isAvailable: val,
+                                              ),
+                                            );
+                                      },
+                                    );
+                                  },
+                                ),
+                                // Gap(20.h),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
-                    decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.06),
-                          blurRadius: 12,
-                          offset: const Offset(0, -4),
-                        ),
-                      ],
-                    ),
-                    child: ButtonApp(
-                      onPressed: isFormValid
-                          ? () {
-                              if (formKey.currentState!.validate()) {
-                                context.read<UpdateItemBloc>().add(
-                                  UpdateItemEvent(
-                                    productId: widget.product.id!,
-                                    addItemEntity: AddItemEntity(
-                                      name: nameController.text,
-                                      description: descriptionController.text,
-                                      price: priceController.text,
-                                      insurance: insuranceController.text,
-                                      isAvailable: isAvailable,
-                                      rentUnit: rentalType,
-                                      condition: selectedCondition,
-                                      categoryName: selectedCategory,
-                                      city: selectedCity,
-                                      images: images.isNotEmpty ? images : null,
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
+                      decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.06),
+                            blurRadius: 12,
+                            offset: const Offset(0, -4),
+                          ),
+                        ],
+                      ),
+                      child: ButtonApp(
+                        onPressed: isFormValid
+                            ? () {
+                                if (formKey.currentState!.validate()) {
+                                  context.read<UpdateItemBloc>().add(
+                                    UpdateItemEvent(
+                                      productId: widget.product.id!,
+                                      addItemEntity: AddItemEntity(
+                                        name: nameController.text,
+                                        description: descriptionController.text,
+                                        price: priceController.text,
+                                        insurance: insuranceController.text,
+                                        isAvailable: isAvailable,
+                                        rentUnit: rentalType,
+                                        condition: selectedCondition,
+                                        categoryName: selectedCategory,
+                                        city: selectedCity,
+                                        images: images.isNotEmpty ? images : null,
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
                               }
-                            }
-                          : null,
-                      text: kEditProduct.tr(),
-                      color: kPrimaryColor,
+                            : null,
+                        text: kEditProduct.tr(),
+                        color: isDark && !isFormValid ? kGreyColor.withOpacity(0.5) :
+                        isDark && isFormValid ?
+                        kButtonColor : !isDark && !isFormValid ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

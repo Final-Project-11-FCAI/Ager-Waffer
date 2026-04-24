@@ -10,7 +10,7 @@ class FavoriteRepository {
 
     return NetworkUtil.internal().post(
       FavoriteModel(),
-      "$baseUrl/FavoriteItems/toggle/$itemId",
+      "${baseUrl}FavoriteItems/toggle/$itemId",
       headers: Map<String, String>.from({
         'Accept': 'application/json',
         "Authorization":

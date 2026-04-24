@@ -121,11 +121,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.lock,
-                          size: Shared.width * 0.25.w,
-                          color: isDark ? kLightPrimaryColor : kDoneColor,
-                        ),
+                        Image.asset('assets/images/verfiy_email.png'),
                         Gap(20.h),
                         Text(
                           kVerifyEmailTitle.tr(),

@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
+import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Notification/presentation/manager/notifications_bloc.dart';
 import 'package:ager_waffer/Features/Notification/presentation/manager/notifications_state.dart';
@@ -45,7 +46,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(
-          "الإشعارات",
+          kNotifications.tr(),
           style: font16BlackSemiBold.copyWith(fontSize: 20, color: kWhiteColor),
         ),
       ),
@@ -59,62 +60,60 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             topRight: Radius.circular(25.r),
           ),
         ),
-        child: ListView(
-          padding: EdgeInsets.all(16),
-          children: [
-            BlocBuilder<NotificationsBloc, NotificationsState>(
-              builder: (context, state) {
-                if (state.status == notificationsStatus.loading) {
-                  return const LoadingPlaceHolder(
-                    shimmerType: ShimmerType.list,
-                    cellShimmerHeight: 50,
-                    shimmerCount: 10,
-                  );
-                } else if (state.status == notificationsStatus.success) {
-                  final notifications = state.notifications;
+        child: BlocBuilder<NotificationsBloc, NotificationsState>(
+          builder: (context, state) {
+            if (state.status == notificationsStatus.loading) {
+              return const LoadingPlaceHolder(
+                shimmerType: ShimmerType.list,
+                cellShimmerHeight: 50,
+                shimmerCount: 10,
+              );
+            } else if (state.status == notificationsStatus.success) {
+              final notifications = state.notifications;
 
-                  final now = DateTime.now();
+              final now = DateTime.now();
 
-                  final todayNotifications = notifications.where((n) {
-                    final date = parseDate(n.createdAt);
-                    if (date == null) return false;
+              final todayNotifications = notifications.where((n) {
+                final date = parseDate(n.createdAt);
+                if (date == null) return false;
 
-                    return now.difference(date).inHours < 24;
-                  }).toList();
+                return now.difference(date).inHours < 24;
+              }).toList();
 
-                  final oldNotifications = notifications.where((n) {
-                    final date = parseDate(n.createdAt);
-                    if (date == null) return false;
+              final oldNotifications = notifications.where((n) {
+                final date = parseDate(n.createdAt);
+                if (date == null) return false;
 
-                    return now.difference(date).inHours >= 24;
-                  }).toList();
+                return now.difference(date).inHours >= 24;
+              }).toList();
 
-                  if (notifications.isEmpty) {
-                    return LayoutBuilder(
-                      builder: (context, constraints) {
-                        return SingleChildScrollView(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              minHeight: constraints.maxHeight,
-                            ),
-                            child: Center(
-                              child: EmptyProducts(
-                                image: 'assets/images/no_products.png',
-                                title: kNoCurrentOrders.tr(),
-                                subTitle: kNoCurrentOrdersDesc.tr(),
-                              ),
-                            ),
+              if (notifications.isEmpty) {
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                        child: Center(
+                          child: EmptyProducts(
+                            image: 'assets/images/no_products.png',
+                            title: kNoNotifications.tr(),
+                            subTitle: kNoNotificationsDesc.tr(),
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     );
-                  }
-                  return Column(
+                  },
+                );
+              }
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w, vertical: Shared.height * 0.02.h),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (todayNotifications.isNotEmpty)
                         Text(
-                          "اليوم",
+                          kToday.tr(),
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -134,7 +133,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       if (todayNotifications.isNotEmpty) Gap(20.h),
                       if (oldNotifications.isNotEmpty)
                         Text(
-                          "الاقدم",
+                          kOlder.tr(),
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -152,28 +151,28 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         },
                       ),
                     ],
+                  ),
+                ),
+              );
+            } else if (state.status == notificationsStatus.failure) {
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  return Center(
+                    child: CustomErrorWidget(
+                      message: state.failureMessage,
+                      onRetry: () {
+                        context.read<NotificationsBloc>().add(
+                          GetNotificationsEvent(),
+                        );
+                      },
+                    ),
                   );
-                } else if (state.status == notificationsStatus.failure) {
-                  return LayoutBuilder(
-                    builder: (context, constraints) {
-                      return Center(
-                        child: CustomErrorWidget(
-                          message: state.failureMessage,
-                          onRetry: () {
-                            context.read<NotificationsBloc>().add(
-                              GetNotificationsEvent(),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return Center(child: Text(kNoDataYet.tr()));
-                }
-              },
-            ),
-          ],
+                },
+              );
+            } else {
+              return Center(child: Text(kNoDataYet.tr()));
+            }
+          },
         ),
       ),
     );

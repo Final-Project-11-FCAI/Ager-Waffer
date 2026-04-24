@@ -110,6 +110,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<UpdateProfileBloc, UpdateProfileState>(
       listener: (context, state) {
         if (state.status == updateProfileStatus.loading) {
@@ -161,159 +162,163 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               onPressed: () => Navigator.pop(context),
             ),
           ),
-          body: Form(
-            key: _formKey,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: Shared.height * 0.15.h),
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25.r),
-                        topRight: Radius.circular(25.r),
-                      ),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: Shared.height * 0.1.h,
-                          right: Shared.width * 0.04.w,
-                          left: Shared.width * 0.025.h,
-                          bottom: Shared.width * 0.04.h,
+          body: SafeArea(
+            child: Form(
+              key: _formKey,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: Shared.height * 0.15.h),
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.r),
+                          topRight: Radius.circular(25.r),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              kFirstName.tr(),
-                              style: font24LightPrimarySemiBold.copyWith(
-                                fontSize: 16,
-                                fontWeight: medium,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: Shared.height * 0.1.h,
+                            right: Shared.width * 0.04.w,
+                            left: Shared.width * 0.025.h,
+                            bottom: Shared.width * 0.04.h,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                kFirstName.tr(),
+                                style: font24LightPrimarySemiBold.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: medium,
+                                ),
                               ),
-                            ),
-                            Gap(10.h),
-                            EditProfileTextField(
-                              controller: firstNameController,
-                              icon: Icon(Icons.account_circle_outlined),
-                              label: kFirstName.tr(),
-                              keyboardType: TextInputType.name,
-                              isPrefixFound: true,
-                            ),
-                            Gap(15.h),
-                            Text(
-                              kLastName.tr(),
-                              style: font24LightPrimarySemiBold.copyWith(
-                                fontSize: 16,
-                                fontWeight: medium,
+                              Gap(10.h),
+                              EditProfileTextField(
+                                controller: firstNameController,
+                                icon: Icon(Icons.account_circle_outlined),
+                                label: kFirstName.tr(),
+                                keyboardType: TextInputType.name,
+                                isPrefixFound: true,
                               ),
-                            ),
-                            Gap(10.h),
-                            EditProfileTextField(
-                              controller: secondNameController,
-                              icon: Icon(Icons.account_circle_outlined),
-                              label: kLastName.tr(),
-                              keyboardType: TextInputType.name,
-                              isPrefixFound: true,
-                            ),
-                            Gap(15.h),
-                            Text(
-                              kPhone.tr(),
-                              style: font24LightPrimarySemiBold.copyWith(
-                                fontSize: 16,
-                                fontWeight: medium,
+                              Gap(15.h),
+                              Text(
+                                kLastName.tr(),
+                                style: font24LightPrimarySemiBold.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: medium,
+                                ),
                               ),
-                            ),
-                            Gap(10.h),
-                            EditProfileTextField(
-                              controller: phoneController,
-                              keyboardType: TextInputType.number,
-                              icon: Icon(Icons.phone),
-                              label: kPhone.tr(),
-                              validator: (value) {
-                                if (value == _originalPhone || value!.isEmpty) return null;
-                                return InputValidation.isValidEditEgyptianPhone(value ?? '');
+                              Gap(10.h),
+                              EditProfileTextField(
+                                controller: secondNameController,
+                                icon: Icon(Icons.account_circle_outlined),
+                                label: kLastName.tr(),
+                                keyboardType: TextInputType.name,
+                                isPrefixFound: true,
+                              ),
+                              Gap(15.h),
+                              Text(
+                                kPhone.tr(),
+                                style: font24LightPrimarySemiBold.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: medium,
+                                ),
+                              ),
+                              Gap(10.h),
+                              EditProfileTextField(
+                                controller: phoneController,
+                                keyboardType: TextInputType.number,
+                                icon: Icon(Icons.phone),
+                                label: kPhone.tr(),
+                                validator: (value) {
+                                  if (value == _originalPhone || value!.isEmpty) return null;
+                                  return InputValidation.isValidEditEgyptianPhone(value ?? '');
+                                  },
+                              ),
+                              Gap(15.h),
+                              Text(
+                                kPassword.tr(),
+                                style: font24LightPrimarySemiBold.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: medium,
+                                ),
+                              ),
+                              Gap(10.h),
+                              PasswordTextField(
+                                passwordController: passwordController,
+                                icon: Icon(Icons.lock_outline),
+                                label: kEnterNewPassword.tr(),
+                                validator: (value) {
+                                  return InputValidation.passwordValidator(value!);
                                 },
-                            ),
-                            Gap(15.h),
-                            Text(
-                              kPassword.tr(),
-                              style: font24LightPrimarySemiBold.copyWith(
-                                fontSize: 16,
-                                fontWeight: medium,
                               ),
-                            ),
-                            Gap(10.h),
-                            PasswordTextField(
-                              passwordController: passwordController,
-                              icon: Icon(Icons.lock_outline),
-                              label: kEnterNewPassword.tr(),
-                              validator: (value) {
-                                return InputValidation.passwordValidator(value!);
-                              },
-                            ),
-                            Gap(25.h),
-                            ButtonApp(
-                              onPressed: _hasChanges
-                                  ? () {
-                                      _showUpdateDialog(context);
-                                    }
-                                  : null,
-                              text: kSave.tr(),
-                              color: _hasChanges ? kPrimaryColor : kGreyColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Profile Image
-                Positioned(
-                  right: Shared.width * 0.25.sp,
-                  left: Shared.width * 0.25.sp,
-                  top: Shared.height * 0.02.sp,
-                  child: _pickedImage != null
-                      ? CircleAvatar(
-                          radius: 70.r,
-                          backgroundImage: FileImage(File(_pickedImage!.path)),
-                        )
-                      : CircleAvatar(
-                          radius: 70.r,
-                          backgroundImage: NetworkImage(
-                            widget.user.imageUrl.toString(),
+                              Gap(25.h),
+                              ButtonApp(
+                                onPressed: _hasChanges
+                                    ? () {
+                                        _showUpdateDialog(context);
+                                      }
+                                    : null,
+                                text: kSave.tr(),
+                                color: isDark && !_hasChanges ? kGreyColor.withOpacity(0.5) :
+                                isDark && _hasChanges ?
+                                kButtonColor : !isDark && !_hasChanges ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
+                              ),
+                            ],
                           ),
                         ),
-                ),
-
-                // Camera Edit Button
-                Positioned(
-                  right: Shared.width * 0.31.w,
-                  top: Shared.height * 0.16.h,
-                  child: GestureDetector(
-                    onTap: () async {
-                      final ImagePicker picker = ImagePicker();
-                      final XFile? image = await picker.pickImage(
-                        source: ImageSource.gallery,
-                      );
-                      if (image != null) {
-                        setState(() {
-                          _pickedImage = image;
-                        });
-                      }
-                    },
-                    child: Image.asset(
-                      'assets/images/camera_edit.png',
-                      width: Shared.width * 0.1.w,
-                      height: Shared.height * 0.05.h,
+                      ),
                     ),
                   ),
-                ),
-              ],
+            
+                  // Profile Image
+                  Positioned(
+                    right: Shared.width * 0.25.sp,
+                    left: Shared.width * 0.25.sp,
+                    top: Shared.height * 0.02.sp,
+                    child: _pickedImage != null
+                        ? CircleAvatar(
+                            radius: 70.r,
+                            backgroundImage: FileImage(File(_pickedImage!.path)),
+                          )
+                        : CircleAvatar(
+                            radius: 70.r,
+                            backgroundImage: NetworkImage(
+                              widget.user.imageUrl.toString(),
+                            ),
+                          ),
+                  ),
+            
+                  // Camera Edit Button
+                  Positioned(
+                    right: Shared.width * 0.31.w,
+                    top: Shared.height * 0.16.h,
+                    child: GestureDetector(
+                      onTap: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final XFile? image = await picker.pickImage(
+                          source: ImageSource.gallery,
+                        );
+                        if (image != null) {
+                          setState(() {
+                            _pickedImage = image;
+                          });
+                        }
+                      },
+                      child: Image.asset(
+                        'assets/images/camera_edit.png',
+                        width: Shared.width * 0.1.w,
+                        height: Shared.height * 0.05.h,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

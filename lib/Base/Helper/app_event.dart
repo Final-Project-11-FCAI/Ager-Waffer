@@ -101,6 +101,12 @@ class ToggleFavoriteEvent extends AppEvent {
   ToggleFavoriteEvent({required this.itemId});
 }
 
+class SyncFavoritesEvent extends AppEvent {
+  final Map<int, bool> favorites;
+
+  SyncFavoritesEvent(this.favorites);
+}
+
 class GetAllFavoriteItemsEvent extends AppEvent {
   GetAllFavoriteItemsEvent();
 }

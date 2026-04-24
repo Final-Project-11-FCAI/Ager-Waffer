@@ -1,10 +1,16 @@
+import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
+import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/all_favorite_items_bloc.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/favorite_bloc.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/favorite_state.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/product_details_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -140,46 +146,57 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                     ),
                     Align(
                       alignment: AlignmentDirectional.bottomEnd,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isFavorite = !isFavorite;
-                          });
+                      child: BlocBuilder<FavoriteBloc, FavoriteState>(
+                        buildWhen: (prev, curr) {
+                          final id = widget.product.id;
+                          return prev.favorites[id] != curr.favorites[id];
                         },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          height: 31.h,
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          decoration: BoxDecoration(
-                            color: isFavorite
-                                ? kRedColor.withOpacity(isDark ? 0.2 : 0.1)
-                                : (isDark ? kDarkModeColor : Colors.white),
-                            borderRadius: BorderRadius.circular(14.sp),
-                            border: Border.all(
-                              color: isFavorite ? kRedColor : (isDark ? kLightDarkModeColor : Colors.grey.shade300),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                isFavorite ? Icons.favorite : Icons.favorite_border,
+                        builder: (context, state) {
+                          final isFavorite =
+                              state.favorites[widget.product.id!] ?? false;
+
+                          return GestureDetector(
+                            onTap: () {
+                              context.read<FavoriteBloc>().add(
+                                ToggleFavoriteEvent(itemId: widget.product.id!),
+                              );
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              height: Shared.height * 0.04.h,
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              decoration: BoxDecoration(
                                 color: isFavorite
-                                    ? kRedColor
-                                    : (isDark ? Colors.grey[400]! : kGreyColor),
-                                size: 16.sp,
-                              ),
-                              Gap(4.w),
-                              Text(
-                                isFavorite ? "Saved" : "Save",
-                                style: font16BlackSemiBold.copyWith(
-                                  fontSize: 12.sp,
-                                  color: isFavorite ? kRedColor : (isDark ? Colors.grey[400]! : kGreyColor),
+                                    ? kRedColor.withOpacity(0.1)
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(14.sp),
+                                border: Border.all(
+                                  color: isFavorite ? kRedColor : Colors.grey,
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    isFavorite
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: isFavorite ? kRedColor : kGreyColor,
+                                    size: 16.sp,
+                                  ),
+                                  Gap(4.w),
+                                  Text(
+                                    isFavorite ? "Saved" : "Save",
+                                    style: font16BlackSemiBold.copyWith(
+                                      fontSize: 12.sp,
+                                      color: isFavorite ? kRedColor : kGreyColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

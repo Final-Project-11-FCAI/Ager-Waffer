@@ -3,6 +3,7 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ProductDataContainer extends StatefulWidget {
   const ProductDataContainer({
@@ -124,7 +125,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
                           vertical: Shared.height * 0.01.h,
                         ),
                         child: Text(
-                          widget.options[index],
+                          widget.options[index].tr(),
                           style: font15SomeBlackColorMedium.copyWith(
                             color: kBlackColor,
                           ),

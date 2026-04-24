@@ -14,7 +14,11 @@ String kCreateNewAccount = 'create_new_account';
 String kHaveAccountLogin = 'have_account_login';
 String kAppName = 'app_name';
 String kNext = 'next';
-
+String kAvailable = 'available';
+String kNotAvailable = 'not_available';
+String kNoFavoritesYet = 'no_favorites_yet';
+String kAddFavoritesHint = 'add_favorites_hint';
+String kFavoriteItems = 'favorite_items';
 String kNumberOfMonths = 'number_of_months';
 String kNumberOfWeeks = 'number_of_weeks';
 
@@ -45,10 +49,57 @@ String kAddImage = 'add_image';
 String kFirstName = 'first_name';
 String kLastName = 'last_name';
 
+String kNotifications = 'notifications';
+
+String kNoNotifications = 'no_notifications';
+String kNoNotificationsDesc = 'no_notifications_desc';
+
+String kToday = 'today';
+String kOlder = 'older';
+
+
 String kCreateAccount = 'create_account';
 String kHaveAccount = 'have_account';
 String kLogin = 'login';
 
+String kNoSuggestedItems = 'no_suggested_items';
+String kSuggestedItemsDesc = 'suggested_items_desc';
+
+String kCairo = 'cairo';
+String kAlexandria = 'alexandria';
+String kGiza = 'giza';
+String kLuxor = 'luxor';
+String kAswan = 'aswan';
+String kPortSaid = 'port_said';
+String kSuez = 'suez';
+String kIsmailia = 'ismailia';
+String kDamietta = 'damietta';
+String kDakahlia = 'dakahlia';
+String kSharqia = 'sharqia';
+String kQalyubia = 'qalyubia';
+String kKafrElSheikh = 'kafr_el_sheikh';
+String kGharbia = 'gharbia';
+String kMonufia = 'monufia';
+String kBeheira = 'beheira';
+String kFaiyum = 'faiyum';
+String kBeniSuef = 'beni_suef';
+String kMinya = 'minya';
+String kAsyut = 'asyut';
+String kSohag = 'sohag';
+String kQena = 'qena';
+String kRedSea = 'red_sea';
+String kNewValley = 'new_valley';
+String kMatruh = 'matruh';
+String kNorthSinai = 'north_sinai';
+String kSouthSinai = 'south_sinai';
+String kEmergency = 'emergency';
+String kNeedHelp = 'need_help';
+String kLoginToViewConversations = 'login_to_view_conversations';
+String kCall = 'call';
+String kConversations = 'conversations';
+String kPolice = 'police';
+String kAmbulance = 'ambulance';
+String kFirefighters = 'firefighters';
 
 String kVerifyEmailTitle = 'verify_email_title';
 String kVerifyEmailDesc = 'verify_email_desc';
@@ -149,6 +200,17 @@ String kUploadProductImages = 'upload_product_images';
 String kUploadRange = 'upload_range';
 String kUploadImages = 'upload_images';
 
+String kBabyItems = 'baby_items';
+
+String kNoItemsAvailable = 'no_items_available';
+String kNoItemsAvailableDesc = 'no_items_available_desc';
+String kCategoryElectronics = 'category_electronics';
+String kCategoryBooks = 'category_books';
+String kCategoryTravel = 'category_travel';
+String kCategoryHome = 'category_home';
+
+String kCategoryEmptyTitle = 'category_empty_title';
+String kCategoryEmptyDesc = 'category_empty_desc';
 
 String kCompleteDataTitle = 'complete_data_title';
 String kCompleteDataDesc = 'complete_data_desc';

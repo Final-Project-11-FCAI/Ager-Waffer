@@ -4,7 +4,8 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
-import 'package:ager_waffer/Features/Home/presentation/pages/contact_us_screen.dart';
+import 'package:ager_waffer/Features/Chat/presentation/pages/coversations_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/emergancy_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
 import 'package:ager_waffer/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Authentication/login/data/models/login_model.dart';
 
@@ -24,6 +26,24 @@ class DrawerDetails extends StatefulWidget {
 
 class _DrawerDetailsState extends State<DrawerDetails> {
   bool isSwitched = false;
+
+  Future<void> launchEmail() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'raghadnourr@gmail.com',
+      query: Uri.encodeFull(
+        'subject=',
+      ),
+    );
+    try {
+      await launchUrl(
+        emailUri,
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      debugPrint("Email launch failed: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +125,15 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 ),
                 Gap(2.h),
                 drawerItem(
+                  title: kConversations.tr(),
+                  icon: 'assets/images/management_orders.png',
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    customAnimatedPushNavigation(context, ConversationsScreen());
+                  },
+                ),
+                Gap(2.h),
+                drawerItem(
                   title: kLanguage.tr(),
                   icon: 'assets/images/language.png',
                   onTap: () {
@@ -120,7 +149,15 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 Gap(2.h),
                 drawerItem(
                   onTap: (){
-                    customAnimatedPushNavigation(context, ContactUsScreen());
+                    customAnimatedPushNavigation(context, EmergencyScreen());
+                  },
+                  title: kEmergency.tr(),
+                  icon: 'assets/images/contact_us.png',
+                ),
+                Gap(2.h),
+                drawerItem(
+                  onTap: (){
+                    launchEmail();
                   },
                   title: kContactUs.tr(),
                   icon: 'assets/images/contact_us.png',
@@ -274,7 +311,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 )
               : Padding(
                 padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
-                child: Icon(Icons.arrow_forward_ios_outlined),
+                child: Icon(Icons.arrow_forward_ios_outlined, color: kPrimaryColor,),
               ),
         ],
       ),

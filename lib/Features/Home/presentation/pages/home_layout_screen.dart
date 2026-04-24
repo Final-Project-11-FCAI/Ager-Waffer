@@ -24,7 +24,6 @@ class HomeLayoutScreen extends StatelessWidget {
       HomeScreen(email: email, password: password),
       FavoriteScreen(),
       MyOrdersScreen(),
-      ConversationsScreen(),
       ProfileScreen(),
     ];
 
@@ -111,14 +110,6 @@ class HomeLayoutScreen extends StatelessWidget {
                         color: currentIndex == 2 ? kPrimaryColor : kMoreGreyColor,
                       ),
                       label: kMyOrders.tr(),
-                      backgroundColor: kWhiteColor,
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Image.asset(
-                        'assets/images/shopping-cart.png',
-                        color: currentIndex == 3 ? kPrimaryColor : kMoreGreyColor,
-                      ),
-                      label: kMyChats.tr(),
                       backgroundColor: kWhiteColor,
                     ),
                     BottomNavigationBarItem(

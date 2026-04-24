@@ -8,7 +8,7 @@ class NotificationsRepository {
 
   Future<NotificationsModel> getNotifications({
     int pageIndex = 1,
-    int pageSize = 50,
+    int pageSize = 70,
   }) async {
     return NetworkUtil.internal().get(
       NotificationsModel(),

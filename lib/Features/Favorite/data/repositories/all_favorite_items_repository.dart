@@ -8,7 +8,7 @@ class AllFavoriteItemsRepository {
 
   Future<AllFavoriteItemsModel> getFavoriteItems({
     int pageIndex = 1,
-    int pageSize = 20,
+    int pageSize = 70,
   }) async {
     return NetworkUtil.internal().get(
       AllFavoriteItemsModel(),

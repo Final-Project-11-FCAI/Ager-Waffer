@@ -36,7 +36,7 @@ class _HomeEssentialsScreenState extends State<HomeEssentialsScreen> {
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(
-          "مستلزمات المنزل",
+          kCategoryHome.tr(),
           style: font16BlackSemiBold.copyWith(fontSize: 20, color: kWhiteColor),
         ),
       ),
@@ -79,8 +79,8 @@ class _HomeEssentialsScreenState extends State<HomeEssentialsScreen> {
                           child: Center(
                             child: EmptyProducts(
                               image: 'assets/images/no_products.png',
-                              title: 'لا توجد عناصر متاحة',
-                              subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                              title: kNoItemsAvailable.tr(),
+                              subTitle: kNoItemsAvailableDesc.tr(),
                             ),
                           ),
                         ),
@@ -106,7 +106,7 @@ class _HomeEssentialsScreenState extends State<HomeEssentialsScreen> {
                   },
                 );
               } else {
-                return Center(child: Text("No Data Yet"));
+                return Center(child: Text(kNoDataYet.tr()));
               }
             },
           ),

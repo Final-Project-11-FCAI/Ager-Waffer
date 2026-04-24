@@ -21,6 +21,7 @@ import 'package:ager_waffer/Features/Home/presentation/widgets/custom_home_app_b
 import 'package:ager_waffer/Features/Home/presentation/widgets/drawer_details.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/product_card_list_view.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -172,6 +173,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 final userId = user?.id?.toString().trim();
                                 return ownerId != userId;
                               }).toList();
+
+                              if (filteredProducts.isEmpty) {
+                                return Center(
+                                  child: EmptyProducts(
+                                    image: 'assets/images/empty_products.png',
+                                    title: kNoSuggestedItems.tr(),
+                                    subTitle: kSuggestedItemsDesc.tr(),
+                                  ),
+                                );
+                              }
 
                               return ListView.builder(
                                 itemCount: filteredProducts.length,

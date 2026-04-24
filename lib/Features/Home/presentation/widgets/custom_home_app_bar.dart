@@ -5,6 +5,7 @@ import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/search_screen.dart';
 import 'package:ager_waffer/Features/Notification/presentation/pages/notifications_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -42,10 +43,27 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: user?.imageUrl != null
-                          ? NetworkImage(user!.imageUrl.toString())
-                          : const AssetImage('assets/images/virtual_user.jpg')
-                      as ImageProvider,
+                      child: ClipOval(
+                        child: user?.imageUrl != null && user!.imageUrl!.isNotEmpty
+                            ? CachedNetworkImage(
+                          imageUrl: user.imageUrl!,
+                          width: double.infinity,
+                          height: double.infinity,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Image.asset(
+                            'assets/images/virtual_user.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                          errorWidget: (context, url, error) => Image.asset(
+                            'assets/images/virtual_user.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                            : Image.asset(
+                          'assets/images/virtual_user.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                     Gap(8.w),
                     Expanded(

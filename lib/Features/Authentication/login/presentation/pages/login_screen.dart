@@ -199,11 +199,6 @@ class _LoginScreenState extends State<LoginScreen>
                                     password: passwordController.text,
                                   ),
                                 );
-                                await FirebaseAuth.instance
-                                    .signInWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                );
                               }
                             }
                                 : null,

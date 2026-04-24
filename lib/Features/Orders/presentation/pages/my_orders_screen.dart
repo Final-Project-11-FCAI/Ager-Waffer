@@ -18,9 +18,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   int selectedIndex = 0;
 
   final List<String> tabs = [
-    kCurrent.tr(),
-    kUnderReview.tr(),
-    kPrevious.tr(),
+    kCurrent,
+    kUnderReview,
+    kPrevious,
   ];
 
   @override
@@ -68,7 +68,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                           padding:
                           const EdgeInsets.symmetric(vertical: 14),
                           child: Text(
-                            tabs[index],
+                            tabs[index].tr(),
                             style: font16BlackSemiBold.copyWith(
                               color: selectedIndex == index
                                   ? kLightPrimaryColor

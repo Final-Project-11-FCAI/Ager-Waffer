@@ -84,8 +84,11 @@
 
   "no_previous_products": "لا توجد منتجات سابقة",
   "no_previous_products_desc": "لم يتم العثور على أي منتجات سابقة حتى الآن",
-
-
+  "available": "متاح",
+  "not_available": "غير متاح",
+  "no_favorites_yet": "لا توجد عناصر مفضلة بعد",
+  "add_favorites_hint": "أضف العناصر التي أعجبتك للعودة إليها لاحقًا",
+  "favorite_items": "العناصر المفضلة",
   "rate_product": "تقييم المنتج",
   "rate_owner": "تقييم المالك",
 
@@ -162,6 +165,28 @@
   "cancel": "إلغاء",
   "edit": "تعديل",
 
+  "notifications": "الإشعارات",
+
+  "no_notifications": "لا توجد إشعارات",
+  "no_notifications_desc": "لم تصلك أي إشعارات حتى الآن",
+  "login_to_view_conversations": "يُرجى تسجيل الدخول لعرض المحادثات",
+  "today": "اليوم",
+  "older": "الأقدم",
+  "emergency": "طوارئ",
+  "need_help": "هل تحتاج لمساعدة؟",
+
+  "call": "اتصل :",
+  "conversations": "المحادثات",
+  
+  "category_electronics": "إلكترونيات",
+  "category_books": "كتب",
+  "category_travel": "مستلزمات السفر",
+  "category_home": "مستلزمات المنزل",
+  "no_items_available": "لا توجد عناصر متاحة",
+  "no_items_available_desc": "لم يتم العثور على منتجات ضمن هذه الفئة حالياً",
+  "police": "النجدة",
+  "ambulance": "الإسعاف",
+  "firefighters": "المطافئ",
   "add_product_tooltip": "إضافة منتج",
   "my_products": "منتجاتي",
   "delete_success": "تم حذف المنتج بنجاح",
@@ -183,7 +208,8 @@
   "upload_range": "يمكنك رفع من 3 إلى 5 صور",
   "upload_images": "تحميل الصور",
 
-
+  "no_suggested_items": "لا توجد عناصر مقترحة",
+  "suggested_items_desc": "سيتم عرض العناصر عند توفرها",
 
   "complete_data_title": "يرجى استكمال بياناتك أولاً",
   "complete_data_desc": "لإتمام عملية إضافة المنتجات",
@@ -196,12 +222,42 @@
   "enter_street": "ادخل شارعك",
 
 
+
   "contact_renter": "مراسلة المستأجر",
   "accept_order_success": "تم قبول الطلب بنجاح",
   "decline_order_success": "تم رفض الطلب بنجاح",
 
   "no_incoming_orders": "لا توجد طلبات واردة",
   "no_incoming_orders_desc": "لم يتم العثور على أي طلبات تأجير",
+
+  "cairo": "القاهرة",
+  "alexandria": "الإسكندرية",
+  "giza": "الجيزة",
+  "luxor": "الأقصر",
+  "aswan": "أسوان",
+  "port_said": "بورسعيد",
+  "suez": "السويس",
+  "ismailia": "الإسماعيلية",
+  "damietta": "دمياط",
+  "dakahlia": "الدقهلية",
+  "sharqia": "الشرقية",
+  "qalyubia": "القليوبية",
+  "kafr_el_sheikh": "كفر الشيخ",
+  "gharbia": "الغربية",
+  "monufia": "المنوفية",
+  "beheira": "البحيرة",
+  "faiyum": "الفيوم",
+  "beni_suef": "بني سويف",
+  "minya": "المنيا",
+  "asyut": "أسيوط",
+  "sohag": "سوهاج",
+  "qena": "قنا",
+  "red_sea": "البحر الأحمر",
+  "new_valley": "الوادي الجديد",
+  "matruh": "مطروح",
+  "north_sinai": "شمال سيناء",
+  "south_sinai": "جنوب سيناء",
+
 
 
   "accept_order": "قبول الطلب",

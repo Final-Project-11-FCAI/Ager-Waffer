@@ -1,3 +1,4 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
 import 'package:ager_waffer/Features/Chat/data/models/room_models.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ConversationsScreen extends StatefulWidget {
   const ConversationsScreen({super.key});
@@ -40,93 +42,21 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(
-          child: Text('يُرجى تسجيل الدخول لعرض المحادثات'),
+          child: Text(kLoginToViewConversations.tr()),
         ),
       );
     }
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: kPrimaryColor,
-        foregroundColor: kWhiteColor,
-        heroTag: 'chat_fab',
-        onPressed: () {
-          showBottomSheet(
-            context: context,
-            builder: (context) {
-              return Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Enter Friend Email",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Spacer(),
-                        IconButton.filled(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(kPrimaryColor),
-                            foregroundColor:
-                                MaterialStatePropertyAll(kWhiteColor),
-                          ),
-                          onPressed: () {},
-                          icon: Icon(Icons.scanner),
-                        )
-                      ],
-                    ),
-                    CustomField(
-                      controller: emailController,
-                      icon: Icons.dashboard_customize_outlined,
-                      lable: "Email",
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(16),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            backgroundColor: kPrimaryColor,
-                        foregroundColor: kWhiteColor
-                        ),
-                        onPressed: () {
-                          if (emailController.text.isNotEmpty) {
-                            FireData().createRoom(emailController.text).then((value) {
-                              print("ROOM FUNCTION FINISHED");
-                              setState(() {
-                                emailController.text = '';
-                              });
-                              Navigator.pop(context);
-                            });
-                          }
-                        },
-                        child: Center(
-                          child: Text("Create Chat"),
-                        ))
-                  ],
-                ),
-              );
-            },
-          );
-        },
-        child: const Icon(Icons.message_outlined),
-      ),
       appBar: AppBar(
-        title: const Text("المحادثات"),
+        title: Text(kConversations.tr()),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

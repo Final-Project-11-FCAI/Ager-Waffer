@@ -2,49 +2,68 @@ import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Features/Favorite/data/repositories/favorite_repository.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/manager/favorite_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 
 class FavoriteBloc extends Bloc<AppEvent, FavoriteState> {
-
-  FavoriteBloc() : super(FavoriteState()) {
+  FavoriteBloc() : super(const FavoriteState()) {
     on<ToggleFavoriteEvent>(_onToggleFavorite);
+    on<SyncFavoritesEvent>(_onSyncFavorites);
   }
 
+  /// ✅ Sync from API
+  void _onSyncFavorites(
+      SyncFavoritesEvent event,
+      Emitter<FavoriteState> emit,
+      ) {
+    if (mapEquals(state.favorites, event.favorites)) return;
+
+    emit(state.copyWith(
+      favorites: event.favorites,
+    ));
+  }
+
+  /// ✅ Toggle
   Future<void> _onToggleFavorite(
       ToggleFavoriteEvent event,
       Emitter<FavoriteState> emit,
       ) async {
+    final updated = Map<int, bool>.from(state.favorites);
+    final currentValue = updated[event.itemId] ?? false;
+
+    /// optimistic update
+    updated[event.itemId] = !currentValue;
 
     emit(state.copyWith(
+      favorites: updated,
       status: favoriteStatus.loading,
-      isFavorite: !state.isFavorite,
     ));
 
     try {
-      var response = await favoriteRepository.toggleFavorite(
-        itemId: event.itemId,
-      );
+      final response =
+      await favoriteRepository.toggleFavorite(itemId: event.itemId);
 
       if (response.isSuccess == true) {
+        updated[event.itemId] = response.data ?? false;
+
         emit(state.copyWith(
+          favorites: updated,
           status: favoriteStatus.success,
-          favoriteData: response,
-          isFavorite: response.data ?? false,
         ));
       } else {
+        updated[event.itemId] = currentValue;
+
         emit(state.copyWith(
+          favorites: updated,
           status: favoriteStatus.failure,
-          failureMessage: response.messageAr ?? '',
-          isFavorite: !state.isFavorite,
         ));
       }
-    } catch (e) {
+    } catch (_) {
+      updated[event.itemId] = currentValue;
+
       emit(state.copyWith(
+        favorites: updated,
         status: favoriteStatus.failure,
-        failureMessage: e.toString(),
-        isFavorite: !state.isFavorite,
       ));
     }
   }
 }
-
-FavoriteBloc favoriteBloc = FavoriteBloc();

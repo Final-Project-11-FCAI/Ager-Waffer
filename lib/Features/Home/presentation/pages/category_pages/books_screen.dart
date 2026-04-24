@@ -35,7 +35,7 @@ class _BooksScreenState extends State<BooksScreen> {
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           foregroundColor: kWhiteColor,
-          title: Text("كتب",
+          title: Text(kCategoryBooks.tr(),
             style: font16BlackSemiBold.copyWith(
               fontSize: 20,
               color: kWhiteColor,
@@ -81,8 +81,8 @@ class _BooksScreenState extends State<BooksScreen> {
                               child: Center(
                                 child: EmptyProducts(
                                   image: 'assets/images/no_products.png',
-                                  title: 'لا توجد عناصر متاحة',
-                                  subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                                  title: kNoItemsAvailable.tr(),
+                                  subTitle: kNoItemsAvailableDesc.tr(),
                                 ),
                               ),
                             ),
@@ -109,7 +109,7 @@ class _BooksScreenState extends State<BooksScreen> {
                       },
                     );
                   } else {
-                    return Center(child: Text("No Data Yet"));
+                    return Center(child: Text(kNoDataYet.tr()));
                   }
                 },
               ),

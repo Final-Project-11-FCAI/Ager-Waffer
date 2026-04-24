@@ -173,11 +173,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             );
                                           },
                                         )
-                                      : EmptyProducts(
-                                          image: 'assets/images/empty_products.png',
-                                          title: kNoProductsYet.tr(),
-                                          subTitle: kAddProductsDesc.tr(),
-                                        );
+                                      : SingleChildScrollView(
+                                        child: EmptyProducts(
+                                            image: 'assets/images/empty_products.png',
+                                            title: kNoProductsYet.tr(),
+                                            subTitle: kAddProductsDesc.tr(),
+                                          ),
+                                      );
                                 } else if (state.status ==
                                     myListingsStatus.failure) {
                                   return CustomErrorWidget(

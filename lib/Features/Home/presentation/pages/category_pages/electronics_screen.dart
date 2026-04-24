@@ -38,7 +38,7 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           foregroundColor: kWhiteColor,
-          title: Text("إلكترونيات",
+          title: Text(kCategoryElectronics.tr(),
             style: font16BlackSemiBold.copyWith(
               fontSize: 20,
               color: kWhiteColor,
@@ -84,8 +84,8 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
                               child: Center(
                                 child: EmptyProducts(
                                   image: 'assets/images/no_products.png',
-                                  title: 'لا توجد عناصر متاحة',
-                                  subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                                  title: kNoItemsAvailable.tr(),
+                                  subTitle: kNoItemsAvailableDesc.tr(),
                                 ),
                               ),
                             ),
@@ -112,7 +112,7 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
                       },
                     );
                   } else {
-                    return Center(child: Text("No Data Yet"));
+                    return Center(child: Text(kNoDataYet.tr()));
                   }
                 },
               ),

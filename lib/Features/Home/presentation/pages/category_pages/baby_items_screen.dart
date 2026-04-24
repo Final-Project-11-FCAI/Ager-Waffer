@@ -36,7 +36,7 @@ class _BabyItemsScreenState extends State<BabyItemsScreen> {
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(
-          "أغراض أطفال",
+          kBabyItems.tr(),
           style: font16BlackSemiBold.copyWith(fontSize: 20, color: kWhiteColor),
         ),
       ),
@@ -79,8 +79,8 @@ class _BabyItemsScreenState extends State<BabyItemsScreen> {
                           child: Center(
                             child: EmptyProducts(
                               image: 'assets/images/no_products.png',
-                              title: 'لا توجد عناصر متاحة',
-                              subTitle: 'لم يتم العثور على منتجات ضمن هذه الفئة حالياً',
+                              title: kNoItemsAvailable.tr(),
+                              subTitle: kNoItemsAvailableDesc.tr(),
                             ),
                           ),
                         ),
@@ -107,7 +107,7 @@ class _BabyItemsScreenState extends State<BabyItemsScreen> {
                   },
                 );
               } else {
-                return Center(child: Text("No Data Yet"));
+                return Center(child: Text(kNoDataYet.tr()));
               }
             },
           ),

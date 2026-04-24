@@ -73,15 +73,79 @@
   "insurance": "Insurance amount",
   "city": "City",
 
+  "notifications": "Notifications",
+
+  "emergency": "Emergency",
+  "need_help": "Are you need help?",
+  "login_to_view_conversations": "Please log in to view conversations",
+  "call": "Call :",
+  "category_books": "Books",
+  "category_electronics": "Electronics",
+  "category_travel": "Travel essentials",
+  "category_home": "Home essentials",
+  "category_empty_title": "No items available",
+  "category_empty_desc": "No products found in this category currently",
+
+  "baby_items": "Baby items",
+
+  "no_items_available": "No items available",
+  "no_items_available_desc": "No products found in this category currently",
+
+
+  "police": "Police",
+  "ambulance": "Ambulance",
+  "firefighters": "Firefighters",
+  "conversations": "Chats",
+  "no_notifications": "No notifications found",
+  "no_notifications_desc": "You haven't received any notifications yet",
+
+  "today": "Today",
+  "older": "Oldest",
+
+  "cairo": "Cairo",
+  "alexandria": "Alexandria",
+  "giza": "Giza",
+  "luxor": "Luxor",
+  "aswan": "Aswan",
+  "port_said": "Port Said",
+  "suez": "Suez",
+  "ismailia": "Ismailia",
+  "damietta": "Damietta",
+  "dakahlia": "Dakahlia",
+  "sharqia": "Sharqia",
+  "qalyubia": "Qalyubia",
+  "kafr_el_sheikh": "Kafr El Sheikh",
+  "gharbia": "Gharbia",
+  "monufia": "Monufia",
+  "beheira": "Beheira",
+  "faiyum": "Faiyum",
+  "beni_suef": "Beni Suef",
+  "minya": "Minya",
+  "asyut": "Asyut",
+  "sohag": "Sohag",
+  "qena": "Qena",
+  "red_sea": "Red Sea",
+  "new_valley": "New Valley",
+  "matruh": "Matruh",
+  "north_sinai": "North Sinai",
+  "south_sinai": "South Sinai",
+
+  "no_suggested_items": "No suggested items",
+  "suggested_items_desc": "Items will appear once available",
+
   "product_available": "Product is currently available",
   "add_product": "Add product",
   "currency_per": "EGP/{unit}",
-
-
+  "favorite_items": "Favorite items",
+  "available": "Available",
+  "not_available": "Unavailable",
   "phone": "Phone Number",
   "enter_new_password": "Enter new password",
 
   "save": "Save",
+
+  "no_favorites_yet": "No favorites yet",
+  "add_favorites_hint": "Add items you like to revisit them later",
 
   "update_success": "Profile updated successfully",
   "update_error": "An error occurred while updating",

@@ -4,32 +4,32 @@ import '../../data/models/favorite_model.dart';
 enum favoriteStatus { initial, loading, success, failure }
 
 class FavoriteState extends Equatable {
-  FavoriteModel? favoriteData;
-  favoriteStatus status;
-  String failureMessage;
-  bool isFavorite;
+  final Map<int, bool> favorites;
+  final favoriteStatus status;
+  final String failureMessage;
+  final FavoriteModel? favoriteData;
 
-  FavoriteState({
-    this.favoriteData,
+  const FavoriteState({
+    this.favorites = const {},
     this.status = favoriteStatus.initial,
     this.failureMessage = '',
-    this.isFavorite = false,
+    this.favoriteData,
   });
 
   @override
-  List<Object?> get props => [favoriteData, status, failureMessage, isFavorite];
+  List<Object?> get props => [favorites, status, failureMessage, favoriteData];
 
   FavoriteState copyWith({
-    FavoriteModel? favoriteData,
+    Map<int, bool>? favorites,
     favoriteStatus? status,
     String? failureMessage,
-    bool? isFavorite,
+    FavoriteModel? favoriteData,
   }) {
     return FavoriteState(
-      favoriteData: favoriteData ?? this.favoriteData,
+      favorites: favorites ?? this.favorites,
       status: status ?? this.status,
       failureMessage: failureMessage ?? this.failureMessage,
-      isFavorite: isFavorite ?? this.isFavorite,
+      favoriteData: favoriteData ?? this.favoriteData,
     );
   }
 }
