@@ -134,45 +134,50 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                                 },
                               ),
                               Gap(20.h),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    pendingOrders[index].itemName ?? '',
-                                    style: font16BlackSemiBold.copyWith(
-                                      color: kPrimaryColor,
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      pendingOrders[index].itemName ?? '',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: font16BlackSemiBold.copyWith(
+                                        color: kPrimaryColor,
+                                      ),
                                     ),
-                                  ),
-                                  Gap(2.w),
-                                  Row(
-                                    children: [
-                                      Image.asset('assets/images/owner.png'),
-                                      Gap(5.w),
-                                      Text(
-                                          "${kOwner.tr()}: ${pendingOrders[index].ownerName}",
-                                        style: font13kLightPrimaryColorMedium
-                                            .copyWith(color: kBlackColor),
-                                      ),
-                                    ],
-                                  ),
-                                  Gap(5.w),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/date_determine.png',
-                                      ),
-                                      Gap(5.w),
-                                      Text(
-                                        '${pendingOrders[index].fromDate ?? ''} - ${pendingOrders[index].toDate ?? ''}',
-                                        style: font20PrimaryMedium.copyWith(
-                                          fontSize: 12.sp,
-                                          color: kTextGreyColor,
+                                    Gap(2.w),
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/images/owner.png'),
+                                        Gap(5.w),
+                                        Text(
+                                            "${kOwner.tr()}: ${pendingOrders[index].ownerName}",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: font13kLightPrimaryColorMedium
+                                              .copyWith(color: kBlackColor),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                    Gap(5.w),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/date_determine.png',
+                                        ),
+                                        Gap(5.w),
+                                        Text(
+                                          '${pendingOrders[index].fromDate ?? ''} - ${pendingOrders[index].toDate ?? ''}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: font20PrimaryMedium.copyWith(
+                                            fontSize: 12.sp,
+                                            color: kTextGreyColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

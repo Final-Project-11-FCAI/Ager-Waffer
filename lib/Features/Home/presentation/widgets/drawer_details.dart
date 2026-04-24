@@ -5,6 +5,7 @@ import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/pages/login_screen.dart';
 import 'package:ager_waffer/Features/Chat/presentation/pages/coversations_screen.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/about_us_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/emergancy_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
 import 'package:ager_waffer/main.dart';
@@ -152,6 +153,14 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     customAnimatedPushNavigation(context, EmergencyScreen());
                   },
                   title: kEmergency.tr(),
+                  icon: 'assets/images/contact_us.png',
+                ),
+                Gap(2.h),
+                drawerItem(
+                  onTap: (){
+                    customAnimatedPushNavigation(context, AboutUsScreen());
+                  },
+                  title: "Abou us",
                   icon: 'assets/images/contact_us.png',
                 ),
                 Gap(2.h),

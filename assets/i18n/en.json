@@ -81,12 +81,12 @@
   "call": "Call :",
   "category_books": "Books",
   "category_electronics": "Electronics",
-  "category_travel": "Travel essentials",
-  "category_home": "Home essentials",
+  "category_travel": "Travel Gear",
+  "category_home": "Home Appliances",
   "category_empty_title": "No items available",
   "category_empty_desc": "No products found in this category currently",
 
-  "baby_items": "Baby items",
+  "baby_items": "Baby Gear",
 
   "no_items_available": "No items available",
   "no_items_available_desc": "No products found in this category currently",
