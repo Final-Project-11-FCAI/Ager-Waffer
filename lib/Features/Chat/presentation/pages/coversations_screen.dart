@@ -1,9 +1,7 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
-import 'package:ager_waffer/Base/common/theme.dart';
-import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
 import 'package:ager_waffer/Features/Chat/data/models/room_models.dart';
 import 'package:ager_waffer/Features/Chat/presentation/widgets/chat_card.dart';
-import 'package:ager_waffer/Features/Chat/presentation/widgets/text_field.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -74,7 +72,13 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Center(child: Text("No Chats Yet"));
+                    return Center(
+                        child: EmptyProducts(
+                          image: 'assets/images/no_products.png',
+                          title: kNoConversationsYet.tr(),
+                          subTitle: kConversationsHint.tr(),
+                        )
+                    );
                   }
 
                   final List<ChatRoom> items = snapshot.data!.docs

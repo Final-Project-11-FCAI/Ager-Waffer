@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_database.dart';
 import 'package:ager_waffer/Features/Chat/data/models/firebase/fire_storage.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.roomId, required this.chatUser});
@@ -224,7 +226,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: GestureDetector(
                                 onTap: () => FireData().sendMessage(
                                     widget.chatUser.id!,
-                                    "Assalamu Alaikum 👋",
+                                    kSalamMessage.tr(),
                                     widget.roomId,
                                     widget.chatUser,
                                     context),
@@ -246,7 +248,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                           height: 16,
                                         ),
                                         Text(
-                                          "Say Assalamu Alaikum",
+                                          kSaySalam.tr(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium,

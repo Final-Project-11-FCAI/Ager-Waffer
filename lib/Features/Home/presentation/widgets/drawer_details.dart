@@ -160,7 +160,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                   onTap: (){
                     customAnimatedPushNavigation(context, AboutUsScreen());
                   },
-                  title: "Abou us",
+                  title: kAboutUs.tr(),
                   icon: 'assets/images/contact_us.png',
                 ),
                 Gap(2.h),

@@ -218,6 +218,13 @@ String kCompleteDataDesc = 'complete_data_desc';
 String kGovernorate = 'governorate';
 String kStreet = 'street';
 
+String kNoConversationsYet = 'no_conversations_yet';
+String kConversationsHint = 'conversations_hint';
+
+String kSaySalam = 'say_salam';
+String kSalamMessage = 'salam_message';
+String kAboutUs = 'about_us';
+
 String kEnterGovernorate = 'enter_governorate';
 String kEnterCity = 'enter_city';
 String kEnterStreet = 'enter_street';

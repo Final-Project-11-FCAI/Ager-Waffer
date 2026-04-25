@@ -120,7 +120,7 @@ class ChatCard extends StatelessWidget {
             ),
           );
         }
-        return SizedBox(); // Return an empty widget if snapshot doesn't have data
+        return SizedBox();
       },
     );
   }

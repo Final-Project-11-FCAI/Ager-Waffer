@@ -177,7 +177,15 @@
 
   "call": "اتصل :",
   "conversations": "المحادثات",
-  
+  "about_us": "معلومات عنا",
+
+  "no_conversations_yet": "لا توجد محادثات حتى الآن",
+  "conversations_hint": "سيتم عرض المحادثات عند مراسلة أي شخص",
+
+  "say_salam": "قل السلام عليكم",
+  "salam_message": "السلام عليكم 👋",
+
+
   "category_electronics": "إلكترونيات",
   "category_books": "كتب",
   "category_travel": "مستلزمات السفر",

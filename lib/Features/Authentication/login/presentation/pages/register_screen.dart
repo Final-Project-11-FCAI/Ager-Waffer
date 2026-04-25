@@ -420,11 +420,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             "${firstNameController.text} ${lastNameController.text}",
           );
         }
-        // String imageUrl = '';
-        //
-        // if (_selectedImage != null) {
-        //   imageUrl = await uploadImageToStorage(_selectedImage!, user.uid);
-        // }
 
         await FirebaseFirestore.instance
             .collection('users')
@@ -435,7 +430,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "email": emailController.text,
           'about': "Hello! I'm ${firstNameController.text}",
           'last_message_time': DateTime.now().millisecondsSinceEpoch,
-         // 'image': imageUrl,
+         'image': _selectedImage.toString(),
           "created_at": DateTime.now().millisecondsSinceEpoch,
           'last_activated': user.metadata.lastSignInTime?.millisecondsSinceEpoch.toString() ?? '',
           'push_token': '',
