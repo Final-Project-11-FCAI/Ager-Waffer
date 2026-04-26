@@ -175,7 +175,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: Shared.height * 0.03.h),
+            padding: EdgeInsets.symmetric(vertical: Shared.height * 0.01.h),
             child: Divider(height: 1.h, thickness: 0.8, color: kBorderColor),
           ),
           Padding(
