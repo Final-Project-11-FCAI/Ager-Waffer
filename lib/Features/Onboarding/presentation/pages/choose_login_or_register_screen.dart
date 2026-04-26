@@ -59,6 +59,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
                       },
                       text: kHaveAccountLogin.tr(),
                       color: kWhiteColor,
+                      isLogin: true,
                     ),
                   ],
                 ),

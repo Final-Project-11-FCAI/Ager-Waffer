@@ -5,6 +5,8 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/external_services/auth_external_services.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_state.dart';
+import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +36,16 @@ class ExternalLoginWidget extends StatelessWidget {
                 ExternalLoginEvent(
                     provider: 'google', accessToken: token),
               );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (c) =>
+                      BlocProvider(
+                        create: (_) => BottomNavCubit(),
+                        child: HomeLayoutScreen(),
+                      ),
+                ),
+              );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(kGoogleSignInFailed.tr())),
@@ -55,6 +67,16 @@ class ExternalLoginWidget extends StatelessWidget {
               context.read<ExternalLoginBloc>().add(
                 ExternalLoginEvent(
                     provider: 'facebook', accessToken: token),
+              );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (c) =>
+                      BlocProvider(
+                        create: (_) => BottomNavCubit(),
+                        child: HomeLayoutScreen(),
+                      ),
+                ),
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

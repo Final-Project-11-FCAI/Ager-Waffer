@@ -16,6 +16,7 @@ class ButtonApp extends StatefulWidget {
     required this.text,
     required this.color,
     this.isReview = false,
+    this.isLogin = false,
   });
 
   final int? currentPage;
@@ -25,6 +26,7 @@ class ButtonApp extends StatefulWidget {
   final Color color;
   final bool isLanguageScreen;
   final bool isReview;
+  final bool isLogin;
   final double? borderRadius;
 
   @override
@@ -113,7 +115,7 @@ class _ButtonAppState extends State<ButtonApp>
                   style: GoogleFonts.notoSansArabic(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
-                    color: kWhiteColor,
+                    color: widget.isLogin ? kPrimaryColor : kWhiteColor,
                   ),
                 ),
                 if (widget.isReview) ...[
