@@ -9,6 +9,7 @@ import 'package:ager_waffer/Features/Home/presentation/manager/send_request_bloc
 import 'package:ager_waffer/Features/Home/presentation/manager/send_request_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/renatl_terms_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
+import 'package:ager_waffer/Features/Profile/presentation/widgets/user_information.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +37,26 @@ class _RequestScreenState extends State<RequestScreen> {
   bool agree = false;
 
   bool isRequestSent = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        enableDrag: false,
+        isDismissible: false,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (context) {
+          return UserInformation(isRequestScreen: true);
+        },
+      );
+    });
+  }
 
   bool get isValid {
     if (startDate == null || endDate == null) return false;
@@ -138,17 +159,17 @@ class _RequestScreenState extends State<RequestScreen> {
     return DateFormat('yyyy/MM/dd').format(date);
   }
 
-  String period(String text) {
-    switch (text.toLowerCase()) {
-      case 'Daily':
-        return kDaily.tr();
-      case 'Weekly':
-        return kWeekly.tr();
-      case 'Monthly':
-        return kMonthly.tr();
-      default:
-        return '';
-    }
+  String rentPeriod({bool isPlus = false}) {
+    return widget.product.rentUnit == "Daily" ||
+        widget.product.rentUnit == "يومي"
+        ? isPlus ? kDayss.tr() : kDay.tr()
+        : widget.product.rentUnit == "Weekly" ||
+        widget.product.rentUnit == "أسبوعي"
+        ? isPlus ? kWeeks.tr() : kWeek.tr()
+        : widget.product.rentUnit == "Monthly" ||
+        widget.product.rentUnit == "شهري"
+        ? isPlus ? kMonths.tr() : kMonth.tr()
+        : '';
   }
 
   @override
@@ -173,7 +194,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 Shared.showLoadingDialog(context: context);
               } else if (state.status == sendRequestStatus.success) {
                 Shared.dismissDialog(context: context);
-          
+
                 Dialogs.showDialogSuccess(
                   context,
                   title: kRequestSuccessTitle.tr(),
@@ -217,7 +238,9 @@ class _RequestScreenState extends State<RequestScreen> {
                             Container(
                               padding: EdgeInsets.all(Shared.width * 0.04),
                               decoration: BoxDecoration(
-                                color: isDark ? kSomeDarkModeColor : kWhiteColor,
+                                color: isDark
+                                    ? kSomeDarkModeColor
+                                    : kWhiteColor,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Row(
@@ -270,19 +293,14 @@ class _RequestScreenState extends State<RequestScreen> {
                                             ),
                                             Gap(8.w),
                                             Text(
-                                              "${widget.product.price} ${kPricePerUnit.tr()}/${widget.product.rentUnit == kDaily.tr()
-                                                  ? kDay.tr()
-                                                  : widget.product.rentUnit == kWeekly.tr()
-                                                  ? kWeek.tr()
-                                                  : widget.product.rentUnit == kMonthly.tr()
-                                                  ? kMonth.tr()
-                                                  : ''}",
-                                              style: font16BlackSemiBold.copyWith(
-                                                fontSize: 11,
-                                                color: isDark
-                                                    ? kWhiteColor
-                                                    : kBlackColor,
-                                              ),
+                                              "${widget.product.price} ${kCurrency.tr()}/${rentPeriod()}",
+                                              style: font16BlackSemiBold
+                                                  .copyWith(
+                                                    fontSize: 11,
+                                                    color: isDark
+                                                        ? kWhiteColor
+                                                        : kBlackColor,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -297,10 +315,16 @@ class _RequestScreenState extends State<RequestScreen> {
                                           children: [
                                             Text(
                                               "${widget.product.averageRate!}",
-                                              style: font16BlackSemiBold.copyWith(
-                                                fontSize: 10,
-                                                color: Color.fromRGBO(151, 151, 151, 1,),
-                                              ),
+                                              style: font16BlackSemiBold
+                                                  .copyWith(
+                                                    fontSize: 10,
+                                                    color: Color.fromRGBO(
+                                                      151,
+                                                      151,
+                                                      151,
+                                                      1,
+                                                    ),
+                                                  ),
                                             ),
                                             Gap(5.w),
                                             ...List.generate(
@@ -309,7 +333,11 @@ class _RequestScreenState extends State<RequestScreen> {
                                                 Icons.star,
                                                 size: 14.sp,
                                                 color:
-                                                    index < widget.product.averageRate!.floor()
+                                                    index <
+                                                        widget
+                                                            .product
+                                                            .averageRate!
+                                                            .floor()
                                                     ? Colors.amber
                                                     : Colors.grey.shade300,
                                               ),
@@ -393,9 +421,12 @@ class _RequestScreenState extends State<RequestScreen> {
                                       ],
                                     ),
                                     Gap(10.h),
-                                    widget.product.rentUnit == kWeekly.tr() ||
+                                    widget.product.rentUnit == "Weekly" ||
                                             widget.product.rentUnit ==
-                                                kMonthly.tr()
+                                                "أسبوعي" ||
+                                            widget.product.rentUnit ==
+                                                "Monthly" ||
+                                            widget.product.rentUnit == "شهري"
                                         ? Row(
                                             children: [
                                               Text(
@@ -403,8 +434,11 @@ class _RequestScreenState extends State<RequestScreen> {
                                                         kWeekly.tr()
                                                     ? kNumberOfWeeks.tr()
                                                     : kNumberOfMonths.tr(),
-                                                style: font15SomeBlackColorMedium
-                                                    .copyWith(color: kgreyColor),
+                                                style:
+                                                    font15SomeBlackColorMedium
+                                                        .copyWith(
+                                                          color: kgreyColor,
+                                                        ),
                                               ),
                                               const Spacer(),
                                               IconButton(
@@ -447,7 +481,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                                 padding: EdgeInsets.all(8.w),
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(16.r),
+                                                      BorderRadius.circular(
+                                                        16.r,
+                                                      ),
                                                   color: Colors.blue[50],
                                                 ),
                                                 child: totalDays > 0
@@ -487,7 +523,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                   children: [
                                     buildPriceRow(
                                       Text(
-                                        "${kPricePerUnit.tr()} ${widget.product.rentUnit}",
+                                        "${kPricePerUnit.tr()} ${rentPeriod()}",
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 13,
@@ -495,7 +531,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                             ),
                                       ),
                                       Text(
-                                        "${widget.product.price} ${kEgp.tr()}/${widget.product.rentUnit}",
+                                        "${widget.product.price} ${kEgp.tr()}/${rentPeriod()}",
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 13,
@@ -505,13 +541,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                     ),
                                     buildPriceRow(
                                       Text(
-                                        "${kNumberOfDays.tr()} ${widget.product.rentUnit == kDaily.tr()
-                                            ? kDayss.tr()
-                                            : widget.product.rentUnit == kWeekly.tr()
-                                            ? kWeeks.tr()
-                                            : widget.product.rentUnit == kMonthly.tr()
-                                            ? kMonths.tr()
-                                            : ''}",
+                                        "${kNumber.tr()} ${rentPeriod(isPlus: true)}",
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 13,
@@ -545,7 +575,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         thickness: 1,
                                       ),
                                     ),
-          
+
                                     buildPriceRow(
                                       Text(
                                         kTotal.tr(),

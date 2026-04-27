@@ -66,7 +66,7 @@ class _HomeEssentialsScreenState extends State<HomeEssentialsScreen> {
                 );
               } else if (state.status == allItemsStatus.success) {
                 final products = state.product;
-                final homeAppliances = products.where((e) => e.categoryName == kHomeAppliances.tr()).toList();
+                final homeAppliances = products.where((e) => e.categoryName == "Home Appliances" || e.categoryName == "أجهزة منزلية").toList();
 
                 if (homeAppliances.isEmpty) {
                   return LayoutBuilder(

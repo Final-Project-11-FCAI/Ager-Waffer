@@ -14,7 +14,8 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:gap/gap.dart';
 
 class UserInformation extends StatefulWidget {
-  const UserInformation({super.key});
+  const UserInformation({super.key, this.isRequestScreen = false});
+  final bool isRequestScreen;
 
   @override
   State<UserInformation> createState() => _UserInformationState();
@@ -110,7 +111,7 @@ class _UserInformationState extends State<UserInformation> {
                       ),
                       Gap(5.h),
                       Text(
-                        kCompleteDataDesc.tr(),
+                        widget.isRequestScreen ? kCompleteRentProcess.tr() : kCompleteDataDesc.tr(),
                         style: font20PrimaryMedium.copyWith(
                           fontSize: 16,
                           color: kPrimaryColor,

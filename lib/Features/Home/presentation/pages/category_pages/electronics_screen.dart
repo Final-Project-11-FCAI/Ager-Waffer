@@ -71,7 +71,7 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
                     );
                   } else if (state.status == allItemsStatus.success) {
                     final products = state.product;
-                    final electronics = products.where((e) => e.categoryName == kElectronics.tr()).toList();
+                    final electronics = products.where((e) => e.categoryName == "Electronics" || e.categoryName == "إلكترونيات").toList();
 
                     if (electronics.isEmpty) {
                       return LayoutBuilder(

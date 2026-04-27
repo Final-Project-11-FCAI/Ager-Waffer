@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/room_models.dart';
 import 'package:ager_waffer/Features/Chat/presentation/widgets/chat_card.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
@@ -53,7 +54,9 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
     }
 
     return Scaffold(
+      backgroundColor: kWhiteColor,
       appBar: AppBar(
+        backgroundColor: kWhiteColor,
         title: Text(kConversations.tr()),
       ),
       body: Padding(

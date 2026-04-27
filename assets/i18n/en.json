@@ -86,11 +86,10 @@
   "category_empty_title": "No items available",
   "category_empty_desc": "No products found in this category currently",
 
-  "baby_items": "Baby Gear",
 
   "no_items_available": "No items available",
   "no_items_available_desc": "No products found in this category currently",
-
+  "complete_rent_process": "To complete the rental process",
 
   "about_us": "About us",
   "no_conversations_yet": "No conversations yet",
@@ -376,7 +375,7 @@
   "accept_order": "Accept order",
   "decline": "Decline",
 
-
+  "number": "Number of",
   "condition": "Condition",
   "insurance_only": "Insurance",
   "description": "Description",

@@ -195,12 +195,12 @@ String kCurrencyPerDay = 'currency_per_day';
 
 String kMaxImages = 'max_images';
 String kMinImages = 'min_images';
+String kNumber = 'number';
 
 String kUploadProductImages = 'upload_product_images';
 String kUploadRange = 'upload_range';
 String kUploadImages = 'upload_images';
 
-String kBabyItems = 'baby_items';
 
 String kNoItemsAvailable = 'no_items_available';
 String kNoItemsAvailableDesc = 'no_items_available_desc';
@@ -214,6 +214,8 @@ String kCategoryEmptyDesc = 'category_empty_desc';
 
 String kCompleteDataTitle = 'complete_data_title';
 String kCompleteDataDesc = 'complete_data_desc';
+
+String kCompleteRentProcess = 'complete_rent_process';
 
 String kGovernorate = 'governorate';
 String kStreet = 'street';

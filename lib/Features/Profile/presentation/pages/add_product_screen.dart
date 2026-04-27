@@ -31,11 +31,11 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   List<String> categoryOptions = [
-    kElectronics.tr(),
-    kHomeAppliances.tr(),
-    kBabyGear.tr(),
-    kBooks.tr(),
-    kTravelGear.tr(),
+    kElectronics,
+    kHomeAppliances,
+    kBabyGear,
+    kBooks,
+    kTravelGear,
   ];
   List<String> governmentOptions = [
     kCairo,
@@ -68,10 +68,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
   ];
 
   List<String> productStatesOptions = [
-    kBrandNew.tr(),
-    kNew.tr(),
-    kUsed.tr(),
-    kHeavilyUsed.tr(),
+    kBrandNew,
+    kNew,
+    kUsed,
+    kHeavilyUsed,
   ];
 
   final formKey = GlobalKey<FormState>();

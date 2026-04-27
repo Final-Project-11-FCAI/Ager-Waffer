@@ -27,11 +27,39 @@ class ProductCardListView extends StatefulWidget {
 class _ProductCardListViewState extends State<ProductCardListView> {
   bool isFavorite = false;
 
+  String rentPeriod() {
+    return widget.product.rentUnit == "Daily" ||
+        widget.product.rentUnit == "يومي"
+        ? kDay.tr()
+        : widget.product.rentUnit == "Weekly" ||
+        widget.product.rentUnit == "أسبوعي"
+        ? kWeek.tr()
+        : widget.product.rentUnit == "Monthly" ||
+        widget.product.rentUnit == "شهري"
+        ? kMonth.tr()
+        : '';
+  }
+  String rentCondition() {
+    return widget.product.condition == "BrandNew" ||
+        widget.product.condition == "أول استخدام"
+        ? kBrandNew.tr()
+        : widget.product.condition == "New" ||
+        widget.product.condition == "جديد"
+        ? kNew.tr()
+        : widget.product.condition == "Used" ||
+        widget.product.condition == "مستخدم"
+        ? kUsed.tr()
+        : widget.product.condition == "HeavilyUsed" ||
+        widget.product.condition == "مستخدم بشدة"
+        ? kHeavilyUsed.tr()
+        : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
-      onTap: (){
+      onTap: () {
         customAnimatedPushNavigation(
           context,
           ProductDetailsScreen(product: widget.product),
@@ -43,9 +71,17 @@ class _ProductCardListViewState extends State<ProductCardListView> {
         decoration: BoxDecoration(
           color: isDark ? kDarkModeColor : kWhiteColor,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isDark ? kLightDarkModeColor : Color.fromRGBO(110, 122, 135, 1)),
+          border: Border.all(
+            color: isDark
+                ? kLightDarkModeColor
+                : Color.fromRGBO(110, 122, 135, 1),
+          ),
           boxShadow: const [
-            BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 4)),
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 4),
+            ),
           ],
         ),
         child: Row(
@@ -64,28 +100,28 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                           : 0,
                     ),
                     child:
-                    widget.product.itemImages != null &&
-                        widget.product.itemImages!.isNotEmpty
+                        widget.product.itemImages != null &&
+                            widget.product.itemImages!.isNotEmpty
                         ? CachedNetworkImage(
-                      imageUrl: widget.product.itemImages!.first,
-                      width: 95.w,
-                      height: 95.h,
-                      fit: BoxFit.contain,
-                      placeholder: (context, url) =>
-                          Image.asset("assets/images/virtual_image.jpg",
+                            imageUrl: widget.product.itemImages!.first,
+                            width: 95.w,
+                            height: 95.h,
+                            fit: BoxFit.contain,
+                            placeholder: (context, url) => Image.asset(
+                              "assets/images/virtual_image.jpg",
+                              width: 95.w,
+                              height: 95.h,
+                              fit: BoxFit.contain,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )
+                        : Image.asset(
+                            "assets/images/virtual_image.jpg",
                             width: 95.w,
                             height: 95.h,
                             fit: BoxFit.contain,
                           ),
-                      errorWidget: (context, url, error) =>
-                          Icon(Icons.error),
-                    )
-                        : Image.asset(
-                      "assets/images/virtual_image.jpg",
-                      width: 95.w,
-                      height: 95.h,
-                      fit: BoxFit.contain,
-                    ),
                   ),
                 ],
               ),
@@ -103,22 +139,29 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                         Expanded(
                           child: Text(
                             widget.product.name!,
-                            style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),
+                            style: font16BlackSemiBold.copyWith(
+                              color: isDark ? kWhiteColor : kBlackColor,
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Gap(8.w),
                         Text(
-                          "${widget.product.price} ${kEgp.tr()}/${widget.product.rentUnit}",
-                          style: font16BlackSemiBold.copyWith(fontSize: 10, color: isDark ? kWhiteColor : kBlackColor),
+                          "${widget.product.price} ${kEgp.tr()}/${rentPeriod()}",
+                          style: font16BlackSemiBold.copyWith(
+                            fontSize: 10,
+                            color: isDark ? kWhiteColor : kBlackColor,
+                          ),
                         ),
                       ],
                     ),
                     Text(
-                      widget.product.condition!,
+                      rentCondition(),
                       style: font16BlackSemiBold.copyWith(
-                        color: isDark ? kWhiteColor.withOpacity(0.6) : Color.fromRGBO(85, 85, 85, 0.61),
+                        color: isDark
+                            ? kWhiteColor.withOpacity(0.6)
+                            : Color.fromRGBO(85, 85, 85, 0.61),
                       ),
                     ),
                     Gap(5.h),
@@ -128,13 +171,15 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                           "${widget.product.averageRate}",
                           style: font16BlackSemiBold.copyWith(
                             fontSize: 10,
-                            color: isDark ? kWhiteColor.withOpacity(0.8) : Color.fromRGBO(151, 151, 151, 1),
+                            color: isDark
+                                ? kWhiteColor.withOpacity(0.8)
+                                : Color.fromRGBO(151, 151, 151, 1),
                           ),
                         ),
                         Gap(5.w),
                         ...List.generate(
                           5,
-                              (index) => Icon(
+                          (index) => Icon(
                             Icons.star,
                             size: 14.sp,
                             color: index < widget.product.averageRate!.floor()
@@ -189,7 +234,9 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                                     isFavorite ? "Saved" : "Save",
                                     style: font16BlackSemiBold.copyWith(
                                       fontSize: 12.sp,
-                                      color: isFavorite ? kRedColor : kGreyColor,
+                                      color: isFavorite
+                                          ? kRedColor
+                                          : kGreyColor,
                                     ),
                                   ),
                                 ],

@@ -36,7 +36,7 @@ class _BabyItemsScreenState extends State<BabyItemsScreen> {
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(
-          kBabyItems.tr(),
+          kBabyGear.tr(),
           style: font16BlackSemiBold.copyWith(fontSize: 20, color: kWhiteColor),
         ),
       ),
@@ -66,7 +66,7 @@ class _BabyItemsScreenState extends State<BabyItemsScreen> {
                 );
               } else if (state.status == allItemsStatus.success) {
                 final products = state.product;
-                final babyGear = products.where((e) => e.categoryName == kBabyGear.tr()).toList();
+                final babyGear = products.where((e) => e.categoryName == "Baby Gear" || e.categoryName == "مستلزمات أطفال").toList();
 
                 if (babyGear.isEmpty) {
                   return LayoutBuilder(

@@ -3,6 +3,7 @@ import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/request_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart' as login;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -32,7 +33,9 @@ class RentAndFavoriteButton extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-                product.isAvailable == true ? customAnimatedPushNavigation(context, RequestScreen(product: product,)) : null;
+                product.isAvailable == true ?
+                customAnimatedPushNavigation(context, RequestScreen(product: product,))
+                    : null;
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: product.isAvailable == true ? kPrimaryColor : kGreyColor,

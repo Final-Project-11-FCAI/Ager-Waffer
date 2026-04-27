@@ -68,7 +68,7 @@ class _BooksScreenState extends State<BooksScreen> {
                     );
                   } else if (state.status == allItemsStatus.success) {
                     final products = state.product;
-                    final books = products.where((e) => e.categoryName == kBooks.tr()).toList();
+                    final books = products.where((e) => e.categoryName == "Books" || e.categoryName == "كتب").toList();
 
                     if (books.isEmpty) {
                       return LayoutBuilder(

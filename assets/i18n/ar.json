@@ -56,6 +56,7 @@
   "used": "مستخدم",
   "heavily_used": "مستخدم بشدة",
 
+  "complete_rent_process": "لإتمام عملية استئجار المنتجات",
   "sent": "تم الإرسال",
   "number_of_months": "عدد الشهور",
   "number_of_weeks": "عدد الأسابيع",
@@ -74,6 +75,7 @@
   "renter_data": "بيانات المستأجر",
   "name": "الاسم",
   "address": "العنوان",
+  "number": "عدد",
 
 
   "total_amount": "إجمالي المبلغ",

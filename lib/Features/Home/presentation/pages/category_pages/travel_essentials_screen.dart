@@ -67,7 +67,7 @@ class _TravelEssentialsScreenState extends State<TravelEssentialsScreen> {
                 );
               } else if (state.status == allItemsStatus.success) {
                 final products = state.product;
-                final travelGear = products.where((e) => e.categoryName == kTravelGear.tr()).toList();
+                final travelGear = products.where((e) => e.categoryName == "Travel Gear" || e.categoryName == "معدات سفر").toList();
 
                 if (travelGear.isEmpty) {
                   return LayoutBuilder(
