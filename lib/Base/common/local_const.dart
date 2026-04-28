@@ -180,9 +180,14 @@ String kEdit = 'edit';
 
 
 String kAddProductTooltip = 'add_product_tooltip';
-
+String kSaved = 'saved';
 String kMyProducts = 'my_products';
 String kDeleteSuccess = 'delete_success';
+
+String kAboutParagraph1 = 'about_paragraph_1';
+String kAboutParagraph2 = 'about_paragraph_2';
+String kAboutParagraph3 = 'about_paragraph_3';
+String kAboutParagraph4 = 'about_paragraph_4';
 
 String kNoProductsYet = 'no_products_yet';
 String kAddProductsDesc = 'add_products_desc';

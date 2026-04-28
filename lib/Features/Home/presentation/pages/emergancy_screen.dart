@@ -14,62 +14,68 @@ class EmergencyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(top: 60.h, left: 20.w, right: 20.w, bottom: 30.h),
-            decoration: BoxDecoration(
-              color: kPrimaryColor,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30.r),
-                bottomRight: Radius.circular(30.r),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(top: 60.h, left: 20.w, right: 20.w, bottom: 30.h),
+              decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30.r),
+                  bottomRight: Radius.circular(30.r),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        kEmergency.tr(),
+                        style: TextStyle(
+                          fontSize: 28.sp,
+                          color: kWhiteColor,
+                          fontWeight: bold,
+                        ),
+                      ),
+                      Gap(5.h),
+                      Text(
+                        kNeedHelp.tr(),
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Icon(Icons.arrow_back, color: kWhiteColor,))
+                ],
               ),
             ),
-            child: Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      kEmergency.tr(),
-                      style: TextStyle(
-                        fontSize: 28.sp,
-                        color: kWhiteColor,
-                        fontWeight: bold,
-                      ),
+            Gap(20.h),
+            _buildCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    kCall.tr(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: kPrimaryColor,
                     ),
-                    Gap(5.h),
-                    Text(
-                      kNeedHelp.tr(),
-                      style: TextStyle(color: Colors.white70),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Gap(20.h),
-          _buildCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  kCall.tr(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: kPrimaryColor,
                   ),
-                ),
-                Gap(15.h),
-                _buildRow("122", kPolice.tr()),
-                _buildRow("123", kAmbulance.tr()),
-                _buildRow("180", kFirefighters.tr()),
-              ],
+                  Gap(15.h),
+                  _buildRow("122", kPolice.tr()),
+                  _buildRow("123", kAmbulance.tr()),
+                  _buildRow("180", kFirefighters.tr()),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

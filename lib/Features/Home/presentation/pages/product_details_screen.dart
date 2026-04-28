@@ -38,97 +38,100 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
         backgroundColor: kPrimaryColor,
-        elevation: 0,
-        foregroundColor: kWhiteColor,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: kWhiteColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.r),
-                    topRight: Radius.circular(25.r),
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          elevation: 0,
+          foregroundColor: kWhiteColor,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: kWhiteColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.r),
+                      topRight: Radius.circular(25.r),
+                    ),
                   ),
-                ),
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: ProductImages(product: widget.product,),
-                      ),
-                      Gap(20.h),
-                      ProductDataContainer(product: widget.product),
-                      Gap(10.h),
-                     Padding(
-                       padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.08.w, vertical: Shared.height * 0.02.h),
-                       child: Divider(color: kBlackColor, thickness: 1.h,),
-                     ),
-                      Gap(10.h),
-                      ContactOwnerContainer(product: widget.product,),
-                      Gap(24.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                          kReviews.tr(),
-                            style: font16BlackSemiBold.copyWith(fontWeight: bold),
-                          ),
-                        ],
-                      ),
-                      Gap(5.h),
-                      BlocBuilder<ItemReviewBloc, ItemReviewState>(
-                        builder: (context, state) {
-                          if (state.status == itemReviewStatus.loading) {
-                            return const LoadingPlaceHolder(
-                              shimmerType: ShimmerType.list,
-                              cellShimmerHeight: 50,
-                              shimmerCount: 10,
-                            );
-                          } else if (state.status == itemReviewStatus.success) {
-                            final reviews = state.reviews;
-                            return reviews.isNotEmpty ?
-                            ListView.builder(
-                              itemCount: reviews.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8.h),
-                                  child: ReviewItem(
-                                    review: reviews[index],
-                                  ),
-                                );
-                              },
-                            ) : Center(child: EmptyProducts(
-                              image: 'assets/images/empty_products.png',
-                              title: kNoReviewsYet.tr(),
-                              subTitle: '',
-                              titleFontSize: 19.sp,
-                            ));
-                          } else if (state.status == itemReviewStatus.failure) {
-                            return Center(child: Text(state.failureMessage));
-                          } else  {
-                            return Center(child: Text(kNoDataYet.tr()));
-                          }
-                        },
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: ProductImages(product: widget.product,),
+                        ),
+                        Gap(20.h),
+                        ProductDataContainer(product: widget.product),
+                        Gap(10.h),
+                       Padding(
+                         padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.08.w, vertical: Shared.height * 0.02.h),
+                         child: Divider(color: kBlackColor, thickness: 1.h,),
+                       ),
+                        Gap(10.h),
+                        ContactOwnerContainer(product: widget.product,),
+                        Gap(24.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                            kReviews.tr(),
+                              style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                            ),
+                          ],
+                        ),
+                        Gap(5.h),
+                        BlocBuilder<ItemReviewBloc, ItemReviewState>(
+                          builder: (context, state) {
+                            if (state.status == itemReviewStatus.loading) {
+                              return const LoadingPlaceHolder(
+                                shimmerType: ShimmerType.list,
+                                cellShimmerHeight: 50,
+                                shimmerCount: 10,
+                              );
+                            } else if (state.status == itemReviewStatus.success) {
+                              final reviews = state.reviews;
+                              return reviews.isNotEmpty ?
+                              ListView.builder(
+                                itemCount: reviews.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 8.h),
+                                    child: ReviewItem(
+                                      review: reviews[index],
+                                    ),
+                                  );
+                                },
+                              ) : Center(child: EmptyProducts(
+                                image: 'assets/images/empty_products.png',
+                                title: kNoReviewsYet.tr(),
+                                subTitle: '',
+                                titleFontSize: 19.sp,
+                              ));
+                            } else if (state.status == itemReviewStatus.failure) {
+                              return Center(child: Text(state.failureMessage));
+                            } else  {
+                              return Center(child: Text(kNoDataYet.tr()));
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            RentAndFavoriteButton(product: widget.product,)
-          ],
+              RentAndFavoriteButton(product: widget.product,)
+            ],
+          ),
         ),
       ),
     );

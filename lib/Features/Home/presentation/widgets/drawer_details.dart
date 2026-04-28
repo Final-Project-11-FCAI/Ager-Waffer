@@ -127,7 +127,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 Gap(2.h),
                 drawerItem(
                   title: kConversations.tr(),
-                  icon: 'assets/images/management_orders.png',
+                  icon: 'assets/images/chat_icon.png',
                   onTap: () {
                     Navigator.of(context).pop();
                     customAnimatedPushNavigation(context, ConversationsScreen());
@@ -153,7 +153,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     customAnimatedPushNavigation(context, EmergencyScreen());
                   },
                   title: kEmergency.tr(),
-                  icon: 'assets/images/contact_us.png',
+                  icon: 'assets/images/emergancy_icon.png',
                 ),
                 Gap(2.h),
                 drawerItem(

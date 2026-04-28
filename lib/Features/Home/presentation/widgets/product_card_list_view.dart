@@ -231,7 +231,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                                   ),
                                   Gap(4.w),
                                   Text(
-                                    isFavorite ? "Saved" : "Save",
+                                    isFavorite ? kSaved.tr() : kSave.tr(),
                                     style: font16BlackSemiBold.copyWith(
                                       fontSize: 12.sp,
                                       color: isFavorite

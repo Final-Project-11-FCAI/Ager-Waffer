@@ -29,6 +29,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     return Scaffold(
       backgroundColor: isDark ? kDarkModeColor :kPrimaryColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: isDark ? kMoreDarkModeColor :  kPrimaryColor,
         foregroundColor: kWhiteColor,
           title: Text(

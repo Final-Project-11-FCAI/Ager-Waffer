@@ -1,7 +1,9 @@
+import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class AboutUsScreen extends StatelessWidget {
   const AboutUsScreen({super.key});
@@ -11,10 +13,7 @@ class AboutUsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: false,
-        title: Text(
-          "About Us",
-          style: font24LightPrimarySemiBold
-        ),
+        title: Text(kAboutUs.tr(), style: font24LightPrimarySemiBold),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -23,22 +22,15 @@ class AboutUsScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
+                // Image.asset("assets/images/about_us_logo.png"),
                 Gap(25.h),
-                _buildText(
-                  "Ager Wafer is your go-to app for discovering, exploring, and enjoying a wide variety of crispy, delicious wafers—made for every mood and every moment. From classic favorites to exciting new flavors, we bring crunch and joy right to your fingertips.",
-                ),
+                _buildText(kAboutParagraph1.tr()),
                 Gap(15.h),
-                _buildText(
-                  "Our mission is to make wafer shopping easier, smarter, and more enjoyable. With a user-friendly experience, secure ordering, and fast delivery, Ager Wafer ensures that your favorite treats are always within reach.",
-                ),
+                _buildText(kAboutParagraph2.tr()),
                 Gap(15.h),
-                _buildText(
-                  "Whether you're craving a quick bite, looking for the perfect gift, or stocking up for loved ones, Ager Wafer is here to add a little extra crunch to your day.",
-                ),
+                _buildText(kAboutParagraph3.tr()),
                 Gap(15.h),
-                _buildText(
-                  "Thank you for being part of the Ager Wafer family. Together, let’s crunch more, smile more, and share more happiness.",
-                ),
+                _buildText(kAboutParagraph4.tr()),
                 Gap(15.h),
               ],
             ),
@@ -52,11 +44,7 @@ class AboutUsScreen extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.justify,
-      style: TextStyle(
-        fontSize: 14.sp,
-        height: 1.6,
-        color: Colors.black87,
-      ),
+      style: font14BlackBold.copyWith(fontWeight: medium, color: kBlackColor, height: 1.6),
     );
   }
 }

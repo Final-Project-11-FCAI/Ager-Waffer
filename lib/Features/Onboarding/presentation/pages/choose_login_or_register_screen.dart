@@ -43,7 +43,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        top: Shared.height * 0.05,
+                        top: Shared.height * 0.04,
                         bottom: Shared.height * 0.025,),
                       child: ButtonApp(
                         onPressed: () {

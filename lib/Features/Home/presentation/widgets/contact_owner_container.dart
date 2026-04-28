@@ -89,7 +89,7 @@ class ContactOwnerContainer extends StatelessWidget {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator(color: kBlueColor,));
                 }
 
                 final uid = snapshot.data!.docs.first.id;

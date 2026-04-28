@@ -95,7 +95,7 @@ class _ButtonAppState extends State<ButtonApp>
                     borderRadius: BorderRadius.circular(
                       widget.borderRadius ?? Shared.width * 0.07.w,
                     ),
-                    side: BorderSide(color: widget.color, width: 1),
+                    side: BorderSide(color: widget.isLogin ? kPrimaryColor : widget.color, width: 1),
                   ),
                 ).copyWith(
                   backgroundColor: WidgetStateProperty.resolveWith<Color?>((

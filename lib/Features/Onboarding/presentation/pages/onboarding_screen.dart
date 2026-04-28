@@ -50,7 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         onboardingDate[index].image,
                         width: Shared.width * 0.9,
                       ),
-                      Gap(Shared.height * 0.02),
+                      Gap(Shared.height * 0.0),
                       RichText(
                         text: TextSpan(
                           children: [

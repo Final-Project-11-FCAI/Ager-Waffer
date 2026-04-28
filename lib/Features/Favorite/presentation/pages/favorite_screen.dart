@@ -36,6 +36,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         title: Text(
           kFavoriteItems.tr(),

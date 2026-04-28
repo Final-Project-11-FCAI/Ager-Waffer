@@ -171,6 +171,21 @@ class _RequestScreenState extends State<RequestScreen> {
         ? isPlus ? kMonths.tr() : kMonth.tr()
         : '';
   }
+  String rentCondition() {
+    return widget.product.condition == "BrandNew" ||
+        widget.product.condition == "أول استخدام"
+        ? kBrandNew.tr()
+        : widget.product.condition == "New" ||
+        widget.product.condition == "جديد"
+        ? kNew.tr()
+        : widget.product.condition == "Used" ||
+        widget.product.condition == "مستخدم"
+        ? kUsed.tr()
+        : widget.product.condition == "HeavilyUsed" ||
+        widget.product.condition == "مستخدم بشدة"
+        ? kHeavilyUsed.tr()
+        : '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +320,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                           ],
                                         ),
                                         Text(
-                                          widget.product.condition!,
+                                          rentCondition(),
                                           style: font16BlackSemiBold.copyWith(
                                             color: kBlueColor,
                                           ),

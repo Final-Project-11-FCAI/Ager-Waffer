@@ -11,6 +11,22 @@ class ProductDataContainer extends StatelessWidget {
 
   final ProductData product;
 
+  String rentCondition() {
+    return product.condition == "BrandNew" ||
+        product.condition == "أول استخدام"
+        ? kBrandNew.tr()
+        : product.condition == "New" ||
+        product.condition == "جديد"
+        ? kNew.tr()
+        : product.condition == "Used" ||
+        product.condition == "مستخدم"
+        ? kUsed.tr()
+        : product.condition == "HeavilyUsed" ||
+        product.condition == "مستخدم بشدة"
+        ? kHeavilyUsed.tr()
+        : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -65,7 +81,7 @@ class ProductDataContainer extends StatelessWidget {
                           style: font16BlackSemiBold.copyWith(fontWeight: bold),
                         ),
                         TextSpan(
-                          text: product.condition!,
+                          text: rentCondition(),
                           style: font16BlackSemiBold.copyWith(
                             fontWeight: bold,
                             color: kBlueColor,
@@ -107,7 +123,7 @@ class ProductDataContainer extends StatelessWidget {
           style: font16BlackSemiBold,
         ),
         Gap(8.h),
-        Text(
+        SelectableText(
           product.description!,
           style: font14GreyRegular.copyWith(fontWeight: medium),
         ),
