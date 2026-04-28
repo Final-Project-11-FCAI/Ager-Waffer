@@ -23,7 +23,7 @@ class HomeLayoutScreen extends StatelessWidget {
     final List<Widget> screens = [
       HomeScreen(email: email, password: password),
       FavoriteScreen(),
-      MyOrdersScreen(),
+      ConversationsScreen(),
       ProfileScreen(),
     ];
 
@@ -109,7 +109,7 @@ class HomeLayoutScreen extends StatelessWidget {
                         'assets/images/shopping-cart.png',
                         color: currentIndex == 2 ? kPrimaryColor : kMoreGreyColor,
                       ),
-                      label: kMyOrders.tr(),
+                      label: kConversations.tr(),
                       backgroundColor: kWhiteColor,
                     ),
                     BottomNavigationBarItem(

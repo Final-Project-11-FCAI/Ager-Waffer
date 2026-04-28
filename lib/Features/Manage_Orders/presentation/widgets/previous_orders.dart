@@ -155,7 +155,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                       Image.asset('assets/images/owner.png'),
                                       Gap(5.w),
                                       Text(
-                                        "${kOwner.tr()}: ${previousOrders[index].renteeName}",
+                                        "${kRenter.tr()}: ${previousOrders[index].renteeName}",
                                         style: font13kLightPrimaryColorMedium.copyWith(
                                           color: kBlackColor,
                                         ),

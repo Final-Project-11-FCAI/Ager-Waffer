@@ -8,6 +8,7 @@ import 'package:ager_waffer/Features/Chat/presentation/pages/coversations_screen
 import 'package:ager_waffer/Features/Home/presentation/pages/about_us_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/emergancy_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/manage_orders_screen.dart';
+import 'package:ager_waffer/Features/Orders/presentation/pages/my_orders_screen.dart';
 import 'package:ager_waffer/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -126,11 +127,11 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 ),
                 Gap(2.h),
                 drawerItem(
-                  title: kConversations.tr(),
+                  title: kMyOrders.tr(),
                   icon: 'assets/images/chat_icon.png',
                   onTap: () {
                     Navigator.of(context).pop();
-                    customAnimatedPushNavigation(context, ConversationsScreen());
+                    customAnimatedPushNavigation(context, MyOrdersScreen(),);
                   },
                 ),
                 Gap(2.h),

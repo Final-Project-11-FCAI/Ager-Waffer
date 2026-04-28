@@ -132,7 +132,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                       Image.asset('assets/images/owner.png'),
                                       Gap(5.w),
                                       Text(
-                                        "${kOwner.tr()}: ${currentOrdersManagement[index].renteeName}",
+                                        "${kRenter.tr()}: ${currentOrdersManagement[index].renteeName}",
                                         style: font13kLightPrimaryColorMedium
                                             .copyWith(
                                           color: kBlackColor,

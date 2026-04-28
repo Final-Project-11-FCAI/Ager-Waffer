@@ -178,7 +178,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                         Image.asset('assets/images/owner.png'),
                                         Gap(5.w),
                                         Text(
-                                            "${kOwner.tr()}: ${incomingOrders[index].renteeName}",
+                                            "${kRenter.tr()}: ${incomingOrders[index].renteeName}",
                                           style: font13kLightPrimaryColorMedium
                                               .copyWith(color: kBlackColor),
                                         ),
