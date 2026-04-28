@@ -90,12 +90,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
     insuranceController.addListener(validateForm);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      bool isDark = Theme.of(context).brightness == Brightness.dark;
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         enableDrag: false,
         isDismissible: false,
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
@@ -114,16 +115,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         appBar: AppBar(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
           foregroundColor: kWhiteColor,
         ),
         body: Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: kWhiteColor,
+            color: isDark ? kDarkModeColor : kWhiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.r),
               topRight: Radius.circular(25.r),
@@ -220,7 +221,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             Text(
                               kRentalType.tr(),
                               style: font16BlackSemiBold.copyWith(
-                                color: kSomeBlackColor,
+                                color: isDark ? kWhiteColor : kBlackColor,
                               ),
                             ),
                             Gap(10.h),
@@ -276,7 +277,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
                 decoration: BoxDecoration(
-                  color: kWhiteColor,
+                  color: isDark ? kDarkModeColor : kWhiteColor,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.06),
@@ -311,7 +312,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   text: kAddProduct.tr(),
                   color: isDark && !isFormValid ? kGreyColor.withOpacity(0.5) :
                   isDark && isFormValid ?
-                  kButtonColor : !isDark && !isFormValid ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
+                  kButtonColor : !isDark && !isFormValid ? kGreyColor.withOpacity(0.35) : isDark ? kButtonColor : kPrimaryColor,
                 ),
               ),
             ],
@@ -326,14 +327,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
     required bool value,
     required ValueChanged<bool> onChanged,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         Switch(
           value: value,
           onChanged: onChanged,
-          activeTrackColor: kLightPrimaryColor,
+          activeTrackColor: isDark ? kButtonColor : kLightPrimaryColor,
           activeColor: kWhiteColor,
-          inactiveTrackColor: kInactiveSwitchColor.withOpacity(0.3),
+          inactiveTrackColor: kTextGreyColor,
           inactiveThumbColor: kWhiteColor,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           trackOutlineWidth: MaterialStateProperty.all(0),
@@ -347,7 +349,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           }),
         ),
         Gap(8.w),
-        Text(title, style: font15BlackRegular.copyWith(fontWeight: semiBold)),
+        Text(title, style: font15BlackRegular.copyWith(fontWeight: semiBold,color: isDark ? kWhiteColor : kBlackColor)),
       ],
     );
   }

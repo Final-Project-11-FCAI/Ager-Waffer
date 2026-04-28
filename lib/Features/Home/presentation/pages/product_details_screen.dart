@@ -38,10 +38,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         elevation: 0,
         foregroundColor: kWhiteColor,
       ),
@@ -52,7 +53,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: kWhiteColor,
+                  color: isDark ? kDarkModeColor : kWhiteColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25.r),
                     topRight: Radius.circular(25.r),
@@ -64,6 +65,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
+
                         child: ProductImages(product: widget.product,),
                       ),
                       Gap(20.h),
@@ -71,7 +73,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Gap(10.h),
                      Padding(
                        padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.08.w, vertical: Shared.height * 0.02.h),
-                       child: Divider(color: kBlackColor, thickness: 1.h,),
+                       child: Divider(color: isDark ? kTextColor : kBlackColor, thickness: 1.h,),
                      ),
                       Gap(10.h),
                       ContactOwnerContainer(product: widget.product,),
@@ -81,7 +83,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           Text(
                           kReviews.tr(),
-                            style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                            style: font16BlackSemiBold.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kBlackColor),
                           ),
                         ],
                       ),

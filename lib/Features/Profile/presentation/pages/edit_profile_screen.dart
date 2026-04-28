@@ -110,6 +110,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<UpdateProfileBloc, UpdateProfileState>(
       listener: (context, state) {
         if (state.status == updateProfileStatus.loading) {
@@ -150,7 +151,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
           appBar: AppBar(
             backgroundColor: kRedColor,
             foregroundColor: kWhiteColor,
@@ -171,7 +172,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     width: double.infinity,
                     height: double.infinity,
                     decoration: BoxDecoration(
-                      color: kWhiteColor,
+                      color: isDark ? kSomeDarkModeColor : kWhiteColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25.r),
                         topRight: Radius.circular(25.r),
@@ -193,13 +194,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
+                                color: isDark ? kWhiteColor : kPrimaryColor
                               ),
                             ),
                             Gap(10.h),
                             EditProfileTextField(
                               controller: firstNameController,
                               icon: Icon(Icons.account_circle_outlined),
-                              label: kFirstName.tr(),
+                              hint: kFirstName.tr(),
                               keyboardType: TextInputType.name,
                               isPrefixFound: true,
                             ),
@@ -209,13 +211,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
+                                  color: isDark ? kWhiteColor : kPrimaryColor
+
                               ),
                             ),
                             Gap(10.h),
                             EditProfileTextField(
                               controller: secondNameController,
                               icon: Icon(Icons.account_circle_outlined),
-                              label: kLastName.tr(),
+                              hint: kLastName.tr(),
                               keyboardType: TextInputType.name,
                               isPrefixFound: true,
                             ),
@@ -225,6 +229,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
+                                  color: isDark ? kWhiteColor : kPrimaryColor
+
                               ),
                             ),
                             Gap(10.h),
@@ -232,7 +238,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               controller: phoneController,
                               keyboardType: TextInputType.number,
                               icon: Icon(Icons.phone),
-                              label: kPhone.tr(),
+                              hint: kPhone.tr(),
                               validator: (value) {
                                 if (value == _originalPhone || value!.isEmpty) return null;
                                 return InputValidation.isValidEditEgyptianPhone(value ?? '');
@@ -244,6 +250,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               style: font24LightPrimarySemiBold.copyWith(
                                 fontSize: 16,
                                 fontWeight: medium,
+                                  color: isDark ? kWhiteColor : kPrimaryColor
+
                               ),
                             ),
                             Gap(10.h),

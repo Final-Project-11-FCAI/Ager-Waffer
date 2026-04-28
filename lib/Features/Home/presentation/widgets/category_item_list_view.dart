@@ -14,22 +14,34 @@ class CategoryItemListView extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
-        width: Shared.width * 0.31.w,
+      width: Shared.width * 0.31.w,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
           elevation: 3.sp,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.sp)),
-            margin: const EdgeInsets.symmetric(horizontal: 0,),
-            color: isDark ? kLightDarkModeColor : kWhiteColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.sp),
+            side: BorderSide(
+              color: isDark ? kTransparentColor : kGreyColor,
+            ),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 0),
+          color: isDark ? kSomeDarkModeColor : kWhiteColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(category.image, scale: 1,color: isDark ? kWhiteColor : null,),
+              Image.asset(
+                category.image,
+                scale: 1,
+                color: isDark ? kWhiteColor : null,
+              ),
               Text(
                 category.title,
                 textAlign: TextAlign.center,
-              style: font14BlackBold.copyWith(fontWeight: medium,color: isDark ? kWhiteColor : kBlackColor,),
+                style: font14BlackBold.copyWith(
+                  fontWeight: medium,
+                  color: isDark ? kWhiteColor : kBlackColor,
+                ),
               ),
             ],
           ),

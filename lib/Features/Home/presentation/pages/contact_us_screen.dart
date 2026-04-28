@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../../../../Base/common/theme.dart';
+
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contact Us"),
+        title: const Text("Contact Us",style: TextStyle(color: kWhiteColor)),
         elevation: 0,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
+        foregroundColor: kWhiteColor,
       ),
+      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -19,7 +25,7 @@ class ContactUsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.phone, color: Colors.green),
               title: const Text("Call us"),
-              subtitle: const Text("+20 100 000 0000"),
+              subtitle:  Text("+20 100 000 0000",style: TextStyle(color: isDark ? kTextColor : kBlackColor),),
               onTap: () {},
             ),
 
@@ -29,7 +35,7 @@ class ContactUsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.email, color: Colors.blue),
               title: const Text("Email"),
-              subtitle: const Text("support@app.com"),
+              subtitle:  Text("support@app.com",style: TextStyle(color: isDark ? kTextColor : kBlackColor)),
               onTap: () {},
             ),
 
@@ -60,8 +66,12 @@ class ContactUsScreen extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isDark ? kButtonColor : kPrimaryColor,
+                ),
                 onPressed: () {},
-                child: const Text("Send"),
+                child: const Text("Send",style: TextStyle(color: kWhiteColor)),
+
               ),
             ),
           ],

@@ -18,7 +18,7 @@ class CustomSearchTextField extends StatelessWidget {
         .of(context)
         .brightness == Brightness.dark;
     return TextField(
-      cursorColor: kPrimaryColor,
+      cursorColor: isDark ? kGreyColor : kPrimaryColor,
       onChanged: onChanged,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(

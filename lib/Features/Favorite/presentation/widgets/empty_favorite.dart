@@ -9,18 +9,29 @@ class EmptyFavorite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-      Image.asset('assets/images/favorite_empty.png'),
+        Image.asset('assets/images/favorite_empty.png'),
         Gap(Shared.height * 0.04.h),
-        Text('لا توجد عناصر مفضلة بعد',
+        Text(
+          'لا توجد عناصر مفضلة بعد',
           textAlign: TextAlign.center,
-          style: font24PrimarySemiBold.copyWith(fontWeight: bold),),
+          style: font24PrimarySemiBold.copyWith(
+            fontWeight: bold,
+            color: isDark ? kWhiteColor : kPrimaryColor,
+          ),
+        ),
         Gap(5.h),
-        Text('أضِف العناصر التي أعجبتك للعودة إليها لاحقًا',
+        Text(
+          'أضِف العناصر التي أعجبتك للعودة إليها لاحقًا',
           textAlign: TextAlign.center,
-          style: font20PrimaryMedium.copyWith(color: kBorderColor,fontSize: 18),)
+          style: font20PrimaryMedium.copyWith(
+            color: isDark ? kGreyColor : kBorderColor,
+            fontSize: 18,
+          ),
+        ),
       ],
     );
   }

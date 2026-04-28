@@ -76,6 +76,7 @@ class _UploadProductImagesContainerState
     );
   }  @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return DottedBorder(
       borderType: BorderType.RRect,
       radius: const Radius.circular(25),
@@ -90,7 +91,7 @@ class _UploadProductImagesContainerState
         padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.r),
-          color: kProductDataContainerColor,
+          color: isDark ? kSomeDarkModeColor : kProductDataContainerColor,
         ),
 
         child: selectedImages.isEmpty
@@ -98,19 +99,19 @@ class _UploadProductImagesContainerState
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/camera_plus.png',
+              'assets/images/camera_plus.png',color: isDark ? kTextColor : kLightPrimaryColor,
               width: 50.w,
               height: 50.h,
             ),
             Gap(10.h),
             Text(
               kUploadProductImages.tr(),
-              style: font16BlackSemiBold.copyWith(fontSize: 15),
+              style: font16BlackSemiBold.copyWith(fontSize: 15,color: isDark ? kWhiteColor : kBlackColor),
             ),
             Gap(4.h),
             Text(
               kUploadRange.tr(),
-              style: font13kLightPrimaryColorMedium,
+              style: font13kLightPrimaryColorMedium.copyWith(color: isDark ? kTextColor : kLightPrimaryColor),
             ),
             Gap(10.h),
             SizedBox(
@@ -118,7 +119,7 @@ class _UploadProductImagesContainerState
               child: ElevatedButton(
                 onPressed: pickImages,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
+                  backgroundColor: isDark ? kButtonColor : kPrimaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25.r),
                   ),

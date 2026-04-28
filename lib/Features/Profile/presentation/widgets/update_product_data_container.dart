@@ -29,10 +29,12 @@ class UpdateProductDataContainer extends StatefulWidget {
   final String? initialValue;
 
   @override
-  State<UpdateProductDataContainer> createState() => _UpdateProductDataContainerState();
+  State<UpdateProductDataContainer> createState() =>
+      _UpdateProductDataContainerState();
 }
 
-class _UpdateProductDataContainerState extends State<UpdateProductDataContainer> {
+class _UpdateProductDataContainerState
+    extends State<UpdateProductDataContainer> {
   bool isOpen = false;
   String? selectedValue;
 
@@ -47,6 +49,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Container(
@@ -56,112 +59,111 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
               : Shared.height * 0.08.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.r),
-            color: kProductDataContainerColor,
+            color: isDark ? kSomeDarkModeColor : kProductDataContainerColor,
             border: Border.all(color: kBorderColor, width: 1.w),
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
             child: widget.isOptions
                 ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  selectedValue ?? widget.hintText,
-                  style: font15SomeBlackColorMedium.copyWith(
-                    color: selectedValue == null
-                        ? kGreyColor
-                        : kBlackColor,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isOpen = !isOpen;
-                    });
-                  },
-                  child: Icon(
-                    isOpen
-                        ? CupertinoIcons.chevron_up
-                        : CupertinoIcons.chevron_down,
-                    size: 20.sp,
-                  ),
-                ),
-              ],
-            )
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        selectedValue ?? widget.hintText,
+                        style: font15SomeBlackColorMedium.copyWith(
+                          color: selectedValue == null
+                              ? isDark
+                                    ? kWhiteColor
+                                    : kGreyColor
+                              : isDark
+                              ? kWhiteColor
+                              : kBlackColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isOpen = !isOpen;
+                          });
+                        },
+                        child: Icon(
+                          isOpen
+                              ? CupertinoIcons.chevron_up
+                              : CupertinoIcons.chevron_down,
+                          size: 20.sp,
+                        ),
+                      ),
+                    ],
+                  )
                 : TextFormField(
-              controller: widget.controller,
-              keyboardType: widget.keyboardType,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: widget.hintText,
-                hintStyle: font15SomeBlackColorMedium,
-              ),
-            ),
+                    controller: widget.controller,
+                    keyboardType: widget.keyboardType,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: widget.hintText,
+                      hintStyle: font15SomeBlackColorMedium,
+                    ),
+                  ),
           ),
         ),
 
         isOpen
             ? AnimatedCrossFade(
-          duration: const Duration(milliseconds: 300),
-          crossFadeState: isOpen
-              ? CrossFadeState.showFirst
-              : CrossFadeState.showSecond,
-          firstChild: Padding(
-            padding:
-            EdgeInsets.only(top: Shared.height * 0.012.h),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18.r),
-                color: kWhiteColor,
-                border:
-                Border.all(color: kBorderColor, width: 1.w),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Shared.width * 0.04.w,
-                  vertical: Shared.height * 0.02.h,
-                ),
-                child: ListView.builder(
-                  itemCount: widget.optionsLength,
-                  shrinkWrap: true,
-                  physics:
-                  const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        String value = widget.options[index];
-
-                        setState(() {
-                          selectedValue = value;
-                          isOpen = false;
-                        });
-
-                        widget.onItemSelected?.call(value);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical:
-                          Shared.height * 0.01.h,
-                        ),
-                        child: Text(
-                          widget.options[index],
-                          style:
-                          font15SomeBlackColorMedium.copyWith(
-                            color: kBlackColor,
-                          ),
-                        ),
+                duration: const Duration(milliseconds: 300),
+                crossFadeState: isOpen
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                firstChild: Padding(
+                  padding: EdgeInsets.only(top: Shared.height * 0.012.h),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18.r),
+                      color: kWhiteColor,
+                      border: Border.all(color: kBorderColor, width: 1.w),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Shared.width * 0.04.w,
+                        vertical: Shared.height * 0.02.h,
                       ),
-                    );
-                  },
+                      child: ListView.builder(
+                        itemCount: widget.optionsLength,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              String value = widget.options[index];
+
+                              setState(() {
+                                selectedValue = value;
+                                isOpen = false;
+                              });
+
+                              widget.onItemSelected?.call(value);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: Shared.height * 0.01.h,
+                              ),
+                              child: Text(
+                                widget.options[index],
+                                style: font15SomeBlackColorMedium.copyWith(
+                                  color: kBlackColor,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          secondChild: const SizedBox(),
-        )
+                secondChild: const SizedBox(),
+              )
             : const SizedBox(),
       ],
     );

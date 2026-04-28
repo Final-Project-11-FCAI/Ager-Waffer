@@ -34,6 +34,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<AcceptOrderBloc, AcceptOrderState>(
       listener: (context, state) {
         if (state.status == acceptOrderStatus.loading) {
@@ -131,7 +132,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: kWhiteColor,
+                        color: isDark ? kSomeDarkModeColor : kWhiteColor,
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(
                           color: kBlackColor.withOpacity(0.2),
@@ -169,25 +170,27 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                     Text(
                                       incomingOrders[index].itemName ?? '',
                                       style: font16BlackSemiBold.copyWith(
-                                        color: kPrimaryColor,
+                                        color: isDark ? kWhiteColor : kPrimaryColor,
                                       ),
                                     ),
                                     Gap(2.w),
                                     Row(
                                       children: [
-                                        Image.asset('assets/images/owner.png'),
+                                        Image.asset('assets/images/owner.png',color: isDark ? kTextColor : kBlackColor),
                                         Gap(5.w),
                                         Text(
                                             "${kOwner.tr()}: ${incomingOrders[index].renteeName}",
                                           style: font13kLightPrimaryColorMedium
-                                              .copyWith(color: kBlackColor),
+                                              .copyWith(color: isDark ? kTextColor : kBlackColor),
                                         ),
                                       ],
                                     ),
                                     Gap(5.w),
                                     Row(
                                       children: [
-                                        Image.asset(
+                                        isDark ? Image.asset(
+                                          'assets/images/date_determine.png',color: kButtonColor,
+                                        ) : Image.asset(
                                           'assets/images/date_determine.png',
                                         ),
                                         Gap(5.w),
@@ -222,13 +225,14 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                 Text(
                                   kTotalAmount.tr(),
                                   style: font13kLightPrimaryColorMedium.copyWith(
-                                    color: kDarkGreyColor,
+                                    color: isDark ? kTextColor : kDarkGreyColor,
                                   ),
                                 ),
                                 Text(
                                   incomingOrders[index].totalPrice.toString(),
                                   style: font24LightPrimarySemiBold.copyWith(
                                     fontSize: 14.sp,
+                                    color: isDark ? kButtonColor : kPrimaryColor,
                                   ),
                                 ),
                               ],
@@ -255,7 +259,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                 orderButton(
                                   text: kAcceptOrder.tr(),
                                   icon: 'assets/images/done.png',
-                                  backgroundColor: kLightPrimaryColor,
+                                  backgroundColor: isDark ? kButtonColor : kLightPrimaryColor,
                                   textColor: kWhiteColor,
                                   onTap: () {
                                     context.read<AcceptOrderBloc>().add(
@@ -263,20 +267,20 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                         orderId: incomingOrders[index].requestId!,
                                       ),
                                     );
-                                  },
+                                  }, border: isDark ? kButtonColor : kLightPrimaryColor, iconColor: kWhiteColor,
                                 ),
                                 orderButton(
                                   text: kDecline.tr(),
                                   icon: 'assets/images/delete.png',
-                                  backgroundColor: kWhiteColor,
-                                  textColor: kPrimaryColor,
+                                  backgroundColor: isDark ? kTransparentColor : kWhiteColor,
+                                  textColor: isDark ? kTextColor : kPrimaryColor,
                                   onTap: () {
                                     context.read<DeclineOrderBloc>().add(
                                       DeclineOrderEvent(
                                         orderId: incomingOrders[index].requestId!,
                                       ),
                                     );
-                                  },
+                                  }, border: isDark ? kTextColor : kWhiteColor, iconColor: isDark ? kTextColor : kPrimaryColor,
                                 ),
                               ],
                             ),
@@ -311,6 +315,8 @@ class _IncomingOrdersState extends State<IncomingOrders> {
     required Color backgroundColor,
     required Color textColor,
     required Function() onTap,
+    required Color border,
+    required Color iconColor
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -320,12 +326,12 @@ class _IncomingOrdersState extends State<IncomingOrders> {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: kLightPrimaryColor, width: 1.w),
+          border: Border.all(color: border, width: 1.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(icon, width: 20.w, height: 20.h),
+            Image.asset(icon, width: 20.w, height: 20.h, color: iconColor ),
             Gap(5),
             Text(
               text,

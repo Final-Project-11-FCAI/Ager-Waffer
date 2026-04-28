@@ -56,6 +56,7 @@ class _UserInformationState extends State<UserInformation> {
 
   @override
   Widget build(BuildContext context) {
+
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<UpdateAddressBloc, UpdateAddressState>(
       listener: (context, state) {
@@ -77,6 +78,7 @@ class _UserInformationState extends State<UserInformation> {
         }
       },
       child: WillPopScope(
+
         onWillPop: () async {
           Navigator.pop(context);
           Navigator.pop(context);
@@ -104,7 +106,7 @@ class _UserInformationState extends State<UserInformation> {
                       Text(
                       kCompleteDataTitle.tr(),
                         style: font20BoldGreyRegular.copyWith(
-                          color: kBlackColor,
+                          color: isDark ? kWhiteColor : kBlackColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -113,7 +115,7 @@ class _UserInformationState extends State<UserInformation> {
                         kCompleteDataDesc.tr(),
                         style: font20PrimaryMedium.copyWith(
                           fontSize: 16,
-                          color: kPrimaryColor,
+                          color: isDark ? kTextColor : kPrimaryColor,
                         ),
                       ),
                       Gap(30.h),
@@ -174,7 +176,7 @@ class _UserInformationState extends State<UserInformation> {
                     text: kSave.tr(),
                     color: isDark && !isFormValid ? kGreyColor.withOpacity(0.5) :
                     isDark && isFormValid ?
-                    kButtonColor : !isDark && !isFormValid ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
+                    kButtonColor : !isDark && !isFormValid ? kGreyColor.withOpacity(0.35) : isDark ? kButtonColor : kPrimaryColor,
                   ),
                     ],
                   ),

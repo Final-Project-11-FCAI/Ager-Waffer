@@ -27,6 +27,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return SafeArea(
       child: Column(
         children: [
@@ -35,59 +36,70 @@ class _DrawerDetailsState extends State<DrawerDetails> {
               horizontal: Shared.width * 0.04.w,
               vertical: Shared.height * 0.03.h,
             ),
-            decoration: BoxDecoration(color: kDrawerColor.withOpacity(0.05)),
+            decoration: BoxDecoration(
+              color: isDark ? kMoreDarkModeColor : kWhiteColor,
+            ),
             child: FutureBuilder<Data?>(
-                  future: sharedPreferenceManager.getUser(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return CircularProgressIndicator();
-                    }
+              future: sharedPreferenceManager.getUser(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return CircularProgressIndicator();
+                }
 
-                    final user = snapshot.data;
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(user?.imageUrl ?? 'assets/images/virtual_user.jpg'),
-                              ),
-                              Gap(8),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: font15BlackRegular.copyWith(fontWeight: semiBold),
-                                    ),
-                                    Gap(2),
-                                    Text(
-                                      user?.email ?? '',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: font13kLightPrimaryColorMedium.copyWith(
-                                        color: kGreyColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                final user = snapshot.data;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              user?.imageUrl ??
+                                  'assets/images/virtual_user.jpg',
+                            ),
                           ),
+                          Gap(8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: font15BlackRegular.copyWith(
+                                    fontWeight: semiBold,
+                                    color: isDark ? kWhiteColor : kBlackColor,
+                                  ),
+                                ),
+                                Gap(2),
+                                Text(
+                                  user?.email ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: font13kLightPrimaryColorMedium
+                                      .copyWith(color: kGreyColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    CircleAvatar(
+                      backgroundColor: kBorderColor.withOpacity(0.09),
+                      radius: 20.r,
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(
+                          Icons.arrow_forward_ios_sharp,
+                          color: isDark ? kWhiteColor : kPrimaryColor,
                         ),
-                        CircleAvatar(
-                          backgroundColor: kBorderColor.withOpacity(0.09),
-                          radius: 20.r,
-                          child: InkWell(
-                              onTap: () => Navigator.of(context).pop(),
-                              child: Icon(Icons.arrow_forward_ios_sharp, color: kGreyColor)),
-                        ),
-                      ],
-                    );
-                  },
-                ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
           Divider(height: 1.h, thickness: 0.8, color: kBorderColor),
           Gap(Shared.height * 0.02.h),
@@ -110,6 +122,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                   onTap: () {
                     showLanguageDialog();
                   },
+
                 ),
                 Gap(2.h),
                 drawerItem(
@@ -119,7 +132,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 ),
                 Gap(2.h),
                 drawerItem(
-                  onTap: (){
+                  onTap: () {
                     customAnimatedPushNavigation(context, ContactUsScreen());
                   },
                   title: kContactUs.tr(),
@@ -141,7 +154,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
-                      (route) => false,
+                  (route) => false,
                 );
               },
               child: Row(
@@ -169,16 +182,19 @@ class _DrawerDetailsState extends State<DrawerDetails> {
   }
 
   void showLanguageDialog() {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
+
           ),
+          backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
           title: Text(
             kLanguage.tr(),
-            style: font20PrimaryMedium.copyWith(fontWeight: bold),
+            style: font20PrimaryMedium.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kPrimaryColor),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -186,7 +202,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
               ListTile(
                 visualDensity: VisualDensity.compact,
                 leading: Image.asset("assets/images/english_flag.png"),
-                title: Text("English", style: font16BlackSemiBold,),
+                title: Text("English", style: font16BlackSemiBold.copyWith(color: isDark ? kTextColor : kBlackColor)),
                 onTap: () async {
                   await changeLanguage("en");
                   MyMaterial.setLocale(context, Locale("en"));
@@ -196,7 +212,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
               ListTile(
                 visualDensity: VisualDensity.compact,
                 leading: Image.asset("assets/images/egypt_flag.png"),
-                title: Text("العربية", style: font16BlackSemiBold,),
+                title: Text("العربية", style: font16BlackSemiBold.copyWith(color: isDark ? kTextColor : kBlackColor)),
                 onTap: () async {
                   await changeLanguage("ar");
                   MyMaterial.setLocale(context, Locale("ar"));
@@ -214,14 +230,10 @@ class _DrawerDetailsState extends State<DrawerDetails> {
 
     MyMaterial.setLocale(context, Locale(lang));
 
-    sharedPreferenceManager.writeData(
-      CachingKey.APP_LANGUAGE,
-      lang,
-    );
+    sharedPreferenceManager.writeData(CachingKey.APP_LANGUAGE, lang);
 
     Navigator.pop(context);
   }
-
 
   TextButton drawerItem({
     required String? title,
@@ -229,6 +241,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
     bool isDarkMode = false,
     Function()? onTap,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return TextButton(
       onPressed: onTap,
       child: Row(
@@ -236,22 +249,22 @@ class _DrawerDetailsState extends State<DrawerDetails> {
         children: [
           Row(
             children: [
-              Image.asset(icon!, width: 40.w, height: 40.h),
+              Image.asset(icon!, width: 40.w, height: 40.h,color: isDark ? kTextColor : kLightPrimaryColor,),
               Text(
                 title!,
                 style: font20PrimaryMedium.copyWith(
                   fontSize: 17.sp,
-                  color: kLightPrimaryColor,
+                  color: isDark ? kTextColor : kLightPrimaryColor,
                 ),
               ),
             ],
           ),
           isDarkMode
               ? Switch(
-            value: MyMaterial.isDark,
-            activeTrackColor: kLightPrimaryColor,
+                  value: MyMaterial.isDark,
+                  activeTrackColor: isDark ? kButtonColor : kLightPrimaryColor,
                   activeColor: kWhiteColor,
-                  inactiveTrackColor: kInactiveSwitchColor.withOpacity(0.3),
+                  inactiveTrackColor: kTextGreyColor,
                   inactiveThumbColor: kWhiteColor,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   trackOutlineWidth: MaterialStateProperty.all(0),
@@ -263,19 +276,21 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     }
                     return kInactiveSwitchColor.withOpacity(0);
                   }),
-              onChanged: (value) {
-                MyMaterial.toggleTheme(context, value);
+                  onChanged: (value) {
+                    MyMaterial.toggleTheme(context, value);
 
-                sharedPreferenceManager.writeData(
-                  CachingKey.DARK_MODE,
-                  value,
-                );
-              },
+                    sharedPreferenceManager.writeData(
+                      CachingKey.DARK_MODE,
+                      value,
+                    );
+                  },
                 )
               : Padding(
-                padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
-                child: Icon(Icons.arrow_forward_ios_outlined),
-              ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Shared.width * 0.04.w,
+                  ),
+                  child: Icon(Icons.arrow_forward_ios_outlined,color: isDark ? kOpacityWhiteColor : kLightPrimaryColor,),
+                ),
         ],
       ),
     );

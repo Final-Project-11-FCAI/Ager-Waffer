@@ -72,6 +72,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22.r),
               borderSide: BorderSide(color: kBorderAuthColor),
+
             ),
           ),
         ),

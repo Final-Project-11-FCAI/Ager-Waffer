@@ -337,6 +337,8 @@ String kContactRenter = 'contact_renter';
 String kCondition = 'condition';
 String kInsuranceOnly = 'insurance_only';
 String kDescription = 'description';
+String kCityName = 'city';
+
 
 String kAddToFavorite = 'add_to_favorite';
 String kRentNow = 'rent_now';

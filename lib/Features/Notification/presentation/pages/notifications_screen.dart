@@ -39,10 +39,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(
           "الإشعارات",
@@ -53,7 +54,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: isDark ? kDarkModeColor : kWhiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25.r),
             topRight: Radius.circular(25.r),

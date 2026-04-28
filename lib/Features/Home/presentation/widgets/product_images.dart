@@ -22,6 +22,7 @@ class _ProductImagesState extends State<ProductImages> {
   Widget build(BuildContext context) {
 
     final images = widget.product.itemImages ?? [];
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
       children: [
@@ -43,9 +44,10 @@ class _ProductImagesState extends State<ProductImages> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24.r),
-                color: kOpacityGreyColor,
+                color: isDark ? kSomeDarkModeColor : kOpacityGreyColor,
               ),
               child: ClipRRect(
+
                 borderRadius: BorderRadius.circular(24.r),
                 child: CachedNetworkImage(
                   imageUrl: image,
@@ -84,7 +86,7 @@ class _ProductImagesState extends State<ProductImages> {
               height: 4.h,
               decoration: BoxDecoration(
                 color: currentIndex == index
-                    ? kPrimaryColor
+                    ? isDark ? kTextColor : kPrimaryColor
                     : kInactiveColor,
                 borderRadius: BorderRadius.circular(8.r),
               ),

@@ -25,12 +25,13 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: kOpacityGreyColor,
-        borderRadius: BorderRadius.circular(20),
+        color: isDark ? kSomeDarkModeColor : kOpacityGreyColor,
+        borderRadius: BorderRadius.circular(20,),
       ),
       child: Row(
         children: [
@@ -64,8 +65,11 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
           Gap(16.w),
           Expanded(
             flex: 2,
+
             child: Padding(
+
               padding: EdgeInsets.only(top: 8.h),
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -74,7 +78,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                     children: [
                       Expanded(child: Text(widget.myListings.name ?? '',
                           overflow: TextOverflow.ellipsis,
-                          style: font14BlackBold.copyWith(fontSize: 12.sp))),
+                          style: font14BlackBold.copyWith(fontSize: 12.sp,color: isDark ? kWhiteColor : kBlackColor))),
                       Text(
                         "${widget.myListings.price}${
                             widget.myListings.rentUnit == kDaily.tr() ?
@@ -83,13 +87,13 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                             kCurrencyPerWeek.tr() :
                             widget.myListings.rentUnit == kMonthly.tr() ?
                         kCurrencyPerMonth.tr() : ''}",
-                        style: font16BlackSemiBold.copyWith(fontSize: 11,),
+                        style: font16BlackSemiBold.copyWith(fontSize: 11,color: isDark ? kWhiteColor : kBlackColor),
                       ),
                     ],
                   ),
                   Text(
                     widget.myListings.condition ?? '',
-                    style: font16BlackSemiBold.copyWith(color: Color.fromRGBO(85, 85, 85, 0.61), fontSize: 11),
+                    style: font16BlackSemiBold.copyWith(color: isDark ? Color.fromRGBO(151, 151, 151, 1) : Color.fromRGBO(85, 85, 85, 0.61), fontSize: 11),
                   ),
                   Gap(5.h),
                   Row(
@@ -115,24 +119,24 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                     children: [
                       deleteOrEditProductButton(
                           title: kEdit.tr(),
-                          icon: 'assets/images/edit_icon.png',
+                          //icon: 'assets/images/edit_icon.png',
                           onTap: (){
                             customAnimatedPushNavigation(context, UpdateProductScreen(product: widget.myListings,));
                           },
-                          textColor: kBlueColor,
-                          backgroundColor: kOpacityGreyColor,
-                          borderColor: kBlueColor
+                          textColor: isDark ? kWhiteColor : kButtonColor,
+                          backgroundColor: isDark ? kButtonColor : kWhiteColor,
+                          borderColor: kButtonColor
                       ),
-                      Gap(7.w),
+                      Gap(15.w),
                       deleteOrEditProductButton(
                           title: kDelete.tr(),
-                          icon: 'assets/images/delete_icon.png',
+                          //icon: 'assets/images/delete_icon.png',
                           onTap: (){
                             Dialogs.showDialogDeleteProduct(context, productId: widget.myListings.id!);
                           },
-                        textColor: kMoreRedColor,
-                        backgroundColor: kMoreRedColor.withOpacity(0.21),
-                        borderColor: kBlackColor.withOpacity(0.31)
+                        textColor: isDark ? kTextColor : kMoreRedColor,
+                        backgroundColor: isDark ? kTransparentColor : kMoreRedColor.withOpacity(0.21),
+                        borderColor: isDark ? kTextColor : kBlackColor.withOpacity(0.31)
                       ),
                     ],
                   )
@@ -147,7 +151,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
   GestureDetector deleteOrEditProductButton({
     required String? title,
     required void Function()? onTap,
-    String? icon,
+    //String? icon,
     Color? textColor,
     Color? borderColor,
     Color? backgroundColor
@@ -167,7 +171,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
             children: [
               Text(title.toString(),style: font16BlackSemiBold.copyWith(fontSize: 14.sp, color: textColor),),
               Gap(10.w),
-              Image.asset(icon!, width: 20.w, height: 20.h,)
+              //Image.asset(icon!, width: 20.w, height: 20.h,)
             ],
           ),
         ),

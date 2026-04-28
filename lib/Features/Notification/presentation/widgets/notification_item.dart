@@ -17,6 +17,7 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return ListTile(
       dense: true,contentPadding: EdgeInsets.zero,
       visualDensity: VisualDensity.compact,
@@ -31,10 +32,12 @@ class NotificationItem extends StatelessWidget {
       ),
       title: Text(
         notifications.title!,
-        style: font20PrimaryMedium,
+        style: font20PrimaryMedium.copyWith(
+          color: isDark ? kWhiteColor : kPrimaryColor,
+        ),
       ),
-      subtitle: Text(notifications.body!, style: font13kLightPrimaryColorMedium.copyWith(fontSize: 15),),
-      trailing: Text(formatTime(notifications.createdAt!), style: font13kLightPrimaryColorMedium.copyWith(color: kTextColor,),),
-    );;
+      subtitle: Text(notifications.body!, style: font13kLightPrimaryColorMedium.copyWith(fontSize: 15,color: kTextColor,),),
+      trailing: Text(formatTime(notifications.createdAt!), style: font13kLightPrimaryColorMedium.copyWith(color: isDark ? kWhiteColor : kTextColor,),),
+    );
   }
 }

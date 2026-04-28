@@ -32,6 +32,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Container(
@@ -41,7 +42,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
               : Shared.height * 0.08.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.r),
-            color: kProductDataContainerColor,
+            color: isDark ? kSomeDarkModeColor : kProductDataContainerColor,
             border: Border.all(color: kBorderColor, width: 1.w),
           ),
           child: Padding(
@@ -77,7 +78,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
-                hintStyle: font15SomeBlackColorMedium,
+                hintStyle: font15SomeBlackColorMedium.copyWith(color: isDark ? kTextColor : kBlackColor),
               ),
             ),
           ),

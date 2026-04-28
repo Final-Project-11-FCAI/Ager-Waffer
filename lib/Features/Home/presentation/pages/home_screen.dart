@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-          drawer: Drawer(width: Shared.width * 0.8, child: DrawerDetails()),
+          drawer: Drawer(width: Shared.width * 0.8,backgroundColor: isDark ? kDarkModeColor : kWhiteColor, child: DrawerDetails(),),
           backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
           appBar: CustomHomeAppBar(),
           body: RefreshIndicator(

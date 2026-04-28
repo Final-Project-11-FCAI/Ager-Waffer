@@ -7,14 +7,14 @@ class EditProfileTextField extends StatefulWidget {
   const EditProfileTextField({
     super.key,
     required this.icon,
-    required this.label,
+    required this.hint,
     required this.controller,
     this.isPrefixFound = false,
     required this.keyboardType, this.initialText, this.validator,
   });
 
   final Icon icon;
-  final String label;
+  final String hint;
   final bool isPrefixFound;
   final TextInputType keyboardType;
   final TextEditingController controller;
@@ -53,6 +53,7 @@ class _EditProfileTextFieldState extends State<EditProfileTextField> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     // put received text inside the controller
     if (widget.initialText != null && widget.controller.text.isEmpty) {
       widget.controller.text = widget.initialText!;
@@ -63,10 +64,11 @@ class _EditProfileTextFieldState extends State<EditProfileTextField> {
       validator: widget.validator,
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
-        label: Text(widget.label),
+        hint: Text(widget.hint),
         prefixIcon: widget.isPrefixFound ? null : widget.icon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(22.r),
+          borderSide: BorderSide(color: isDark ? kGreyColor : kBorderAuthColor),
         ),
         contentPadding: EdgeInsets.all(Shared.width * 0.05.w),
         floatingLabelStyle: TextStyle(color: kBorderAuthColor),

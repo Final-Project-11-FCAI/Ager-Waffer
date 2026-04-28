@@ -79,12 +79,13 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.r),
-        color: kProductDataContainerColor,
+        color: isDark ? kSomeDarkModeColor : kProductDataContainerColor,
       ),
 
       child: selectedImages.isEmpty && widget.initialImage == null

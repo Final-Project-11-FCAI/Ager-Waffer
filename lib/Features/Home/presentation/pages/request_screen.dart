@@ -288,7 +288,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                       Text(
                                         widget.product.condition!,
                                         style: font16BlackSemiBold.copyWith(
-                                          color: kBlueColor,
+                                          color: kButtonColor,
                                         ),
                                       ),
                                       SizedBox(height: 10),
@@ -625,6 +625,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                                   >(
                                                     context: context,
                                                     isScrollControlled: true,
+                                                    backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
                                                     builder: (context) {
                                                       return const RentalTermsScreen();
                                                     },
@@ -718,7 +719,7 @@ class _RequestScreenState extends State<RequestScreen> {
         padding: const EdgeInsets.all(12),
 
         decoration: BoxDecoration(
-          color: isDark ? Color(0xffC0C0C0) : kWhiteColor,
+          color: isDark ? kGreyColor.withOpacity(0.19) : kWhiteColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: kPartGreyColor),
         ),

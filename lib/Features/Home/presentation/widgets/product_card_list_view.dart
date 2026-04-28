@@ -35,9 +35,9 @@ class _ProductCardListViewState extends State<ProductCardListView> {
         margin: EdgeInsets.symmetric(vertical: 8.h),
         padding: EdgeInsets.all(8.h),
         decoration: BoxDecoration(
-          color: isDark ? kDarkModeColor : kWhiteColor,
+          color: isDark ? kSomeDarkModeColor : kWhiteColor,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isDark ? kLightDarkModeColor : Color.fromRGBO(110, 122, 135, 1)),
+          border: Border.all(color: isDark ? kTransparentColor : kWhiteColor),
           boxShadow: const [
             BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 4)),
           ],
@@ -112,7 +112,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                     Text(
                       widget.product.condition!,
                       style: font16BlackSemiBold.copyWith(
-                        color: isDark ? kWhiteColor.withOpacity(0.6) : Color.fromRGBO(85, 85, 85, 0.61),
+                        color: kGreyColor,
                       ),
                     ),
                     Gap(5.h),
@@ -122,7 +122,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                           "${widget.product.averageRate}",
                           style: font16BlackSemiBold.copyWith(
                             fontSize: 10,
-                            color: isDark ? kWhiteColor.withOpacity(0.8) : Color.fromRGBO(151, 151, 151, 1),
+                            color: kTextColor,
                           ),
                         ),
                         Gap(5.w),
@@ -153,10 +153,10 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                           decoration: BoxDecoration(
                             color: isFavorite
                                 ? kRedColor.withOpacity(isDark ? 0.2 : 0.1)
-                                : (isDark ? kDarkModeColor : Colors.white),
+                                : (isDark ? kSomeDarkModeColor : Colors.white),
                             borderRadius: BorderRadius.circular(14.sp),
                             border: Border.all(
-                              color: isFavorite ? kRedColor : (isDark ? kLightDarkModeColor : Colors.grey.shade300),
+                              color: isFavorite ? kRedColor : (isDark ? kTextColor : Colors.grey.shade300),
                             ),
                           ),
                           child: Row(
@@ -166,7 +166,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                                 isFavorite ? Icons.favorite : Icons.favorite_border,
                                 color: isFavorite
                                     ? kRedColor
-                                    : (isDark ? Colors.grey[400]! : kGreyColor),
+                                    : (isDark ? kTextColor! : kGreyColor),
                                 size: 16.sp,
                               ),
                               Gap(4.w),
@@ -174,7 +174,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                                 isFavorite ? "Saved" : "Save",
                                 style: font16BlackSemiBold.copyWith(
                                   fontSize: 12.sp,
-                                  color: isFavorite ? kRedColor : (isDark ? Colors.grey[400]! : kGreyColor),
+                                  color: isFavorite ? kRedColor : (isDark ? kTextColor! : kGreyColor),
                                 ),
                               ),
                             ],

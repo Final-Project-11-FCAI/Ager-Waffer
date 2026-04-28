@@ -10,7 +10,9 @@ class CustomShowDialog {
     required Widget description,
     required String buttonText,
     VoidCallback? onPressed,
-  }) {
+  })
+  {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -29,8 +31,8 @@ class CustomShowDialog {
                   Container(
                     width: 100,
                     height: 100,
-                    decoration: const BoxDecoration(
-                      color: Color(0xff0B3C4C),
+                    decoration:  BoxDecoration(
+                      color: isDark ? kButtonColor : Color(0xff0B3C4C),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(Icons.check, color: Colors.white, size: 50),

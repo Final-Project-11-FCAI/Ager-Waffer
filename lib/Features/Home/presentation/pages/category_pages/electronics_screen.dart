@@ -33,10 +33,11 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
 
   @override
   Widget build(BuildContext context) {
+   bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         appBar: AppBar(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
           foregroundColor: kWhiteColor,
           title: Text("إلكترونيات",
             style: font16BlackSemiBold.copyWith(
@@ -49,7 +50,7 @@ class _ElectronicsScreenState extends State<ElectronicsScreen> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: kWhiteColor,
+            color: isDark ? kDarkModeColor : kPrimaryColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.r),
               topRight: Radius.circular(25.r),

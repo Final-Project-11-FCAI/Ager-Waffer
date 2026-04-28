@@ -32,6 +32,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<CancelOrderBloc, CancelOrderState>(
       listener: (context, state) {
         if (state.status == cancelOrderStatus.loading) {
@@ -103,7 +104,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: kWhiteColor,
+                      color: isDark ? kSomeDarkModeColor : kWhiteColor,
                       borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(
                         color: kBlackColor.withOpacity(0.2),
@@ -141,25 +142,27 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                                   Text(
                                     pendingOrders[index].itemName ?? '',
                                     style: font16BlackSemiBold.copyWith(
-                                      color: kPrimaryColor,
+                                      color: isDark ? kWhiteColor : kPrimaryColor,
                                     ),
                                   ),
                                   Gap(2.w),
                                   Row(
                                     children: [
-                                      Image.asset('assets/images/owner.png'),
+                                      Image.asset('assets/images/owner.png',color: isDark ? kTextColor : kBlackColor,),
                                       Gap(5.w),
                                       Text(
                                           "${kOwner.tr()}: ${pendingOrders[index].ownerName}",
                                         style: font13kLightPrimaryColorMedium
-                                            .copyWith(color: kBlackColor),
+                                            .copyWith(color: isDark ? kTextColor : kBlackColor),
                                       ),
                                     ],
                                   ),
                                   Gap(5.w),
                                   Row(
                                     children: [
-                                      Image.asset(
+                                      isDark ? Image.asset(
+                                        'assets/images/date_determine.png',color: kButtonColor,
+                                      ):Image.asset(
                                         'assets/images/date_determine.png',
                                       ),
                                       Gap(5.w),
@@ -194,13 +197,14 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                               Text(
                                 kTotalAmount.tr(),
                                 style: font13kLightPrimaryColorMedium.copyWith(
-                                  color: kDarkGreyColor,
+                                  color: isDark ? kTextColor : kDarkGreyColor,
                                 ),
                               ),
                               Text(
                                 pendingOrders[index].totalPrice.toString(),
                                 style: font24LightPrimarySemiBold.copyWith(
                                   fontSize: 14.sp,
+                                  color: isDark ? kButtonColor : kPrimaryColor,
                                 ),
                               ),
                             ],
@@ -223,8 +227,8 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                           ),
                           child: orderButton(
                             text: kCancelOrder.tr(),
-                            backgroundColor: kWhiteColor,
-                            textColor: kPrimaryColor,
+                            backgroundColor: isDark ? kTransparentColor : kWhiteColor,
+                            textColor: isDark ? kTextColor : kPrimaryColor,
                               onTap: () {
                                 showCancelDialog(
                                   context: context,
@@ -310,6 +314,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
     required Color textColor,
     required Function() onTap,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -318,7 +323,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: kLightPrimaryColor, width: 1.w),
+          border: Border.all(color: isDark ? kTextColor : backgroundColor, width: 1.w),
         ),
         child: Center(
           child: Text(

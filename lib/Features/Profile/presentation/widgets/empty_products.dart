@@ -1,6 +1,7 @@
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -14,6 +15,7 @@ class EmptyProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.only(top: Shared.height * 0.02.h),
       child: Column(
@@ -21,11 +23,11 @@ class EmptyProducts extends StatelessWidget {
           Image.asset(image),
           Text(title,
             textAlign: TextAlign.center,
-            style: font24PrimarySemiBold.copyWith(fontWeight: bold, fontSize: titleFontSize.sp),),
+            style: font24PrimarySemiBold.copyWith(fontWeight: bold, fontSize: titleFontSize.sp,color: isDark ? kWhiteColor : kPrimaryColor, ),),
           Gap(5.h),
           Text(subTitle,
             textAlign: TextAlign.center,
-            style: font20PrimaryMedium.copyWith(color: kBorderColor,fontSize: 18.sp),),
+            style: font20PrimaryMedium.copyWith(color: isDark ? kTextColor : kDoneColor,fontSize: 18.sp , ),),
         ],
       ),
     );

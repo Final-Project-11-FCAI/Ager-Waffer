@@ -175,6 +175,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -198,9 +199,9 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
           }
         },
         child: Scaffold(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kMoreDarkModeColor : kWhiteColor,
           appBar: AppBar(
-            backgroundColor: kPrimaryColor,
+            backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
             foregroundColor: kWhiteColor,
           ),
           body: BlocListener<UpdateItemBloc, UpdateItemState>(
@@ -226,7 +227,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
-                color: kWhiteColor,
+                color: isDark ? kDarkModeColor : kWhiteColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25.r),
                   topRight: Radius.circular(25.r),
@@ -298,7 +299,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                               Text(
                                 kRentalType.tr(),
                                 style: font16BlackSemiBold.copyWith(
-                                  color: kSomeBlackColor,
+                                  color: isDark ? kWhiteColor : kSomeBlackColor,
                                 ),
                               ),
                               Gap(10.h),
@@ -373,7 +374,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                     width: double.infinity,
                     padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
                     decoration: BoxDecoration(
-                      color: kWhiteColor,
+                      color: isDark ? kDarkModeColor : kWhiteColor,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.06),
@@ -407,7 +408,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                             }
                           : null,
                       text: kEditProduct.tr(),
-                      color: kPrimaryColor,
+                      color: isDark ? kButtonColor : kPrimaryColor,
                     ),
                   ),
                 ],
@@ -424,14 +425,15 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     required bool value,
     required ValueChanged<bool> onChanged,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         Switch(
           value: value,
           onChanged: onChanged,
-          activeTrackColor: kLightPrimaryColor,
+          activeTrackColor: isDark ? kButtonColor : kLightPrimaryColor,
           activeColor: kWhiteColor,
-          inactiveTrackColor: kInactiveSwitchColor.withOpacity(0.3),
+          inactiveTrackColor: kTextGreyColor,
           inactiveThumbColor: kWhiteColor,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           trackOutlineWidth: MaterialStateProperty.all(0),
@@ -441,11 +443,11 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
             if (states.contains(MaterialState.selected)) {
               return kLightPrimaryColor;
             }
-            return kInactiveSwitchColor.withOpacity(0);
+            return kTextGreyColor;
           }),
         ),
         Gap(8.w),
-        Text(title, style: font15BlackRegular.copyWith(fontWeight: semiBold)),
+        Text(title, style: font15BlackRegular.copyWith(fontWeight: semiBold,color: isDark ? kWhiteColor : kBlackColor)),
       ],
     );
   }

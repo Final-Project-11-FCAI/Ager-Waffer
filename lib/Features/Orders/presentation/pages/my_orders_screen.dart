@@ -71,8 +71,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                             tabs[index],
                             style: font16BlackSemiBold.copyWith(
                               color: selectedIndex == index
-                                  ? kLightPrimaryColor
-                                  : kBlackColor.withOpacity(0.68),
+                                  ? isDark ? kWhiteColor : kLightPrimaryColor
+                                  : isDark ? kTextColor : kBlackColor.withOpacity(0.68),
                             ),
                           ),
                         ),
@@ -85,7 +85,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                 duration: const Duration(milliseconds: 250),
                                 height: 3,
                                 color: selectedIndex == index
-                                    ? kLightPrimaryColor
+                                    ? isDark ? kWhiteColor : kLightPrimaryColor
                                     : Colors.transparent,
                               ),
                             ),

@@ -85,14 +85,14 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
 
                 Text(
                   kHowWasExperience.tr(),
-                  style: font20PrimaryMedium.copyWith(fontWeight: bold),
+                  style: font20PrimaryMedium.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kPrimaryColor),
                 ),
                 Gap(5.h),
 
                 Text(
                   kYourOpinionMatters.tr(),
                   style: font20PrimaryMedium.copyWith(
-                    color: kLightPrimaryColor,
+                    color: isDark ? kTextColor : kLightPrimaryColor,
                     fontSize: 15,
                   ),
                 ),
@@ -104,7 +104,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.star, color: kPrimaryColor),
+                         Icon(Icons.star, color: isDark ? kButtonColor : kPrimaryColor),
                         Gap(5.w),
                         Text(
                           "${kRate.tr()} ${widget.name}",

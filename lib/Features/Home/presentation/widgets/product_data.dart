@@ -13,6 +13,7 @@ class ProductDataContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -29,7 +30,7 @@ class ProductDataContainer extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: font24PrimarySemiBold.copyWith(
                       fontSize: 20.sp,
-                      color: kBlackColor,
+                      color: isDark ? kWhiteColor : kBlackColor,
                     ),
                   ),
                   Gap(8.h),
@@ -40,7 +41,7 @@ class ProductDataContainer extends StatelessWidget {
                         product.averageRate!.toStringAsFixed(1),
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 12.sp,
-                          color: kGreyColor,
+                          color: isDark ? kTextColor : kGreyColor,
                         ),
                       ),
                       Gap(4.w),
@@ -62,13 +63,37 @@ class ProductDataContainer extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '${kCondition.tr()} : ',
-                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                          style: font16BlackSemiBold.copyWith(
+                            fontWeight: bold,
+                            color: isDark ? kWhiteColor : kBlackColor,
+                          ),
                         ),
                         TextSpan(
                           text: product.condition!,
                           style: font16BlackSemiBold.copyWith(
                             fontWeight: bold,
-                            color: kBlueColor,
+                            color: isDark ? kButtonColor : kBlueColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Gap(4.h),
+
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '${kCityName.tr()} : ',
+                          style: font16BlackSemiBold.copyWith(
+                            color: isDark ? kWhiteColor : kBlackColor,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "سوهاج",
+                          style: font14GreyRegular.copyWith(
+                            fontWeight: medium,
+                            color: isDark ? kTextColor : kgreyColor,
                           ),
                         ),
                       ],
@@ -84,7 +109,7 @@ class ProductDataContainer extends StatelessWidget {
                 Text(
                   product.price.toString(),
                   style: font16BlackSemiBold.copyWith(
-                    color: kPrimaryColor,
+                    color: isDark ? kButtonColor : kPrimaryColor,
                     fontSize: 14.sp,
                   ),
                 ),
@@ -93,7 +118,7 @@ class ProductDataContainer extends StatelessWidget {
                   "${kInsuranceOnly.tr()}: ${product.insurance} ${'currency'.tr()}",
                   textAlign: TextAlign.center,
                   style: font20PrimaryMedium.copyWith(
-                    color: kMoreGreyColor,
+                    color: isDark ? kTextColor : kMoreGreyColor,
                     fontSize: 10.sp,
                   ),
                 ),
@@ -104,12 +129,17 @@ class ProductDataContainer extends StatelessWidget {
         Gap(16.h),
         Text(
           kDescription.tr(),
-          style: font16BlackSemiBold,
+          style: font16BlackSemiBold.copyWith(
+            color: isDark ? kWhiteColor : kBlackColor,
+          ),
         ),
         Gap(8.h),
         Text(
           product.description!,
-          style: font14GreyRegular.copyWith(fontWeight: medium),
+          style: font14GreyRegular.copyWith(
+            fontWeight: medium,
+            color: isDark ? kTextColor : kgreyColor,
+          ),
         ),
       ],
     );

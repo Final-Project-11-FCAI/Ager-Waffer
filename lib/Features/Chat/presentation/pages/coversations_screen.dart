@@ -44,6 +44,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
@@ -56,7 +57,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
         foregroundColor: kWhiteColor,
         heroTag: 'chat_fab',
         onPressed: () {

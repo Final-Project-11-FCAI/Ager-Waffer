@@ -25,7 +25,6 @@ class PreviousOrders extends StatefulWidget {
 }
 
 class _PreviousOrdersState extends State<PreviousOrders> {
-
   @override
   void initState() {
     super.initState();
@@ -34,6 +33,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<AddReviewBloc, AddReviewState>(
       listener: (context, state) {
         if (state.status == addReviewStatus.loading) {
@@ -44,9 +44,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: kGreenColor,
-              content: Text(
-                kReviewAddedSuccess.tr(),
-              ),
+              content: Text(kReviewAddedSuccess.tr()),
             ),
           );
         } else if (state.status == addReviewStatus.failure) {
@@ -54,9 +52,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                state.failureMessage ?? kSomethingWentWrong.tr(),
-              ),
+              content: Text(state.failureMessage ?? kSomethingWentWrong.tr()),
             ),
           );
         }
@@ -69,11 +65,13 @@ class _PreviousOrdersState extends State<PreviousOrders> {
               cellShimmerHeight: 50,
               shimmerCount: 10,
             );
-          } else if (state.status == ordersManagementStatus.success){
+          } else if (state.status == ordersManagementStatus.success) {
             final ordersManagement = state.ordersManagement;
-            final previousOrders = ordersManagement.where((e) => e.status == "Completed").toList();
+            final previousOrders = ordersManagement
+                .where((e) => e.status == "Completed")
+                .toList();
 
-            if(previousOrders.isEmpty) {
+            if (previousOrders.isEmpty) {
               return LayoutBuilder(
                 builder: (context, constraints) {
                   return SingleChildScrollView(
@@ -94,7 +92,6 @@ class _PreviousOrdersState extends State<PreviousOrders> {
               );
             }
 
-
             return ListView.builder(
               itemCount: previousOrders.length,
               shrinkWrap: true,
@@ -108,7 +105,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: kWhiteColor,
+                      color: isDark ? kSomeDarkModeColor : kWhiteColor,
                       borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(
                         color: kBlackColor.withOpacity(0.2),
@@ -126,7 +123,8 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               CachedNetworkImage(
-                                imageUrl: previousOrders[index].itemImages!.first,
+                                imageUrl:
+                                    previousOrders[index].itemImages!.first,
                                 width: 90.w,
                                 height: 90.h,
                                 fit: BoxFit.contain,
@@ -135,7 +133,9 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                   fit: BoxFit.contain,
                                 ),
                                 errorWidget: (context, url, error) {
-                                  return Image.asset("assets/images/virtual_image.jpg");
+                                  return Image.asset(
+                                    "assets/images/virtual_image.jpg",
+                                  );
                                 },
                               ),
                               Gap(20.h),
@@ -146,32 +146,51 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                   Text(
                                     previousOrders[index].itemName ?? '',
                                     style: font16BlackSemiBold.copyWith(
-                                      color: kPrimaryColor,
+                                      color: isDark
+                                          ? kWhiteColor
+                                          : kPrimaryColor,
                                     ),
                                   ),
                                   Gap(2.w),
                                   Row(
                                     children: [
-                                      Image.asset('assets/images/owner.png'),
+                                      Image.asset(
+                                        'assets/images/owner.png',
+                                        color: isDark
+                                            ? kTextColor
+                                            : kBlackColor,
+                                      ),
                                       Gap(5.w),
                                       Text(
                                         "${kOwner.tr()}: ${previousOrders[index].renteeName}",
-                                        style: font13kLightPrimaryColorMedium.copyWith(
-                                          color: kBlackColor,
-                                        ),
+                                        style: font13kLightPrimaryColorMedium
+                                            .copyWith(
+                                              color: isDark
+                                                  ? kTextColor
+                                                  : kBlackColor,
+                                            ),
                                       ),
                                     ],
                                   ),
                                   Gap(5.w),
                                   Row(
                                     children: [
-                                      Image.asset('assets/images/date_determine.png'),
+                                      isDark
+                                          ? Image.asset(
+                                              'assets/images/date_determine.png',
+                                              color: kButtonColor,
+                                            )
+                                          : Image.asset(
+                                              'assets/images/date_determine.png',
+                                            ),
                                       Gap(5.w),
                                       Text(
                                         '${previousOrders[index].fromDate ?? ''} - ${previousOrders[index].toDate ?? ''}',
                                         style: font20PrimaryMedium.copyWith(
                                           fontSize: 12.sp,
-                                          color: kTextGreyColor,
+                                          color: isDark
+                                              ? kTextColor
+                                              : kTextGreyColor,
                                         ),
                                       ),
                                     ],
@@ -198,13 +217,15 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                               Text(
                                 kTotalAmount.tr(),
                                 style: font13kLightPrimaryColorMedium.copyWith(
-                                  color: kDarkGreyColor,
+                                  color: isDark ? kTextColor : kDarkGreyColor,
                                 ),
                               ),
                               Text(
                                 previousOrders[index].totalPrice.toString(),
                                 style: font24LightPrimarySemiBold.copyWith(
                                   fontSize: 14.sp,
+                                  color: isDark ? kButtonColor : kLightPrimaryColor,
+
                                 ),
                               ),
                             ],
@@ -228,28 +249,32 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                           child: orderButton(
                             text: kRateRenter.tr(),
                             icon: 'assets/images/star.png',
-                            backgroundColor: kLightPrimaryColor,
+                            backgroundColor: isDark ? kButtonColor : kLightPrimaryColor,
                             textColor: kWhiteColor,
                             onTap: () {
                               showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                context: context,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
                                   ),
-                                  builder: (context){
-                                    return FractionallySizedBox(
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(25.r),
-                                            ),
-                                            child: RenterRatingBottomSheet(
-                                              reviewType: kRenter.tr(),hint: kInteraction.tr(),
-                                              previousOrders: previousOrders,
-                                              index: index,
-                                            )
-                                        ));
-                                  }
+                                ),
+                                builder: (context) {
+                                  return FractionallySizedBox(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25.r),
+                                      ),
+                                      child: RenterRatingBottomSheet(
+                                        reviewType: kRenter.tr(),
+                                        hint: kInteraction.tr(),
+                                        previousOrders: previousOrders,
+                                        index: index,
+                                      ),
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),
@@ -293,12 +318,14 @@ class _PreviousOrdersState extends State<PreviousOrders> {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: kLightPrimaryColor, width: 1.w),
+          border: Border.all(color: backgroundColor, width: 1.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isNotIcon ? SizedBox() : Image.asset(icon, width: 20.w, height: 20.h),
+            isNotIcon
+                ? SizedBox()
+                : Image.asset(icon, width: 20.w, height: 20.h),
             Gap(5),
             Text(
               text,
