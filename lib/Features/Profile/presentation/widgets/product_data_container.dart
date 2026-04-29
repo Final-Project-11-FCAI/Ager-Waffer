@@ -33,6 +33,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Container(
@@ -42,7 +43,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
               : Shared.height * 0.08.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.r),
-            color: kProductDataContainerColor,
+            color:  isDark ? kLightDarkModeColor : kProductDataContainerColor,
             border: Border.all(color: kBorderColor, width: 1.w),
           ),
           child: Padding(
@@ -52,9 +53,9 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  selectedValue ?? widget.hintText,
+                  selectedValue?.tr() ?? widget.hintText,
                   style: font15SomeBlackColorMedium.copyWith(
-                    color: selectedValue == null ? kGreyColor : kBlackColor,
+                    color: selectedValue == null ? isDark ? kWhiteColor : kGreyColor : isDark ? kWhiteColor : kBlackColor,
                   ),
                 ),
                 GestureDetector(
@@ -78,7 +79,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
-                hintStyle: font15SomeBlackColorMedium,
+                hintStyle: font15SomeBlackColorMedium.copyWith(color: isDark ? kWhiteColor : kBlackColor),
               ),
             ),
           ),
@@ -96,7 +97,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.r),
-                color: kWhiteColor,
+                color:  isDark ? kLightDarkModeColor : kWhiteColor,
                 border: Border.all(color: kBorderColor, width: 1.w),
               ),
               child: Padding(
@@ -127,7 +128,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
                         child: Text(
                           widget.options[index].tr(),
                           style: font15SomeBlackColorMedium.copyWith(
-                            color: kBlackColor,
+                            color:  isDark ? kWhiteColor : kBlackColor,
                           ),
                         ),
                       ),

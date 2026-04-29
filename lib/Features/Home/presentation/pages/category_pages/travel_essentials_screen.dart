@@ -31,10 +31,11 @@ class _TravelEssentialsScreenState extends State<TravelEssentialsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(
           kCategoryTravel.tr(),
@@ -45,7 +46,7 @@ class _TravelEssentialsScreenState extends State<TravelEssentialsScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: isDark ? kDarkModeColor : kWhiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25.r),
             topRight: Radius.circular(25.r),

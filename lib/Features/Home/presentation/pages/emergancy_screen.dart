@@ -12,8 +12,9 @@ class EmergencyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: isDark ? kDarkModeColor : Colors.grey.shade200,
       body: SafeArea(
         child: Column(
           children: [
@@ -21,7 +22,7 @@ class EmergencyScreen extends StatelessWidget {
               width: double.infinity,
               padding: EdgeInsets.only(top: 60.h, left: 20.w, right: 20.w, bottom: 30.h),
               decoration: BoxDecoration(
-                color: kPrimaryColor,
+                color: isDark ? kSomeDarkModeColor : kPrimaryColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30.r),
                   bottomRight: Radius.circular(30.r),
@@ -64,15 +65,16 @@ class EmergencyScreen extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: kPrimaryColor,
+                      color: isDark ? kWhiteColor : kPrimaryColor,
                     ),
                   ),
                   Gap(15.h),
-                  _buildRow("122", kPolice.tr()),
-                  _buildRow("123", kAmbulance.tr()),
-                  _buildRow("180", kFirefighters.tr()),
+                  _buildRow("122", kPolice.tr(), context),
+                  _buildRow("123", kAmbulance.tr(), context),
+                  _buildRow("180", kFirefighters.tr(), context),
                 ],
               ),
+              context: context
             ),
           ],
         ),
@@ -80,14 +82,15 @@ class EmergencyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCard({required Widget child}) {
+  Widget _buildCard({required Widget child, required BuildContext context}) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.all(16.h),
         decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+          color: isDark ? kSomeDarkModeColor : Colors.grey.shade300,
           borderRadius: BorderRadius.circular(20),
         ),
         child: child,
@@ -95,12 +98,13 @@ class EmergencyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRow(String number, String title) {
+  Widget _buildRow(String number, String title, BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Container(
         decoration: BoxDecoration(
-          color: kPrimaryColor,
+          color: isDark ? kSomeGreyColor.withOpacity(0.9) : kPrimaryColor,
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: ListTile(
@@ -112,7 +116,7 @@ class EmergencyScreen extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(color: kWhiteColor),
+                style: TextStyle(color: isDark ? kBlackColor : kWhiteColor),
               ),
               Gap(10.w),
               Text(
@@ -120,12 +124,12 @@ class EmergencyScreen extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16.sp,
-                  color: kWhiteColor
+                  color: isDark ? kBlackColor : kWhiteColor
                 ),
               ),
             ],
           ),
-          trailing: const Icon(Icons.call, color: kWhiteColor),
+          trailing: Icon(Icons.call, color: isDark ? kBlackColor : kWhiteColor),
         ),
       ),
     );

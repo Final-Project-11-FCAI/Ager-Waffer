@@ -53,7 +53,8 @@ class _EditProfileTextFieldState extends State<EditProfileTextField> {
 
   @override
   Widget build(BuildContext context) {
-    // put received text inside the controller
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (widget.initialText != null && widget.controller.text.isEmpty) {
       widget.controller.text = widget.initialText!;
     }
@@ -73,7 +74,7 @@ class _EditProfileTextFieldState extends State<EditProfileTextField> {
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(22.r),
-          borderSide: BorderSide(color: kBorderAuthColor),
+          borderSide: isDark ? BorderSide(color: kWhiteColor) : BorderSide(color: kBorderAuthColor),
         ),
       ),
     );

@@ -15,11 +15,12 @@ class RentAndFavoriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
       decoration: BoxDecoration(
-        color: kWhiteColor,
+        color: isDark ? kMoreDarkModeColor : kWhiteColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.06),
@@ -38,7 +39,7 @@ class RentAndFavoriteButton extends StatelessWidget {
                     : null;
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: product.isAvailable == true ? kPrimaryColor : kGreyColor,
+                backgroundColor: product.isAvailable == true ? isDark ? kButtonColor : kPrimaryColor : kGreyColor,
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14.r),

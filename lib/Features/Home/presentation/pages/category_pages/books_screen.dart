@@ -30,10 +30,11 @@ class _BooksScreenState extends State<BooksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
         appBar: AppBar(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
           foregroundColor: kWhiteColor,
           title: Text(kCategoryBooks.tr(),
             style: font16BlackSemiBold.copyWith(
@@ -46,7 +47,7 @@ class _BooksScreenState extends State<BooksScreen> {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: kWhiteColor,
+              color: isDark ? kDarkModeColor : kWhiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25.r),
                 topRight: Radius.circular(25.r),

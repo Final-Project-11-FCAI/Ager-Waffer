@@ -42,12 +42,13 @@ class _RequestScreenState extends State<RequestScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      bool isDark = Theme.of(context).brightness == Brightness.dark;
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         enableDrag: false,
         isDismissible: false,
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
@@ -322,7 +323,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         Text(
                                           rentCondition(),
                                           style: font16BlackSemiBold.copyWith(
-                                            color: kBlueColor,
+                                            color: kButtonColor,
                                           ),
                                         ),
                                         SizedBox(height: 10),
@@ -452,7 +453,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                                 style:
                                                     font15SomeBlackColorMedium
                                                         .copyWith(
-                                                          color: kgreyColor,
+                                                          color: isDark ? kWhiteColor : kgreyColor,
                                                         ),
                                               ),
                                               const Spacer(),
@@ -499,7 +500,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                                       BorderRadius.circular(
                                                         16.r,
                                                       ),
-                                                  color: Colors.blue[50],
+                                                  color: isDark ? kSomeGreyColor : Colors.blue[50],
                                                 ),
                                                 child: totalDays > 0
                                                     ? Row(
@@ -510,6 +511,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                                           Gap(5.w),
                                                           Text(
                                                             "${kDuration.tr()}: $totalDays ${kDays.tr()}",
+                                                            style: TextStyle(color: isDark ? kBlackColor : kBlackColor),
                                                           ),
                                                         ],
                                                       )
@@ -530,7 +532,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(24),
-                                color: const Color.fromARGB(255, 240, 240, 240),
+                                color: isDark ? kSomeDarkModeColor : Color.fromARGB(255, 240, 240, 240),
                               ),
                               child: Padding(
                                 padding: EdgeInsets.all(Shared.width * 0.04),
@@ -542,7 +544,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 13,
-                                              color: kBlackColor,
+                                          color: isDark ? kWhiteColor : kBlackColor,
                                             ),
                                       ),
                                       Text(
@@ -550,7 +552,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 13,
-                                              color: kBlackColor,
+                                          color: isDark ? kWhiteColor : kBlackColor,
                                             ),
                                       ),
                                     ),
@@ -560,7 +562,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 13,
-                                              color: kBlackColor,
+                                              color: isDark ? kWhiteColor : kBlackColor,
                                             ),
                                       ),
                                       Text(
@@ -576,7 +578,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 13,
-                                              color: kBlackColor,
+                                          color: isDark ? kWhiteColor : kBlackColor,
                                             ),
                                       ),
                                     ),
@@ -596,6 +598,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         kTotal.tr(),
                                         style: font14BlackBold.copyWith(
                                           fontSize: 13,
+                                          color: isDark ? kWhiteColor : kBlackColor,
                                         ),
                                       ),
                                       Text(
@@ -604,6 +607,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                             : "--",
                                         style: font14BlackBold.copyWith(
                                           fontSize: 13,
+                                          color: isDark ? kWhiteColor : kBlackColor,
                                         ),
                                       ),
                                       isTotal: true,
@@ -619,9 +623,11 @@ class _RequestScreenState extends State<RequestScreen> {
                                 vertical: 10.h,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
+                                color: isDark
+                                ? kSomeDarkModeColor
+                                : Colors.grey.shade100,
                                 borderRadius: BorderRadius.circular(16.r),
-                                border: Border.all(color: Colors.grey.shade300),
+                                border: Border.all(color: isDark ? kWhiteColor.withOpacity(0.4) : Colors.grey.shade300),
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -634,7 +640,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         agree = value!;
                                       });
                                     },
-                                    activeColor: kPrimaryColor,
+                                    activeColor: isDark ? kButtonColor : kPrimaryColor,
                                   ),
                                   Gap(8.w),
                                   Expanded(
@@ -643,7 +649,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                         style: font15SomeBlackColorMedium
                                             .copyWith(
                                               fontSize: 14,
-                                              color: Colors.black87,
+                                              color: isDark ? kWhiteColor : Colors.black87,
                                             ),
                                         children: [
                                           TextSpan(
@@ -660,6 +666,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                                     >(
                                                       context: context,
                                                       isScrollControlled: true,
+                                                      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
                                                       builder: (context) {
                                                         return const RentalTermsScreen();
                                                       },
@@ -673,9 +680,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                               child: Text(
                                                 kRentalTerms.tr(),
                                                 style: font14BlackBold.copyWith(
-                                                  color: kLightPrimaryColor,
+                                                  color: isDark ? kButtonColor :  kLightPrimaryColor,
                                                   decoration:
-                                                      TextDecoration.underline,
+                                                      TextDecoration.underline,decorationColor: isDark ? kWhiteColor :  kBlackColor,
                                                   fontSize: 15,
                                                 ),
                                               ),
@@ -697,7 +704,9 @@ class _RequestScreenState extends State<RequestScreen> {
                     width: double.infinity,
                     padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
                     decoration: BoxDecoration(
-                      color: kWhiteColor,
+                      color: isDark
+                          ? kSomeDarkModeColor
+                          : kWhiteColor,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.06),
@@ -754,14 +763,14 @@ class _RequestScreenState extends State<RequestScreen> {
         padding: const EdgeInsets.all(12),
 
         decoration: BoxDecoration(
-          color: isDark ? Color(0xffC0C0C0) : kWhiteColor,
+          color: isDark ? kGreyColor.withOpacity(0.19) : kWhiteColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: kPartGreyColor),
         ),
 
         child: Row(
           children: [
-            Image.asset('assets/images/date_determine.png'),
+            Image.asset('assets/images/date_determine.png', color: isDark ? kWhiteColor : null,),
             Gap(10.w),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

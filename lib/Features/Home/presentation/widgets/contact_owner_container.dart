@@ -22,13 +22,14 @@ class ContactOwnerContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: Shared.width * 0.04.w,
         vertical: Shared.height * 0.03.h,
       ),
       decoration: BoxDecoration(
-        color: kWhiteColor,
+        color: isDark ? kDarkModeColor : kWhiteColor,
         borderRadius: BorderRadius.circular(18.r),
         boxShadow: [
           BoxShadow(
@@ -64,13 +65,13 @@ class ContactOwnerContainer extends StatelessWidget {
               children: [
                 Text(
                   product.ownerName!,
-                  style: font16BlackSemiBold.copyWith(fontSize: 14.sp),
+                  style: font16BlackSemiBold.copyWith(fontSize: 14.sp,color: isDark ? kWhiteColor : kBlackColor),
                 ),
                 Row(
                   children: [
                     Text(
                       '4.5',
-                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp),
+                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp,color: isDark ? kWhiteColor : kBlackColor),
                     ),
                     Gap(1.w),
                     Icon(Icons.star, size: 17.sp, color: Colors.amber),
@@ -89,7 +90,7 @@ class ContactOwnerContainer extends StatelessWidget {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator(color: kBlueColor,));
+                  return const Center(child: CircularProgressIndicator(color: kButtonColor,));
                 }
 
                 final uid = snapshot.data!.docs.first.id;
@@ -138,7 +139,7 @@ class ContactOwnerContainer extends StatelessWidget {
                       horizontal: 10.w,
                       vertical: 6.h,
                     ),
-                    backgroundColor: kBlueColor.withOpacity(0.12),
+                    backgroundColor: kButtonColor.withOpacity(0.12),
                     side: const BorderSide(color: kLightBlueColor),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.r),
@@ -150,7 +151,7 @@ class ContactOwnerContainer extends StatelessWidget {
                         kContactOwner.tr(),
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 12.sp,
-                          color: kBlueColor,
+                          color: kButtonColor,
                         ),
                       ),
                       Gap(5.w),

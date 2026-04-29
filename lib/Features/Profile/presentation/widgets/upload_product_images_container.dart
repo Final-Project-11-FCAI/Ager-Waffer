@@ -76,12 +76,13 @@ class _UploadProductImagesContainerState
     );
   }  @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return DottedBorder(
       borderType: BorderType.RRect,
       radius: const Radius.circular(25),
       dashPattern: const [6, 8],
       strokeWidth: 1.4,
-      color: kLightPrimaryColor,
+      color: isDark ? kWhiteColor.withOpacity(0.5) : kLightPrimaryColor,
       child: Container(
         width: double.infinity,
         height: selectedImages.isEmpty
@@ -90,7 +91,7 @@ class _UploadProductImagesContainerState
         padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.r),
-          color: kProductDataContainerColor,
+          color:  isDark ? kLightDarkModeColor : kProductDataContainerColor,
         ),
 
         child: selectedImages.isEmpty
@@ -101,16 +102,17 @@ class _UploadProductImagesContainerState
               'assets/images/camera_plus.png',
               width: 50.w,
               height: 50.h,
+              color: isDark ? kWhiteColor : null,
             ),
             Gap(10.h),
             Text(
               kUploadProductImages.tr(),
-              style: font16BlackSemiBold.copyWith(fontSize: 15),
+              style: font16BlackSemiBold.copyWith(fontSize: 15, color: isDark ? kWhiteColor : kBlackColor,),
             ),
             Gap(4.h),
             Text(
               kUploadRange.tr(),
-              style: font13kLightPrimaryColorMedium,
+              style: font13kLightPrimaryColorMedium.copyWith(color: isDark ? kWhiteColor : kLightPrimaryColor,),
             ),
             Gap(10.h),
             SizedBox(
@@ -118,7 +120,7 @@ class _UploadProductImagesContainerState
               child: ElevatedButton(
                 onPressed: pickImages,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
+                  backgroundColor: isDark ? kSomeGreyColor : kPrimaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25.r),
                   ),
@@ -126,7 +128,7 @@ class _UploadProductImagesContainerState
                 child: Text(
                   kUploadImages.tr(),
                   style: font13kLightPrimaryColorMedium.copyWith(
-                    color: kWhiteColor,
+                    color: isDark ? kBlackColor : kWhiteColor,
                   ),
                 ),
               ),

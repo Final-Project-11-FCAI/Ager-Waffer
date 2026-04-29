@@ -43,6 +43,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
@@ -54,9 +55,10 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
+        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
+        foregroundColor: kWhiteColor,
         title: Text(kConversations.tr()),
       ),
       body: Padding(

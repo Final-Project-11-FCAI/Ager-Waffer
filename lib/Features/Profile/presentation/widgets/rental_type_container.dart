@@ -24,10 +24,11 @@ class _RentalTypeContainerState extends State<RentalTypeContainer> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.r),
-        color: kProductDataContainerColor,
+        color: isDark ? kDarkModeColor : kProductDataContainerColor,
         border: Border.all(color: kBorderColor, width: 1.w),
       ),
       child: Row(
@@ -48,8 +49,8 @@ class _RentalTypeContainerState extends State<RentalTypeContainer> {
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   decoration: BoxDecoration(
                     color: selectedIndex == index
-                        ? kLightPrimaryColor
-                        : kSmallContainerColor,
+                        ? isDark ? kSomeGreyColor : kLightPrimaryColor
+                        : isDark ? kLightDarkModeColor : kSmallContainerColor,
                     borderRadius: BorderRadius.circular(18.r),
                   ),
                   child: Center(
@@ -59,8 +60,8 @@ class _RentalTypeContainerState extends State<RentalTypeContainer> {
                         fontSize: 17.sp,
                         fontWeight: medium,
                         color: selectedIndex == index
-                            ? kWhiteColor
-                            : kBlackColor,
+                            ?  isDark ? kBlackColor : kWhiteColor
+                            :  isDark ? kWhiteColor : kBlackColor,
                       )
                     ),
                   ),

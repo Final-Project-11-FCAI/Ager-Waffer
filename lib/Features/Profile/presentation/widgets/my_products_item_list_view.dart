@@ -25,11 +25,12 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: kOpacityGreyColor,
+        color: isDark ? kSomeDarkModeColor : kOpacityGreyColor,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -74,7 +75,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                     children: [
                       Expanded(child: Text(widget.myListings.name ?? '',
                           overflow: TextOverflow.ellipsis,
-                          style: font14BlackBold.copyWith(fontSize: 12.sp))),
+                          style: font14BlackBold.copyWith(fontSize: 12.sp, color: isDark ? kWhiteColor : kBlackColor,))),
                       Text(
                         "${widget.myListings.price}${
                             widget.myListings.rentUnit == kDaily.tr() ?
@@ -83,20 +84,20 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                             kCurrencyPerWeek.tr() :
                             widget.myListings.rentUnit == kMonthly.tr() ?
                         kCurrencyPerMonth.tr() : ''}",
-                        style: font16BlackSemiBold.copyWith(fontSize: 11,),
+                        style: font16BlackSemiBold.copyWith(fontSize: 11, color: isDark ? kWhiteColor : kBlackColor,),
                       ),
                     ],
                   ),
                   Text(
                     widget.myListings.condition ?? '',
-                    style: font16BlackSemiBold.copyWith(color: Color.fromRGBO(85, 85, 85, 0.61), fontSize: 11),
+                    style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : Color.fromRGBO(85, 85, 85, 0.61), fontSize: 11),
                   ),
                   Gap(5.h),
                   Row(
                     children: [
                       Text(
                         "${widget.myListings.averageRate}",
-                        style: font16BlackSemiBold.copyWith(fontSize: 10, color: Color.fromRGBO(151, 151, 151, 1),),
+                        style: font16BlackSemiBold.copyWith(fontSize: 10,  color: isDark ? kWhiteColor : Color.fromRGBO(151, 151, 151, 1),),
                       ),
                       Gap(5.w),
                       ...List.generate(
@@ -119,9 +120,9 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           onTap: (){
                             customAnimatedPushNavigation(context, UpdateProductScreen(product: widget.myListings,));
                           },
-                          textColor: kBlueColor,
-                          backgroundColor: kOpacityGreyColor,
-                          borderColor: kBlueColor
+                          textColor: kButtonColor,
+                          backgroundColor: isDark ? kSomeGreyColor : kOpacityGreyColor,
+                          borderColor: kButtonColor
                       ),
                       Gap(7.w),
                       deleteOrEditProductButton(

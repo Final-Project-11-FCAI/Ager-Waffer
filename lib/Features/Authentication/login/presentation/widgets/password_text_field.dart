@@ -59,7 +59,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           keyboardType: TextInputType.visiblePassword,
           obscureText: isHidden,
           decoration: InputDecoration(
-            hintStyle: TextStyle(color: Colors.grey[400]),
+            hintStyle: TextStyle(color: isDark ? kWhiteColor : Colors.grey[400]),
             labelText: widget.label,
             prefixIcon: widget.icon,
             suffixIcon: IconButton(
@@ -74,7 +74,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22.r),
-              borderSide: isDark ? BorderSide(color: kGreyColor) : BorderSide(color: kBorderAuthColor),
+              borderSide: isDark ? BorderSide(color: kWhiteColor) : BorderSide(color: kBorderAuthColor),
             ),
 
             focusedBorder: OutlineInputBorder(

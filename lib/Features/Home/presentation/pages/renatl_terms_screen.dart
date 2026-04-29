@@ -26,6 +26,7 @@ class _RentalTermsScreenState extends State<RentalTermsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w, vertical: Shared.height * 0.025.h),
       child: Column(
@@ -33,7 +34,7 @@ class _RentalTermsScreenState extends State<RentalTermsScreen> {
         children: [
           Text(
           kRentalTermsTitle.tr(),
-            style: font14BlackBold.copyWith(fontSize: 20),
+            style: font14BlackBold.copyWith(fontSize: 20,color: isDark ? kWhiteColor : kBlackColor),
           ),
           Gap(25.h),
           ...List.generate(terms.length, (index) => _buildTermItem(index)),
@@ -43,7 +44,7 @@ class _RentalTermsScreenState extends State<RentalTermsScreen> {
             height: 55,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
+                backgroundColor: isDark ? kButtonColor : kPrimaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -67,21 +68,22 @@ class _RentalTermsScreenState extends State<RentalTermsScreen> {
   }
 
   Widget _buildTermItem(int index) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: kProductDataContainerColor,
+        color: isDark ? kTextColor.withOpacity(0.19) : kProductDataContainerColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         children: [
-          Image.asset('assets/images/terms_icon.png'),
+          Image.asset('assets/images/terms_icon.png',color: isDark ? kWhiteColor : kPrimaryColor,),
           Gap(5.w),
           Expanded(
             child: Text(
               terms[index],
-              style: font20PrimaryMedium.copyWith(fontSize: 16),
+              style: font20PrimaryMedium.copyWith(fontSize: 16.sp,color: isDark ? kWhiteColor : kPrimaryColor),
             ),
           ),
         ],

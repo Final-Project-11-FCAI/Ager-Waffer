@@ -11,10 +11,11 @@ class AboutUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: false,
-        title: Text(kAboutUs.tr(), style: font24LightPrimarySemiBold),
+        title: Text(kAboutUs.tr(), style: font24LightPrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kLightPrimaryColor)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -28,13 +29,13 @@ class AboutUsScreen extends StatelessWidget {
                   child: Image.asset("assets/images/about_logo.png"),
                 ),
                 Gap(25.h),
-                _buildText(kAboutParagraph1.tr()),
+                _buildText(kAboutParagraph1.tr(), context),
                 Gap(15.h),
-                _buildText(kAboutParagraph2.tr()),
+                _buildText(kAboutParagraph2.tr(), context),
                 Gap(15.h),
-                _buildText(kAboutParagraph3.tr()),
+                _buildText(kAboutParagraph3.tr(), context),
                 Gap(15.h),
-                _buildText(kAboutParagraph4.tr()),
+                _buildText(kAboutParagraph4.tr(), context),
                 Gap(15.h),
               ],
             ),
@@ -44,11 +45,12 @@ class AboutUsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildText(String text) {
+  Widget _buildText(String text, BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Text(
       text,
       textAlign: TextAlign.justify,
-      style: font14BlackBold.copyWith(fontWeight: medium, color: kLightPrimaryColor, height: 1.9.sp),
+      style: font14BlackBold.copyWith(fontWeight: medium, color: isDark ? kWhiteColor : kLightPrimaryColor, height: 1.9.sp),
     );
   }
 }

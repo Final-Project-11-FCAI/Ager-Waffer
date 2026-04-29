@@ -47,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     if (_user == null) {
       return Center(child: CircularProgressIndicator());
     }
@@ -54,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final user = _user!;
 
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
       floatingActionButton: CircleAvatar(
         radius: 25.r,
         child: FloatingActionButton(
@@ -63,8 +64,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             customAnimatedPushNavigation(context, AddProductScreen());
           },
           elevation: 3.sp,
-          backgroundColor: kPrimaryColor,
-          child: Icon(Icons.add, color: kWhiteColor),
+          backgroundColor: isDark ? kWhiteColor : kPrimaryColor,
+          child: Icon(Icons.add, color: isDark ? kPrimaryColor : kWhiteColor),
         ),
       ),
       body: SafeArea(
@@ -76,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: kWhiteColor,
+                  color: isDark ? kDarkModeColor : kWhiteColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25.r),
                     topRight: Radius.circular(25.r),
@@ -94,13 +95,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           user.fullName.toString(),
                           style: font24PrimarySemiBold.copyWith(
-                            color: kBlackColor,
+                            color: isDark ? kWhiteColor : kBlackColor,
                           ),
                         ),
                         Text(
                           user.email.toString(),
                           style: font16BlackSemiBold.copyWith(
-                            color: kBlackColor.withOpacity(0.64),
+                            color: isDark ? kWhiteColor : kBlackColor.withOpacity(0.64),
                           ),
                         ),
                         Row(
@@ -110,6 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               '4.5',
                               style: font20PrimaryMedium.copyWith(
                                 fontSize: 15.sp,
+                                color: isDark ? kWhiteColor : kPrimaryColor
                               ),
                             ),
                             Gap(3.w),
@@ -121,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               kMyProducts.tr(),
-                              style: font16BlackSemiBold.copyWith(fontSize: 20),
+                              style: font16BlackSemiBold.copyWith(fontSize: 20, color: isDark ? kWhiteColor : kBlackColor),
                             ),
                           ],
                         ),

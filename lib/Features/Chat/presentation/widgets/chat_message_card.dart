@@ -51,6 +51,7 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     bool isMe =
         widget.messageItem.fromId == FirebaseAuth.instance.currentUser!.uid;
     return Container(
@@ -70,7 +71,7 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
               topRight: Radius.circular(16),
             )),
             color: isMe
-                ? kPrimaryColor
+                ? isDark ? kLightPrimaryColor : kPrimaryColor
                 : kWhiteColor,
             child: Padding(
               padding: const EdgeInsets.all(12.0),

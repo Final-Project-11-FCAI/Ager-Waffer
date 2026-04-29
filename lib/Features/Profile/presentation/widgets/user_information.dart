@@ -105,7 +105,7 @@ class _UserInformationState extends State<UserInformation> {
                       Text(
                       kCompleteDataTitle.tr(),
                         style: font20BoldGreyRegular.copyWith(
-                          color: kBlackColor,
+                          color: isDark ? kWhiteColor : kBlackColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -114,7 +114,7 @@ class _UserInformationState extends State<UserInformation> {
                         widget.isRequestScreen ? kCompleteRentProcess.tr() : kCompleteDataDesc.tr(),
                         style: font20PrimaryMedium.copyWith(
                           fontSize: 16,
-                          color: kPrimaryColor,
+                          color: isDark ? kWhiteColor.withOpacity(0.9) : kPrimaryColor,
                         ),
                       ),
                       Gap(30.h),

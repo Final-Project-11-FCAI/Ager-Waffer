@@ -77,6 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final String roomId = widget.roomId;
     final String? userId = widget.chatUser.id;
 
@@ -291,7 +292,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ); // Correctly create the file
                                   }
                                 },
-                                icon: const Icon(Icons.camera_alt_outlined),
+                                icon: Icon(Icons.camera_alt_outlined, color: isDark ? kWhiteColor : null,),
                               ),
                             ],
                           ),
@@ -316,9 +317,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(kPrimaryColor),
+                      backgroundColor: isDark ? MaterialStateProperty.all(kWhiteColor) : MaterialStateProperty.all(kPrimaryColor),
                     ),
-                    icon: Icon(Icons.send))
+                    icon: Icon(Icons.send, color: isDark ? kPrimaryColor : kWhiteColor,))
               ],
             )
           ],

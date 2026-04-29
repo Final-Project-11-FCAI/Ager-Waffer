@@ -49,6 +49,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return SafeArea(
       child: Column(
         children: [
@@ -83,14 +84,16 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                                     Text(
                                       "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
                                       overflow: TextOverflow.ellipsis,
-                                      style: font15BlackRegular.copyWith(fontWeight: semiBold),
+                                      style: font15BlackRegular.copyWith(fontWeight: semiBold,
+                                      color: isDark ? kWhiteColor : kBlackColor
+                                      ),
                                     ),
                                     Gap(2),
                                     Text(
                                       user?.email ?? '',
                                       overflow: TextOverflow.ellipsis,
                                       style: font13kLightPrimaryColorMedium.copyWith(
-                                        color: kGreyColor,
+                                        color: isDark ? kSomeGreyColor : kGreyColor,
                                       ),
                                     ),
                                   ],
@@ -104,7 +107,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                           radius: 20.r,
                           child: InkWell(
                               onTap: () => Navigator.of(context).pop(),
-                              child: Icon(Icons.arrow_forward_ios_sharp, color: kGreyColor)),
+                              child: Icon(Icons.arrow_forward_ios_sharp, color: isDark ? kSomeGreyColor : kGreyColor)),
                         ),
                       ],
                     );
@@ -276,6 +279,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
     bool isDarkMode = false,
     Function()? onTap,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return TextButton(
       onPressed: onTap,
       child: Row(
@@ -283,12 +287,12 @@ class _DrawerDetailsState extends State<DrawerDetails> {
         children: [
           Row(
             children: [
-              Image.asset(icon!, width: 40.w, height: 40.h, color: kLightPrimaryColor,),
+              Image.asset(icon!, width: 40.w, height: 40.h, color: isDark ? kWhiteColor : kLightPrimaryColor,),
               Text(
                 title!,
                 style: font20PrimaryMedium.copyWith(
                   fontSize: 17.sp,
-                  color: kLightPrimaryColor,
+                  color: isDark ? kWhiteColor : kLightPrimaryColor,
                 ),
               ),
             ],
@@ -296,7 +300,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
           isDarkMode
               ? Switch(
             value: MyMaterial.isDark,
-            activeTrackColor: kLightPrimaryColor,
+            activeTrackColor: isDark ? kBlueColor : kLightPrimaryColor,
                   activeColor: kWhiteColor,
                   inactiveTrackColor: kInactiveSwitchColor.withOpacity(0.3),
                   inactiveThumbColor: kWhiteColor,
@@ -306,7 +310,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     states,
                   ) {
                     if (states.contains(MaterialState.selected)) {
-                      return kLightPrimaryColor;
+                      return isDark ? kBlueColor : kLightPrimaryColor;
                     }
                     return kInactiveSwitchColor.withOpacity(0);
                   }),
@@ -321,7 +325,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 )
               : Padding(
                 padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
-                child: Icon(Icons.arrow_forward_ios_outlined, color: kPrimaryColor,),
+                child: Icon(Icons.arrow_forward_ios_outlined, color: isDark ? kWhiteColor : kPrimaryColor,),
               ),
         ],
       ),

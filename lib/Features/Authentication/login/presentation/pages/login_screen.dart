@@ -78,10 +78,10 @@ class _LoginScreenState extends State<LoginScreen>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         appBar: AppBar(
           toolbarHeight: 90,
-          backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+          backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
           foregroundColor: isDark ? kWhiteColor : kWhiteColor,
           title: Container(
             alignment: Alignment.centerLeft,
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen>
           child: Container(
             height: double.infinity,
             decoration: BoxDecoration(
-              color: isDark ? Color(0xFF1E1E1E) : kWhiteColor,
+              color: isDark ? kDarkModeColor : kWhiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25.r),
                 topRight: Radius.circular(25.r),

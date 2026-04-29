@@ -151,9 +151,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
           appBar: AppBar(
-            backgroundColor: kRedColor,
+            backgroundColor: kPrimaryColor,
             foregroundColor: kWhiteColor,
             forceMaterialTransparency: true,
             elevation: 0,
@@ -173,7 +173,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: kWhiteColor,
+                        color: isDark ? kDarkModeColor : kWhiteColor,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.r),
                           topRight: Radius.circular(25.r),
@@ -195,6 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 style: font24LightPrimarySemiBold.copyWith(
                                   fontSize: 16,
                                   fontWeight: medium,
+                                  color: isDark ? kWhiteColor : kLightPrimaryColor
                                 ),
                               ),
                               Gap(10.h),
@@ -211,6 +212,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 style: font24LightPrimarySemiBold.copyWith(
                                   fontSize: 16,
                                   fontWeight: medium,
+                                    color: isDark ? kWhiteColor : kLightPrimaryColor
                                 ),
                               ),
                               Gap(10.h),
@@ -227,6 +229,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 style: font24LightPrimarySemiBold.copyWith(
                                   fontSize: 16,
                                   fontWeight: medium,
+                                    color: isDark ? kWhiteColor : kLightPrimaryColor
                                 ),
                               ),
                               Gap(10.h),
@@ -246,6 +249,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 style: font24LightPrimarySemiBold.copyWith(
                                   fontSize: 16,
                                   fontWeight: medium,
+                                    color: isDark ? kWhiteColor : kLightPrimaryColor
                                 ),
                               ),
                               Gap(10.h),

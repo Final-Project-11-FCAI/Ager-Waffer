@@ -48,6 +48,7 @@ class ProductDataContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,7 +67,7 @@ class ProductDataContainer extends StatelessWidget {
                     overflow: TextOverflow.visible,
                     style: font24PrimarySemiBold.copyWith(
                       fontSize: 20.sp,
-                      color: kBlackColor,
+                      color: isDark ? kWhiteColor : kBlackColor,
                     ),
                   ),
                   Gap(8.h),
@@ -77,7 +78,7 @@ class ProductDataContainer extends StatelessWidget {
                         product.averageRate!.toStringAsFixed(1),
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 12.sp,
-                          color: kGreyColor,
+                          color: isDark ? kWhiteColor : kGreyColor,
                         ),
                       ),
                       Gap(4.w),
@@ -99,13 +100,13 @@ class ProductDataContainer extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '${kCondition.tr()} : ',
-                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                          style: font16BlackSemiBold.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kBlackColor,),
                         ),
                         TextSpan(
                           text: rentCondition(),
                           style: font16BlackSemiBold.copyWith(
                             fontWeight: bold,
-                            color: kBlueColor,
+                            color: kButtonColor,
                           ),
                         ),
                       ],
@@ -116,13 +117,13 @@ class ProductDataContainer extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '${kCategory.tr()} : ',
-                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                          style: font16BlackSemiBold.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kBlackColor,),
                         ),
                         TextSpan(
                           text: categoryType(),
                           style: font16BlackSemiBold.copyWith(
                             fontWeight: bold,
-                            color: kBlueColor,
+                            color: kButtonColor,
                           ),
                         ),
                       ],
@@ -133,13 +134,13 @@ class ProductDataContainer extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '${kCity.tr()} : ',
-                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                          style: font16BlackSemiBold.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kBlackColor,),
                         ),
                         TextSpan(
                           text: product.governorate!,
                           style: font16BlackSemiBold.copyWith(
                             fontWeight: bold,
-                            color: kBlueColor,
+                            color: kButtonColor,
                           ),
                         ),
                       ],
@@ -155,7 +156,7 @@ class ProductDataContainer extends StatelessWidget {
                 Text(
                   product.price.toString(),
                   style: font16BlackSemiBold.copyWith(
-                    color: kPrimaryColor,
+                    color: isDark ? kWhiteColor : kPrimaryColor,
                     fontSize: 14.sp,
                   ),
                 ),
@@ -164,7 +165,7 @@ class ProductDataContainer extends StatelessWidget {
                   "${kInsuranceOnly.tr()}: ${product.insurance} ${'currency'.tr()}",
                   textAlign: TextAlign.center,
                   style: font20PrimaryMedium.copyWith(
-                    color: kMoreGreyColor,
+                    color: isDark ? kWhiteColor.withOpacity(0.9) : kMoreGreyColor,
                     fontSize: 10.sp,
                   ),
                 ),
@@ -175,12 +176,12 @@ class ProductDataContainer extends StatelessWidget {
         Gap(16.h),
         Text(
           kDescription.tr(),
-          style: font16BlackSemiBold,
+          style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor,),
         ),
         Gap(8.h),
         SelectableText(
           product.description!,
-          style: font14GreyRegular.copyWith(fontWeight: medium),
+          style: font14GreyRegular.copyWith(fontWeight: medium, color: isDark ? kWhiteColor.withOpacity(0.8) : kGreyColor,),
         ),
       ],
     );
