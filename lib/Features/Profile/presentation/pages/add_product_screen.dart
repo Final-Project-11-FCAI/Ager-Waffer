@@ -271,6 +271,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                             Gap(20.h),
                             ProductDataContainer(
+                              isCity: true,
                               hintText: kCity.tr(),
                               isOptions: true,
                               options: governmentOptions,

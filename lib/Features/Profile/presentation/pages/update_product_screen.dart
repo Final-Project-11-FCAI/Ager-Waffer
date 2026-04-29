@@ -39,10 +39,33 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     kTravelGear.tr(),
   ];
   List<String> governmentOptions = [
-    'الإسكندرية',
-    'الإسماعيلية',
-    'الأقصر',
-    'البحر الأحمر',
+    kCairo,
+    kAlexandria,
+    kGiza,
+    kLuxor,
+    kAswan,
+    kPortSaid,
+    kSuez,
+    kIsmailia,
+    kDamietta,
+    kDakahlia,
+    kSharqia,
+    kQalyubia,
+    kKafrElSheikh,
+    kGharbia,
+    kMonufia,
+    kBeheira,
+    kFaiyum,
+    kBeniSuef,
+    kMinya,
+    kAsyut,
+    kSohag,
+    kQena,
+    kRedSea,
+    kNewValley,
+    kMatruh,
+    kNorthSinai,
+    kSouthSinai,
   ];
   List<String> productStatesOptions = [
     kBrandNew.tr(),
@@ -199,9 +222,9 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
           }
         },
         child: Scaffold(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
           appBar: AppBar(
-            backgroundColor: kPrimaryColor,
+            backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
             foregroundColor: kWhiteColor,
           ),
           body: SafeArea(
@@ -228,7 +251,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: kWhiteColor,
+                  color: isDark ? kDarkModeColor : kPrimaryColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25.r),
                     topRight: Radius.circular(25.r),
@@ -327,6 +350,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                                 ),
                                 Gap(20.h),
                                 UpdateProductDataContainer(
+                                  isCity: true,
                                   hintText: kCity.tr(),
                                   isOptions: true,
                                   options: governmentOptions,
@@ -375,7 +399,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                       width: double.infinity,
                       padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
                       decoration: BoxDecoration(
-                        color: kWhiteColor,
+                        color: isDark ? kDarkModeColor : kWhiteColor,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.06),
@@ -429,6 +453,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     required bool value,
     required ValueChanged<bool> onChanged,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         Switch(
@@ -450,7 +475,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
           }),
         ),
         Gap(8.w),
-        Text(title, style: font15BlackRegular.copyWith(fontWeight: semiBold)),
+        Text(title, style: font15BlackRegular.copyWith(fontWeight: semiBold,color: isDark ? kWhiteColor : kBlackColor)),
       ],
     );
   }

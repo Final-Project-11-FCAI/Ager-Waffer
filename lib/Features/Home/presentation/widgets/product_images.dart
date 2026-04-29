@@ -1,5 +1,6 @@
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/show_full_image_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _ProductImagesState extends State<ProductImages> {
 
   @override
   Widget build(BuildContext context) {
-
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final images = widget.product.itemImages ?? [];
 
     return Column(
@@ -43,17 +44,31 @@ class _ProductImagesState extends State<ProductImages> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24.r),
-                color: kOpacityGreyColor,
+                color: isDark ? kSomeDarkModeColor : kOpacityGreyColor,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(24.r),
-                child: CachedNetworkImage(
-                  imageUrl: image,
-                  fit: BoxFit.contain,
-                  placeholder: (context, url) =>
-                      Image.asset("assets/images/virtual_image.jpg"),
-                  errorWidget: (context, url, error) =>
-                  const Icon(Icons.error),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          transitionDuration: const Duration(milliseconds: 400),
+                          pageBuilder: (_, __, ___) => ShowFullImageScreen(
+                            images: images,
+                            initialIndex: currentIndex,
+                          ),
+                        ),
+                      );
+                    },
+                  child: CachedNetworkImage(
+                    imageUrl: image,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) =>
+                        Image.asset("assets/images/virtual_image.jpg"),
+                    errorWidget: (context, url, error) =>
+                    const Icon(Icons.error),
+                  ),
                 ),
               ),
             );

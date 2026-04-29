@@ -17,16 +17,12 @@ class UpdateRentalTypeContainer extends StatefulWidget {
   final String? initialValue;
 
   @override
-  State<UpdateRentalTypeContainer> createState() => _UpdateRentalTypeContainerState();
+  State<UpdateRentalTypeContainer> createState() =>
+      _UpdateRentalTypeContainerState();
 }
 
 class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
-
-  final List<String> items = [
-    kDaily.tr(),
-    kWeekly.tr(),
-    kMonthly.tr(),
-  ];
+  final List<String> items = [kDaily.tr(), kWeekly.tr(), kMonthly.tr()];
 
   int getSelectedIndex() {
     final value = widget.initialValue;
@@ -39,20 +35,22 @@ class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
 
     return 0;
   }
+
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final currentIndex = getSelectedIndex();
 
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.r),
-        color: kProductDataContainerColor,
+        color: isDark ? kDarkModeColor : kProductDataContainerColor,
         border: Border.all(color: kBorderColor, width: 1.w),
       ),
       child: Row(
         children: List.generate(
           items.length,
-              (index) => Expanded(
+          (index) => Expanded(
             child: GestureDetector(
               onTap: () {
                 widget.onChanged(items[index]);
@@ -63,7 +61,13 @@ class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
                   duration: const Duration(milliseconds: 250),
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   decoration: BoxDecoration(
-                    color: getSelectedIndex() == index ? kLightPrimaryColor : kSmallContainerColor,
+                    color: getSelectedIndex() == index
+                        ? isDark
+                              ? kSomeGreyColor
+                              : kLightPrimaryColor
+                        : isDark
+                        ? kLightDarkModeColor
+                        : kSmallContainerColor,
                     borderRadius: BorderRadius.circular(18.r),
                   ),
                   child: Center(
@@ -73,8 +77,8 @@ class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
                         fontSize: 17.sp,
                         fontWeight: medium,
                         color: getSelectedIndex() == index
-                            ? kWhiteColor
-                            : kBlackColor,
+                            ? isDark ? kBlackColor : kWhiteColor
+                            : isDark ? kWhiteColor : kBlackColor,
                       ),
                     ),
                   ),

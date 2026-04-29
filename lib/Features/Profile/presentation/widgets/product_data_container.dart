@@ -11,12 +11,13 @@ class ProductDataContainer extends StatefulWidget {
     required this.hintText,
     this.isOptions = false,
     this.isDescription = false, this.options = const [
-    ], this.optionsLength, this.controller, this.keyboardType, this.onItemSelected,
+    ], this.optionsLength, this.controller, this.keyboardType, this.onItemSelected, this.isCity = false,
   });
 
   final String hintText;
   final bool isOptions;
   final bool isDescription;
+  final bool isCity;
   final int? optionsLength;
   final List<String> options;
   final TextEditingController? controller;
@@ -92,6 +93,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
           firstChild: Padding(
             padding: EdgeInsets.only(top: Shared.height * 0.012.h),
             child: AnimatedContainer(
+              height: widget.isCity ? Shared.height * 0.3.h : null,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               width: double.infinity,
@@ -108,7 +110,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
                 child: ListView.builder(
                   itemCount: widget.optionsLength,
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: widget.isCity ? BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {

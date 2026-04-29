@@ -16,11 +16,13 @@ class UpdateProductDataContainer extends StatefulWidget {
     this.keyboardType,
     this.onItemSelected,
     this.initialValue,
+    this.isCity = false,
   });
 
   final String hintText;
   final bool isOptions;
   final bool isDescription;
+  final bool isCity;
   final int? optionsLength;
   final List<String> options;
   final TextEditingController? controller;
@@ -47,6 +49,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Container(
@@ -56,7 +59,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
               : Shared.height * 0.08.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.r),
-            color: kProductDataContainerColor,
+            color:  isDark ? kLightDarkModeColor : kProductDataContainerColor,
             border: Border.all(color: kBorderColor, width: 1.w),
           ),
           child: Padding(
@@ -68,9 +71,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
                 Text(
                   selectedValue ?? widget.hintText,
                   style: font15SomeBlackColorMedium.copyWith(
-                    color: selectedValue == null
-                        ? kGreyColor
-                        : kBlackColor,
+                    color: selectedValue == null ? isDark ? kWhiteColor : kGreyColor : isDark ? kWhiteColor : kBlackColor,
                   ),
                 ),
                 GestureDetector(
@@ -94,7 +95,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
-                hintStyle: font15SomeBlackColorMedium,
+                hintStyle: font15SomeBlackColorMedium.copyWith(color: isDark ? kWhiteColor : kBlackColor),
               ),
             ),
           ),
@@ -110,12 +111,13 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
             padding:
             EdgeInsets.only(top: Shared.height * 0.012.h),
             child: AnimatedContainer(
+              height: widget.isCity ? Shared.height * 0.3.h : null,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.r),
-                color: kWhiteColor,
+                color:  isDark ? kLightDarkModeColor : kWhiteColor,
                 border:
                 Border.all(color: kBorderColor, width: 1.w),
               ),
@@ -127,8 +129,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
                 child: ListView.builder(
                   itemCount: widget.optionsLength,
                   shrinkWrap: true,
-                  physics:
-                  const NeverScrollableScrollPhysics(),
+                  physics: widget.isCity ? BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
@@ -150,8 +151,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
                           widget.options[index],
                           style:
                           font15SomeBlackColorMedium.copyWith(
-                            color: kBlackColor,
-                          ),
+                            color:  isDark ? kWhiteColor : kBlackColor,                          ),
                         ),
                       ),
                     );
