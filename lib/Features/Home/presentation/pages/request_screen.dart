@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/dialogs.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/send_request_entity.dart';
@@ -10,6 +11,7 @@ import 'package:ager_waffer/Features/Home/presentation/manager/send_request_stat
 import 'package:ager_waffer/Features/Home/presentation/pages/renatl_terms_screen.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/user_information.dart';
+import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart' as login;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +43,17 @@ class _RequestScreenState extends State<RequestScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final user = await sharedPreferenceManager.getUser();
+
+      bool shouldShow = user?.phoneNumber == null ||
+          user?.governorate == null ||
+          user?.city == null ||
+          user?.street == null;
+
+      if (!shouldShow) return;
+
       bool isDark = Theme.of(context).brightness == Brightness.dark;
       showModalBottomSheet(
         context: context,
@@ -49,7 +61,7 @@ class _RequestScreenState extends State<RequestScreen> {
         enableDrag: false,
         isDismissible: false,
         backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         builder: (context) {
@@ -526,7 +538,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             Gap(20.h),
                             Text(
                               kPriceSummary.tr(),
-                              style: font16BlackSemiBold.copyWith(fontSize: 16),
+                              style: font16BlackSemiBold.copyWith(fontSize: 16, color: isDark ? kWhiteColor : kBlackColor),
                             ),
                             Gap(10.h),
                             Container(

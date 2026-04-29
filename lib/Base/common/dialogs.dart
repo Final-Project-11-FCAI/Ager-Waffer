@@ -22,10 +22,12 @@ class Dialogs {
     required String textButton,
     required VoidCallback onPressed,
   }) {
+    bool isDark = Theme.of(parentContext).brightness == Brightness.dark;
     return showDialog(
       context: parentContext,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: isDark ? kDarkModeColor : null,
           title: Padding(
             padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.02),
             child: Column(
@@ -36,7 +38,7 @@ class Dialogs {
                 Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: font20PrimaryMedium.copyWith(fontWeight: bold),
+                  style: font20PrimaryMedium.copyWith(fontWeight: bold, color: isDark ? kWhiteColor : kPrimaryColor),
                 ),
                 Gap(6.h),
                 Text(
@@ -44,7 +46,7 @@ class Dialogs {
                   textAlign: TextAlign.center,
                   style: font16BlackSemiBold.copyWith(
                     fontWeight: medium,
-                    color: kMoreGreyColor,
+                    color: isDark ? kWhiteColor.withOpacity(0.7) : kMoreGreyColor,
                   ),
                 ),
                 Gap(15.h),
@@ -55,7 +57,7 @@ class Dialogs {
                   child: ButtonApp(
                     onPressed: onPressed,
                     text: textButton,
-                    color: kPrimaryColor,
+                    color: isDark ? kButtonColor : kPrimaryColor,
                   ),
                 ),
               ],

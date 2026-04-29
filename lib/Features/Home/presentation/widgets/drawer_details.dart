@@ -219,16 +219,18 @@ class _DrawerDetailsState extends State<DrawerDetails> {
   }
 
   void showLanguageDialog() {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: isDark ? kDarkModeColor : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           title: Text(
             kLanguage.tr(),
-            style: font20PrimaryMedium.copyWith(fontWeight: bold),
+            style: font20PrimaryMedium.copyWith(fontWeight: bold, color: isDark ? kWhiteColor : kPrimaryColor,),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -236,7 +238,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
               ListTile(
                 visualDensity: VisualDensity.compact,
                 leading: Image.asset("assets/images/english_flag.png"),
-                title: Text("English", style: font16BlackSemiBold,),
+                title: Text("English", style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),),
                 onTap: () async {
                   await changeLanguage("en");
                   MyMaterial.setLocale(context, Locale("en"));
@@ -246,7 +248,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
               ListTile(
                 visualDensity: VisualDensity.compact,
                 leading: Image.asset("assets/images/egypt_flag.png"),
-                title: Text("العربية", style: font16BlackSemiBold,),
+                title: Text("العربية", style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor,),),
                 onTap: () async {
                   await changeLanguage("ar");
                   MyMaterial.setLocale(context, Locale("ar"));
