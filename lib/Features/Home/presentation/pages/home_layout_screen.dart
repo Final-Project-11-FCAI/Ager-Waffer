@@ -106,7 +106,7 @@ class HomeLayoutScreen extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: Image.asset(
-                        'assets/images/shopping-cart.png',
+                        'assets/images/chat_icon.png',
                         color: currentIndex == 2 ? kPrimaryColor : kMoreGreyColor,
                       ),
                       label: kConversations.tr(),

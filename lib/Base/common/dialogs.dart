@@ -70,10 +70,12 @@ class Dialogs {
 
   static Future<void>? showDialogDeleteProduct(parentContext,
       {required int productId}) {
+    bool isDark = Theme.of(parentContext).brightness == Brightness.dark;
     return showDialog(
       context: parentContext,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
           title: Padding(
             padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.02),
             child: Column(
@@ -84,7 +86,7 @@ class Dialogs {
                 Text(
                   kDeleteProductTitle.tr(),
                   textAlign: TextAlign.center,
-                  style: font20PrimaryMedium.copyWith(fontWeight: bold),
+                  style: font20PrimaryMedium.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kPrimaryColor ),
                 ),
                 Gap(10.h),
                 Text(
@@ -92,7 +94,7 @@ class Dialogs {
                   textAlign: TextAlign.center,
                   style: font16BlackSemiBold.copyWith(
                     fontWeight: medium,
-                    color: kMoreGreyColor,
+                    color:  isDark ? kTextColor : kMoreGreyColor,
                   ),
                 ),
                 Gap(15.h),
@@ -120,10 +122,10 @@ class Dialogs {
                             vertical: Shared.height * 0.008.h,
                           ),
                           decoration: BoxDecoration(
-                            color: kPrimaryColor,
+                            color: isDark ? kButtonColor : kPrimaryColor,
                             borderRadius: BorderRadius.circular(12.r),
                             border: Border.all(
-                              color: kPrimaryColor,
+                              color: isDark ? kButtonColor : kPrimaryColor,
                               width: 1.w,
                             ),
                           ),
@@ -157,10 +159,10 @@ class Dialogs {
                             vertical: Shared.height * 0.008.h,
                           ),
                           decoration: BoxDecoration(
-                            color: kWhiteColor,
+                            color: isDark ? kTransparentColor : kWhiteColor,
                             borderRadius: BorderRadius.circular(12.r),
                             border: Border.all(
-                              color: kPrimaryColor,
+                              color: isDark ? kTextColor : kPrimaryColor,
                               width: 1.w,
                             ),
                           ),
@@ -176,7 +178,7 @@ class Dialogs {
                                   kCancel.tr(),
                                   style: font16BlackSemiBold.copyWith(
                                     fontSize: 14.sp,
-                                    color: kPrimaryColor,
+                                    color: isDark ? kTextColor : kPrimaryColor,
                                   ),
                                 ),
                               ],

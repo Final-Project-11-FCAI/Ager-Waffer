@@ -1,12 +1,14 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_state.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/my_orders_state.dart';
+import 'package:ager_waffer/Features/Orders/presentation/pages/order_details_screen.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/rating_bottom_sheet.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
@@ -103,190 +105,195 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                     horizontal: Shared.width * 0.04.w,
                     vertical: Shared.height * 0.015.h,
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
-                        color: kBlackColor.withOpacity(0.2),
-                        width: 1.w,
+                  child: GestureDetector(
+                    onTap: () {
+                      customAnimatedPushNavigation(context, OrderDetailsScreen(currentOrders: completedOrders[index]));
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: kBlackColor.withOpacity(0.2),
+                          width: 1.w,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.04.w,
-                            vertical: Shared.height * 0.02.h,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CachedNetworkImage(
-                                imageUrl: completedOrders[index].itemImages!.first,
-                                width: 90.w,
-                                height: 90.h,
-                                fit: BoxFit.contain,
-                                placeholder: (context, url) => Image.asset(
-                                  "assets/images/virtual_image.jpg",
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.04.w,
+                              vertical: Shared.height * 0.02.h,
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl: completedOrders[index].itemImages!.first,
+                                  width: 90.w,
+                                  height: 90.h,
                                   fit: BoxFit.contain,
+                                  placeholder: (context, url) => Image.asset(
+                                    "assets/images/virtual_image.jpg",
+                                    fit: BoxFit.contain,
+                                  ),
+                                  errorWidget: (context, url, error) {
+                                    return Image.asset("assets/images/virtual_image.jpg");
+                                  },
                                 ),
-                                errorWidget: (context, url, error) {
-                                  return Image.asset("assets/images/virtual_image.jpg");
-                                },
-                              ),
-                              Gap(20.h),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    completedOrders[index].itemName ?? '',
-                                    style: font16BlackSemiBold.copyWith(
-                                      color: kPrimaryColor,
+                                Gap(20.h),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      completedOrders[index].itemName ?? '',
+                                      style: font16BlackSemiBold.copyWith(
+                                        color: kPrimaryColor,
+                                      ),
                                     ),
-                                  ),
-                                  Gap(2.w),
-                                  Row(
-                                    children: [
-                                      Image.asset('assets/images/owner.png'),
-                                      Gap(5.w),
-                                      Text(
-                                        "${kOwner.tr()}: ${completedOrders[index].ownerName ?? ''}",
-                                        style: font13kLightPrimaryColorMedium
-                                            .copyWith(color: kBlackColor),
-                                      ),
-                                    ],
-                                  ),
-                                  Gap(5.w),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/date_determine.png',
-                                      ),
-                                      Gap(5.w),
-                                      Text(
-                                        '${completedOrders[index].fromDate ?? ''} - ${completedOrders[index].toDate ?? ''}',
-                                        style: font20PrimaryMedium.copyWith(
-                                          fontSize: 12.sp,
-                                          color: kTextGreyColor,
+                                    Gap(2.w),
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/images/owner.png'),
+                                        Gap(5.w),
+                                        Text(
+                                          "${kOwner.tr()}: ${completedOrders[index].ownerName ?? ''}",
+                                          style: font13kLightPrimaryColorMedium
+                                              .copyWith(color: kBlackColor),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Gap(10),
-                        Divider(
-                          height: 1,
-                          thickness: 0.7,
-                          color: kBlackColor.withOpacity(0.19),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.04.w,
-                            vertical: Shared.height * 0.02.h,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                kTotalAmount.tr(),
-                                style: font13kLightPrimaryColorMedium.copyWith(
-                                  color: kDarkGreyColor,
+                                      ],
+                                    ),
+                                    Gap(5.w),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/date_determine.png',
+                                        ),
+                                        Gap(5.w),
+                                        Text(
+                                          '${completedOrders[index].fromDate ?? ''} - ${completedOrders[index].toDate ?? ''}',
+                                          style: font20PrimaryMedium.copyWith(
+                                            fontSize: 12.sp,
+                                            color: kTextGreyColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                completedOrders[index].totalPrice.toString(),
-                                style: font24LightPrimarySemiBold.copyWith(
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.1.w,
-                          ),
-                          child: Divider(
+                          Gap(10),
+                          Divider(
                             height: 1,
-                            thickness: 0.5,
+                            thickness: 0.7,
                             color: kBlackColor.withOpacity(0.19),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.04.w,
-                            vertical: Shared.height * 0.02.h,
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.04.w,
+                              vertical: Shared.height * 0.02.h,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  kTotalAmount.tr(),
+                                  style: font13kLightPrimaryColorMedium.copyWith(
+                                    color: kDarkGreyColor,
+                                  ),
+                                ),
+                                Text(
+                                  completedOrders[index].totalPrice.toString(),
+                                  style: font24LightPrimarySemiBold.copyWith(
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              orderButton(
-                                text: kRateProduct.tr(),
-                                icon: 'assets/images/star.png',
-                                backgroundColor: kLightPrimaryColor,
-                                textColor: kWhiteColor,
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (context) {
-                                      return FractionallySizedBox(
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25.r),
-                                          ),
-                                          child: RatingBottomSheet(
-                                            reviewType: 'المنتج',
-                                            hint: kProduct.tr(),
-                                            name: kProduct.tr(),
-                                            completedOrders: completedOrders,
-                                            index: index,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                              orderButton(
-                                text: kRateOwner.tr(),
-                                icon: 'assets/images/star.png',
-                                backgroundColor: kWhiteColor,
-                                textColor: kPrimaryColor,
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (context) {
-                                      return FractionallySizedBox(
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25.r),
-                                          ),
-                                          child: RatingBottomSheet(
-                                            reviewType: 'المالك',
-                                            hint: kInteraction.tr(),
-                                            name: kOwner.tr(),
-                                            completedOrders: completedOrders,
-                                            index: index,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                            ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.1.w,
+                            ),
+                            child: Divider(
+                              height: 1,
+                              thickness: 0.5,
+                              color: kBlackColor.withOpacity(0.19),
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.04.w,
+                              vertical: Shared.height * 0.02.h,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                orderButton(
+                                  text: kRateProduct.tr(),
+                                  icon: 'assets/images/star.png',
+                                  backgroundColor: kLightPrimaryColor,
+                                  textColor: kWhiteColor,
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return FractionallySizedBox(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(25.r),
+                                            ),
+                                            child: RatingBottomSheet(
+                                              reviewType: 'المنتج',
+                                              hint: kProduct.tr(),
+                                              name: kProduct.tr(),
+                                              completedOrders: completedOrders,
+                                              index: index,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                orderButton(
+                                  text: kRateOwner.tr(),
+                                  icon: 'assets/images/star.png',
+                                  backgroundColor: kWhiteColor,
+                                  textColor: kPrimaryColor,
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return FractionallySizedBox(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(25.r),
+                                            ),
+                                            child: RatingBottomSheet(
+                                              reviewType: 'المالك',
+                                              hint: kInteraction.tr(),
+                                              name: kOwner.tr(),
+                                              completedOrders: completedOrders,
+                                              index: index,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

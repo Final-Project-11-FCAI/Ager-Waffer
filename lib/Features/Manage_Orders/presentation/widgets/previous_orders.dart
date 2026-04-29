@@ -1,10 +1,12 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_state.dart';
+import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/show_details_screen.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_bloc.dart';
 import 'package:ager_waffer/Features/Orders/presentation/manager/add_review_state.dart';
 import 'package:ager_waffer/Features/Orders/presentation/widgets/renter_rating_bottom_sheet.dart';
@@ -93,8 +95,6 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                 },
               );
             }
-
-
             return ListView.builder(
               itemCount: previousOrders.length,
               shrinkWrap: true,
@@ -105,156 +105,161 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                     horizontal: Shared.width * 0.04.w,
                     vertical: Shared.height * 0.015.h,
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
-                        color: kBlackColor.withOpacity(0.2),
-                        width: 1.w,
+                  child: GestureDetector(
+                    onTap: () {
+                      customAnimatedPushNavigation(context, ShowDetailsScreen(currentManageOrders: previousOrders[index]));
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: kBlackColor.withOpacity(0.2),
+                          width: 1.w,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.04.w,
-                            vertical: Shared.height * 0.02.h,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CachedNetworkImage(
-                                imageUrl: previousOrders[index].itemImages!.first,
-                                width: 90.w,
-                                height: 90.h,
-                                fit: BoxFit.contain,
-                                placeholder: (context, url) => Image.asset(
-                                  "assets/images/virtual_image.jpg",
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.04.w,
+                              vertical: Shared.height * 0.02.h,
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl: previousOrders[index].itemImages!.first,
+                                  width: 90.w,
+                                  height: 90.h,
                                   fit: BoxFit.contain,
+                                  placeholder: (context, url) => Image.asset(
+                                    "assets/images/virtual_image.jpg",
+                                    fit: BoxFit.contain,
+                                  ),
+                                  errorWidget: (context, url, error) {
+                                    return Image.asset("assets/images/virtual_image.jpg");
+                                  },
                                 ),
-                                errorWidget: (context, url, error) {
-                                  return Image.asset("assets/images/virtual_image.jpg");
-                                },
-                              ),
-                              Gap(20.h),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    previousOrders[index].itemName ?? '',
-                                    style: font16BlackSemiBold.copyWith(
-                                      color: kPrimaryColor,
+                                Gap(20.h),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      previousOrders[index].itemName ?? '',
+                                      style: font16BlackSemiBold.copyWith(
+                                        color: kPrimaryColor,
+                                      ),
                                     ),
-                                  ),
-                                  Gap(2.w),
-                                  Row(
-                                    children: [
-                                      Image.asset('assets/images/owner.png'),
-                                      Gap(5.w),
-                                      Text(
-                                        "${kRenter.tr()}: ${previousOrders[index].renteeName}",
-                                        style: font13kLightPrimaryColorMedium.copyWith(
-                                          color: kBlackColor,
+                                    Gap(2.w),
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/images/owner.png'),
+                                        Gap(5.w),
+                                        Text(
+                                          "${kRenter.tr()}: ${previousOrders[index].renteeName}",
+                                          style: font13kLightPrimaryColorMedium.copyWith(
+                                            color: kBlackColor,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Gap(5.w),
-                                  Row(
-                                    children: [
-                                      Image.asset('assets/images/date_determine.png'),
-                                      Gap(5.w),
-                                      Text(
-                                        '${previousOrders[index].fromDate ?? ''} - ${previousOrders[index].toDate ?? ''}',
-                                        style: font20PrimaryMedium.copyWith(
-                                          fontSize: 12.sp,
-                                          color: kTextGreyColor,
+                                      ],
+                                    ),
+                                    Gap(5.w),
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/images/date_determine.png'),
+                                        Gap(5.w),
+                                        Text(
+                                          '${previousOrders[index].fromDate ?? ''} - ${previousOrders[index].toDate ?? ''}',
+                                          style: font20PrimaryMedium.copyWith(
+                                            fontSize: 12.sp,
+                                            color: kTextGreyColor,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Gap(10),
-                        Divider(
-                          height: 1,
-                          thickness: 0.7,
-                          color: kBlackColor.withOpacity(0.19),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.04.w,
-                            vertical: Shared.height * 0.02.h,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                kTotalAmount.tr(),
-                                style: font13kLightPrimaryColorMedium.copyWith(
-                                  color: kDarkGreyColor,
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                previousOrders[index].totalPrice.toString(),
-                                style: font24LightPrimarySemiBold.copyWith(
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.1.w,
-                          ),
-                          child: Divider(
+                          Gap(10),
+                          Divider(
                             height: 1,
-                            thickness: 0.5,
+                            thickness: 0.7,
                             color: kBlackColor.withOpacity(0.19),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Shared.width * 0.04.w,
-                            vertical: Shared.height * 0.02.h,
-                          ),
-                          child: orderButton(
-                            text: kRateRenter.tr(),
-                            icon: 'assets/images/star.png',
-                            backgroundColor: kLightPrimaryColor,
-                            textColor: kWhiteColor,
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.04.w,
+                              vertical: Shared.height * 0.02.h,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  kTotalAmount.tr(),
+                                  style: font13kLightPrimaryColorMedium.copyWith(
+                                    color: kDarkGreyColor,
                                   ),
-                                  builder: (context){
-                                    return FractionallySizedBox(
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(25.r),
-                                            ),
-                                            child: RenterRatingBottomSheet(
-                                              reviewType: kRenter.tr(),hint: kInteraction.tr(),
-                                              previousOrders: previousOrders,
-                                              index: index,
-                                            )
-                                        ));
-                                  }
-                              );
-                            },
+                                ),
+                                Text(
+                                  previousOrders[index].totalPrice.toString(),
+                                  style: font24LightPrimarySemiBold.copyWith(
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.1.w,
+                            ),
+                            child: Divider(
+                              height: 1,
+                              thickness: 0.5,
+                              color: kBlackColor.withOpacity(0.19),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Shared.width * 0.04.w,
+                              vertical: Shared.height * 0.02.h,
+                            ),
+                            child: orderButton(
+                              text: kRateRenter.tr(),
+                              icon: 'assets/images/star.png',
+                              backgroundColor: kLightPrimaryColor,
+                              textColor: kWhiteColor,
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                    ),
+                                    builder: (context){
+                                      return FractionallySizedBox(
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(25.r),
+                                              ),
+                                              child: RenterRatingBottomSheet(
+                                                reviewType: kRenter.tr(),hint: kInteraction.tr(),
+                                                previousOrders: previousOrders,
+                                                index: index,
+                                              )
+                                          ));
+                                    }
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,10 @@ class AboutUsScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
-                // Image.asset("assets/images/about_us_logo.png"),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: Shared.height * 0.03.h),
+                  child: Image.asset("assets/images/about_logo.png"),
+                ),
                 Gap(25.h),
                 _buildText(kAboutParagraph1.tr()),
                 Gap(15.h),
@@ -44,7 +48,7 @@ class AboutUsScreen extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.justify,
-      style: font14BlackBold.copyWith(fontWeight: medium, color: kBlackColor, height: 1.6),
+      style: font14BlackBold.copyWith(fontWeight: medium, color: kLightPrimaryColor, height: 1.9.sp),
     );
   }
 }

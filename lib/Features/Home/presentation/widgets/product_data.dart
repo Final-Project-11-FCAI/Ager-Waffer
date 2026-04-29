@@ -27,6 +27,25 @@ class ProductDataContainer extends StatelessWidget {
         : '';
   }
 
+  String categoryType() {
+    return product.categoryName == "Electronics" ||
+        product.categoryName == "إلكترونيات"
+        ? kElectronics.tr()
+        : product.categoryName == "Home Appliances" ||
+        product.categoryName == "أجهزة منزلية"
+        ? kHomeAppliances.tr()
+        : product.categoryName == "Baby Gear" ||
+        product.categoryName == "مستلزمات أطفال"
+        ? kBabyGear.tr()
+        : product.categoryName == "Books" ||
+        product.categoryName == "كتب"
+        ? kBooks.tr()
+        : product.categoryName == "Travel Gear" ||
+        product.categoryName == "معدات سفر"
+        ? kTravelGear.tr()
+        : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,7 +61,9 @@ class ProductDataContainer extends StatelessWidget {
                 children: [
                   Text(
                     product.name!,
-                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                     style: font24PrimarySemiBold.copyWith(
                       fontSize: 20.sp,
                       color: kBlackColor,
@@ -90,6 +111,40 @@ class ProductDataContainer extends StatelessWidget {
                       ],
                     ),
                   ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '${kCategory.tr()} : ',
+                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                        ),
+                        TextSpan(
+                          text: categoryType(),
+                          style: font16BlackSemiBold.copyWith(
+                            fontWeight: bold,
+                            color: kBlueColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '${kCity.tr()} : ',
+                          style: font16BlackSemiBold.copyWith(fontWeight: bold),
+                        ),
+                        TextSpan(
+                          text: product.governorate!,
+                          style: font16BlackSemiBold.copyWith(
+                            fontWeight: bold,
+                            color: kBlueColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

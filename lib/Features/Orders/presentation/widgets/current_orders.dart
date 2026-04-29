@@ -81,216 +81,221 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                   horizontal: Shared.width * 0.04.w,
                   vertical: Shared.height * 0.015.h,
                 ),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color:isDark  ? kDarkModeColor : kWhiteColor,
-                    borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(
-                      color: kBlackColor.withOpacity(0.2),
-                      width: 1.w,
+                child: GestureDetector(
+                  onTap: () {
+                    customAnimatedPushNavigation(context, OrderDetailsScreen(currentOrders: currentOrders[index]));
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color:isDark  ? kDarkModeColor : kWhiteColor,
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(
+                        color: kBlackColor.withOpacity(0.2),
+                        width: 1.w,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Shared.width * 0.04.w,
-                          vertical: Shared.height * 0.02.h,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: currentOrders[index].itemImages!.first,
-                              width: 90.w,
-                              height: 90.h,
-                              fit: BoxFit.contain,
-                              placeholder: (context, url) => Image.asset(
-                                "assets/images/virtual_image.jpg",
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Shared.width * 0.04.w,
+                            vertical: Shared.height * 0.02.h,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl: currentOrders[index].itemImages!.first,
+                                width: 90.w,
+                                height: 90.h,
                                 fit: BoxFit.contain,
+                                placeholder: (context, url) => Image.asset(
+                                  "assets/images/virtual_image.jpg",
+                                  fit: BoxFit.contain,
+                                ),
+                                errorWidget: (context, url, error) {
+                                  return Image.asset("assets/images/virtual_image.jpg");
+                                },
                               ),
-                              errorWidget: (context, url, error) {
-                                return Image.asset("assets/images/virtual_image.jpg");
-                              },
-                            ),
-                            Gap(20.h),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  currentOrders[index].itemName ?? '',
-                                  style: font16BlackSemiBold.copyWith(
-                                    color: kPrimaryColor,
+                              Gap(20.h),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    currentOrders[index].itemName ?? '',
+                                    style: font16BlackSemiBold.copyWith(
+                                      color: kPrimaryColor,
+                                    ),
                                   ),
-                                ),
-                                Gap(2.h),
-                                Row(
-                                  children: [
-                                    Image.asset('assets/images/owner.png'),
-                                    Gap(5.w),
-                                    Text(
-                                      "${kOwner.tr()}: ${currentOrders[index].ownerName ?? ''}",
-                                      style: font13kLightPrimaryColorMedium.copyWith(
-                                        color: kBlackColor,
+                                  Gap(2.h),
+                                  Row(
+                                    children: [
+                                      Image.asset('assets/images/owner.png'),
+                                      Gap(5.w),
+                                      Text(
+                                        "${kOwner.tr()}: ${currentOrders[index].ownerName ?? ''}",
+                                        style: font13kLightPrimaryColorMedium.copyWith(
+                                          color: kBlackColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Gap(5.h),
-                                Row(
-                                  children: [
-                                    Image.asset('assets/images/date_determine.png'),
-                                    Gap(5.w),
-                                    Text(
-                                      '${currentOrders[index].fromDate ?? ''} - ${currentOrders[index].toDate ?? ''}',
-                                      style: font20PrimaryMedium.copyWith(
-                                        fontSize: 12.sp,
-                                        color: kTextGreyColor,
+                                    ],
+                                  ),
+                                  Gap(5.h),
+                                  Row(
+                                    children: [
+                                      Image.asset('assets/images/date_determine.png'),
+                                      Gap(5.w),
+                                      Text(
+                                        '${currentOrders[index].fromDate ?? ''} - ${currentOrders[index].toDate ?? ''}',
+                                        style: font20PrimaryMedium.copyWith(
+                                          fontSize: 12.sp,
+                                          color: kTextGreyColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Gap(5.h),
-                                Row(
-                                  children: [
-                                    Image.asset('assets/images/remainder.png'),
-                                    Gap(5.w),
-                                    Text(
-                                      "${kRemaining.tr()} ${currentOrders[index].timeLeftInDays} ${kDays.tr()}",
-                                      style: font20PrimaryMedium.copyWith(
-                                        fontSize: 13.sp,
-                                        color: kOrangeColor,
+                                    ],
+                                  ),
+                                  Gap(5.h),
+                                  Row(
+                                    children: [
+                                      Image.asset('assets/images/remainder.png'),
+                                      Gap(5.w),
+                                      Text(
+                                        "${kRemaining.tr()} ${currentOrders[index].timeLeftInDays} ${kDays.tr()}",
+                                        style: font20PrimaryMedium.copyWith(
+                                          fontSize: 13.sp,
+                                          color: kOrangeColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Gap(10),
-                      Divider(
-                        height: 1,
-                        thickness: 0.7,
-                        color: kBlackColor.withOpacity(0.19),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Shared.width * 0.04.w,
-                          vertical: Shared.height * 0.02.h,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              kTotalAmount.tr(),
-                              style: font13kLightPrimaryColorMedium.copyWith(
-                                color: kDarkGreyColor,
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
-                            Text(
-                              currentOrders[index].totalPrice.toString(),
-                              style: font24LightPrimarySemiBold.copyWith(
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Shared.width * 0.1.w,
-                        ),
-                        child: Divider(
+                        Gap(10),
+                        Divider(
                           height: 1,
-                          thickness: 0.5,
+                          thickness: 0.7,
                           color: kBlackColor.withOpacity(0.19),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Shared.width * 0.04.w,
-                          vertical: Shared.height * 0.02.h,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Shared.width * 0.04.w,
+                            vertical: Shared.height * 0.02.h,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                kTotalAmount.tr(),
+                                style: font13kLightPrimaryColorMedium.copyWith(
+                                  color: kDarkGreyColor,
+                                ),
+                              ),
+                              Text(
+                                currentOrders[index].totalPrice.toString(),
+                                style: font24LightPrimarySemiBold.copyWith(
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            orderButton(
-                              text: kViewDetails.tr(),
-                              icon: 'assets/images/refresh.png',
-                              backgroundColor: kLightPrimaryColor,
-                              textColor: kWhiteColor,
-                              isNotIcon: true,
-                              onTap: () {
-                                customAnimatedPushNavigation(context, OrderDetailsScreen(currentOrders: currentOrders[index],));
-                              },
-                            ),
-                            StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('users')
-                                  .where('email', isEqualTo: currentOrders[index].email)
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return const Center(child: CircularProgressIndicator());
-                                }
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Shared.width * 0.1.w,
+                          ),
+                          child: Divider(
+                            height: 1,
+                            thickness: 0.5,
+                            color: kBlackColor.withOpacity(0.19),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Shared.width * 0.04.w,
+                            vertical: Shared.height * 0.02.h,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              orderButton(
+                                text: kViewDetails.tr(),
+                                icon: 'assets/images/refresh.png',
+                                backgroundColor: kLightPrimaryColor,
+                                textColor: kWhiteColor,
+                                isNotIcon: true,
+                                onTap: () {
+                                  customAnimatedPushNavigation(context, OrderDetailsScreen(currentOrders: currentOrders[index],));
+                                },
+                              ),
+                              StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .where('email', isEqualTo: currentOrders[index].email)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return const Center(child: CircularProgressIndicator());
+                                  }
 
-                                final uid = snapshot.data!.docs.first.id;
-                                print("##uid : ${uid}");
+                                  final uid = snapshot.data!.docs.first.id;
+                                  print("##uid : ${uid}");
 
-                                return orderButton(
-                                  text: kContactOwner.tr(),
-                                  icon: 'assets/images/contact_icon.png',
-                                  backgroundColor: kWhiteColor,
-                                  textColor: kPrimaryColor,
-                                  onTap: () async {
-                                    print("ownerEmail: ${currentOrders[index].email}");
-                                    final roomId = await FireData()
-                                        .createRoom(currentOrders[index].email!)
-                                        .onError((error, stackTrace) {
-                                      print("error: ${error}");
-                                      print("stackTrace: ${stackTrace}");
-                                    });
-                                    print("roomId: ${roomId}");
-                                    if (roomId != null) {
-                                      customAnimatedPushNavigation(
-                                        context,
-                                        ChatScreen(
-                                          roomId: roomId,
-                                          chatUser: ChatUser(
-                                            id: uid,
-                                            name: currentOrders[index].ownerName,
-                                            image: "assets/images/virtual_user.jpg",
-                                            about: "Hello I'm ${currentOrders[index].ownerName}",
-                                            email: currentOrders[index].email,
-                                            createdAt: DateTime.now().millisecondsSinceEpoch
-                                                .toString(),
-                                            lastActivated: DateTime.now().millisecondsSinceEpoch
-                                                .toString(),
-                                            pushToken: '',
-                                            online: false,
-                                            myUsers: [],
+                                  return orderButton(
+                                    text: kContactOwner.tr(),
+                                    icon: 'assets/images/contact_icon.png',
+                                    backgroundColor: kWhiteColor,
+                                    textColor: kPrimaryColor,
+                                    onTap: () async {
+                                      print("ownerEmail: ${currentOrders[index].email}");
+                                      final roomId = await FireData()
+                                          .createRoom(currentOrders[index].email!)
+                                          .onError((error, stackTrace) {
+                                        print("error: ${error}");
+                                        print("stackTrace: ${stackTrace}");
+                                      });
+                                      print("roomId: ${roomId}");
+                                      if (roomId != null) {
+                                        customAnimatedPushNavigation(
+                                          context,
+                                          ChatScreen(
+                                            roomId: roomId,
+                                            chatUser: ChatUser(
+                                              id: uid,
+                                              name: currentOrders[index].ownerName,
+                                              image: "assets/images/virtual_user.jpg",
+                                              about: "Hello I'm ${currentOrders[index].ownerName}",
+                                              email: currentOrders[index].email,
+                                              createdAt: DateTime.now().millisecondsSinceEpoch
+                                                  .toString(),
+                                              lastActivated: DateTime.now().millisecondsSinceEpoch
+                                                  .toString(),
+                                              pushToken: '',
+                                              online: false,
+                                              myUsers: [],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    } else {
-                                      print("EMAIL: ${currentOrders[index].email}");
-                                      print("ID: ${currentOrders[index].ownerId}");
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(SnackBar(content: Text("User not found")));
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                          ],
+                                        );
+                                      } else {
+                                        print("EMAIL: ${currentOrders[index].email}");
+                                        print("ID: ${currentOrders[index].ownerId}");
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(SnackBar(content: Text("User not found")));
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

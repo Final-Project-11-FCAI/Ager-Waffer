@@ -128,7 +128,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                 Gap(2.h),
                 drawerItem(
                   title: kMyOrders.tr(),
-                  icon: 'assets/images/chat_icon.png',
+                  icon: 'assets/images/shopping-cart.png',
                   onTap: () {
                     Navigator.of(context).pop();
                     customAnimatedPushNavigation(context, MyOrdersScreen(),);
@@ -162,7 +162,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
                     customAnimatedPushNavigation(context, AboutUsScreen());
                   },
                   title: kAboutUs.tr(),
-                  icon: 'assets/images/contact_us.png',
+                  icon: 'assets/images/about_us_icon.png',
                 ),
                 Gap(2.h),
                 drawerItem(
@@ -283,7 +283,7 @@ class _DrawerDetailsState extends State<DrawerDetails> {
         children: [
           Row(
             children: [
-              Image.asset(icon!, width: 40.w, height: 40.h),
+              Image.asset(icon!, width: 40.w, height: 40.h, color: kLightPrimaryColor,),
               Text(
                 title!,
                 style: font20PrimaryMedium.copyWith(
