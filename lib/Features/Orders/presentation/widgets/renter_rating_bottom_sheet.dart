@@ -43,15 +43,19 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return AnimatedPadding(
+
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeOut,
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
+
       child: SafeArea(
+
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
+
               left: Shared.width * 0.04.w,
               right: Shared.width * 0.04.w,
               top: Shared.height * 0.02.h,
@@ -71,13 +75,13 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
                 Gap(20.h),
                 Text(
                     kHowWasExperience.tr(),
-                  style: font20PrimaryMedium.copyWith(fontWeight: bold),
+                  style: font20PrimaryMedium.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kPrimaryColor),
                 ),
                 Gap(5.h),
                 Text(
                   kYourOpinionMatters.tr(),
                   style: font20PrimaryMedium.copyWith(
-                    color: kLightPrimaryColor,
+                    color: isDark ? kTextColor : kLightPrimaryColor,
                     fontSize: 15,
                   ),
                 ),
@@ -87,13 +91,14 @@ class _RenterRatingBottomSheetState extends State<RenterRatingBottomSheet> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.star, color: kPrimaryColor),
+                         Icon(Icons.star, color: isDark ? kWhiteColor : kLightPrimaryColor),
                         Gap(5.w),
                         Text(
                           "${kRate.tr()} ${widget.reviewType}",
                           style: font20PrimaryMedium.copyWith(
                             fontWeight: bold,
                             fontSize: 16,
+                            color: isDark ? kWhiteColor : kLightPrimaryColor,
                           ),
                         ),
                       ],

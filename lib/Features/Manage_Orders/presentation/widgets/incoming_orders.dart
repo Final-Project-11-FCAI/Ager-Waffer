@@ -36,6 +36,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<AcceptOrderBloc, AcceptOrderState>(
       listener: (context, state) {
         if (state.status == acceptOrderStatus.loading) {
@@ -48,17 +49,12 @@ class _IncomingOrdersState extends State<IncomingOrders> {
               content: Text(kAcceptOrderSuccess.tr()),
             ),
           );
-          context.read<OrdersManagementBloc>().add(
-            GetOrdersManagementEvent(),
-          );
+          context.read<OrdersManagementBloc>().add(GetOrdersManagementEvent());
         } else if (state.status == acceptOrderStatus.failure) {
           Shared.dismissDialog(context: context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                state.failureMessage ??
-                    kSomethingWentWrong.tr(),
-              ),
+              content: Text(state.failureMessage ?? kSomethingWentWrong.tr()),
             ),
           );
         }
@@ -75,7 +71,9 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                 content: Text(kDeclineOrderSuccess.tr()),
               ),
             );
-            context.read<OrdersManagementBloc>().add(GetOrdersManagementEvent());
+            context.read<OrdersManagementBloc>().add(
+              GetOrdersManagementEvent(),
+            );
           } else if (state.status == declineOrderStatus.failure) {
             Shared.dismissDialog(context: context);
             ScaffoldMessenger.of(context).showSnackBar(
@@ -132,12 +130,17 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        customAnimatedPushNavigation(context, ShowDetailsScreen(currentManageOrders: incomingOrders[index]));
+                        customAnimatedPushNavigation(
+                          context,
+                          ShowDetailsScreen(
+                            currentManageOrders: incomingOrders[index],
+                          ),
+                        );
                       },
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: kWhiteColor,
+                          color: isDark ? kSomeDarkModeColor : kWhiteColor,
                           borderRadius: BorderRadius.circular(10.r),
                           border: Border.all(
                             color: kBlackColor.withOpacity(0.2),
@@ -155,7 +158,8 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CachedNetworkImage(
-                                    imageUrl: incomingOrders[index].itemImages!.first,
+                                    imageUrl:
+                                        incomingOrders[index].itemImages!.first,
                                     width: 90.w,
                                     height: 90.h,
                                     fit: BoxFit.contain,
@@ -164,38 +168,60 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                       fit: BoxFit.contain,
                                     ),
                                     errorWidget: (context, url, error) {
-                                      return Image.asset("assets/images/virtual_image.jpg");
+                                      return Image.asset(
+                                        "assets/images/virtual_image.jpg",
+                                      );
                                     },
                                   ),
                                   Gap(20.h),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         incomingOrders[index].itemName ?? '',
                                         style: font16BlackSemiBold.copyWith(
-                                          color: kPrimaryColor,
+                                          color: isDark
+                                              ? kWhiteColor
+                                              : kPrimaryColor,
                                         ),
                                       ),
                                       Gap(2.w),
                                       Row(
                                         children: [
-                                          Image.asset('assets/images/owner.png'),
+                                          isDark
+                                              ? Image.asset(
+                                                  'assets/images/owner.png',
+                                                  color: kTextColor,
+                                                )
+                                              : Image.asset(
+                                                  'assets/images/owner.png',
+                                                ),
                                           Gap(5.w),
                                           Text(
-                                              "${kRenter.tr()}: ${incomingOrders[index].renteeName}",
-                                            style: font13kLightPrimaryColorMedium
-                                                .copyWith(color: kBlackColor),
+                                            "${kRenter.tr()}: ${incomingOrders[index].renteeName}",
+                                            style:
+                                                font13kLightPrimaryColorMedium
+                                                    .copyWith(
+                                                      color: isDark
+                                                          ? kTextColor
+                                                          : kBlackColor,
+                                                    ),
                                           ),
                                         ],
                                       ),
                                       Gap(5.w),
                                       Row(
                                         children: [
-                                          Image.asset(
-                                            'assets/images/date_determine.png',
-                                          ),
+                                          isDark
+                                              ? Image.asset(
+                                                  'assets/images/date_determine.png',
+                                                  color: kButtonColor,
+                                                )
+                                              : Image.asset(
+                                                  'assets/images/date_determine.png',
+                                                ),
                                           Gap(5.w),
                                           Text(
                                             '${incomingOrders[index].fromDate ?? ''} - ${incomingOrders[index].toDate ?? ''}',
@@ -223,18 +249,25 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                 vertical: Shared.height * 0.02.h,
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     kTotalAmount.tr(),
-                                    style: font13kLightPrimaryColorMedium.copyWith(
-                                      color: kDarkGreyColor,
-                                    ),
+                                    style: font13kLightPrimaryColorMedium
+                                        .copyWith(
+                                          color: isDark
+                                              ? kTextColor
+                                              : kDarkGreyColor,
+                                        ),
                                   ),
                                   Text(
                                     incomingOrders[index].totalPrice.toString(),
                                     style: font24LightPrimarySemiBold.copyWith(
                                       fontSize: 14.sp,
+                                      color: isDark
+                                          ? kButtonColor
+                                          : kLightPrimaryColor,
                                     ),
                                   ),
                                 ],
@@ -256,33 +289,52 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                 vertical: Shared.height * 0.02.h,
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   orderButton(
                                     text: kAcceptOrder.tr(),
                                     icon: 'assets/images/done.png',
-                                    backgroundColor: kLightPrimaryColor,
+                                    backgroundColor: isDark
+                                        ? kButtonColor
+                                        : kLightPrimaryColor,
                                     textColor: kWhiteColor,
                                     onTap: () {
                                       context.read<AcceptOrderBloc>().add(
                                         AcceptOrderEvent(
-                                          orderId: incomingOrders[index].requestId!,
+                                          orderId:
+                                              incomingOrders[index].requestId!,
                                         ),
                                       );
                                     },
+                                    borderColor: isDark
+                                        ? kButtonColor
+                                        : kLightPrimaryColor,
+                                    iconColor: kWhiteColor,
                                   ),
                                   orderButton(
                                     text: kDecline.tr(),
                                     icon: 'assets/images/delete.png',
-                                    backgroundColor: kWhiteColor,
-                                    textColor: kPrimaryColor,
+                                    backgroundColor: isDark
+                                        ? kTransparentColor
+                                        : kWhiteColor,
+                                    textColor: isDark
+                                        ? kTextColor
+                                        : kPrimaryColor,
                                     onTap: () {
                                       context.read<DeclineOrderBloc>().add(
                                         DeclineOrderEvent(
-                                          orderId: incomingOrders[index].requestId!,
+                                          orderId:
+                                              incomingOrders[index].requestId!,
                                         ),
                                       );
                                     },
+                                    borderColor: isDark
+                                        ? kTextColor
+                                        : kLightPrimaryColor,
+                                    iconColor: isDark
+                                        ? kTextColor
+                                        : kLightPrimaryColor,
                                   ),
                                 ],
                               ),
@@ -318,6 +370,8 @@ class _IncomingOrdersState extends State<IncomingOrders> {
     required Color backgroundColor,
     required Color textColor,
     required Function() onTap,
+    required Color borderColor,
+    required Color iconColor,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -327,12 +381,12 @@ class _IncomingOrdersState extends State<IncomingOrders> {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: kLightPrimaryColor, width: 1.w),
+          border: Border.all(color: borderColor, width: 1.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(icon, width: 20.w, height: 20.h),
+            Image.asset(icon, width: 20.w, height: 20.h, color: iconColor),
             Gap(5),
             Text(
               text,

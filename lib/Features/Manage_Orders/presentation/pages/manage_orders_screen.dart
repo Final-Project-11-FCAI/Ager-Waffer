@@ -26,10 +26,11 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark? kDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
           foregroundColor: kWhiteColor,
           title: Text(
             kManageOrders.tr(),
@@ -43,7 +44,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: isDark ? kDarkModeColor : kWhiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25.r),
             topRight: Radius.circular(25.r),
@@ -71,8 +72,8 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                             tabs[index],
                             style: font16BlackSemiBold.copyWith(
                               color: selectedIndex == index
-                                  ? kLightPrimaryColor
-                                  : kBlackColor.withOpacity(0.68),
+                                  ? isDark ? kWhiteColor : kLightPrimaryColor
+                                  : isDark ? kTextColor : kBlackColor.withOpacity(0.68),
                             ),
                           ),
                         ),
@@ -85,7 +86,7 @@ class _ManageOrdersScreenState extends State<ManageOrdersScreen> {
                                 duration: const Duration(milliseconds: 250),
                                 height: 3,
                                 color: selectedIndex == index
-                                    ? kLightPrimaryColor
+                                    ? isDark ? kWhiteColor : kLightPrimaryColor
                                     : Colors.transparent,
                               ),
                             ),
