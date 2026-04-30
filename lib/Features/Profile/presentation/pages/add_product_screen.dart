@@ -237,7 +237,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               options: productStatesOptions,
                               optionsLength: productStatesOptions.length,
                               onItemSelected: (value) {
-                                selectedCondition = value;
+                                selectedCondition = value.tr();
+                                print("condition : $selectedCondition");
                                 validateForm();
                               },
                             ),

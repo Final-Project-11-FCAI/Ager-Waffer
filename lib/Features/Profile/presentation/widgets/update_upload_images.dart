@@ -79,12 +79,13 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.r),
-        color: kProductDataContainerColor,
+        color: isDark ? kLightDarkModeColor : kProductDataContainerColor,
       ),
 
       child: selectedImages.isEmpty && widget.initialImage == null
@@ -143,7 +144,6 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
     );
   }
 
-  // 🔹 UI للصورة القديمة من API
   Widget _buildInitialImage() {
     return Stack(
       children: [
@@ -171,8 +171,8 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
     );
   }
 
-  // 🔹 UI للصور الجديدة
   Widget _buildSelectedImages() {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       height: Shared.height * 0.16.h,
       child: ReorderableListView.builder(
@@ -243,10 +243,10 @@ class _UpdateUploadImagesState extends State<UpdateUploadImages> {
                 height: Shared.height * 0.16.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(color: kPrimaryColor),
+                  border: Border.all(color: isDark ? kSomeGreyColor : kPrimaryColor),
                 ),
                 child: Icon(Icons.add,
-                    size: 30.sp, color: kPrimaryColor),
+                    size: 30.sp, color: isDark ? kSomeGreyColor : kPrimaryColor),
               ),
             ),
           );

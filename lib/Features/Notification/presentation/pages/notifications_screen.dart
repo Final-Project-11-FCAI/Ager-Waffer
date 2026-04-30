@@ -31,6 +31,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     context.read<NotificationsBloc>().add(GetNotificationsEvent());
     _saveLastSeen();
   }
+
   Future<void> _saveLastSeen() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
@@ -103,7 +104,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   builder: (context, constraints) {
                     return SingleChildScrollView(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
                         child: Center(
                           child: EmptyProducts(
                             image: 'assets/images/no_products.png',
@@ -118,7 +121,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               }
               return SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w, vertical: Shared.height * 0.02.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Shared.width * 0.04.w,
+                    vertical: Shared.height * 0.02.h,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

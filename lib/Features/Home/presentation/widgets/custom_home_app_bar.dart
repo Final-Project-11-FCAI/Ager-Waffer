@@ -120,8 +120,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                           },
                           child: Image.asset(
                             state.hasUnread
-                                ? 'assets/images/about_logo.png'
-                                : 'assets/images/notification_icon.png',
+                                ? isDark ? 'assets/images/notification_active_black.png' : 'assets/images/notification_icon.png'
+                                : isDark ? 'assets/images/notification_black.png' : 'assets/images/notification_white.png',
                             width: Shared.width * 0.06.w,
                             // color: isDark ? kWhiteColor : kBlackColor,
                           ),

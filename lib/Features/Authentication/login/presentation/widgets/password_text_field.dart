@@ -74,12 +74,12 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22.r),
-              borderSide: isDark ? BorderSide(color: kWhiteColor.withOpacity(0.8)) : BorderSide(color: kBorderAuthColor),
+              borderSide: isDark ? BorderSide(color: kWhiteColor.withOpacity(0.7)) : BorderSide(color: kBorderAuthColor),
             ),
 
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22.r),
-              borderSide: BorderSide(color: kBorderAuthColor),
+              borderSide: isDark ? BorderSide(color: kWhiteColor) : BorderSide(color: kBorderAuthColor),
             ),
 
             floatingLabelStyle: TextStyle(color: kBorderAuthColor),

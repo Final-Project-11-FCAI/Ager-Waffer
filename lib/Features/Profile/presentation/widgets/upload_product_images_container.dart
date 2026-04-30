@@ -211,10 +211,10 @@ class _UploadProductImagesContainerState
                     height: Shared.height * 0.16.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: kPrimaryColor),
+                      border: Border.all(color: isDark ? kSomeGreyColor : kPrimaryColor),
                     ),
                     child: Icon(Icons.add,
-                        size: 30.sp, color: kPrimaryColor),
+                        size: 30.sp, color: isDark ? kSomeGreyColor : kPrimaryColor),
                   ),
                 ),
               );

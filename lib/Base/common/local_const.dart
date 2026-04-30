@@ -167,6 +167,7 @@ String kNoInternet = 'no_internet';
 
 String kPhone = 'phone';
 String kEnterNewPassword = 'enter_new_password';
+String kSelected = 'selected';
 
 String kSave = 'save';
 String kCurrency = 'currency';

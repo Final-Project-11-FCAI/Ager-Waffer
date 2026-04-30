@@ -3,6 +3,7 @@ import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class UpdateProductDataContainer extends StatefulWidget {
   const UpdateProductDataContainer({
@@ -43,7 +44,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
     super.initState();
 
     if (widget.initialValue != null && widget.initialValue!.isNotEmpty) {
-      selectedValue = widget.initialValue;
+      selectedValue = widget.initialValue!.tr();
     }
   }
 
@@ -136,7 +137,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
                         String value = widget.options[index];
 
                         setState(() {
-                          selectedValue = value;
+                          selectedValue = value.tr();
                           isOpen = false;
                         });
 
@@ -148,7 +149,7 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
                           Shared.height * 0.01.h,
                         ),
                         child: Text(
-                          widget.options[index],
+                          widget.options[index].tr(),
                           style:
                           font15SomeBlackColorMedium.copyWith(
                             color:  isDark ? kWhiteColor : kBlackColor,                          ),

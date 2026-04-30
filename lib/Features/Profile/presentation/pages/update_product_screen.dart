@@ -32,11 +32,11 @@ class UpdateProductScreen extends StatefulWidget {
 
 class _UpdateProductScreenState extends State<UpdateProductScreen> {
   List<String> categoryOptions = [
-    kElectronics.tr(),
-    kHomeAppliances.tr(),
-    kBabyGear.tr(),
-    kBooks.tr(),
-    kTravelGear.tr(),
+    kElectronics,
+    kHomeAppliances,
+    kBabyGear,
+    kBooks,
+    kTravelGear,
   ];
   List<String> governmentOptions = [
     kCairo,
@@ -68,10 +68,10 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     kSouthSinai,
   ];
   List<String> productStatesOptions = [
-    kBrandNew.tr(),
-    kNew.tr(),
-    kUsed.tr(),
-    kHeavilyUsed.tr(),
+    kBrandNew,
+    kNew,
+    kUsed,
+    kHeavilyUsed,
   ];
 
   final formKey = GlobalKey<FormState>();
@@ -142,8 +142,10 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     insuranceController.text = product.insurance?.toString() ?? '';
 
     selectedCategory = product.categoryName ?? '';
-    selectedCondition = product.condition ?? '';
-    selectedCity = product.city ?? '';
+
+    selectedCondition = mapValueToKey(product.condition ?? '', productStatesOptions,);
+    selectedCategory = mapValueToKey(product.categoryName ?? '', categoryOptions,);
+    selectedCity = mapValueToKey(product.city ?? '', governmentOptions,);
 
     isAvailable = product.isAvailable ?? true;
     rentalType = mapRentUnit(product.rentUnit);
@@ -196,6 +198,15 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     return kDaily.tr();
   }
 
+  String mapValueToKey(String value, List<String> options) {
+    for (var key in options) {
+      if (value == key || value == key.tr()) {
+        return key;
+      }
+    }
+    return options.first; // fallback
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -222,7 +233,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
           }
         },
         child: Scaffold(
-          backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+          backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
           appBar: AppBar(
             backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
             foregroundColor: kWhiteColor,
@@ -251,7 +262,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: isDark ? kDarkModeColor : kPrimaryColor,
+                  color: isDark ? kDarkModeColor : kWhiteColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25.r),
                     topRight: Radius.circular(25.r),
@@ -422,9 +433,9 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                                         insurance: insuranceController.text,
                                         isAvailable: isAvailable,
                                         rentUnit: rentalType,
-                                        condition: selectedCondition,
-                                        categoryName: selectedCategory,
-                                        city: selectedCity,
+                                        condition: selectedCondition.tr(),
+                                        categoryName: selectedCategory.tr(),
+                                        city: selectedCity.tr(),
                                         images: images.isNotEmpty ? images : null,
                                       ),
                                     ),
