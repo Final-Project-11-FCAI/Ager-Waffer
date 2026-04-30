@@ -30,6 +30,7 @@ class ChatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     final currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
     if (currentUserId == null || item.members == null || item.members!.isEmpty) {
@@ -58,6 +59,7 @@ class ChatCard extends StatelessWidget {
           });
 
           return Card(
+            color: isDark ? kSomeDarkModeColor : kSmallContainerColor,
             child: ListTile(
               onTap: () {
                 Navigator.push(

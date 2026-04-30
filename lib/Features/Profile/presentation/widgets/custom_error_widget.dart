@@ -16,6 +16,7 @@ class CustomErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,7 +26,7 @@ class CustomErrorWidget extends StatelessWidget {
           ElevatedButton(
             onPressed: onRetry,
             style: ElevatedButton.styleFrom(
-              backgroundColor: kPrimaryColor,
+              backgroundColor: isDark ? kButtonColor : kPrimaryColor,
               foregroundColor: kWhiteColor,
             ),
             child: Text(kRetry.tr()),

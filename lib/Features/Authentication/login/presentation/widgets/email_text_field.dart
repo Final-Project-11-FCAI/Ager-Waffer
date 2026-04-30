@@ -64,7 +64,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
             prefixIcon: widget.icon,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(22.r),
-              borderSide: isDark ? BorderSide(color: kGreyColor) : BorderSide(color: kBorderAuthColor),
+              borderSide: isDark ? BorderSide(color: kWhiteColor.withOpacity(0.8)) : BorderSide(color: kBorderAuthColor),
             ),
             contentPadding: EdgeInsets.all(Shared.width * 0.05.w),
             floatingLabelStyle: TextStyle(color: kBorderAuthColor),

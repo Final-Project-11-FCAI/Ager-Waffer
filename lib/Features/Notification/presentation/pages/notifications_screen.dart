@@ -12,11 +12,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../Base/common/local_const.dart';
 
 class NotificationsScreen extends StatefulWidget {
-  const NotificationsScreen({super.key});
+  const NotificationsScreen({super.key, this.selectedNotification});
+  final dynamic selectedNotification;
 
   @override
   State<NotificationsScreen> createState() => _NotificationsScreenState();
@@ -27,6 +29,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   void initState() {
     super.initState();
     context.read<NotificationsBloc>().add(GetNotificationsEvent());
+    _saveLastSeen();
+  }
+  Future<void> _saveLastSeen() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      'last_seen_notifications',
+      DateTime.now().toIso8601String(),
+    );
   }
 
   DateTime? parseDate(String? value) {
@@ -40,10 +50,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(
           kNotifications.tr(),
@@ -54,7 +65,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: isDark ? kDarkModeColor : kWhiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25.r),
             topRight: Radius.circular(25.r),

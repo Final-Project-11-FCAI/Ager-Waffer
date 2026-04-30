@@ -359,6 +359,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void successDialog(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     CustomShowDialog.show(
       context: context,
       title: Text(
@@ -366,7 +367,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         textAlign: TextAlign.center,
         style: font14BlackBold.copyWith(
           fontSize: 24,
-          color: kPrimaryColor,
+          color: isDark ? kWhiteColor : kPrimaryColor,
         ),
       ),
       description: RichText(
@@ -375,10 +376,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: <TextSpan>[
             TextSpan(
               text: kWelcomePrefix.tr(),
-              style: font20PrimaryMedium.copyWith(fontSize: 16),
+              style: font20PrimaryMedium.copyWith(fontSize: 16, color: isDark ? kWhiteColor : kPrimaryColor,),
             ),
             TextSpan(
-              text: kAppName.tr(),
+              text: "${kAppName.tr()} ",
               style: font16BlackSemiBold.copyWith(
                 color: kBlueColor,
                 fontSize: 16,
@@ -387,7 +388,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             TextSpan(
               text:
               kWelcomeDesc.tr(),
-              style: font20PrimaryMedium.copyWith(fontSize: 16),
+              style: font20PrimaryMedium.copyWith(fontSize: 16, color: isDark ? kWhiteColor : kPrimaryColor,),
             ),
           ],
         ),

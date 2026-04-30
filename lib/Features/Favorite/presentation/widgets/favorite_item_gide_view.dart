@@ -12,11 +12,24 @@ class FavoriteItemGideView extends StatelessWidget {
 
   final FavoriteData allFavoriteItems;
 
+  String rentPeriod({bool isPlus = false}) {
+    return allFavoriteItems.rentUnit == "Daily" ||
+        allFavoriteItems.rentUnit == "يومي"
+        ? kDay.tr()
+        : allFavoriteItems.rentUnit == "Weekly" ||
+        allFavoriteItems.rentUnit == "أسبوعي"
+        ? kWeek.tr()
+        : allFavoriteItems.rentUnit == "Monthly" ||
+        allFavoriteItems.rentUnit == "شهري"
+        ? kMonth.tr()
+        : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Card(
-      color: isDark ? kDarkModeColor : kWhiteColor,
+      color: isDark ? kSomeDarkModeColor : kWhiteColor,
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
       child: Column(
@@ -30,10 +43,11 @@ class FavoriteItemGideView extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                Center(child: allFavoriteItems.imageUrls != null ?
-                Image.network(allFavoriteItems.imageUrls!.first)
-              : Image.asset('assets/images/virtual_image.jpg')
-          ),
+                Center(
+                  child: allFavoriteItems.imageUrls != null
+                      ? Image.network(allFavoriteItems.imageUrls!.first)
+                      : Image.asset('assets/images/virtual_image.jpg'),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: CircleAvatar(
@@ -68,7 +82,11 @@ class FavoriteItemGideView extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: allFavoriteItems.isAvailable! ? kLightGreenColor : kNotAvailableColor,
+                        color: allFavoriteItems.isAvailable!
+                            ? kLightGreenColor
+                            : isDark
+                            ? kSomeGreyColor
+                            : kNotAvailableColor,
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Padding(
@@ -77,9 +95,17 @@ class FavoriteItemGideView extends StatelessWidget {
                           vertical: Shared.height * 0.003.h,
                         ),
                         child: Text(
-                          allFavoriteItems.isAvailable! ? kAvailable.tr() : kNotAvailable.tr(),
+                          allFavoriteItems.isAvailable!
+                              ? kAvailable.tr()
+                              : kNotAvailable.tr(),
                           style: font20PrimaryMedium.copyWith(
-                            color: allFavoriteItems.isAvailable! ? kGreenColor : kPartGreyColor,
+                            color: allFavoriteItems.isAvailable!
+                                ? isDark
+                                      ? kBlackColor
+                                      : kGreenColor
+                                : isDark
+                                ? kBlackColor
+                                : kPartGreyColor,
                             fontSize: 10.sp,
                           ),
                         ),
@@ -97,13 +123,8 @@ class FavoriteItemGideView extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: ' / ${allFavoriteItems.rentUnit == kDaily.tr()
-                            ? kDay.tr()
-                            : allFavoriteItems.rentUnit == kWeekly.tr()
-                            ? kWeek.tr()
-                            : allFavoriteItems.rentUnit == kMonthly.tr()
-                            ? kMonth.tr()
-                            : ''}',
+                        text:
+                            ' / ${rentPeriod()}',
                         style: font16BlackSemiBold.copyWith(
                           fontSize: 13,
                           color: isDark ? kWhiteColor : kBlackColor,
@@ -117,7 +138,10 @@ class FavoriteItemGideView extends StatelessWidget {
                   children: [
                     Text(
                       allFavoriteItems.averageRate.toString(),
-                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp,color: isDark ? kWhiteColor : kPrimaryColor),
+                      style: font20PrimaryMedium.copyWith(
+                        fontSize: 15.sp,
+                        color: isDark ? kWhiteColor : kPrimaryColor,
+                      ),
                     ),
                     Gap(3.w),
                     Icon(Icons.star, size: 17.sp, color: Colors.amber),

@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           user.email.toString(),
                           style: font16BlackSemiBold.copyWith(
-                            color: isDark ? kWhiteColor : kBlackColor.withOpacity(0.64),
+                            color: isDark ? kSomeGreyColor : kBlackColor.withOpacity(0.64),
                           ),
                         ),
                         Row(

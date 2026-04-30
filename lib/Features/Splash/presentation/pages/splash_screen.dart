@@ -129,12 +129,13 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: isDark ? kMoreDarkModeColor : kWhiteColor,
       body: SafeArea(
         child: Column(
           children: [
-            buildDesign(isTopLeft: true),
+            buildDesign(isTopLeft: true, context: context),
             Expanded(
               child: Center(
                 child: FadeTransition(
@@ -146,7 +147,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ),
             ),
-            buildDesign(isTopLeft: false),
+            buildDesign(isTopLeft: false, context: context),
           ],
         ),
       ),
@@ -154,14 +155,15 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-Align buildDesign({required bool isTopLeft}) {
+Align buildDesign({required bool isTopLeft,required BuildContext context}) {
+  bool isDark = Theme.of(context).brightness == Brightness.dark;
   return Align(
     alignment: isTopLeft ? Alignment.topLeft : Alignment.bottomRight,
     child: Container(
       height: Shared.height * 0.1,
       width: Shared.width * 0.25,
       decoration: BoxDecoration(
-        color: kPrimaryColor,
+        color: isDark ? kSomeDarkModeColor : kPrimaryColor,
         borderRadius: BorderRadius.only(
           bottomRight: isTopLeft ? Radius.circular(80) : Radius.circular(0),
           topLeft: isTopLeft ? Radius.circular(0) : Radius.circular(80),

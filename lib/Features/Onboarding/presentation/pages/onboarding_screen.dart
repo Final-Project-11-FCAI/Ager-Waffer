@@ -30,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            buildDesign(isTopLeft: true),
+            buildDesign(isTopLeft: true, context: context),
             Gap(Shared.height * 0.055),
             SkipButton(),
             Gap(Shared.height * 0.05),
@@ -136,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             ),
-            buildDesign(isTopLeft: false),
+            buildDesign(isTopLeft: false,  context: context),
           ],
         ),
       ),

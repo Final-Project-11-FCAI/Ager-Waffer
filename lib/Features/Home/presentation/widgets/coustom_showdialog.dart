@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomShowDialog {
   static void show({
@@ -11,6 +12,7 @@ class CustomShowDialog {
     required String buttonText,
     VoidCallback? onPressed,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -29,11 +31,11 @@ class CustomShowDialog {
                   Container(
                     width: 100,
                     height: 100,
-                    decoration: const BoxDecoration(
-                      color: Color(0xff0B3C4C),
+                    decoration: BoxDecoration(
+                      color: isDark ? kButtonColor : Color(0xff0B3C4C),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.check, color: Colors.white, size: 50),
+                    child: Icon(Icons.check, color: Colors.white, size: 65.sp),
                   ),
 
                   const SizedBox(height: 20),
@@ -50,7 +52,7 @@ class CustomShowDialog {
                         if (onPressed != null) onPressed();
                       },
                       text: buttonText,
-                      color: kPrimaryColor,
+                      color: isDark ? kButtonColor : kPrimaryColor,
                       borderRadius: Shared.width * 0.04,
                     ),
                   ),

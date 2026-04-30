@@ -4,9 +4,12 @@ import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/search_screen.dart';
+import 'package:ager_waffer/Features/Notification/presentation/manager/notifications_bloc.dart';
+import 'package:ager_waffer/Features/Notification/presentation/manager/notifications_state.dart';
 import 'package:ager_waffer/Features/Notification/presentation/pages/notifications_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -104,18 +107,26 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: EdgeInsets.symmetric(
                       horizontal: Shared.width * 0.04.w,
                     ),
-                    child: GestureDetector(
-                      onTap: () {
-                        customAnimatedPushNavigation(
-                          context,
-                          NotificationsScreen(),
+                    child: BlocBuilder<NotificationsBloc, NotificationsState>(
+                      builder: (context, state) {
+                        bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+                        return GestureDetector(
+                          onTap: () {
+                            customAnimatedPushNavigation(
+                              context,
+                              NotificationsScreen(),
+                            );
+                          },
+                          child: Image.asset(
+                            state.hasUnread
+                                ? 'assets/images/about_logo.png'
+                                : 'assets/images/notification_icon.png',
+                            width: Shared.width * 0.06.w,
+                            // color: isDark ? kWhiteColor : kBlackColor,
+                          ),
                         );
                       },
-                      child: Image.asset(
-                        'assets/images/notification_icon.png',
-                        width: Shared.width * 0.06.w,
-                        color: isDark ? kWhiteColor : kBlackColor,
-                      ),
                     ),
                   ),
                   GestureDetector(

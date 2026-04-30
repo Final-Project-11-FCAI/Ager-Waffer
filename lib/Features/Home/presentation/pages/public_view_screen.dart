@@ -46,10 +46,11 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
         foregroundColor: kWhiteColor,
       ),
       body: SafeArea(
@@ -61,7 +62,7 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: kWhiteColor,
+                  color: isDark ? kDarkModeColor : kWhiteColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25.r),
                     topRight: Radius.circular(25.r),
@@ -72,18 +73,18 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                     padding: EdgeInsets.only(
                       right: Shared.width * 0.04.w,
                       left: Shared.width * 0.04.w,
-                      top: Shared.height * 0.07.h,
+                      top: Shared.height * 0.08.h,
                     ),
                     child: Column(
                       children: [
                         Text(
                           widget.product.ownerName!,
-                          style: font24PrimarySemiBold.copyWith(color: kBlackColor),
+                          style: font24PrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),
                         ),
                         Text(
                           widget.product.ownerEmail!,
                           style: font24PrimarySemiBold.copyWith(
-                            color: kGreyColor,
+                            color: isDark ? kSomeGreyColor : kGreyColor,
                             fontSize: 14,
                           ),
                         ),
@@ -98,7 +99,7 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                                 children: [
                                   TextSpan(
                                     text: "4.8",
-                                    style: font14GreyRegular.copyWith(color: kPrimaryColor),
+                                    style: font14GreyRegular.copyWith(color: isDark ? kWhiteColor : kPrimaryColor),
                                   ),
                                 ],
                               ),
@@ -207,6 +208,7 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
 
 
   Widget _buildInfoRow(IconData icon, String title, String value) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
@@ -214,7 +216,7 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
         children: [
           Row(
             children: [
-              Icon(icon, color: kLightPrimaryColor, size: 22),
+              Icon(icon, color: isDark ? kWhiteColor : kLightPrimaryColor, size: 22),
               Gap(10.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,14 +224,14 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                   Text(
                     title,
                     style: font15SomeBlackColorMedium.copyWith(
-                      color: kGreyColor,
+                      color: isDark ? kWhiteColor : kGreyColor,
                       fontSize: 12.sp,
                     ),
                   ),
                   Gap(5.h),
                   Text(
                     value,
-                    style: font24PrimarySemiBold.copyWith(fontSize: 15.sp),
+                    style: font24PrimarySemiBold.copyWith(fontSize: 15.sp, color: isDark ? kButtonColor : kPrimaryColor),
                   ),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Chat/data/models/room_models.dart';
 import 'package:ager_waffer/Features/Chat/presentation/widgets/chat_card.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class ConversationsScreen extends StatefulWidget {
@@ -58,11 +60,11 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
       backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       appBar: AppBar(
         backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
-        foregroundColor: kWhiteColor,
+        foregroundColor: isDark ? kWhiteColor : kBlackColor,
         title: Text(kConversations.tr()),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.03.w, vertical: Shared.height * 0.01.h),
         child: Column(
           children: [
             Expanded(

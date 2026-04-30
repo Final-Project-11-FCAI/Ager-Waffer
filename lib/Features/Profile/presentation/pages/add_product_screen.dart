@@ -139,7 +139,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
         appBar: AppBar(
           backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
           foregroundColor: kWhiteColor,
@@ -148,7 +148,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: isDark ? kDarkModeColor : kPrimaryColor,
+            color: isDark ? kDarkModeColor : kWhiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.r),
               topRight: Radius.circular(25.r),

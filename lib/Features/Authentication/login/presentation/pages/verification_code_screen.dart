@@ -121,7 +121,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset('assets/images/verfiy_email.png'),
+                        Image.asset('assets/images/verfiy_email.png', color: isDark ? kButtonColor : null,),
                         Gap(20.h),
                         Text(
                           kVerifyEmailTitle.tr(),
@@ -135,12 +135,12 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                         Text(
                           kVerifyEmailDesc.tr(),
                           textAlign: TextAlign.center,
-                          style: font20PrimaryMedium.copyWith(color: isDark ? kGreyColor : kDoneColor),
+                          style: font20PrimaryMedium.copyWith(color: isDark ? kSomeGreyColor : kDoneColor),
                         ),
                         Gap(5.h),
                         Text(
                           widget.email,
-                          style: font20PrimaryMedium.copyWith(color: kDoneColor),
+                          style: font20PrimaryMedium.copyWith(color: isDark ? kButtonColor : kDoneColor),
                         ),
                         Gap(40.h),
                         Pinput(
@@ -189,7 +189,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             : Text(
                           "${kResendIn.tr()} $secondsRemaining ${kSeconds.tr()}",
                                 style: font16BlackSemiBold.copyWith(
-                                  color: kGreyColor,
+                                  color: isDark ? kSomeGreyColor : kGreyColor,
                                 ),
                               ),
                       ],

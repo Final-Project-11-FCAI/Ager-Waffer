@@ -28,10 +28,13 @@ class NotificationsBloc extends Bloc<AppEvent, NotificationsState> {
 
       if (response.isSuccess == true) {
         print("notifications count: ${response.data?.data?.length}");
+        final list = response.data?.data ?? [];
+        final hasUnread = list.any((n) => n.isRead == false);
 
         emit(state.copyWith(
           status: notificationsStatus.success,
           notifications: response.data?.data ?? [],
+          hasUnread: hasUnread,
         ));
       } else {
         emit(state.copyWith(

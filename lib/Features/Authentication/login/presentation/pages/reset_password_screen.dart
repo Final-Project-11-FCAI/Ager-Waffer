@@ -188,42 +188,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       isDark && isButtonEnabled ?
                       kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
                     ),
-                    Gap(10.h),
-                    Gap(20.h),
-                    Align(
-                      alignment: Alignment.center,
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: knoAccountKey.tr(),
-                              style: TextStyle(
-                                color: isDark
-                                    ? kButtonColor
-                                    : Color(0xff5588A3),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    'RegisterScreen',
-                                  );
-                                },
-                            ),
-                            TextSpan(
-                              text: " ${kcreateAccountNowKey.tr()}",
-                              style: TextStyle(
-                                color: isDark ? kWhiteColor : kPrimaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

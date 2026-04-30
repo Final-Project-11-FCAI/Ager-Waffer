@@ -22,7 +22,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            buildDesign(isTopLeft: true),
+            buildDesign(isTopLeft: true, context: context),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -65,7 +65,7 @@ class ChooseLoginOrRegisterScreen extends StatelessWidget {
                 ),
               ),
             ),
-            buildDesign(isTopLeft: false),
+            buildDesign(isTopLeft: false, context: context),
           ],
         ),
       ),

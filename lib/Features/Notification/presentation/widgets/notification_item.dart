@@ -5,10 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
-class NotificationItem extends StatelessWidget {
+class NotificationItem extends StatefulWidget {
   const NotificationItem({super.key, required this.notifications});
 
   final NotificationsData notifications;
+
+  @override
+  State<NotificationItem> createState() => _NotificationItemState();
+}
+
+class _NotificationItemState extends State<NotificationItem> {
+
+  @override
+  initState(){
+    super.initState();
+    widget.notifications.isRead = true;
+  }
 
   String formatTime(String date) {
     final parsed = DateTime.parse(date).toLocal();
@@ -69,25 +81,26 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return ListTile(
       dense: true,
       contentPadding: EdgeInsets.zero,
       visualDensity: VisualDensity.compact,
-      leading: notifications.subType == 'completed'
-          ? Image.asset('assets/images/new_request.png')
-          : notifications.subType == 'declined'
-          ? Image.asset('assets/images/cancel_request.png')
-          : notifications.subType == 'accepted'
-          ? Image.asset('assets/images/accept_request.png')
-          : Image.asset('assets/images/new_notification.png'),
-      title: Text(notifications.title!, style: font20PrimaryMedium),
+      leading: widget.notifications.subType == 'completed'
+          ? isDark ? Image.asset('assets/images/dark_new_notification.png') : Image.asset('assets/images/new_request.png')
+          : widget.notifications.subType == 'declined'
+          ? isDark ? Image.asset('assets/images/dark_notification_cancel.png') : Image.asset('assets/images/cancel_request.png')
+          : widget.notifications.subType == 'accepted'
+          ? isDark ? Image.asset('assets/images/dark_notification_done.png') : Image.asset('assets/images/accept_request.png')
+          : isDark ? Image.asset('assets/images/dark_new_notification.png') : Image.asset('assets/images/new_notification.png'),
+      title: Text(widget.notifications.title!, style: font20PrimaryMedium.copyWith(color: isDark ? kButtonColor : kPrimaryColor)),
       subtitle: Text(
-        notifications.body!,
-        style: font13kLightPrimaryColorMedium.copyWith(fontSize: 15),
+        widget.notifications.body!,
+        style: font13kLightPrimaryColorMedium.copyWith(fontSize: 15,color: isDark ? kWhiteColor : kLightPrimaryColor),
       ),
       trailing: Text(
-        formatDateSmart(notifications.createdAt!),
-        style: font13kLightPrimaryColorMedium.copyWith(color: kTextColor),
+        formatDateSmart(widget.notifications.createdAt!),
+        style: font13kLightPrimaryColorMedium.copyWith(color: isDark ? kSomeGreyColor : kTextColor),
       ),
     );
     ;
