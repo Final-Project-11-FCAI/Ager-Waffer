@@ -147,6 +147,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                                     children: [
                                       Text(
                                         pendingOrders[index].itemName ?? '',
+                                        maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: font16BlackSemiBold.copyWith(
                                           color: kPrimaryColor,

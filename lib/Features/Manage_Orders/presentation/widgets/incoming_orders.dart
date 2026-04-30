@@ -174,65 +174,69 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                     },
                                   ),
                                   Gap(20.h),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        incomingOrders[index].itemName ?? '',
-                                        style: font16BlackSemiBold.copyWith(
-                                          color: isDark
-                                              ? kWhiteColor
-                                              : kPrimaryColor,
+                                  Flexible(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          incomingOrders[index].itemName ?? '',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: font16BlackSemiBold.copyWith(
+                                            color: isDark
+                                                ? kWhiteColor
+                                                : kPrimaryColor,
+                                          ),
                                         ),
-                                      ),
-                                      Gap(2.w),
-                                      Row(
-                                        children: [
-                                          isDark
-                                              ? Image.asset(
-                                                  'assets/images/owner.png',
-                                                  color: kTextColor,
-                                                )
-                                              : Image.asset(
-                                                  'assets/images/owner.png',
-                                                ),
-                                          Gap(5.w),
-                                          Text(
-                                            "${kRenter.tr()}: ${incomingOrders[index].renteeName}",
-                                            style:
-                                                font13kLightPrimaryColorMedium
-                                                    .copyWith(
-                                                      color: isDark
-                                                          ? kTextColor
-                                                          : kBlackColor,
-                                                    ),
-                                          ),
-                                        ],
-                                      ),
-                                      Gap(5.w),
-                                      Row(
-                                        children: [
-                                          isDark
-                                              ? Image.asset(
-                                                  'assets/images/date_determine.png',
-                                                  color: kButtonColor,
-                                                )
-                                              : Image.asset(
-                                                  'assets/images/date_determine.png',
-                                                ),
-                                          Gap(5.w),
-                                          Text(
-                                            '${incomingOrders[index].fromDate ?? ''} - ${incomingOrders[index].toDate ?? ''}',
-                                            style: font20PrimaryMedium.copyWith(
-                                              fontSize: 12.sp,
-                                              color: kTextGreyColor,
+                                        Gap(2.w),
+                                        Row(
+                                          children: [
+                                            isDark
+                                                ? Image.asset(
+                                                    'assets/images/owner.png',
+                                                    color: kTextColor,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/images/owner.png',
+                                                  ),
+                                            Gap(5.w),
+                                            Text(
+                                              "${kRenter.tr()}: ${incomingOrders[index].renteeName}",
+                                              style:
+                                                  font13kLightPrimaryColorMedium
+                                                      .copyWith(
+                                                        color: isDark
+                                                            ? kTextColor
+                                                            : kBlackColor,
+                                                      ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                        Gap(5.w),
+                                        Row(
+                                          children: [
+                                            isDark
+                                                ? Image.asset(
+                                                    'assets/images/date_determine.png',
+                                                    color: kButtonColor,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/images/date_determine.png',
+                                                  ),
+                                            Gap(5.w),
+                                            Text(
+                                              '${incomingOrders[index].fromDate ?? ''} - ${incomingOrders[index].toDate ?? ''}',
+                                              style: font20PrimaryMedium.copyWith(
+                                                fontSize: 12.sp,
+                                                color: kTextGreyColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

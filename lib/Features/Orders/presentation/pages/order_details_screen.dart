@@ -103,6 +103,8 @@ class OrderDetailsScreen extends StatelessWidget {
                 Text(
                   currentOrders.itemName!,
                   textAlign: TextAlign.right,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: font16BlackSemiBold,
                 ),
                 Gap(5.h),

@@ -104,6 +104,8 @@ class ShowDetailsScreen extends StatelessWidget {
               children: [
                 Text(
                   currentManageOrders.itemName!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.right,
                   style: font16BlackSemiBold,
                 ),

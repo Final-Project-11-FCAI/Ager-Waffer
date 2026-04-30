@@ -10,7 +10,6 @@ import 'package:ager_waffer/Features/Chat/presentation/pages/chat_screen.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_bloc.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/manager/orders_management_state.dart';
 import 'package:ager_waffer/Features/Manage_Orders/presentation/pages/show_details_screen.dart';
-import 'package:ager_waffer/Features/Orders/presentation/pages/order_details_screen.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -121,64 +120,67 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                   },
                                 ),
                                 Gap(20.h),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      currentOrdersManagement[index].itemName ??
-                                          '',
-                                      style: font16BlackSemiBold.copyWith(
-                                        color: isDark ? kWhiteColor : kBlackColor,
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        currentOrdersManagement[index].itemName ?? '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: font16BlackSemiBold.copyWith(
+                                          color: isDark ? kWhiteColor : kBlackColor,
+                                        ),
                                       ),
-                                    ),
-                                    Gap(2.h),
-                                    Row(
-                                      children: [
-                                        isDark ? Image.asset('assets/images/owner.png',color: kTextColor,):Image.asset('assets/images/owner.png'),
-                                        Gap(5.w),
-                                        Text(
-                                          "${kRenter.tr()}: ${currentOrdersManagement[index].renteeName}",
-                                          style: font13kLightPrimaryColorMedium
-                                              .copyWith(
-                                            color: isDark ? kTextColor : kBlackColor,
+                                      Gap(2.h),
+                                      Row(
+                                        children: [
+                                          isDark ? Image.asset('assets/images/owner.png',color: kTextColor,):Image.asset('assets/images/owner.png'),
+                                          Gap(5.w),
+                                          Text(
+                                            "${kRenter.tr()}: ${currentOrdersManagement[index].renteeName}",
+                                            style: font13kLightPrimaryColorMedium
+                                                .copyWith(
+                                              color: isDark ? kTextColor : kBlackColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(5.h),
-                                    Row(
-                                      children: [
-                                        isDark ? Image.asset('assets/images/date_determine.png',color: kButtonColor,):Image.asset('assets/images/date_determine.png'),
-                                        Gap(5.w),
-                                        Text(
-                                          '${currentOrdersManagement[index]
-                                              .fromDate ??
-                                              ''} - ${currentOrdersManagement[index]
-                                              .toDate ?? ''}',
-                                          style: font20PrimaryMedium.copyWith(
-                                            fontSize: 12.sp,
-                                            color: kTextGreyColor,
+                                        ],
+                                      ),
+                                      Gap(5.h),
+                                      Row(
+                                        children: [
+                                          isDark ? Image.asset('assets/images/date_determine.png',color: kButtonColor,):Image.asset('assets/images/date_determine.png'),
+                                          Gap(5.w),
+                                          Text(
+                                            '${currentOrdersManagement[index]
+                                                .fromDate ??
+                                                ''} - ${currentOrdersManagement[index]
+                                                .toDate ?? ''}',
+                                            style: font20PrimaryMedium.copyWith(
+                                              fontSize: 12.sp,
+                                              color: kTextGreyColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(5.h),
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                            'assets/images/remainder.png'),
-                                        Gap(5.w),
-                                        Text(
-                                          "${kRemaining.tr()} ${currentOrdersManagement[index].timeLeftInDays} ${kDays.tr()}",
-                                          style: font20PrimaryMedium.copyWith(
-                                            fontSize: 13.sp,
-                                            color: kOrangeColor,
+                                        ],
+                                      ),
+                                      Gap(5.h),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                              'assets/images/remainder.png'),
+                                          Gap(5.w),
+                                          Text(
+                                            "${kRemaining.tr()} ${currentOrdersManagement[index].timeLeftInDays} ${kDays.tr()}",
+                                            style: font20PrimaryMedium.copyWith(
+                                              fontSize: 13.sp,
+                                              color: kOrangeColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

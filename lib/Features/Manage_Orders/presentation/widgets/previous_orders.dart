@@ -144,44 +144,48 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                   },
                                 ),
                                 Gap(20.h),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      previousOrders[index].itemName ?? '',
-                                      style: font16BlackSemiBold.copyWith(
-                                        color: isDark ? kWhiteColor : kBlackColor,
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        previousOrders[index].itemName ?? '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: font16BlackSemiBold.copyWith(
+                                          color: isDark ? kWhiteColor : kBlackColor,
+                                        ),
                                       ),
-                                    ),
-                                    Gap(2.w),
-                                    Row(
-                                      children: [
-                                        isDark ? Image.asset('assets/images/owner.png',color: kTextColor,):Image.asset('assets/images/owner.png'),
-                                        Gap(5.w),
-                                        Text(
-                                          "${kRenter.tr()}: ${previousOrders[index].renteeName}",
-                                          style: font13kLightPrimaryColorMedium.copyWith(
-                                            color: isDark ? kTextColor : kBlackColor,
+                                      Gap(2.w),
+                                      Row(
+                                        children: [
+                                          isDark ? Image.asset('assets/images/owner.png',color: kTextColor,):Image.asset('assets/images/owner.png'),
+                                          Gap(5.w),
+                                          Text(
+                                            "${kRenter.tr()}: ${previousOrders[index].renteeName}",
+                                            style: font13kLightPrimaryColorMedium.copyWith(
+                                              color: isDark ? kTextColor : kBlackColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(5.w),
-                                    Row(
-                                      children: [
-                                        isDark ? Image.asset('assets/images/date_determine.png',color: kButtonColor,):Image.asset('assets/images/date_determine.png'),
-                                        Gap(5.w),
-                                        Text(
-                                          '${previousOrders[index].fromDate ?? ''} - ${previousOrders[index].toDate ?? ''}',
-                                          style: font20PrimaryMedium.copyWith(
-                                            fontSize: 12.sp,
-                                            color: kTextGreyColor,
+                                        ],
+                                      ),
+                                      Gap(5.w),
+                                      Row(
+                                        children: [
+                                          isDark ? Image.asset('assets/images/date_determine.png',color: kButtonColor,):Image.asset('assets/images/date_determine.png'),
+                                          Gap(5.w),
+                                          Text(
+                                            '${previousOrders[index].fromDate ?? ''} - ${previousOrders[index].toDate ?? ''}',
+                                            style: font20PrimaryMedium.copyWith(
+                                              fontSize: 12.sp,
+                                              color: kTextGreyColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

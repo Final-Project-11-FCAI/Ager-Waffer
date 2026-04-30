@@ -143,45 +143,49 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                   },
                                 ),
                                 Gap(20.h),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      completedOrders[index].itemName ?? '',
-                                      style: font16BlackSemiBold.copyWith(
-                                        color: kPrimaryColor,
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        completedOrders[index].itemName ?? '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: font16BlackSemiBold.copyWith(
+                                          color: kPrimaryColor,
+                                        ),
                                       ),
-                                    ),
-                                    Gap(2.w),
-                                    Row(
-                                      children: [
-                                        Image.asset('assets/images/owner.png'),
-                                        Gap(5.w),
-                                        Text(
-                                          "${kOwner.tr()}: ${completedOrders[index].ownerName ?? ''}",
-                                          style: font13kLightPrimaryColorMedium
-                                              .copyWith(color: kBlackColor),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(5.w),
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/date_determine.png',
-                                        ),
-                                        Gap(5.w),
-                                        Text(
-                                          '${completedOrders[index].fromDate ?? ''} - ${completedOrders[index].toDate ?? ''}',
-                                          style: font20PrimaryMedium.copyWith(
-                                            fontSize: 12.sp,
-                                            color: kTextGreyColor,
+                                      Gap(2.w),
+                                      Row(
+                                        children: [
+                                          Image.asset('assets/images/owner.png'),
+                                          Gap(5.w),
+                                          Text(
+                                            "${kOwner.tr()}: ${completedOrders[index].ownerName ?? ''}",
+                                            style: font13kLightPrimaryColorMedium
+                                                .copyWith(color: kBlackColor),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                      Gap(5.w),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/date_determine.png',
+                                          ),
+                                          Gap(5.w),
+                                          Text(
+                                            '${completedOrders[index].fromDate ?? ''} - ${completedOrders[index].toDate ?? ''}',
+                                            style: font20PrimaryMedium.copyWith(
+                                              fontSize: 12.sp,
+                                              color: kTextGreyColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

@@ -119,58 +119,62 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                 },
                               ),
                               Gap(20.h),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    currentOrders[index].itemName ?? '',
-                                    style: font16BlackSemiBold.copyWith(
-                                      color: kPrimaryColor,
+                              Flexible(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      currentOrders[index].itemName ?? '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: font16BlackSemiBold.copyWith(
+                                        color: kPrimaryColor,
+                                      ),
                                     ),
-                                  ),
-                                  Gap(2.h),
-                                  Row(
-                                    children: [
-                                      Image.asset('assets/images/owner.png'),
-                                      Gap(5.w),
-                                      Text(
-                                        "${kOwner.tr()}: ${currentOrders[index].ownerName ?? ''}",
-                                        style: font13kLightPrimaryColorMedium.copyWith(
-                                          color: kBlackColor,
+                                    Gap(2.h),
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/images/owner.png'),
+                                        Gap(5.w),
+                                        Text(
+                                          "${kOwner.tr()}: ${currentOrders[index].ownerName ?? ''}",
+                                          style: font13kLightPrimaryColorMedium.copyWith(
+                                            color: kBlackColor,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Gap(5.h),
-                                  Row(
-                                    children: [
-                                      Image.asset('assets/images/date_determine.png'),
-                                      Gap(5.w),
-                                      Text(
-                                        '${currentOrders[index].fromDate ?? ''} - ${currentOrders[index].toDate ?? ''}',
-                                        style: font20PrimaryMedium.copyWith(
-                                          fontSize: 12.sp,
-                                          color: kTextGreyColor,
+                                      ],
+                                    ),
+                                    Gap(5.h),
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/images/date_determine.png'),
+                                        Gap(5.w),
+                                        Text(
+                                          '${currentOrders[index].fromDate ?? ''} - ${currentOrders[index].toDate ?? ''}',
+                                          style: font20PrimaryMedium.copyWith(
+                                            fontSize: 12.sp,
+                                            color: kTextGreyColor,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Gap(5.h),
-                                  Row(
-                                    children: [
-                                      Image.asset('assets/images/remainder.png'),
-                                      Gap(5.w),
-                                      Text(
-                                        "${kRemaining.tr()} ${currentOrders[index].timeLeftInDays} ${kDays.tr()}",
-                                        style: font20PrimaryMedium.copyWith(
-                                          fontSize: 13.sp,
-                                          color: kOrangeColor,
+                                      ],
+                                    ),
+                                    Gap(5.h),
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/images/remainder.png'),
+                                        Gap(5.w),
+                                        Text(
+                                          "${kRemaining.tr()} ${currentOrders[index].timeLeftInDays} ${kDays.tr()}",
+                                          style: font20PrimaryMedium.copyWith(
+                                            fontSize: 13.sp,
+                                            color: kOrangeColor,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
