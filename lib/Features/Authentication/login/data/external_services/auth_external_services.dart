@@ -1,16 +1,7 @@
+import 'package:ager_waffer/Features/Authentication/login/data/external_services/google_auth_result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-class GoogleAuthResult {
-  final User user;
-  final String accessToken;
-
-  GoogleAuthResult({
-    required this.user,
-    required this.accessToken,
-  });
-}
 
 class AuthExternalService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -25,7 +16,6 @@ class AuthExternalService {
       final GoogleSignInAccount googleUser =
       await _googleSignIn.authenticate();
 
-      /// 🔐 access token
       final authorization = await googleUser.authorizationClient
           .authorizationForScopes([
         'email',
@@ -37,7 +27,6 @@ class AuthExternalService {
 
       final accessToken = authorization.accessToken;
 
-      /// 🔐 firebase auth
       final googleAuth = googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(

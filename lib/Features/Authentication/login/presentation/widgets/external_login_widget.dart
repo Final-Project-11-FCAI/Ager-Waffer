@@ -65,10 +65,8 @@ class ExternalLoginWidget extends StatelessWidget {
             final result = await auth.signInWithGoogle();
 
             if (result != null) {
-              /// ✅ خزّن المستخدم في Firestore
               await saveGoogleUserToFirestore(result.user);
 
-              /// ✅ استخدم access token
               context.read<ExternalLoginBloc>().add(
                 ExternalLoginEvent(
                   provider: 'google',
