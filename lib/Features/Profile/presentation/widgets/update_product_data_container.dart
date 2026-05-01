@@ -69,6 +69,9 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
                 ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+        //     if (widget.initialValue != null && widget.initialValue!.isNotEmpty) {
+        //       selectedValue = widget.initialValue!.tr();
+        // }
                 Text(
                   selectedValue ?? widget.hintText,
                   style: font15SomeBlackColorMedium.copyWith(
@@ -152,7 +155,8 @@ class _UpdateProductDataContainerState extends State<UpdateProductDataContainer>
                           widget.options[index].tr(),
                           style:
                           font15SomeBlackColorMedium.copyWith(
-                            color:  isDark ? kWhiteColor : kBlackColor,                          ),
+                            color:  isDark ? kWhiteColor : kBlackColor,
+                          ),
                         ),
                       ),
                     );

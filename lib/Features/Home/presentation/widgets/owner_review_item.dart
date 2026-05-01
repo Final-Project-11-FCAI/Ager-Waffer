@@ -48,10 +48,11 @@ class OwnerReviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: kWhiteColor,
+        color: isDark ? kSomeDarkModeColor : kWhiteColor,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: kBlackColor.withOpacity(0.2), width: 1.w),
       ),
@@ -81,12 +82,13 @@ class OwnerReviewItem extends StatelessWidget {
                              reviews.authorName ?? kUserName.tr(),
                             style: font16BlackSemiBold.copyWith(
                               fontSize: 13.sp,
+                              color: isDark ? kWhiteColor : kBlackColor,
                             ),
                           ),
                         ),
                         Text(
                           formatDateSmart(reviews.createAt!) ?? kDate.tr(),
-                          style: font14GreyRegular.copyWith(fontSize: 11.sp),
+                          style: font14GreyRegular.copyWith(fontSize: 11.sp, color: isDark ? kSomeGreyColor : kGreyColor),
                         ),
                       ],
                     ),
@@ -97,7 +99,7 @@ class OwnerReviewItem extends StatelessWidget {
                           reviews.rate.toString() ??'0.0',
                           style: font20PrimaryMedium.copyWith(
                             fontSize: 12.sp,
-                            color: kPartGreyColor,
+                            color: isDark ? kSomeGreyColor : kPartGreyColor,
                           ),
                         ),
                         Gap(1.w),
@@ -114,7 +116,7 @@ class OwnerReviewItem extends StatelessWidget {
            reviews.reviewText ??kReviewText.tr(),
             style: font14GreyRegular.copyWith(
               fontSize: 12.sp,
-              color: kBlackColor,
+              color: isDark ? kWhiteColor : kBlackColor,
             ),
           ),
         ],

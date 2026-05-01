@@ -6,7 +6,6 @@ class ItemReviewsModel extends BaseMappable {
   String? messageAr;
   String? messageEn;
   int? statusCode;
-  Null? errors;
 
   ItemReviewsModel({
     this.isSuccess,
@@ -14,7 +13,6 @@ class ItemReviewsModel extends BaseMappable {
     this.messageAr,
     this.messageEn,
     this.statusCode,
-    this.errors,
   });
 
   ItemReviewsModel.fromJson(Map<String, dynamic> json) {
@@ -28,7 +26,6 @@ class ItemReviewsModel extends BaseMappable {
     messageAr = json['messageAr'];
     messageEn = json['messageEn'];
     statusCode = json['statusCode'];
-    errors = json['errors'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,7 +37,6 @@ class ItemReviewsModel extends BaseMappable {
     data['messageAr'] = this.messageAr;
     data['messageEn'] = this.messageEn;
     data['statusCode'] = this.statusCode;
-    data['errors'] = this.errors;
     return data;
   }
 
@@ -56,14 +52,12 @@ class ItemReviewsModel extends BaseMappable {
     messageAr = json['messageAr'];
     messageEn = json['messageEn'];
     statusCode = json['statusCode'];
-    errors = json['errors'];
     return ItemReviewsModel(
       isSuccess: isSuccess,
       data: data,
       messageAr: messageAr,
       messageEn: messageEn,
       statusCode: statusCode,
-      errors: errors,
     );
   }
 }
@@ -77,8 +71,8 @@ class Data {
   String? authorId;
   String? authorName;
   String? authorImageUrl;
-  Null? reviewedUserId;
-  Null? reviewedUserName;
+  String? reviewedUserId;
+  String? reviewedUserName;
 
   Data({
     this.id,
