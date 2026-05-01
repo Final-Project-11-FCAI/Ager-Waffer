@@ -71,7 +71,7 @@ class _ChatMessageCardState extends State<ChatMessageCard> {
               topRight: Radius.circular(16),
             )),
             color: isMe
-                ? isDark ? kLightPrimaryColor : kPrimaryColor
+                ? isDark ? kButtonColor : kPrimaryColor
                 : kWhiteColor,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
