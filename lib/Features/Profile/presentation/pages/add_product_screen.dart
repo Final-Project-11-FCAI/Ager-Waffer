@@ -219,7 +219,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               options: categoryOptions,
                               optionsLength: categoryOptions.length,
                               onItemSelected: (value) {
-                                selectedCategory = value;
+                                selectedCategory = value.tr();
+                                print("Category : $selectedCategory");
                                 validateForm();
                               },
                             ),

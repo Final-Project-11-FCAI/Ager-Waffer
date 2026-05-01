@@ -10,11 +10,18 @@ class AuthExternalService {
   Future<GoogleAuthResult?> signInWithGoogle() async {
     try {
       await _googleSignIn.initialize(
-        serverClientId: "784984253888-9guiv8svk035agkdqpibn97nrk7kbe4u.apps.googleusercontent.com",
+        serverClientId:
+        "784984253888-9guiv8svk035agkdqpibn97nrk7kbe4u.apps.googleusercontent.com",
       );
 
-      final GoogleSignInAccount googleUser =
+      await _auth.signOut();
+      await _googleSignIn.disconnect();
+      await _googleSignIn.signOut();
+
+      final GoogleSignInAccount? googleUser =
       await _googleSignIn.authenticate();
+
+      if (googleUser == null) return null;
 
       final authorization = await googleUser.authorizationClient
           .authorizationForScopes([
@@ -25,8 +32,6 @@ class AuthExternalService {
 
       if (authorization == null) return null;
 
-      final accessToken = authorization.accessToken;
-
       final googleAuth = googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
@@ -36,21 +41,20 @@ class AuthExternalService {
       final userCredential =
       await _auth.signInWithCredential(credential);
 
-      final user = userCredential.user;
-
-      if (user == null) return null;
-
       return GoogleAuthResult(
-        user: user,
-        accessToken: accessToken,
+        user: userCredential.user!,
+        accessToken: authorization.accessToken,
       );
     } catch (e) {
       print("Google Sign-In Error: $e");
-      return null;
+      rethrow;
     }
   }
+
+
   Future<void> signOut() async {
     await _googleSignIn.signOut();
+    await _googleSignIn.disconnect();
     await _auth.signOut();
   }
 

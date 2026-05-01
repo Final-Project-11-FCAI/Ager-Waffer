@@ -27,6 +27,7 @@ class SharedPreferenceManager {
   Future<void> saveUser(Data user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('user', user.toUserJson());
+    print("user : $user");
   }
 
   Future<Data?> getUser() async {
@@ -44,7 +45,7 @@ class SharedPreferenceManager {
     return null;
   }
 
-  Future<void> removeUser() async {
+  Future<void> removeUser(getUser) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('user');
   }

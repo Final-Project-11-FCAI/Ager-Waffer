@@ -300,8 +300,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             
                   // Camera Edit Button
                   Positioned(
-                    right: Shared.width * 0.31.w,
-                    top: Shared.height * 0.16.h,
+                    right: LocalizeAndTranslate.getLanguageCode() == 'en' ? Shared.width * 0.625.sp : Shared.width * 0.31.sp,
+                    top: Shared.width * 0.31.sp,
+
                     child: GestureDetector(
                       onTap: () async {
                         final ImagePicker picker = ImagePicker();
@@ -376,7 +377,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 );
 
-                Navigator.of(context).pop(); // بس كده
+                Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: kPrimaryColor,

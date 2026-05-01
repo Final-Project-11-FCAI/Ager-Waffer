@@ -43,6 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _user = user;
     });
+    print("?????????????????????????????????????");
   }
 
   @override
@@ -220,9 +221,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Positioned(
-              right: LocalizeAndTranslate.getLanguageCode() == 'en' ? Shared.width * 0.28.sp : Shared.width * -0.08.sp,
-              left: LocalizeAndTranslate.getLanguageCode() == 'en' ?  Shared.width * -0.08.sp : Shared.width * 0.28.sp,
-              top: Shared.height * 0.01.sp,
+              right: LocalizeAndTranslate.getLanguageCode() == 'en' ? Shared.width * 0.64.sp : Shared.width * 0.29.sp,
+              top: Shared.height * 0.2.sp,
               child: GestureDetector(
                 onTap: () async {
                   final Data? userData = await sharedPreferenceManager.getUser();

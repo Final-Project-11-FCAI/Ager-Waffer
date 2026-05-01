@@ -30,8 +30,18 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       future: sharedPreferenceManager.getUser(),
       builder: (context, snapshot) {
         print("snapshot : $snapshot");
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
+
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Text('${kError.tr()}: ${snapshot.error}');
+        }
+
+        if (!snapshot.hasData || snapshot.data == null) {
+          return const SizedBox();
         } else if (snapshot.hasError) {
           return Text('${kError.tr()}: ${snapshot.error}');
         }

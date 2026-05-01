@@ -26,7 +26,6 @@ class ExternalLoginWidget extends StatelessWidget {
 
     final docSnapshot = await docRef.get();
 
-    // لو المستخدم مش موجود
     if (!docSnapshot.exists) {
       await docRef.set({
         "uid": user.uid,
@@ -43,7 +42,6 @@ class ExternalLoginWidget extends StatelessWidget {
         "my_users": [],
       });
     } else {
-      // المستخدم موجود → ممكن تحدث last seen بس
       await docRef.update({
         "last_activated":
         user.metadata.lastSignInTime?.millisecondsSinceEpoch.toString() ?? '',
@@ -62,9 +60,11 @@ class ExternalLoginWidget extends StatelessWidget {
           text: kContinueWithGoogle.tr(),
           icon: "assets/images/Google.png",
           onTap: () async {
-            final result = await auth.signInWithGoogle();
+            try {
+              final result = await auth.signInWithGoogle();
 
-            if (result != null) {
+              if (result == null) return;
+
               await saveGoogleUserToFirestore(result.user);
 
               context.read<ExternalLoginBloc>().add(
@@ -83,7 +83,7 @@ class ExternalLoginWidget extends StatelessWidget {
                   ),
                 ),
               );
-            } else {
+            } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(kGoogleSignInFailed.tr())),
               );
