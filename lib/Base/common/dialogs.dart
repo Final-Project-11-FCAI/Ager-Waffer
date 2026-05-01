@@ -180,7 +180,7 @@ class Dialogs {
                                   kCancel.tr(),
                                   style: font16BlackSemiBold.copyWith(
                                     fontSize: 14.sp,
-                                    color: isDark ? kTextColor : kPrimaryColor,
+                                    color: isDark ? kSomeGreyColor : kPrimaryColor,
                                   ),
                                 ),
                               ],
