@@ -7,6 +7,8 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/manager/e
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +20,38 @@ class ExternalLoginWidget extends StatelessWidget {
 
   final auth = AuthExternalService();
 
+  Future<void> saveGoogleUserToFirestore(User user) async {
+    final docRef =
+    FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+    final docSnapshot = await docRef.get();
+
+    // لو المستخدم مش موجود
+    if (!docSnapshot.exists) {
+      await docRef.set({
+        "uid": user.uid,
+        "name": user.displayName ?? '',
+        "email": user.email ?? '',
+        "about": "Hello! I'm ${user.displayName ?? ''}",
+        "image": user.photoURL ?? '',
+        "created_at": DateTime.now().millisecondsSinceEpoch,
+        "last_message_time": DateTime.now().millisecondsSinceEpoch,
+        "last_activated":
+        user.metadata.lastSignInTime?.millisecondsSinceEpoch.toString() ?? '',
+        "push_token": '',
+        "online": true,
+        "my_users": [],
+      });
+    } else {
+      // المستخدم موجود → ممكن تحدث last seen بس
+      await docRef.update({
+        "last_activated":
+        user.metadata.lastSignInTime?.millisecondsSinceEpoch.toString() ?? '',
+        "online": true,
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,22 +62,27 @@ class ExternalLoginWidget extends StatelessWidget {
           text: kContinueWithGoogle.tr(),
           icon: "assets/images/Google.png",
           onTap: () async {
-            final token =
-            await auth.signInWithGoogleAndGetAccessToken();
+            final result = await auth.signInWithGoogle();
 
-            if (token != null) {
+            if (result != null) {
+              /// ✅ خزّن المستخدم في Firestore
+              await saveGoogleUserToFirestore(result.user);
+
+              /// ✅ استخدم access token
               context.read<ExternalLoginBloc>().add(
                 ExternalLoginEvent(
-                    provider: 'google', accessToken: token),
+                  provider: 'google',
+                  accessToken: result.accessToken,
+                ),
               );
+
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (c) =>
-                      BlocProvider(
-                        create: (_) => BottomNavCubit(),
-                        child: HomeLayoutScreen(),
-                      ),
+                  builder: (c) => BlocProvider(
+                    create: (_) => BottomNavCubit(),
+                    child: HomeLayoutScreen(),
+                  ),
                 ),
               );
             } else {

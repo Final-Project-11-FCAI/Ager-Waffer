@@ -269,7 +269,7 @@ class _FinishedOrdersState extends State<FinishedOrders> {
                                   text: kRateOwner.tr(),
                                   icon: 'assets/images/star.png',
                                   backgroundColor: isDark ? kTransparentColor : kWhiteColor,
-                                  textColor: isDark ? kTextColor : kPrimaryColor,
+                                  textColor: isDark ? kWhiteColor : kPrimaryColor,
                                   onTap: () {
                                     showModalBottomSheet(
                                       context: context,

@@ -2,52 +2,64 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+class GoogleAuthResult {
+  final User user;
+  final String accessToken;
+
+  GoogleAuthResult({
+    required this.user,
+    required this.accessToken,
+  });
+}
+
 class AuthExternalService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
-  Future<String?> signInWithGoogleAndGetAccessToken() async {
+  Future<GoogleAuthResult?> signInWithGoogle() async {
     try {
       await _googleSignIn.initialize(
-        serverClientId: "784984253888-5k2hdf3ltoeg0f3uecr5g7l8n907oaid.apps.googleusercontent.com",
+        serverClientId: "784984253888-9guiv8svk035agkdqpibn97nrk7kbe4u.apps.googleusercontent.com",
       );
 
-      final GoogleSignInAccount user =
+      final GoogleSignInAccount googleUser =
       await _googleSignIn.authenticate();
 
-      print("Google user selected");
-
-      // 2️⃣ الحصول على accessToken
-      final authorization = await user.authorizationClient
+      /// 🔐 access token
+      final authorization = await googleUser.authorizationClient
           .authorizationForScopes([
         'email',
         'profile',
         'openid',
       ]);
 
-      if (authorization == null) {
-        print("Authorization failed");
-        return null;
-      }
+      if (authorization == null) return null;
 
       final accessToken = authorization.accessToken;
-      print("AccessToken: $accessToken");
 
-      final googleAuth = user.authentication;
+      /// 🔐 firebase auth
+      final googleAuth = googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
 
+      final userCredential =
       await _auth.signInWithCredential(credential);
 
-      return accessToken;
+      final user = userCredential.user;
+
+      if (user == null) return null;
+
+      return GoogleAuthResult(
+        user: user,
+        accessToken: accessToken,
+      );
     } catch (e) {
       print("Google Sign-In Error: $e");
       return null;
     }
   }
-
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();

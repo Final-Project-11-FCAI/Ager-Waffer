@@ -262,7 +262,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                             child: orderButton(
                               text: kCancelOrder.tr(),
                               backgroundColor: isDark ? kTransparentColor : kWhiteColor,
-                              textColor: isDark ? kTextColor : kLightPrimaryColor,
+                              textColor: isDark ? kWhiteColor : kLightPrimaryColor,
                               onTap: () {
                                 showCancelDialog(
                                   context: context,

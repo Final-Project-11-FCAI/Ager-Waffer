@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             customAnimatedPushNavigation(context, AddProductScreen());
           },
           elevation: 3.sp,
-          backgroundColor: isDark ? kWhiteColor : kPrimaryColor,
+          backgroundColor: isDark ? kSomeGreyColor : kPrimaryColor,
           child: Icon(Icons.add, color: isDark ? kPrimaryColor : kWhiteColor),
         ),
       ),

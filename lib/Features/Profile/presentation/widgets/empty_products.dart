@@ -40,7 +40,7 @@ class EmptyProducts extends StatelessWidget {
             subTitle,
             textAlign: TextAlign.center,
             style: font20PrimaryMedium.copyWith(
-              color: kBorderColor,
+              color: isDark ? kSomeGreyColor : kBorderColor,
               fontSize: 18.sp,
             ),
           ),

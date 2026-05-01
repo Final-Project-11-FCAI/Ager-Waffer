@@ -132,10 +132,10 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           onTap: (){
                             Dialogs.showDialogDeleteProduct(context, productId: widget.myListings.id!);
                           },
-                        textColor: isDark ? kTextColor : kMoreRedColor,
+                        textColor: isDark ? kWhiteColor : kMoreRedColor,
                         backgroundColor: isDark ? kTransparentColor : kMoreRedColor.withOpacity(0.21),
                         borderColor: isDark ? kTextColor : kMoreRedColor.withOpacity(0.21),
-                        iconColor: isDark ? kTextColor : kMoreRedColor
+                        iconColor: isDark ? kWhiteColor : kMoreRedColor
                       ),
                     ],
                   )

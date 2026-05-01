@@ -264,7 +264,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
                                       text: kContactRenter.tr(),
                                       icon: 'assets/images/contact_icon.png',
                                       backgroundColor: isDark ? kTransparentColor : kWhiteColor,
-                                      textColor: isDark ? kTextColor : kPrimaryColor,
+                                      textColor: isDark ? kWhiteColor : kPrimaryColor,
                                       onTap: () async {
                                         print("ownerEmail: ${currentOrdersManagement[index].email}");
                                         final roomId = await FireData()
@@ -356,7 +356,7 @@ class _CurrentManageOrdersState extends State<CurrentManageOrders> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             isNotIcon ? SizedBox() : Image.asset(
-                icon, color: isDark ? kTextColor : kLightPrimaryColor, width: 20.w, height: 20.h),
+                icon, color: isDark ? kWhiteColor : kLightPrimaryColor, width: 20.w, height: 20.h),
             Gap(3.w),
             Text(
               text,

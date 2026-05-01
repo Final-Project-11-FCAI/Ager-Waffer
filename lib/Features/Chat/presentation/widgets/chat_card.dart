@@ -28,6 +28,24 @@ class ChatCard extends StatelessWidget {
     return DateTime.now();
   }
 
+  Color getColorFromName(String name) {
+    final colors = [
+      Colors.red,
+      Colors.blue,
+      Colors.green,
+      Colors.orange,
+      Colors.purple,
+      Colors.teal,
+      Colors.indigo,
+      Colors.pink,
+      Colors.cyan,
+      Colors.brown,
+    ];
+
+    final index = name.hashCode % colors.length;
+    return colors[index.abs()];
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -72,12 +90,14 @@ class ChatCard extends StatelessWidget {
                   ),
                 );
               },
-              leading: chatUser.image == ''
+              leading: chatUser.image == null
                   ? CircleAvatar(
+                backgroundColor: getColorFromName(chatUser.name!),
                       child: Text(
                         (chatUser.name != null && chatUser.name!.isNotEmpty)
                             ? chatUser.name!.characters.first
                             : '?',
+                        style: TextStyle(color: isDark ? kWhiteColor : kWhiteColor),
                       ),
                     )
                   : CircleAvatar(

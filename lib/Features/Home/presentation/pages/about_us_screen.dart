@@ -13,8 +13,10 @@ class AboutUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
+      backgroundColor: isDark ? kMoreDarkModeColor : null,
       appBar: AppBar(
         forceMaterialTransparency: false,
+        backgroundColor: isDark ? kDarkModeColor : null,
         title: Text(kAboutUs.tr(), style: font24LightPrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kLightPrimaryColor)),
         centerTitle: true,
       ),

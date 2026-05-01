@@ -196,7 +196,16 @@ class _DrawerDetailsState extends State<DrawerDetails> {
               },
               child: Row(
                 children: [
-                  Icon(
+                  LocalizeAndTranslate.getLanguageCode() == 'en' ?
+                  Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(3.1416),
+                    child: Icon(
+                      Icons.exit_to_app_outlined,
+                      color: kMoreRedColor,
+                      size: 30.sp,
+                    ),
+                  ) : Icon(
                     Icons.exit_to_app_outlined,
                     color: kMoreRedColor,
                     size: 30.sp,

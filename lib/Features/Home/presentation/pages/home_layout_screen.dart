@@ -89,7 +89,7 @@ class HomeLayoutScreen extends StatelessWidget {
                   items: [
                     BottomNavigationBarItem(
                       icon: Image.asset(
-                        'assets/images/home.png',
+                        currentIndex == 0 ? 'assets/images/home.png' : 'assets/images/home_outline.png',
                         color: currentIndex == 0 ?
                         isDark ? kButtonColor : kPrimaryColor : isDark ? kSomeGreyColor : kMoreGreyColor,
                       ),
@@ -98,7 +98,7 @@ class HomeLayoutScreen extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: Image.asset(
-                        'assets/images/heart.png',
+                        currentIndex == 1 ? 'assets/images/favorite_filled.png' : 'assets/images/heart.png',
                         color: currentIndex == 1 ? isDark ? kButtonColor : kPrimaryColor : isDark ? kSomeGreyColor : kMoreGreyColor,
                       ),
                       label: kFavorite.tr(),
@@ -106,7 +106,7 @@ class HomeLayoutScreen extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: Image.asset(
-                        'assets/images/chat_icon.png',
+                        currentIndex == 2 ? 'assets/images/chat_filled.png' : 'assets/images/chat_outline.png',
                         color: currentIndex == 2 ? isDark ? kButtonColor : kPrimaryColor : isDark ? kSomeGreyColor : kMoreGreyColor,
                       ),
                       label: kConversations.tr(),
@@ -114,7 +114,7 @@ class HomeLayoutScreen extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: Image.asset(
-                        'assets/images/profile.png',
+                        currentIndex == 3 ? 'assets/images/profile_filled.png' : 'assets/images/profile.png',
                         color: currentIndex == 3 ? isDark ? kButtonColor : kPrimaryColor : isDark ? kSomeGreyColor : kMoreGreyColor,
                       ),
                       label: kMyAccount.tr(),

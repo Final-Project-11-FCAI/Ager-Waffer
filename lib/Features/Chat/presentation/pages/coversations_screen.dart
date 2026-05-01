@@ -80,11 +80,13 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return Center(
+                      child: SingleChildScrollView(
                         child: EmptyProducts(
                           image: 'assets/images/no_products.png',
                           title: kNoConversationsYet.tr(),
                           subTitle: kConversationsHint.tr(),
-                        )
+                        ),
+                      ),
                     );
                   }
 

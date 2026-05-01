@@ -323,7 +323,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                         ? kTransparentColor
                                         : kWhiteColor,
                                     textColor: isDark
-                                        ? kTextColor
+                                        ? kWhiteColor
                                         : kPrimaryColor,
                                     onTap: () {
                                       context.read<DeclineOrderBloc>().add(
@@ -337,7 +337,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                         ? kTextColor
                                         : kLightPrimaryColor,
                                     iconColor: isDark
-                                        ? kTextColor
+                                        ? kWhiteColor
                                         : kLightPrimaryColor,
                                   ),
                                 ],

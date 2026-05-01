@@ -68,60 +68,60 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                     topRight: Radius.circular(25.r),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      right: Shared.width * 0.04.w,
-                      left: Shared.width * 0.04.w,
-                      top: Shared.height * 0.08.h,
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          widget.product.ownerName!,
-                          style: font24PrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: Shared.width * 0.04.w,
+                    left: Shared.width * 0.04.w,
+                    top: Shared.height * 0.08.h,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.product.ownerName!,
+                        style: font24PrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),
+                      ),
+                      Text(
+                        widget.product.ownerEmail!,
+                        style: font24PrimarySemiBold.copyWith(
+                          color: isDark ? kSomeGreyColor : kGreyColor,
+                          fontSize: 14,
                         ),
-                        Text(
-                          widget.product.ownerEmail!,
-                          style: font24PrimarySemiBold.copyWith(
-                            color: isDark ? kSomeGreyColor : kGreyColor,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Gap(10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.star, color: kMoreYellowColor, size: 18),
-                            Gap(5.w),
-                            Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "4.8",
-                                    style: font14GreyRegular.copyWith(color: isDark ? kWhiteColor : kPrimaryColor),
-                                  ),
-                                ],
-                              ),
+                      ),
+                      Gap(10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.star, color: kMoreYellowColor, size: 18),
+                          Gap(5.w),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "4.8",
+                                  style: font14GreyRegular.copyWith(color: isDark ? kWhiteColor : kPrimaryColor),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        Gap(20.h),
-                        _buildInfoRow(
-                          Icons.location_on_outlined,
-                          kGovernorate.tr(),
-                          widget.product.governorate ?? "",
-                        ),
-                        _buildInfoRow(
-                          Icons.calendar_month_outlined,
-                          kJoinDate.tr(),
-                          "${kMemberSince.tr()} ${
-                              LocalizeAndTranslate.getLanguageCode() == 'ar' ?
-                              formatDateArabic(widget.product.ownerCreatedAt!) ?? '2026'
-                          : formatDate(widget.product.ownerCreatedAt!) ?? '2026'}",
-                        ),
-                        Gap(10.h),
-                        BlocBuilder<ReviewsAboutUserBloc, ReviewsAboutUserState>(
+                          ),
+                        ],
+                      ),
+                      Gap(20.h),
+                      _buildInfoRow(
+                        Icons.location_on_outlined,
+                        kGovernorate.tr(),
+                        widget.product.governorate ?? "",
+                      ),
+                      _buildInfoRow(
+                        Icons.calendar_month_outlined,
+                        kJoinDate.tr(),
+                        "${kMemberSince.tr()} ${
+                            LocalizeAndTranslate.getLanguageCode() == 'ar' ?
+                            formatDateArabic(widget.product.ownerCreatedAt!) ?? '2026'
+                        : formatDate(widget.product.ownerCreatedAt!) ?? '2026'}",
+                      ),
+                      Gap(10.h),
+                      Expanded(
+                        child: BlocBuilder<ReviewsAboutUserBloc, ReviewsAboutUserState>(
                           builder: (context, state) {
                             if (state.status == reviewsAboutUserStatus.loading) {
                               return const LoadingPlaceHolder(
@@ -178,8 +178,8 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                             }
                           },
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
