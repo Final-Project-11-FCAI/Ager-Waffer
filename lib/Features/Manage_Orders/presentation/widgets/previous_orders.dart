@@ -154,7 +154,7 @@ class _PreviousOrdersState extends State<PreviousOrders> {
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: font16BlackSemiBold.copyWith(
-                                          color: isDark ? kWhiteColor : kBlackColor,
+                                          color: isDark ? kWhiteColor : kPrimaryColor,
                                         ),
                                       ),
                                       Gap(2.w),

@@ -34,6 +34,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocListener<CancelOrderBloc, CancelOrderState>(
       listener: (context, state) {
         if (state.status == cancelOrderStatus.loading) {
@@ -104,12 +105,15 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      customAnimatedPushNavigation(context, OrderDetailsScreen(currentOrders: pendingOrders[index]));
+                      customAnimatedPushNavigation(
+                        context,
+                        OrderDetailsScreen(currentOrders: pendingOrders[index]),
+                      );
                     },
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: kWhiteColor,
+                        color: isDark ? kSomeDarkModeColor : kWhiteColor,
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(
                           color: kBlackColor.withOpacity(0.2),
@@ -127,7 +131,8 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CachedNetworkImage(
-                                  imageUrl: pendingOrders[index].itemImages!.first,
+                                  imageUrl:
+                                      pendingOrders[index].itemImages!.first,
                                   width: 90.w,
                                   height: 90.h,
                                   fit: BoxFit.contain,
@@ -136,42 +141,63 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                                     fit: BoxFit.contain,
                                   ),
                                   errorWidget: (context, url, error) {
-                                    return Image.asset("assets/images/virtual_image.jpg");
+                                    return Image.asset(
+                                      "assets/images/virtual_image.jpg",
+                                    );
                                   },
                                 ),
                                 Gap(20.h),
                                 Expanded(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         pendingOrders[index].itemName ?? '',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: font16BlackSemiBold.copyWith(
-                                          color: kPrimaryColor,
+                                          color: isDark
+                                              ? kWhiteColor
+                                              : kPrimaryColor,
                                         ),
                                       ),
                                       Gap(2.w),
                                       Row(
                                         children: [
-                                          Image.asset('assets/images/owner.png'),
+                                          isDark
+                                              ? Image.asset(
+                                                  'assets/images/owner.png',
+                                                  color: kTextColor,
+                                                )
+                                              : Image.asset(
+                                                  'assets/images/owner.png',
+                                                ),
                                           Gap(5.w),
                                           Text(
-                                              "${kOwner.tr()}: ${pendingOrders[index].ownerName}",
+                                            "${kOwner.tr()}: ${pendingOrders[index].ownerName}",
                                             overflow: TextOverflow.ellipsis,
-                                            style: font13kLightPrimaryColorMedium
-                                                .copyWith(color: kBlackColor),
+                                            style:
+                                                font13kLightPrimaryColorMedium
+                                                    .copyWith(
+                                                      color: isDark
+                                                          ? kTextColor
+                                                          : kBlackColor,
+                                                    ),
                                           ),
                                         ],
                                       ),
                                       Gap(5.w),
                                       Row(
                                         children: [
-                                          Image.asset(
-                                            'assets/images/date_determine.png',
-                                          ),
+                                          isDark
+                                              ? Image.asset(
+                                                  'assets/images/date_determine.png'
+                                                ,color: kButtonColor)
+                                              : Image.asset(
+                                                  'assets/images/date_determine.png',
+                                                ),
                                           Gap(5.w),
                                           Text(
                                             '${pendingOrders[index].fromDate ?? ''} - ${pendingOrders[index].toDate ?? ''}',
@@ -205,14 +231,14 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                               children: [
                                 Text(
                                   kTotalAmount.tr(),
-                                  style: font13kLightPrimaryColorMedium.copyWith(
-                                    color: kDarkGreyColor,
-                                  ),
+                                  style: font13kLightPrimaryColorMedium
+                                      .copyWith(color: isDark ? kTextColor : kDarkGreyColor),
                                 ),
                                 Text(
                                   pendingOrders[index].totalPrice.toString(),
                                   style: font24LightPrimarySemiBold.copyWith(
                                     fontSize: 14.sp,
+                                    color: isDark ? kButtonColor : kLightPrimaryColor,
                                   ),
                                 ),
                               ],
@@ -235,20 +261,21 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
                             ),
                             child: orderButton(
                               text: kCancelOrder.tr(),
-                              backgroundColor: kWhiteColor,
-                              textColor: kPrimaryColor,
-                                onTap: () {
-                                  showCancelDialog(
-                                    context: context,
-                                    onConfirm: () {
-                                      context.read<CancelOrderBloc>().add(
-                                        CancelOrderEvent(
-                                          orderId: pendingOrders[index].requestId!,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
+                              backgroundColor: isDark ? kTransparentColor : kWhiteColor,
+                              textColor: isDark ? kTextColor : kLightPrimaryColor,
+                              onTap: () {
+                                showCancelDialog(
+                                  context: context,
+                                  onConfirm: () {
+                                    context.read<CancelOrderBloc>().add(
+                                      CancelOrderEvent(
+                                        orderId:
+                                            pendingOrders[index].requestId!,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }, borderColor: isDark ? kTextColor : kLightPrimaryColor,
                             ),
                           ),
                         ],
@@ -262,9 +289,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
             return CustomErrorWidget(
               message: state.failureMessage,
               onRetry: () {
-                context.read<MyOrdersBloc>().add(
-                  GetMyOrdersEvent(),
-                );
+                context.read<MyOrdersBloc>().add(GetMyOrdersEvent());
               },
             );
           } else {
@@ -294,21 +319,21 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text(kBack.tr(),
-              style: font15SomeBlackColorMedium.copyWith(color: kBlackColor),
+              child: Text(
+                kBack.tr(),
+                style: font15SomeBlackColorMedium.copyWith(color: kBlackColor),
               ),
             ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
               onPressed: () {
                 Navigator.pop(context);
 
                 onConfirm();
               },
-              child: Text(kConfirm.tr(),
-              style: font15SomeBlackColorMedium.copyWith(color: kWhiteColor),
+              child: Text(
+                kConfirm.tr(),
+                style: font15SomeBlackColorMedium.copyWith(color: kWhiteColor),
               ),
             ),
           ],
@@ -322,6 +347,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
     required Color backgroundColor,
     required Color textColor,
     required Function() onTap,
+    required Color borderColor,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -331,7 +357,7 @@ class _UnderReviewOrdersState extends State<UnderReviewOrders> {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: kLightPrimaryColor, width: 1.w),
+          border: Border.all(color: borderColor, width: 1.w),
         ),
         child: Center(
           child: Text(

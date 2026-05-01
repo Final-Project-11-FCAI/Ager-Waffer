@@ -120,9 +120,10 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           onTap: (){
                             customAnimatedPushNavigation(context, UpdateProductScreen(product: widget.myListings,));
                           },
-                          textColor: kButtonColor,
-                          backgroundColor: isDark ? kSomeGreyColor : kOpacityGreyColor,
-                          borderColor: kButtonColor
+                          textColor: isDark ? kWhiteColor : kButtonColor,
+                          backgroundColor: isDark ? kButtonColor : kWhiteColor,
+                          borderColor: kButtonColor,
+                        iconColor: isDark ? kWhiteColor : kButtonColor
                       ),
                       Gap(7.w),
                       deleteOrEditProductButton(
@@ -131,9 +132,10 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           onTap: (){
                             Dialogs.showDialogDeleteProduct(context, productId: widget.myListings.id!);
                           },
-                        textColor: kMoreRedColor,
-                        backgroundColor: kMoreRedColor.withOpacity(0.21),
-                        borderColor: kBlackColor.withOpacity(0.31)
+                        textColor: isDark ? kTextColor : kMoreRedColor,
+                        backgroundColor: isDark ? kTransparentColor : kMoreRedColor.withOpacity(0.21),
+                        borderColor: isDark ? kTextColor : kMoreRedColor.withOpacity(0.21),
+                        iconColor: isDark ? kTextColor : kMoreRedColor
                       ),
                     ],
                   )
@@ -151,7 +153,8 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
     String? icon,
     Color? textColor,
     Color? borderColor,
-    Color? backgroundColor
+    Color? backgroundColor,
+    Color? iconColor
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -168,7 +171,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
             children: [
               Text(title.toString(),style: font16BlackSemiBold.copyWith(fontSize: 14.sp, color: textColor),),
               Gap(10.w),
-              Image.asset(icon!, width: 20.w, height: 20.h,)
+              Image.asset(icon!, width: 20.w, height: 20.h,color: iconColor,)
             ],
           ),
         ),

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:path/path.dart';
 
 
 class ShowDetailsScreen extends StatelessWidget {
@@ -17,10 +18,11 @@ class ShowDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
           foregroundColor: kWhiteColor,
           title: Text(
             kOrderDetails.tr(),
@@ -35,7 +37,7 @@ class ShowDetailsScreen extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: kWhiteColor,
+            color: isDark ? kMoreDarkModeColor : kWhiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.r),
               topRight: Radius.circular(25.r),
@@ -50,22 +52,22 @@ class ShowDetailsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildProductCard(),
+                        _buildProductCard(context),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.12.w, vertical: Shared.height * 0.02.h),
-                          child: Divider(height: 1,color: kBlackColor,),
+                          child: Divider(height: 1,color: isDark ? kTextColor : kBlackColor,),
                         ),
-                        Text(kRentalPeriod.tr(), style: font16BlackSemiBold,),
+                        Text(kRentalPeriod.tr(), style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),),
                         Gap(8.h),
-                        _buildDateSection(),
+                        _buildDateSection(context),
                         Gap(15.h),
-                        Text(kPriceSummary.tr(), style: font16BlackSemiBold,),
+                        Text(kPriceSummary.tr(), style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),),
                         Gap(8.h),
-                        _buildPriceSection(),
+                        _buildPriceSection(context),
                         Gap(15.h),
-                        Text(kOwnerData.tr(), style: font16BlackSemiBold,),
+                        Text(kOwnerData.tr(), style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),),
                         Gap(8.h),
-                        _buildUserSection(),
+                        _buildUserSection(context),
                       ],
                     ),
                   ),
@@ -79,7 +81,8 @@ class ShowDetailsScreen extends StatelessWidget {
   }
 
 
-  Widget _buildProductCard() {
+  Widget _buildProductCard(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
       child: Row(
@@ -107,7 +110,7 @@ class ShowDetailsScreen extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.right,
-                  style: font16BlackSemiBold,
+                  style: font16BlackSemiBold.copyWith(color: isDark? kWhiteColor : kBlackColor),
                 ),
                 Gap(5.h),
                 Text(currentManageOrders.itemCondition!, style: font16BlackSemiBold.copyWith(
@@ -145,27 +148,28 @@ class ShowDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDateSection() {
+  Widget _buildDateSection(BuildContext context) {
     return _sectionContainer(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(child: _dateBox(kStartDate.tr(), currentManageOrders.fromDate!)),
+          Expanded(child: _dateBox(kStartDate.tr(), currentManageOrders.fromDate!,context),),
           Gap(10.w),
-          Expanded(child: _dateBox(kEndDate.tr(), currentManageOrders.toDate!)),
+          Expanded(child: _dateBox(kEndDate.tr(), currentManageOrders.toDate!,context)),
         ],
-      ),
+      ), context: context,
     );
   }
 
-  Widget _dateBox(String title, String date) {
+  Widget _dateBox(String title, String date,BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: _innerBoxDecoration(),
+      decoration: _innerBoxDecoration(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: font14GreyRegular.copyWith(fontWeight: medium,fontSize: 15),),
+          Text(title, style: font14GreyRegular.copyWith(fontWeight: medium,fontSize: 15,color: isDark ? kWhiteColor : kgreyColor),),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -180,7 +184,7 @@ class ShowDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceSection() {
+  Widget _buildPriceSection(BuildContext context) {
     return _sectionContainer(
       child: Column(
         children: [
@@ -189,11 +193,11 @@ class ShowDetailsScreen extends StatelessWidget {
           Divider(),
           _PriceRow(kTotal.tr(), "${currentManageOrders.totalPrice} ${kCurrency.tr()}", isTotal: true)
         ],
-      ),
+      ), context: context,
     );
   }
 
-  Widget _buildUserSection() {
+  Widget _buildUserSection(BuildContext context) {
     return _sectionContainer(
       child: Column(
         children: [
@@ -203,14 +207,14 @@ class ShowDetailsScreen extends StatelessWidget {
           _InfoRow(Icons.phone, kPhone.tr(), currentManageOrders.phoneNumber!),
           _InfoRow(Icons.email, kEmail.tr(), currentManageOrders.email!)
         ],
-      ),
+      ), context: context,
     );
   }
 
-  Widget _sectionContainer({required Widget child}) {
+  Widget _sectionContainer({required Widget child,required BuildContext context}) {
     return Container(
       padding: EdgeInsets.all(Shared.height * 0.02.h),
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -220,9 +224,10 @@ class ShowDetailsScreen extends StatelessWidget {
     );
   }
 
-  BoxDecoration _cardDecoration() {
+  BoxDecoration _cardDecoration(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BoxDecoration(
-      color: kProductDataContainerColor.withOpacity(0.3),
+      color: isDark ? kSomeDarkModeColor : kProductDataContainerColor.withOpacity(0.3),
       borderRadius: BorderRadius.circular(15),
       boxShadow: [
         BoxShadow(
@@ -233,9 +238,10 @@ class ShowDetailsScreen extends StatelessWidget {
     );
   }
 
-  BoxDecoration _innerBoxDecoration() {
+  BoxDecoration _innerBoxDecoration(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BoxDecoration(
-      color: kWhiteColor,
+      color: isDark ? kGreyColor.withOpacity(0.19) : kWhiteColor,
       borderRadius: BorderRadius.circular(12.r),
     );
   }
@@ -250,6 +256,7 @@ class _PriceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -260,11 +267,11 @@ class _PriceRow extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: isTotal ? bold : medium,
-              color: isTotal ? kPrimaryColor : kBlackColor,
+              color: isTotal ? isDark ? kWhiteColor : kPrimaryColor : isDark ? kTextColor : kBlackColor,
             ),
           ),
           Text(title,
-          style: font13kLightPrimaryColorMedium.copyWith(color: kBlackColor,
+          style: font13kLightPrimaryColorMedium.copyWith(color: isDark ? kWhiteColor : kBlackColor,
             fontWeight: isTotal ? bold : medium,),
           ),
         ],
@@ -282,16 +289,17 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, color: kLightPrimaryColor),
+          Icon(icon, color: isDark ? kWhiteColor : kLightPrimaryColor,),
           Gap(8.w),
-          Text("$title :",style: font15SomeBlackColorMedium.copyWith(color: kLightPrimaryColor),),
+          Text("$title :",style: font15SomeBlackColorMedium.copyWith(color: isDark ? kWhiteColor : kLightPrimaryColor),),
           Gap(8.w),
           Expanded(
-            child: Text(value, style: font15SomeBlackColorMedium.copyWith(color: kBlackColor),),
+            child: Text(value, style: font15SomeBlackColorMedium.copyWith(color: isDark ? kTextColor : kBlackColor),),
           ),
         ],
       ),

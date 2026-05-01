@@ -85,15 +85,16 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
 
                 Text(
                   kHowWasExperience.tr(),
-                  style: font20PrimaryMedium.copyWith(fontWeight: bold),
+                  style: font20PrimaryMedium.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kPrimaryColor),
                 ),
                 Gap(5.h),
 
                 Text(
                   kYourOpinionMatters.tr(),
                   style: font20PrimaryMedium.copyWith(
-                    color: kLightPrimaryColor,
+                    color: isDark ? kTextColor : kLightPrimaryColor,
                     fontSize: 15,
+
                   ),
                 ),
 
@@ -104,13 +105,14 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.star, color: kPrimaryColor),
+                         Icon(Icons.star, color: isDark ? kWhiteColor : kPrimaryColor),
                         Gap(5.w),
                         Text(
                           "${kRate.tr()} ${widget.name}",
                           style: font20PrimaryMedium.copyWith(
                             fontWeight: bold,
                             fontSize: 16,
+                            color: isDark ? kWhiteColor : kPrimaryColor,
                           ),
                         ),
                       ],
@@ -138,16 +140,16 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                 TextField(
                   controller: commentController,
                   maxLines: 3,
-                  cursorColor: kPrimaryColor,
+                  cursorColor: isDark ? kTextColor : kPrimaryColor,
                   decoration: InputDecoration(
                     hintText:
                     "${kCommentHint.tr()} ${widget.hint} (${kOptional.tr()})",
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: kPrimaryColor),
+                      borderSide:  BorderSide(color: isDark ? kTextColor : kPrimaryColor),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: kPrimaryColor),
+                      borderSide:  BorderSide(color: isDark ? kTextColor : kPrimaryColor),
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
@@ -179,7 +181,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
                     text: kSubmitReview.tr(),
                     color: isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.5) :
                     isDark && isButtonEnabled ?
-                    kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : kPrimaryColor,
+                    kButtonColor : !isDark && !isButtonEnabled ? kGreyColor.withOpacity(0.35) : isDark ? kButtonColor : kPrimaryColor,
                     isReview: true,
                   ),
                 ),

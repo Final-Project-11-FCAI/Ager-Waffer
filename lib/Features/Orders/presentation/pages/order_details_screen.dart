@@ -15,25 +15,23 @@ class OrderDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
       appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          foregroundColor: kWhiteColor,
-          title: Text(
-            kOrderDetails.tr(),
-            style: font16BlackSemiBold.copyWith(
-              fontSize: 20,
-              color: kWhiteColor,
-            ),
-          )
+        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+        foregroundColor: kWhiteColor,
+        title: Text(
+          kOrderDetails.tr(),
+          style: font16BlackSemiBold.copyWith(fontSize: 20, color: kWhiteColor),
+        ),
       ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: kWhiteColor,
+            color: isDark ? kMoreDarkModeColor : kPrimaryColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.r),
               topRight: Radius.circular(25.r),
@@ -44,26 +42,50 @@ class OrderDetailsScreen extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w,vertical: Shared.height * 0.02.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Shared.width * 0.04.w,
+                      vertical: Shared.height * 0.02.h,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildProductCard(),
+                        _buildProductCard(context),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.12.w, vertical: Shared.height * 0.02.h),
-                          child: Divider(height: 1,color: kBlackColor,),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Shared.width * 0.12.w,
+                            vertical: Shared.height * 0.02.h,
+                          ),
+                          child: Divider(
+                            height: 1,
+                            color: isDark ? kTextColor : kBlackColor,
+                          ),
                         ),
-                        Text(kRentalPeriod.tr(), style: font16BlackSemiBold,),
+                        Text(
+                          kRentalPeriod.tr(),
+                          style: font16BlackSemiBold.copyWith(
+                            color: isDark ? kWhiteColor : kBlackColor,
+                          ),
+                        ),
                         Gap(8.h),
-                        _buildDateSection(),
+                        _buildDateSection(context),
                         Gap(15.h),
-                        Text(kPriceSummary.tr(), style: font16BlackSemiBold,),
+                        Text(
+                          kPriceSummary.tr(),
+                          style: font16BlackSemiBold.copyWith(
+                            color: isDark ? kWhiteColor : kBlackColor,
+                          ),
+                        ),
                         Gap(8.h),
-                        _buildPriceSection(),
+                        _buildPriceSection(context),
                         Gap(15.h),
-                        Text(kRenterData.tr(), style: font16BlackSemiBold,),
+                        Text(
+                          kRenterData.tr(),
+                          style: font16BlackSemiBold.copyWith(
+                            color: isDark ? kWhiteColor : kBlackColor,
+                          ),
+                        ),
                         Gap(8.h),
-                        _buildUserSection(),
+                        _buildUserSection(context),
                       ],
                     ),
                   ),
@@ -76,8 +98,9 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildProductCard(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-  Widget _buildProductCard() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.04.w),
       child: Row(
@@ -105,22 +128,29 @@ class OrderDetailsScreen extends StatelessWidget {
                   textAlign: TextAlign.right,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: font16BlackSemiBold,
+                  style: font16BlackSemiBold.copyWith(
+                    color: isDark ? kWhiteColor : kBlackColor,
+                  ),
                 ),
                 Gap(5.h),
-                Text(currentOrders.itemCondition!, style: font16BlackSemiBold.copyWith(
-                  color: kBlueColor,
-                ),),
+                Text(
+                  currentOrders.itemCondition!,
+                  style: font16BlackSemiBold.copyWith(color: kBlueColor),
+                ),
                 Gap(5.h),
                 Row(
                   children: [
-
                     ...List.generate(
                       5,
-                          (index) => Icon(
+                      (index) => Icon(
                         Icons.star,
                         size: 14.sp,
-                        color: index < (double.tryParse(currentOrders.avrageRate ?? '0')?.floor() ?? 0)
+                        color:
+                            index <
+                                (double.tryParse(
+                                      currentOrders.avrageRate ?? '0',
+                                    )?.floor() ??
+                                    0)
                             ? Colors.amber
                             : Colors.grey.shade300,
                       ),
@@ -132,45 +162,58 @@ class OrderDetailsScreen extends StatelessWidget {
                         fontSize: 10,
                         color: const Color.fromRGBO(151, 151, 151, 1),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildDateSection() {
+  Widget _buildDateSection(BuildContext context) {
     return _sectionContainer(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(child: _dateBox(kStartDate.tr(), currentOrders.fromDate!)),
+          Expanded(
+            child: _dateBox(kStartDate.tr(), currentOrders.fromDate!, context),
+          ),
           Gap(10.w),
-          Expanded(child: _dateBox(kEndDate.tr(), currentOrders.toDate!)),
+          Expanded(
+            child: _dateBox(kEndDate.tr(), currentOrders.toDate!, context),
+          ),
         ],
       ),
+      context: context,
     );
   }
 
-  Widget _dateBox(String title, String date) {
+  Widget _dateBox(String title, String date, BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: _innerBoxDecoration(),
+      decoration: _innerBoxDecoration(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: font14GreyRegular.copyWith(fontWeight: medium,fontSize: 15),),
+          Text(
+            title,
+            style: font14GreyRegular.copyWith(
+              fontWeight: medium,
+              fontSize: 15,
+              color: isDark ? kWhiteColor : kgreyColor,
+            ),
+          ),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(date),
               const SizedBox(width: 5),
-              Image.asset('assets/images/date_determine.png', width: 16.w,),
+              Image.asset('assets/images/date_determine.png', width: 16.w),
             ],
           ),
         ],
@@ -178,62 +221,79 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceSection() {
+  Widget _buildPriceSection(BuildContext context) {
     return _sectionContainer(
       child: Column(
         children: [
-          _PriceRow(kPricePerDay.tr(), "${currentOrders.price} ${kCurrency.tr()}"),
-          _PriceRow(kInsurance.tr(), "${currentOrders.insurance} ${kCurrency.tr()}"),
+          _PriceRow(
+            kPricePerDay.tr(),
+            "${currentOrders.price} ${kCurrency.tr()}",
+          ),
+          _PriceRow(
+            kInsurance.tr(),
+            "${currentOrders.insurance} ${kCurrency.tr()}",
+          ),
           Divider(),
-          _PriceRow(kTotal.tr(), "${currentOrders.totalPrice} ${kCurrency.tr()}", isTotal: true)
+          _PriceRow(
+            kTotal.tr(),
+            "${currentOrders.totalPrice} ${kCurrency.tr()}",
+            isTotal: true,
+          ),
         ],
       ),
+      context: context,
     );
   }
 
-  Widget _buildUserSection() {
+  Widget _buildUserSection(BuildContext context) {
     return _sectionContainer(
       child: Column(
         children: [
           _InfoRow(Icons.person, kName.tr(), currentOrders.ownerName!),
-          _InfoRow(Icons.location_on, kAddress.tr(),
-              "${currentOrders.city} ${currentOrders.governorate} ${currentOrders.street}"),
+          _InfoRow(
+            Icons.location_on,
+            kAddress.tr(),
+            "${currentOrders.city} ${currentOrders.governorate} ${currentOrders.street}",
+          ),
           _InfoRow(Icons.phone, kPhone.tr(), currentOrders.phoneNumber!),
-          _InfoRow(Icons.email, kEmail.tr(), currentOrders.email!)
+          _InfoRow(Icons.email, kEmail.tr(), currentOrders.email!),
         ],
       ),
+      context: context,
     );
   }
 
-  Widget _sectionContainer({required Widget child}) {
+  Widget _sectionContainer({
+    required Widget child,
+    required BuildContext context,
+  }) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          child,
-        ],
+        children: [child],
       ),
     );
   }
 
-  BoxDecoration _cardDecoration() {
+  BoxDecoration _cardDecoration(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BoxDecoration(
-      color: kProductDataContainerColor.withOpacity(0.3),
+      color: isDark
+          ? kSomeDarkModeColor
+          : kProductDataContainerColor.withOpacity(0.3),
       borderRadius: BorderRadius.circular(15),
       boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.1),
-          blurRadius: 4,
-        )
+        BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 4),
       ],
     );
   }
 
-  BoxDecoration _innerBoxDecoration() {
+  BoxDecoration _innerBoxDecoration(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return BoxDecoration(
-      color: kWhiteColor,
+      color: isDark ? kGreyColor.withOpacity(0.19) : kWhiteColor,
       borderRadius: BorderRadius.circular(12.r),
     );
   }
@@ -248,21 +308,25 @@ class _PriceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-            style: font13kLightPrimaryColorMedium.copyWith(color: kBlackColor,
-              fontWeight: isTotal ? bold : medium,),
+          Text(
+            title,
+            style: font13kLightPrimaryColorMedium.copyWith(
+              color: isDark ? kWhiteColor : kBlackColor,
+              fontWeight: isTotal ? bold : medium,
+            ),
           ),
           Text(
             value,
             style: TextStyle(
               fontSize: 13,
               fontWeight: isTotal ? bold : medium,
-              color: isTotal ? kPrimaryColor : kBlackColor,
+              color: isTotal ? isDark ? kWhiteColor : kPrimaryColor : isDark ? kTextColor : kBlackColor,
             ),
           ),
         ],
@@ -280,16 +344,25 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, color: kLightPrimaryColor),
+          Icon(icon, color: isDark ? kWhiteColor : kLightPrimaryColor),
           Gap(8.w),
-          Text("$title :",style: font15SomeBlackColorMedium.copyWith(color: kLightPrimaryColor),),
+          Text(
+            "$title :",
+            style: font15SomeBlackColorMedium.copyWith(
+              color: isDark ? kWhiteColor : kLightPrimaryColor,
+            ),
+          ),
           Gap(8.w),
           Expanded(
-            child: Text(value, style: font15SomeBlackColorMedium.copyWith(color: kBlackColor),),
+            child: Text(
+              value,
+              style: font15SomeBlackColorMedium.copyWith(color: isDark ? kTextColor : kBlackColor),
+            ),
           ),
         ],
       ),

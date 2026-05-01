@@ -88,7 +88,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color:isDark  ? kDarkModeColor : kWhiteColor,
+                      color:isDark  ? kSomeDarkModeColor : kWhiteColor,
                       borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(
                         color: kBlackColor.withOpacity(0.2),
@@ -129,18 +129,18 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: font16BlackSemiBold.copyWith(
-                                        color: kPrimaryColor,
+                                        color: isDark ? kWhiteColor : kPrimaryColor,
                                       ),
                                     ),
                                     Gap(2.h),
                                     Row(
                                       children: [
-                                        Image.asset('assets/images/owner.png'),
+                                        isDark ? Image.asset('assets/images/owner.png',color: kTextColor,):Image.asset('assets/images/owner.png'),
                                         Gap(5.w),
                                         Text(
                                           "${kOwner.tr()}: ${currentOrders[index].ownerName ?? ''}",
                                           style: font13kLightPrimaryColorMedium.copyWith(
-                                            color: kBlackColor,
+                                            color: isDark ? kTextColor : kBlackColor,
                                           ),
                                         ),
                                       ],
@@ -148,7 +148,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                     Gap(5.h),
                                     Row(
                                       children: [
-                                        Image.asset('assets/images/date_determine.png'),
+                                        isDark ? Image.asset('assets/images/date_determine.png',color: kButtonColor,) : Image.asset('assets/images/date_determine.png'),
                                         Gap(5.w),
                                         Text(
                                           '${currentOrders[index].fromDate ?? ''} - ${currentOrders[index].toDate ?? ''}',
@@ -196,13 +196,14 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                               Text(
                                 kTotalAmount.tr(),
                                 style: font13kLightPrimaryColorMedium.copyWith(
-                                  color: kDarkGreyColor,
+                                  color: isDark? kTextColor : kDarkGreyColor,
                                 ),
                               ),
                               Text(
                                 currentOrders[index].totalPrice.toString(),
                                 style: font24LightPrimarySemiBold.copyWith(
                                   fontSize: 14.sp,
+                                  color: isDark ? kButtonColor : kLightPrimaryColor,
                                 ),
                               ),
                             ],
@@ -229,12 +230,12 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                               orderButton(
                                 text: kViewDetails.tr(),
                                 icon: 'assets/images/refresh.png',
-                                backgroundColor: kLightPrimaryColor,
+                                backgroundColor: isDark ? kButtonColor : kLightPrimaryColor,
                                 textColor: kWhiteColor,
                                 isNotIcon: true,
                                 onTap: () {
                                   customAnimatedPushNavigation(context, OrderDetailsScreen(currentOrders: currentOrders[index],));
-                                },
+                                }, borderColor: isDark ? kButtonColor : kLightPrimaryColor,
                               ),
                               StreamBuilder(
                                 stream: FirebaseFirestore.instance
@@ -252,8 +253,8 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                   return orderButton(
                                     text: kContactOwner.tr(),
                                     icon: 'assets/images/contact_icon.png',
-                                    backgroundColor: kWhiteColor,
-                                    textColor: kPrimaryColor,
+                                    backgroundColor: isDark ? kTransparentColor : kWhiteColor,
+                                    textColor: isDark ? kTextColor : kPrimaryColor,
                                     onTap: () async {
                                       print("ownerEmail: ${currentOrders[index].email}");
                                       final roomId = await FireData()
@@ -291,7 +292,7 @@ class _CurrentOrdersState extends State<CurrentOrders> {
                                           context,
                                         ).showSnackBar(SnackBar(content: Text("User not found")));
                                       }
-                                    },
+                                    }, borderColor: isDark ? kTextColor : kLightPrimaryColor,
                                   );
                                 },
                               ),
@@ -328,7 +329,9 @@ class _CurrentOrdersState extends State<CurrentOrders> {
     required Color textColor,
     bool isNotIcon = false,
     required Function() onTap,
+    required Color borderColor,
   }) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -337,12 +340,12 @@ class _CurrentOrdersState extends State<CurrentOrders> {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: kLightPrimaryColor, width: 1.w),
+          border: Border.all(color: borderColor, width: 1.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isNotIcon ? SizedBox() : Image.asset(icon, color: kPrimaryColor, width: 20.w, height: 20.h),
+            isNotIcon ? SizedBox() : Image.asset(icon, color: isDark ? kTextColor : kPrimaryColor, width: 20.w, height: 20.h),
             Gap(5),
             Text(
               text,
