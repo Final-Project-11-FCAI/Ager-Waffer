@@ -65,7 +65,7 @@ class ShowDetailsScreen extends StatelessWidget {
                         Gap(8.h),
                         _buildPriceSection(context),
                         Gap(15.h),
-                        Text(kOwnerData.tr(), style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),),
+                        Text(kRenterData.tr(), style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),),
                         Gap(8.h),
                         _buildUserSection(context),
                       ],

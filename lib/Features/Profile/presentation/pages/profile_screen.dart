@@ -48,7 +48,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    bool isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
     if (_user == null) {
       return Center(child: CircularProgressIndicator());
     }
@@ -102,7 +104,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           user.email.toString(),
                           style: font16BlackSemiBold.copyWith(
-                            color: isDark ? kSomeGreyColor : kBlackColor.withOpacity(0.64),
+                            color: isDark ? kSomeGreyColor : kBlackColor
+                                .withOpacity(0.64),
                           ),
                         ),
                         Row(
@@ -111,8 +114,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               '4.5',
                               style: font20PrimaryMedium.copyWith(
-                                fontSize: 15.sp,
-                                color: isDark ? kWhiteColor : kPrimaryColor
+                                  fontSize: 15.sp,
+                                  color: isDark ? kWhiteColor : kPrimaryColor
                               ),
                             ),
                             Gap(3.w),
@@ -124,7 +127,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               kMyProducts.tr(),
-                              style: font16BlackSemiBold.copyWith(fontSize: 20, color: isDark ? kWhiteColor : kBlackColor),
+                              style: font16BlackSemiBold.copyWith(fontSize: 20,
+                                  color: isDark ? kWhiteColor : kBlackColor),
                             ),
                           ],
                         ),
@@ -166,23 +170,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   final myListings = state.myListings;
                                   return myListings.isNotEmpty
                                       ? ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          itemCount: myListings.length,
-                                          shrinkWrap: true,
-                                          physics: BouncingScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            return MyProductsItemListView(
-                                              myListings: myListings[index],
-                                            );
-                                          },
-                                        )
-                                      : SingleChildScrollView(
-                                        child: EmptyProducts(
-                                            image: 'assets/images/empty_products.png',
-                                            title: kNoProductsYet.tr(),
-                                            subTitle: kAddProductsDesc.tr(),
-                                          ),
+                                    padding: EdgeInsets.zero,
+                                    itemCount: myListings.length,
+                                    shrinkWrap: true,
+                                    physics: BouncingScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return MyProductsItemListView(
+                                        myListings: myListings[index],
                                       );
+                                    },
+                                  )
+                                      : SingleChildScrollView(
+                                    child: EmptyProducts(
+                                      image: 'assets/images/empty_products.png',
+                                      title: kNoProductsYet.tr(),
+                                      subTitle: kAddProductsDesc.tr(),
+                                    ),
+                                  );
                                 } else if (state.status ==
                                     myListingsStatus.failure) {
                                   return CustomErrorWidget(
@@ -214,25 +218,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 radius: 70.r,
                 backgroundImage: user.imageUrl != null
                     ? NetworkImage(
-                        "${user.imageUrl}?t=${DateTime.now().millisecondsSinceEpoch}",
-                      )
+                  "${user.imageUrl}?t=${DateTime
+                      .now()
+                      .millisecondsSinceEpoch}",
+                )
                     : AssetImage('assets/images/virtual_user.jpg')
-                          as ImageProvider,
+                as ImageProvider,
               ),
             ),
             Positioned(
-              right: LocalizeAndTranslate.getLanguageCode() == 'en' ? Shared.width * 0.64.sp : Shared.width * 0.29.sp,
+              right: LocalizeAndTranslate.getLanguageCode() == 'en' ? Shared
+                  .width * 0.64.sp : Shared.width * 0.29.sp,
               top: Shared.height * 0.2.sp,
               child: GestureDetector(
                 onTap: () async {
-                  final Data? userData = await sharedPreferenceManager.getUser();
+                  final Data? userData = await sharedPreferenceManager
+                      .getUser();
                   final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => EditProfileScreen(user: user, userData: userData,),
+                      builder: (_) =>
+                          EditProfileScreen(user: user, userData: userData,),
                     ),
                   );
-            
+
                   if (result == true) {
                     await _loadUser();
                   }

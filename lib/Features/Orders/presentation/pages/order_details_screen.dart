@@ -31,7 +31,7 @@ class OrderDetailsScreen extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: isDark ? kMoreDarkModeColor : kPrimaryColor,
+            color: isDark ? kMoreDarkModeColor : kWhiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.r),
               topRight: Radius.circular(25.r),
