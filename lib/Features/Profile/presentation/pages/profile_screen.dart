@@ -139,6 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Shared.dismissDialog(context: context);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
+                                    backgroundColor: kGreenColor,
                                     content: Text(kDeleteSuccess.tr()),
                                   ),
                                 );

@@ -1,4 +1,5 @@
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:flutter/material.dart';
@@ -145,6 +146,23 @@ class ProductDataContainer extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '${kAvailability.tr()} : ',
+                          style: font16BlackSemiBold.copyWith(fontWeight: bold,color: isDark ? kWhiteColor : kBlackColor,),
+                        ),
+                        TextSpan(
+                          text: product.isAvailable! ? kAvailable.tr() : kNotAvailable.tr(),
+                          style: font16BlackSemiBold.copyWith(
+                            fontWeight: bold,
+                            color: product.isAvailable! ? kGreenColor : kRedColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -154,7 +172,7 @@ class ProductDataContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  product.price.toString(),
+                  "${product.price.toString()} ${'currency'.tr()}",
                   style: font16BlackSemiBold.copyWith(
                     color: isDark ? kWhiteColor : kPrimaryColor,
                     fontSize: 14.sp,

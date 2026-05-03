@@ -38,12 +38,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: isDark ? kMoreDarkModeColor : kPrimaryColor,
+        foregroundColor: kWhiteColor,
         title: Text(
           kFavoriteItems.tr(),
-          style: font16BlackSemiBold.copyWith(
-            color: kWhiteColor,
-            fontWeight: bold,
-          ),
         ),
       ),
       body: RefreshIndicator(

@@ -84,10 +84,13 @@
 
 
   "total_amount": "إجمالي المبلغ",
+  "remove_favorites": "ازالة من المفضلة",
 
   "view_details": "عرض التفاصيل",
+  "availability": "التوفر",
 
   "review_added_success": "تم إضافة التقييم بنجاح",
+  "added_favorites_list": "تم الاضافة الي قائمة المفضلة",
 
   "no_previous_products": "لا توجد منتجات سابقة",
   "no_previous_products_desc": "لم يتم العثور على أي منتجات سابقة حتى الآن",

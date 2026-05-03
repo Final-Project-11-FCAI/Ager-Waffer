@@ -158,6 +158,9 @@ String kCity = 'city';
 
 String kProductAvailable = 'product_available';
 String kAddProduct = 'add_product';
+String kRemoveFavorites = 'remove_favorites';
+String kAvailability = 'availability';
+String kAddedFavoritesList = 'added_favorites_list';
 
 String kCurrencyPer = 'currency_per';
 String kSomethingWrong = 'something_wrong';

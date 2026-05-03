@@ -59,9 +59,10 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
     return Scaffold(
       backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       appBar: AppBar(
-        backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
-        foregroundColor: isDark ? kWhiteColor : kBlackColor,
-        title: Text(kConversations.tr()),
+        backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
+        foregroundColor: kWhiteColor,
+        title: Text(kConversations.tr(),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Shared.width * 0.03.w, vertical: Shared.height * 0.01.h),

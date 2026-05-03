@@ -70,6 +70,7 @@
   "add_product_success_title": "Product added successfully",
   "add_product_success_desc": "Your product is now available for rent",
   "show_my_products": "View my products",
+  "remove_favorites": "Remove favorites",
 
   "product_name": "Product name",
   "category": "Category",
@@ -158,6 +159,8 @@
   "enter_new_password": "Enter new password",
 
   "save": "Save",
+  "availability": "Availability",
+  "added_favorites_list": "Added to favorites list",
 
   "no_favorites_yet": "No favorites yet",
   "add_favorites_hint": "Add items you like to revisit them later",
