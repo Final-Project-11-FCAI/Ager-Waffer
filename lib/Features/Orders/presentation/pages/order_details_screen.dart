@@ -79,7 +79,7 @@ class OrderDetailsScreen extends StatelessWidget {
                         _buildPriceSection(context),
                         Gap(15.h),
                         Text(
-                          kRenterData.tr(),
+                          kOwnerData.tr(),
                           style: font16BlackSemiBold.copyWith(
                             color: isDark ? kWhiteColor : kBlackColor,
                           ),

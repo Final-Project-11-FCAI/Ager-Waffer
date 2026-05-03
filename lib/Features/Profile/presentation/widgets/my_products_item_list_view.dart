@@ -23,6 +23,22 @@ class MyProductsItemListView extends StatefulWidget {
 class _MyProductsItemListViewState extends State<MyProductsItemListView> {
   bool isFavorite = false;
 
+  String rentCondition() {
+    return widget.myListings.condition == "BrandNew" ||
+        widget.myListings.condition == "أول استخدام"
+        ? kBrandNew.tr()
+        : widget.myListings.condition == "New" ||
+        widget.myListings.condition == "جديد"
+        ? kNew.tr()
+        : widget.myListings.condition == "Used" ||
+        widget.myListings.condition == "مستخدم"
+        ? kUsed.tr()
+        : widget.myListings.condition == "HeavilyUsed" ||
+        widget.myListings.condition == "مستخدم بشدة"
+        ? kHeavilyUsed.tr()
+        : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -89,7 +105,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                     ],
                   ),
                   Text(
-                    widget.myListings.condition ?? '',
+                    rentCondition() ?? '',
                     style: font16BlackSemiBold.copyWith(color: isDark ? kWhiteColor : Color.fromRGBO(85, 85, 85, 0.61), fontSize: 11),
                   ),
                   Gap(5.h),
@@ -169,9 +185,9 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(icon!, width: 20.w, height: 20.h,color: iconColor,),
+              Gap(5.w),
               Text(title.toString(),style: font16BlackSemiBold.copyWith(fontSize: 14.sp, color: textColor),),
-              Gap(10.w),
-              Image.asset(icon!, width: 20.w, height: 20.h,color: iconColor,)
             ],
           ),
         ),

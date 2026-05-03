@@ -59,6 +59,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
     return Scaffold(
       backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: isDark ? kDarkModeColor : kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: Text(kConversations.tr(),
