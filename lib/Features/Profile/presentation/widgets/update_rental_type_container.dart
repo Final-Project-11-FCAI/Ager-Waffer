@@ -24,6 +24,14 @@ class UpdateRentalTypeContainer extends StatefulWidget {
 class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
   final List<String> items = [kDaily.tr(), kWeekly.tr(), kMonthly.tr()];
 
+  late int selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = getSelectedIndex();
+  }
+
   int getSelectedIndex() {
     final value = widget.initialValue;
 
@@ -53,6 +61,9 @@ class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
           (index) => Expanded(
             child: GestureDetector(
               onTap: () {
+                setState(() {
+                  selectedIndex = index;
+                });
                 widget.onChanged(items[index]);
               },
               child: Padding(
@@ -61,7 +72,7 @@ class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
                   duration: const Duration(milliseconds: 250),
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   decoration: BoxDecoration(
-                    color: getSelectedIndex() == index
+                    color: selectedIndex == index
                         ? isDark
                               ? kSomeGreyColor
                               : kLightPrimaryColor
@@ -76,9 +87,9 @@ class _UpdateRentalTypeContainerState extends State<UpdateRentalTypeContainer> {
                       style: font15BlackRegular.copyWith(
                         fontSize: 17.sp,
                         fontWeight: medium,
-                        color: getSelectedIndex() == index
-                            ? isDark ? kBlackColor : kWhiteColor
-                            : isDark ? kWhiteColor : kBlackColor,
+                        color: selectedIndex == index
+                            ? (isDark ? kBlackColor : kWhiteColor)
+                            : (isDark ? kWhiteColor : kBlackColor),
                       ),
                     ),
                   ),
