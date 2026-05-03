@@ -54,7 +54,9 @@ class _RequestScreenState extends State<RequestScreen> {
 
       if (!shouldShow) return;
 
-      bool isDark = Theme.of(context).brightness == Brightness.dark;
+      bool isDark = Theme
+          .of(context)
+          .brightness == Brightness.dark;
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -184,6 +186,7 @@ class _RequestScreenState extends State<RequestScreen> {
         ? isPlus ? kMonths.tr() : kMonth.tr()
         : '';
   }
+
   String rentCondition() {
     return widget.product.condition == "BrandNew" ||
         widget.product.condition == "أول استخدام"
@@ -202,7 +205,9 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    bool isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -248,526 +253,539 @@ class _RequestScreenState extends State<RequestScreen> {
             },
             child: SafeArea(
               child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.r),
-                          topRight: Radius.circular(25.r),
-                        ),
-                        color: isDark ? kDarkModeColor : kWhiteColor,
+                  children: [
+              Expanded(
+              child: Container(
+              decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.r),
+              topRight: Radius.circular(25.r),
+            ),
+            color: isDark ? kDarkModeColor : kWhiteColor,
+          ),
+          padding: EdgeInsets.all(Shared.width * 0.04.w),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(Shared.width * 0.04),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? kSomeDarkModeColor
+                        : kWhiteColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      widget.product.itemImages != null &&
+                          widget.product.itemImages!.isNotEmpty
+                          ? CachedNetworkImage(
+                        imageUrl:
+                        widget.product.itemImages!.first,
+                        width: 95.w,
+                        height: 95.h,
+                        fit: BoxFit.contain,
+                        placeholder: (context, url) =>
+                            Image.asset(
+                              "assets/images/virtual_image.jpg",
+                              width: 95.w,
+                              height: 95.h,
+                              fit: BoxFit.contain,
+                            ),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.error),
+                      )
+                          : Image.asset(
+                        "assets/images/virtual_image.jpg",
+                        width: 95.w,
+                        height: 95.h,
+                        fit: BoxFit.contain,
                       ),
-                      padding: EdgeInsets.all(Shared.width * 0.04.w),
-                      child: SingleChildScrollView(
+                      Gap(8.w),
+                      Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(Shared.width * 0.04),
-                              decoration: BoxDecoration(
-                                color: isDark
-                                    ? kSomeDarkModeColor
-                                    : kWhiteColor,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: [
-                                  widget.product.itemImages != null &&
-                                          widget.product.itemImages!.isNotEmpty
-                                      ? CachedNetworkImage(
-                                          imageUrl:
-                                              widget.product.itemImages!.first,
-                                          width: 95.w,
-                                          height: 95.h,
-                                          fit: BoxFit.contain,
-                                          placeholder: (context, url) =>
-                                              Image.asset(
-                                                "assets/images/virtual_image.jpg",
-                                                width: 95.w,
-                                                height: 95.h,
-                                                fit: BoxFit.contain,
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
-                                        )
-                                      : Image.asset(
-                                          "assets/images/virtual_image.jpg",
-                                          width: 95.w,
-                                          height: 95.h,
-                                          fit: BoxFit.contain,
-                                        ),
-                                  Gap(8.w),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                widget.product.name!,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: font16BlackSemiBold
-                                                    .copyWith(
-                                                      color: isDark
-                                                          ? kWhiteColor
-                                                          : kBlackColor,
-                                                    ),
-                                              ),
-                                            ),
-                                            Gap(8.w),
-                                            Text(
-                                              "${widget.product.price} ${kCurrency.tr()}/${rentPeriod()}",
-                                              style: font16BlackSemiBold
-                                                  .copyWith(
-                                                    fontSize: 11,
-                                                    color: isDark
-                                                        ? kWhiteColor
-                                                        : kBlackColor,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          rentCondition(),
-                                          style: font16BlackSemiBold.copyWith(
-                                            color: kButtonColor,
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "${widget.product.averageRate!}",
-                                              style: font16BlackSemiBold
-                                                  .copyWith(
-                                                    fontSize: 10,
-                                                    color: Color.fromRGBO(
-                                                      151,
-                                                      151,
-                                                      151,
-                                                      1,
-                                                    ),
-                                                  ),
-                                            ),
-                                            Gap(5.w),
-                                            ...List.generate(
-                                              5,
-                                              (index) => Icon(
-                                                Icons.star,
-                                                size: 14.sp,
-                                                color:
-                                                    index <
-                                                        widget
-                                                            .product
-                                                            .averageRate!
-                                                            .floor()
-                                                    ? Colors.amber
-                                                    : Colors.grey.shade300,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    widget.product.name!,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: font16BlackSemiBold
+                                        .copyWith(
+                                      color: isDark
+                                          ? kWhiteColor
+                                          : kBlackColor,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Gap(8.w),
+                                Text(
+                                  "${widget.product.price} ${kCurrency
+                                      .tr()}/${rentPeriod()}",
+                                  style: font16BlackSemiBold
+                                      .copyWith(
+                                    fontSize: 11,
+                                    color: isDark
+                                        ? kWhiteColor
+                                        : kBlackColor,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Gap(15.h),
-                            Divider(
-                              height: 1,
-                              color: isDark ? kGreyColor : kBlackColor,
-                              indent: 50,
-                              endIndent: 50,
-                              thickness: 1,
-                            ),
-                            Gap(10.h),
                             Text(
-                              kRentalPeriod.tr(),
+                              rentCondition(),
                               style: font16BlackSemiBold.copyWith(
-                                fontSize: 16,
-                                color: isDark ? kWhiteColor : kBlackColor,
+                                color: kButtonColor,
                               ),
                             ),
-                            Gap(10.h),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24),
-                                color: isDark
-                                    ? kSomeDarkModeColor
-                                    : Color.fromARGB(255, 240, 240, 240),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(Shared.width * 0.05),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text(
-                                          kStartDate.tr(),
-                                          style: font15SomeBlackColorMedium
-                                              .copyWith(
-                                                color: isDark
-                                                    ? kWhiteColor
-                                                    : kgreyColor,
-                                              ),
-                                        ),
-                                        Text(
-                                          kEndDate.tr(),
-                                          style: font15SomeBlackColorMedium
-                                              .copyWith(
-                                                color: isDark
-                                                    ? kWhiteColor
-                                                    : kgreyColor,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(10.h),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: buildDateBox(
-                                            startDate,
-                                            () => _selectDate(true),
-                                          ),
-                                        ),
-                                        Gap(10.w),
-                                        Expanded(
-                                          child: buildDateBox(
-                                            endDate,
-                                            () => _selectDate(false),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(10.h),
-                                    widget.product.rentUnit == "Weekly" ||
-                                            widget.product.rentUnit ==
-                                                "أسبوعي" ||
-                                            widget.product.rentUnit ==
-                                                "Monthly" ||
-                                            widget.product.rentUnit == "شهري"
-                                        ? Row(
-                                            children: [
-                                              Text(
-                                                widget.product.rentUnit ==
-                                                        kWeekly.tr()
-                                                    ? kNumberOfWeeks.tr()
-                                                    : kNumberOfMonths.tr(),
-                                                style:
-                                                    font15SomeBlackColorMedium
-                                                        .copyWith(
-                                                          color: isDark ? kWhiteColor : kgreyColor,
-                                                        ),
-                                              ),
-                                              const Spacer(),
-                                              IconButton(
-                                                onPressed: () {
-                                                  if (periodCount > 1) {
-                                                    setState(() {
-                                                      periodCount--;
-                                                    });
-                                                    updateEndDate();
-                                                  }
-                                                },
-                                                icon: const Icon(Icons.remove),
-                                              ),
-                                              CircleAvatar(
-                                                radius: 15.r,
-                                                backgroundColor: kSomeGreyColor,
-                                                child: Text(
-                                                  "$periodCount",
-                                                  style: font14GreyRegular
-                                                      .copyWith(
-                                                        color: kPrimaryColor,
-                                                        fontWeight: bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    periodCount++;
-                                                  });
-                                                  updateEndDate();
-                                                },
-                                                icon: const Icon(Icons.add),
-                                              ),
-                                            ],
-                                          )
-                                        : Row(
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.all(8.w),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        16.r,
-                                                      ),
-                                                  color: isDark ? kSomeGreyColor : Colors.blue[50],
-                                                ),
-                                                child: totalDays > 0
-                                                    ? Row(
-                                                        children: [
-                                                          Image.asset(
-                                                            'assets/images/period.png',
-                                                          ),
-                                                          Gap(5.w),
-                                                          Text(
-                                                            "${kDuration.tr()}: $totalDays ${kDays.tr()}",
-                                                            style: TextStyle(color: isDark ? kBlackColor : kBlackColor),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    : SizedBox.shrink(),
-                                              ),
-                                            ],
-                                          ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Gap(20.h),
-                            Text(
-                              kPriceSummary.tr(),
-                              style: font16BlackSemiBold.copyWith(fontSize: 16, color: isDark ? kWhiteColor : kBlackColor),
-                            ),
-                            Gap(10.h),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24),
-                                color: isDark ? kSomeDarkModeColor : Color.fromARGB(255, 240, 240, 240),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(Shared.width * 0.04),
-                                child: Column(
-                                  children: [
-                                    buildPriceRow(
-                                      Text(
-                                        "${kPricePerUnit.tr()} ${rentPeriod()}",
-                                        style: font15SomeBlackColorMedium
-                                            .copyWith(
-                                              fontSize: 13,
-                                          color: isDark ? kWhiteColor : kBlackColor,
-                                            ),
-                                      ),
-                                      Text(
-                                        "${widget.product.price} ${kEgp.tr()}/${rentPeriod()}",
-                                        style: font15SomeBlackColorMedium
-                                            .copyWith(
-                                              fontSize: 13,
-                                          color: isDark ? kWhiteColor : kBlackColor,
-                                            ),
-                                      ),
-                                    ),
-                                    buildPriceRow(
-                                      Text(
-                                        "${kNumber.tr()} ${rentPeriod(isPlus: true)}",
-                                        style: font15SomeBlackColorMedium
-                                            .copyWith(
-                                              fontSize: 13,
-                                              color: isDark ? kWhiteColor : kBlackColor,
-                                            ),
-                                      ),
-                                      Text(
-                                        totalDays > 0
-                                            ? widget.product.rentUnit ==
-                                                      kWeekly.tr()
-                                                  ? "$periodCount"
-                                                  : widget.product.rentUnit ==
-                                                        kMonthly.tr()
-                                                  ? "$periodCount"
-                                                  : "$totalDays"
-                                            : "--",
-                                        style: font15SomeBlackColorMedium
-                                            .copyWith(
-                                              fontSize: 13,
-                                          color: isDark ? kWhiteColor : kBlackColor,
-                                            ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 4.h,
-                                      ),
-                                      child: Divider(
-                                        height: 1,
-                                        color: kGreyColor,
-                                        thickness: 1,
-                                      ),
-                                    ),
-
-                                    buildPriceRow(
-                                      Text(
-                                        kTotal.tr(),
-                                        style: font14BlackBold.copyWith(
-                                          fontSize: 13,
-                                          color: isDark ? kWhiteColor : kBlackColor,
-                                        ),
-                                      ),
-                                      Text(
-                                        totalDays > 0
-                                            ? "$totalPrice ${kCurrency.tr()}"
-                                            : "--",
-                                        style: font14BlackBold.copyWith(
-                                          fontSize: 13,
-                                          color: isDark ? kWhiteColor : kBlackColor,
-                                        ),
-                                      ),
-                                      isTotal: true,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Gap(14.h),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12.w,
-                                vertical: 10.h,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isDark
-                                ? kSomeDarkModeColor
-                                : Colors.grey.shade100,
-                                borderRadius: BorderRadius.circular(16.r),
-                                border: Border.all(color: isDark ? kWhiteColor.withOpacity(0.4) : Colors.grey.shade300),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Checkbox(
-                                    visualDensity: VisualDensity.compact,
-                                    value: agree,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        agree = value!;
-                                      });
-                                    },
-                                    activeColor: isDark ? kButtonColor : kPrimaryColor,
-                                  ),
-                                  Gap(8.w),
-                                  Expanded(
-                                    child: RichText(
-                                      text: TextSpan(
-                                        style: font15SomeBlackColorMedium
-                                            .copyWith(
-                                              fontSize: 14,
-                                              color: isDark ? kWhiteColor : Colors.black87,
-                                            ),
-                                        children: [
-                                          TextSpan(
-                                            text: "${kAgreeTermsPrefix.tr()} ",
-                                          ),
-                                          WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: GestureDetector(
-                                              onTap: () async {
-                                                final result =
-                                                    await showModalBottomSheet<
-                                                      bool
-                                                    >(
-                                                      context: context,
-                                                      isScrollControlled: true,
-                                                      backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
-                                                      builder: (context) {
-                                                        return const RentalTermsScreen();
-                                                      },
-                                                    );
-                                                if (result == true) {
-                                                  setState(() {
-                                                    agree = true;
-                                                  });
-                                                }
-                                              },
-                                              child: Text(
-                                                kRentalTerms.tr(),
-                                                style: font14BlackBold.copyWith(
-                                                  color: isDark ? kButtonColor :  kLightPrimaryColor,
-                                                  decoration:
-                                                      TextDecoration.underline,decorationColor: isDark ? kWhiteColor :  kBlackColor,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Text(
+                                  "${widget.product.averageRate!}",
+                                  style: font16BlackSemiBold
+                                      .copyWith(
+                                    fontSize: 10,
+                                    color: Color.fromRGBO(
+                                      151,
+                                      151,
+                                      151,
+                                      1,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Gap(5.w),
+                                ...List.generate(
+                                  5,
+                                      (index) =>
+                                      Icon(
+                                        Icons.star,
+                                        size: 14.sp,
+                                        color:
+                                        index <
+                                            widget
+                                                .product
+                                                .averageRate!
+                                                .floor()
+                                            ? Colors.amber
+                                            : Colors.grey.shade300,
+                                      ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? kSomeDarkModeColor
-                          : kWhiteColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.06),
-                          blurRadius: 12,
-                          offset: const Offset(0, -4),
+                ),
+                Gap(15.h),
+                Divider(
+                  height: 1,
+                  color: isDark ? kGreyColor : kBlackColor,
+                  indent: 50,
+                  endIndent: 50,
+                  thickness: 1,
+                ),
+                Gap(10.h),
+                Text(
+                  kRentalPeriod.tr(),
+                  style: font16BlackSemiBold.copyWith(
+                    fontSize: 16,
+                    color: isDark ? kWhiteColor : kBlackColor,
+                  ),
+                ),
+                Gap(10.h),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: isDark
+                        ? kSomeDarkModeColor
+                        : Color.fromARGB(255, 240, 240, 240),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(Shared.width * 0.05),
+                    child: Column(
+                      children: [
+                      Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          kStartDate.tr(),
+                          style: font15SomeBlackColorMedium
+                              .copyWith(
+                            color: isDark
+                                ? kWhiteColor
+                                : kgreyColor,
+                          ),
+                        ),
+                        Text(
+                          kEndDate.tr(),
+                          style: font15SomeBlackColorMedium
+                              .copyWith(
+                            color: isDark
+                                ? kWhiteColor
+                                : kgreyColor,
+                          ),
                         ),
                       ],
                     ),
-                    child: ButtonApp(
-                      onPressed: (isValid && !isRequestSent)
-                          ? () {
-                              context.read<SendRequestBloc>().add(
-                                SendRequestEvent(
-                                  rentalRequestEntity: SendRequestEntity(
-                                    itemId: widget.product.id!,
-                                    fromDate: DateFormat(
-                                      'yyyy-MM-dd',
-                                    ).format(startDate!),
-                                    toDate: DateFormat(
-                                      'yyyy-MM-dd',
-                                    ).format(endDate!),
-                                    agreeToTerms: agree,
-                                  ),
-                                ),
-                              );
-                            }
-                          : null,
-                      text: isRequestSent ? kSent.tr() : kConfirmRequest.tr(),
-                      color: isDark && !(isValid && !isRequestSent)
-                          ? kGreyColor.withOpacity(0.5)
-                          : isDark && (isValid && !isRequestSent)
-                          ? kButtonColor
-                          : !isDark && !(isValid && !isRequestSent)
-                          ? kGreyColor.withOpacity(0.35)
-                          : kPrimaryColor,
-                      borderRadius: Shared.width * 0.04.w,
+                    Gap(10.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: buildDateBox(
+                            startDate,
+                                () => _selectDate(true),
+                          ),
+                        ),
+                        Gap(10.w),
+                        Expanded(
+                          child: buildDateBox(
+                            endDate,
+                                () => _selectDate(false),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Gap(10.h),
+                    widget.product.rentUnit == "Weekly" ||
+                        widget.product.rentUnit ==
+                            "أسبوعي" ||
+                        widget.product.rentUnit ==
+                            "Monthly" ||
+                        widget.product.rentUnit == "شهري"
+                        ? Row(
+                        children: [
+                    Text(
+                    widget.product.rentUnit == "Weekly" ||
+                    widget.product.rentUnit == "أسبوعي" ? kNumberOfWeeks.tr() : kNumberOfMonths.tr(),
+                    style: font15SomeBlackColorMedium
+                        .copyWith(
+                      color: isDark ? kWhiteColor : kgreyColor,
                     ),
                   ),
-                ],
-              ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      if (periodCount > 1) {
+                        setState(() {
+                          periodCount--;
+                        });
+                        updateEndDate();
+                      }
+                    },
+                    icon: const Icon(Icons.remove),
+                  ),
+                  CircleAvatar(
+                    radius: 15.r,
+                    backgroundColor: kSomeGreyColor,
+                    child: Text(
+                      "$periodCount",
+                      style: font14GreyRegular
+                          .copyWith(
+                        color: kPrimaryColor,
+                        fontWeight: bold,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        periodCount++;
+                      });
+                      updateEndDate();
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  ],
+                )
+                    : Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(
+                          16.r,
+                        ),
+                        color: isDark ? kSomeGreyColor : Colors.blue[50],
+                      ),
+                      child: totalDays > 0
+                          ? Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/period.png',
+                          ),
+                          Gap(5.w),
+                          Text(
+                            "${kDuration.tr()}: $totalDays ${kDays.tr()}",
+                            style: TextStyle(
+                                color: isDark ? kBlackColor : kBlackColor),
+                          ),
+                        ],
+                      )
+                          : SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
+        Gap(20.h),
+        Text(
+          kPriceSummary.tr(),
+          style: font16BlackSemiBold.copyWith(
+              fontSize: 16, color: isDark ? kWhiteColor : kBlackColor),
+        ),
+        Gap(10.h),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            color: isDark ? kSomeDarkModeColor : Color.fromARGB(
+                255, 240, 240, 240),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(Shared.width * 0.04),
+            child: Column(
+              children: [
+                buildPriceRow(
+                  Text(
+                    "${kPricePerUnit.tr()} ${rentPeriod()}",
+                    style: font15SomeBlackColorMedium
+                        .copyWith(
+                      fontSize: 13,
+                      color: isDark ? kWhiteColor : kBlackColor,
+                    ),
+                  ),
+                  Text(
+                    "${widget.product.price} ${kEgp.tr()}/${rentPeriod()}",
+                    style: font15SomeBlackColorMedium
+                        .copyWith(
+                      fontSize: 13,
+                      color: isDark ? kWhiteColor : kBlackColor,
+                    ),
+                  ),
+                ),
+                buildPriceRow(
+                  Text(
+                    "${kNumber.tr()} ${rentPeriod(isPlus: true)}",
+                    style: font15SomeBlackColorMedium
+                        .copyWith(
+                      fontSize: 13,
+                      color: isDark ? kWhiteColor : kBlackColor,
+                    ),
+                  ),
+                  Text(
+                    totalDays > 0
+                        ? widget.product.rentUnit ==
+                        kWeekly.tr()
+                        ? "$periodCount"
+                        : widget.product.rentUnit ==
+                        kMonthly.tr()
+                        ? "$periodCount"
+                        : "$totalDays"
+                        : "--",
+                    style: font15SomeBlackColorMedium
+                        .copyWith(
+                      fontSize: 13,
+                      color: isDark ? kWhiteColor : kBlackColor,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 4.h,
+                  ),
+                  child: Divider(
+                    height: 1,
+                    color: kGreyColor,
+                    thickness: 1,
+                  ),
+                ),
+
+                buildPriceRow(
+                  Text(
+                    kTotal.tr(),
+                    style: font14BlackBold.copyWith(
+                      fontSize: 13,
+                      color: isDark ? kWhiteColor : kBlackColor,
+                    ),
+                  ),
+                  Text(
+                    totalDays > 0
+                        ? "$totalPrice ${kCurrency.tr()}"
+                        : "--",
+                    style: font14BlackBold.copyWith(
+                      fontSize: 13,
+                      color: isDark ? kWhiteColor : kBlackColor,
+                    ),
+                  ),
+                  isTotal: true,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Gap(14.h),
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 12.w,
+            vertical: 10.h,
+          ),
+          decoration: BoxDecoration(
+            color: isDark
+                ? kSomeDarkModeColor
+                : Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(16.r),
+            border: Border.all(
+                color: isDark ? kWhiteColor.withOpacity(0.4) : Colors.grey
+                    .shade300),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Checkbox(
+                visualDensity: VisualDensity.compact,
+                value: agree,
+                onChanged: (value) {
+                  setState(() {
+                    agree = value!;
+                  });
+                },
+                activeColor: isDark ? kButtonColor : kPrimaryColor,
+              ),
+              Gap(8.w),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: font15SomeBlackColorMedium
+                        .copyWith(
+                      fontSize: 14,
+                      color: isDark ? kWhiteColor : Colors.black87,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "${kAgreeTermsPrefix.tr()} ",
+                      ),
+                      WidgetSpan(
+                        alignment:
+                        PlaceholderAlignment.middle,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final result =
+                            await showModalBottomSheet<
+                                bool
+                            >(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: isDark
+                                  ? kDarkModeColor
+                                  : kWhiteColor,
+                              builder: (context) {
+                                return const RentalTermsScreen();
+                              },
+                            );
+                            if (result == true) {
+                              setState(() {
+                                agree = true;
+                              });
+                            }
+                          },
+                          child: Text(
+                            kRentalTerms.tr(),
+                            style: font14BlackBold.copyWith(
+                              color: isDark ? kButtonColor : kLightPrimaryColor,
+                              decoration:
+                              TextDecoration.underline,
+                              decorationColor: isDark
+                                  ? kWhiteColor
+                                  : kBlackColor,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        ],
       ),
+    ),
+    ),
+    ),
+    Container(
+    width: double.infinity,
+    padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
+    decoration: BoxDecoration(
+    color: isDark
+    ? kSomeDarkModeColor
+        : kWhiteColor,
+    boxShadow: [
+    BoxShadow(
+    color: Colors.black.withOpacity(0.06),
+    blurRadius: 12,
+    offset: const Offset(0, -4),
+    ),
+    ],
+    ),
+    child: ButtonApp(
+    onPressed: (isValid && !isRequestSent)
+    ? () {
+    context.read<SendRequestBloc>().add(
+    SendRequestEvent(
+    rentalRequestEntity: SendRequestEntity(
+    itemId: widget.product.id!,
+    fromDate: DateFormat(
+    'yyyy-MM-dd',
+    ).format(startDate!),
+    toDate: DateFormat(
+    'yyyy-MM-dd',
+    ).format(endDate!),
+    agreeToTerms: agree,
+    ),
+    ),
+    );
+    }
+        : null,
+    text: isRequestSent ? kSent.tr() : kConfirmRequest.tr(),
+    color: isDark && !(isValid && !isRequestSent)
+    ? kGreyColor.withOpacity(0.5)
+        : isDark && (isValid && !isRequestSent)
+    ? kButtonColor
+        : !isDark && !(isValid && !isRequestSent)
+    ? kGreyColor.withOpacity(0.35)
+        : kPrimaryColor,
+    borderRadius: Shared.width * 0.04.w,
+    ),
+    ),
+    ],
+    ),
+    ),
+    ),
+    )
+    ,
+    )
+    ,
     );
   }
 
   Widget buildDateBox(DateTime? date, VoidCallback onTap) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    bool isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
     return InkWell(
       onTap: onTap,
 
@@ -782,7 +800,8 @@ class _RequestScreenState extends State<RequestScreen> {
 
         child: Row(
           children: [
-            Image.asset('assets/images/date_determine.png', color: isDark ? kWhiteColor : null,),
+            Image.asset('assets/images/date_determine.png',
+              color: isDark ? kWhiteColor : null,),
             Gap(10.w),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
