@@ -11,10 +11,7 @@ import 'package:intl/intl.dart';
 class ChatCard extends StatelessWidget {
   final ChatRoom item;
 
-  const ChatCard({
-    super.key,
-    required this.item,
-  });
+  const ChatCard({super.key, required this.item});
 
   DateTime getDateTime(dynamic timestamp) {
     print("timestamp : ${timestamp.runtimeType} , $timestamp");
@@ -51,7 +48,9 @@ class ChatCard extends StatelessWidget {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     final currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
-    if (currentUserId == null || item.members == null || item.members!.isEmpty) {
+    if (currentUserId == null ||
+        item.members == null ||
+        item.members!.isEmpty) {
       return const SizedBox();
     }
 
@@ -66,7 +65,10 @@ class ChatCard extends StatelessWidget {
     final String userId = otherMembers.first;
 
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data?.data() != null) {
           final raw = snapshot.data!.data()!;
@@ -83,32 +85,32 @@ class ChatCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ChatScreen(
-                      roomId: item.id!,
-                      chatUser: chatUser,
-                    ),
+                    builder: (context) =>
+                        ChatScreen(roomId: item.id!, chatUser: chatUser),
                   ),
                 );
               },
-              leading: chatUser.image == null
-                  ? CircleAvatar(
-                backgroundColor: getColorFromName(chatUser.name!),
-                      child: Text(
-                        (chatUser.name != null && chatUser.name!.isNotEmpty)
-                            ? chatUser.name!.characters.first
-                            : '?',
-                        style: TextStyle(color: isDark ? kWhiteColor : kWhiteColor),
+              leading:
+                  // chatUser.image == null ?
+                  CircleAvatar(
+                    backgroundColor: getColorFromName(chatUser.name!),
+                    child: Text(
+                      (chatUser.name != null && chatUser.name!.isNotEmpty)
+                          ? chatUser.name!.characters.first
+                          : '?',
+                      style: TextStyle(
+                        color: isDark ? kWhiteColor : kWhiteColor,
                       ),
-                    )
-                  : CircleAvatar(
-                      backgroundImage: NetworkImage(chatUser.image ?? "assets/images/virtual_user.jpg"),
                     ),
-              title: Text(
-                chatUser.name ?? '',
-                overflow: TextOverflow.ellipsis,
-              ),
+                  ),
+              // : CircleAvatar(
+              //     backgroundImage: chatUser.image == null?  NetworkImage(chatUser.image!) : AssetImage("assets/images/virtual_user.jpg"),
+              //   ),
+              title: Text(chatUser.name ?? '', overflow: TextOverflow.ellipsis),
               subtitle: Text(
-                item.lastMessage?.isEmpty ?? true ? chatUser.about! : item.lastMessage!,
+                item.lastMessage?.isEmpty ?? true
+                    ? chatUser.about!
+                    : item.lastMessage!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -123,18 +125,25 @@ class ChatCard extends StatelessWidget {
                     print('item.lastMessageTime : ${item.lastMessageTime}');
                     final unReadList = messageSnapshot.data!.docs
                         .map((e) => Message.fromJson(e.data()))
-                        .where((msg) => msg.read == null && msg.fromId != FirebaseAuth.instance.currentUser!.uid)
+                        .where(
+                          (msg) =>
+                              msg.read == null &&
+                              msg.fromId !=
+                                  FirebaseAuth.instance.currentUser!.uid,
+                        )
                         .toList();
-            
+
                     return unReadList.isNotEmpty
                         ? Badge(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      label: Text(unReadList.length.toString()),
-                      largeSize: 30,
-                    )
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            label: Text(unReadList.length.toString()),
+                            largeSize: 30,
+                          )
                         : Text(
-                      DateFormat('hh:mm a').format(getDateTime(item.lastMessageTime)),   //item.lastMessageTime
-                    );
+                            DateFormat('hh:mm a').format(
+                              getDateTime(item.lastMessageTime),
+                            ), //item.lastMessageTime
+                          );
                   }
                   return SizedBox();
                 },
