@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/input_validation.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/email_text_field.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
@@ -53,6 +54,40 @@ class _UserInformationState extends State<UserInformation> {
     cityController.addListener(validateForm);
     govController.addListener(validateForm);
     streetController.addListener(validateForm);
+
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    final user = await sharedPreferenceManager.getUser();
+
+    if (user == null) return;
+
+    if (phoneController.text.isEmpty &&
+        user.phoneNumber != null &&
+        user.phoneNumber!.isNotEmpty) {
+      phoneController.text = user.phoneNumber!;
+    }
+
+    if (cityController.text.isEmpty &&
+        user.city != null &&
+        user.city!.isNotEmpty) {
+      cityController.text = user.city!;
+    }
+
+    if (govController.text.isEmpty &&
+        user.governorate != null &&
+        user.governorate!.isNotEmpty) {
+      govController.text = user.governorate!;
+    }
+
+    if (streetController.text.isEmpty &&
+        user.street != null &&
+        user.street!.isNotEmpty) {
+      streetController.text = user.street!;
+    }
+
+    validateForm();
   }
 
   @override
@@ -127,7 +162,7 @@ class _UserInformationState extends State<UserInformation> {
                           return InputValidation.isValidEgyptianPhone(value ?? '');
                         },
                       ),
-                      Gap(20.h),
+                      Gap(15.h),
                       EmailTextField(
                         icon: Icon(Icons.location_on),
                         label: kCity.tr(),
@@ -137,8 +172,7 @@ class _UserInformationState extends State<UserInformation> {
                           return InputValidation.isValidAddress(value ?? '', kEnterGovernorate.tr(),);
                         },
                       ),
-                      Gap(20.h),
-
+                      Gap(10.h),
                       EmailTextField(
                         icon: Icon(Icons.location_city),
                         label: kGovernorate.tr(),
@@ -148,7 +182,7 @@ class _UserInformationState extends State<UserInformation> {
                           return InputValidation.isValidAddress(value ?? '', kEnterCity.tr(),);
                         },
                       ),
-                      Gap(20.h),
+                      Gap(10.h),
                       EmailTextField(
                         icon: Icon(Icons.streetview),
                         label: kStreet.tr(),
