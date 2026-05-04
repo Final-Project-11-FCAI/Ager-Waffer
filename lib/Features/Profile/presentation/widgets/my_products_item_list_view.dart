@@ -39,6 +39,19 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
         : '';
   }
 
+  String rentPeriod() {
+    return widget.myListings.rentUnit == "Daily" ||
+        widget.myListings.rentUnit == "يومي"
+        ? kCurrencyPerDay.tr()
+        : widget.myListings.rentUnit == "Weekly" ||
+        widget.myListings.rentUnit == "أسبوعي"
+        ? kCurrencyPerWeek.tr()
+        : widget.myListings.rentUnit == "Monthly" ||
+        widget.myListings.rentUnit == "شهري"
+        ? kCurrencyPerMonth.tr()
+        : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -93,13 +106,7 @@ class _MyProductsItemListViewState extends State<MyProductsItemListView> {
                           overflow: TextOverflow.ellipsis,
                           style: font14BlackBold.copyWith(fontSize: 12.sp, color: isDark ? kWhiteColor : kBlackColor,))),
                       Text(
-                        "${widget.myListings.price}${
-                            widget.myListings.rentUnit == kDaily.tr() ?
-                            kCurrencyPerDay.tr() :
-                            widget.myListings.rentUnit == kWeekly.tr() ?
-                            kCurrencyPerWeek.tr() :
-                            widget.myListings.rentUnit == kMonthly.tr() ?
-                        kCurrencyPerMonth.tr() : ''}",
+                        "${widget.myListings.price}${rentPeriod()}",
                         style: font16BlackSemiBold.copyWith(fontSize: 11, color: isDark ? kWhiteColor : kBlackColor,),
                       ),
                     ],

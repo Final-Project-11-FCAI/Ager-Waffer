@@ -95,13 +95,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       },
                     );
                   }
-
                   final items = state.favoriteItems;
 
                   if (items.isEmpty) {
                     return EmptyFavorite();
                   }
-
                   return GridView.builder(
                     itemCount: items.length,
                     gridDelegate:
