@@ -14,11 +14,8 @@ import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/e
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/external_login_widget.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/logoastext.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/widgets/password_text_field.dart';
-import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
-import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/coustom_showdialog.dart';
 import 'package:ager_waffer/Features/Onboarding/presentation/widgets/button_app.dart';
-import 'package:ager_waffer/Features/Onboarding/presentation/widgets/logo_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';

@@ -80,7 +80,7 @@ class _ProductDataContainerState extends State<ProductDataContainer> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
-                hintStyle: font15SomeBlackColorMedium.copyWith(color: isDark ? kWhiteColor : kBlackColor),
+                hintStyle: font15SomeBlackColorMedium.copyWith(color: isDark ? kWhiteColor : kBlackColor.withOpacity(0.5)),
               ),
             ),
           ),

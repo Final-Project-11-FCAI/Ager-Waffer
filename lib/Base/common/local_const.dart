@@ -57,6 +57,16 @@ String kNoNotificationsDesc = 'no_notifications_desc';
 String kToday = 'today';
 String kOlder = 'older';
 
+String kSubmitReport = 'submit_report';
+String kReportUser = 'report_user';
+String kReportedUser = 'reported_user';
+String kWhyReportingUser = 'why_reporting_user';
+String kSelectReason = 'select_reason';
+String kReportDetails = 'report_details';
+String kRequire = 'require';
+String kReportDescription = 'report_description';
+String kAttachImage = 'attach_image';
+String kReport = 'report';
 
 String kCreateAccount = 'create_account';
 String kHaveAccount = 'have_account';

@@ -262,6 +262,20 @@
   "member_since": "Member since",
 
 
+
+  "submit_report": "Submit report",
+  "report_user": "Report user",
+  "reported_user": "1. Reported user",
+  "why_reporting_user": "2. Why are you reporting this user?",
+  "select_reason": "Select reason",
+  "report_details": "3. Report details",
+  "require": "required",
+  "report_description": "Report description",
+  "attach_image": "Attach image / screenshot",
+  "report": "Report",
+
+
+
   "price_summary": "Price summary",
   "price_per_unit": "Price",
   "number_of_days": "Number of",

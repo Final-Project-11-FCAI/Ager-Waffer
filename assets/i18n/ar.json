@@ -83,6 +83,18 @@
   "number": "عدد",
 
 
+
+  "submit_report": "إرسال البلاغ",
+  "report_user": "الإبلاغ عن مستخدم",
+  "reported_user": "1. المستخدم المُبلغ عنه",
+  "why_reporting_user": "2. لماذا تقوم بالإبلاغ عن هذا المستخدم؟",
+  "select_reason": "اختر السبب",
+  "report_details": "3. تفاصيل البلاغ",
+  "require": "إلزامي",
+  "report_description": "وصف البلاغ",
+  "attach_image": "إرفاق صورة / لقطة شاشة",
+  "report": "إبلاغ",
+
   "total_amount": "إجمالي المبلغ",
   "remove_favorites": "ازالة من المفضلة",
 

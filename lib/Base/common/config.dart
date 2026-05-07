@@ -25,6 +25,9 @@ const String ordersManagementUrl = "RentalRequests/received";
 const String ownerRentalCountUrl = "RentalRequests/Owner-rental-count";
 
 
+const String addReportUrl = "Report/AddReport";
+
+
 
 // Chats Url
 const String allChatsUrl = "Chat/conversations";

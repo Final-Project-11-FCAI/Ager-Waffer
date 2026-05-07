@@ -2,6 +2,7 @@ import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/all_favorite_items_bloc.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/manager/favorite_bloc.dart';
 import 'package:ager_waffer/Features/Favorite/presentation/manager/favorite_state.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
@@ -84,6 +85,7 @@ class RentAndFavoriteButton extends StatelessWidget {
                       context.read<AllItemsBloc>().add(
                         GetAllItemsEvent(),
                       );
+                      context.read<AllFavoriteItemsBloc>().add(GetAllFavoriteItemsEvent());
                       if(product.isFavourite == true){
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

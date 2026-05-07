@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ager_waffer/Features/Authentication/login/domain/entities/register_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/add_item_entity.dart';
+import 'package:ager_waffer/Features/Home/domain/entities/add_report_entity.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/send_request_entity.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -229,7 +230,14 @@ class GetMessagesEvent extends AppEvent {
   GetMessagesEvent({required this.conversationId});
 }
 
+class AddReportEvent extends AppEvent {
 
+  final AddReportEntity addReportEntity;
+
+  AddReportEvent({
+    required this.addReportEntity,
+  });
+}
 
 
 

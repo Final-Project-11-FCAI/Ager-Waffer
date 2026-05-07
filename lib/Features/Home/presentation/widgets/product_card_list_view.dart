@@ -204,9 +204,7 @@ class _ProductCardListViewState extends State<ProductCardListView> {
                               context.read<FavoriteBloc>().add(
                                 ToggleFavoriteEvent(itemId: widget.product.id!),
                               );
-                              // context.read<AllItemsBloc>().add(
-                              //   GetAllItemsEvent(),
-                              // );
+                              context.read<AllFavoriteItemsBloc>().add(GetAllFavoriteItemsEvent());
                             },
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),

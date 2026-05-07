@@ -1,10 +1,12 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/Shimmer/loading_shimmer.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
+import 'package:ager_waffer/Base/common/navigtor.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
 import 'package:ager_waffer/Features/Home/data/models/all_items_model.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/reviews_about_user_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/reviews_about_user_state.dart';
+import 'package:ager_waffer/Features/Home/presentation/pages/report_screen.dart';
 import 'package:ager_waffer/Features/Home/presentation/widgets/owner_review_item.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/custom_error_widget.dart';
 import 'package:ager_waffer/Features/Profile/presentation/widgets/empty_products.dart';
@@ -27,18 +29,19 @@ class PublicViewScreen extends StatefulWidget {
 }
 
 class _PublicViewScreenState extends State<PublicViewScreen> {
-
   @override
   void initState() {
     super.initState();
     context.read<ReviewsAboutUserBloc>().add(
-        GetReviewsAboutUserEvent(userId: widget.product.ownerId!));
+      GetReviewsAboutUserEvent(userId: widget.product.ownerId!),
+    );
   }
 
   String formatDate(String date) {
     final parsedDate = DateTime.parse(date);
     return DateFormat('dd MMM yyyy').format(parsedDate);
   }
+
   String formatDateArabic(String date) {
     final parsedDate = DateTime.parse(date);
     return DateFormat('dd MMMM yyyy', 'ar').format(parsedDate);
@@ -52,6 +55,34 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
       appBar: AppBar(
         backgroundColor: isDark ? kSomeDarkModeColor : kPrimaryColor,
         foregroundColor: kWhiteColor,
+        forceMaterialTransparency: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                backgroundColor: isDark ? kDarkModeColor : kWhiteColor,
+                context: context,
+                builder: (_) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h),
+                    child: ListTile(
+                      leading: Icon(Icons.report_outlined, color: isDark ? kWhiteColor : kBlackColor,),
+                      title: Text(kReport.tr()),
+                      onTap: () {
+                        Navigator.pop(context);
+                        customAnimatedPushNavigation(context, ReportScreen(product: widget.product),);
+                        },
+                    ),
+                  );
+                },
+              );
+            },
+            icon: Icon(
+              Icons.more_vert,
+              color: kWhiteColor,
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Stack(
@@ -78,7 +109,9 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                     children: [
                       Text(
                         widget.product.ownerName!,
-                        style: font24PrimarySemiBold.copyWith(color: isDark ? kWhiteColor : kBlackColor),
+                        style: font24PrimarySemiBold.copyWith(
+                          color: isDark ? kWhiteColor : kBlackColor,
+                        ),
                       ),
                       Text(
                         widget.product.ownerEmail!,
@@ -91,14 +124,20 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.star, color: kMoreYellowColor, size: 18),
+                          const Icon(
+                            Icons.star,
+                            color: kMoreYellowColor,
+                            size: 18,
+                          ),
                           Gap(5.w),
                           Text.rich(
                             TextSpan(
                               children: [
                                 TextSpan(
                                   text: "4.8",
-                                  style: font14GreyRegular.copyWith(color: isDark ? kWhiteColor : kPrimaryColor),
+                                  style: font14GreyRegular.copyWith(
+                                    color: isDark ? kWhiteColor : kPrimaryColor,
+                                  ),
                                 ),
                               ],
                             ),
@@ -114,98 +153,109 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                       _buildInfoRow(
                         Icons.calendar_month_outlined,
                         kJoinDate.tr(),
-                        "${kMemberSince.tr()} ${
-                            LocalizeAndTranslate.getLanguageCode() == 'ar' ?
-                            formatDateArabic(widget.product.ownerCreatedAt!) ?? '2026'
-                        : formatDate(widget.product.ownerCreatedAt!) ?? '2026'}",
+                        "${kMemberSince.tr()} ${LocalizeAndTranslate.getLanguageCode() == 'ar' ?
+                        formatDateArabic(widget.product.ownerCreatedAt!) ?? '2026' : formatDate(widget.product.ownerCreatedAt!) ?? '2026'}",
                       ),
                       Gap(10.h),
                       Expanded(
-                        child: BlocBuilder<ReviewsAboutUserBloc, ReviewsAboutUserState>(
-                          builder: (context, state) {
-                            if (state.status == reviewsAboutUserStatus.loading) {
-                              return const LoadingPlaceHolder(
-                                shimmerType: ShimmerType.list,
-                                cellShimmerHeight: 50,
-                                shimmerCount: 10,
-                              );
-                            } else if (state.status == reviewsAboutUserStatus.success) {
-                              final reviews = state.reviews;
-                              return reviews.isNotEmpty
-                                  ? ListView.builder(
-                                      itemCount: reviews.length,
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                                          child: OwnerReviewItem(
-                                            reviews: reviews[index],
+                        child:
+                            BlocBuilder<ReviewsAboutUserBloc, ReviewsAboutUserState>(
+                              builder: (context, state) {
+                                if (state.status ==
+                                    reviewsAboutUserStatus.loading) {
+                                  return const LoadingPlaceHolder(
+                                    shimmerType: ShimmerType.list,
+                                    cellShimmerHeight: 50,
+                                    shimmerCount: 10,
+                                  );
+                                } else if (state.status ==
+                                    reviewsAboutUserStatus.success) {
+                                  final reviews = state.reviews;
+                                  return reviews.isNotEmpty
+                                      ? ListView.builder(
+                                          itemCount: reviews.length,
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 8.h,
+                                              ),
+                                              child: OwnerReviewItem(
+                                                reviews: reviews[index],
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : Center(
+                                          child: SingleChildScrollView(
+                                            child: EmptyProducts(
+                                              image:
+                                                  'assets/images/empty_products.png',
+                                              title: kNoReviewsYet.tr(),
+                                              subTitle: '',
+                                              titleFontSize: 19.sp,
+                                            ),
                                           ),
                                         );
-                                      },
-                                    )
-                                  : Center(
-                                      child: EmptyProducts(
-                                        image: 'assets/images/empty_products.png',
-                                        title: kNoReviewsYet.tr(),
-                                        subTitle: '',
-                                        titleFontSize: 19.sp,
-                                      ),
-                                    );
-                            } else if (state.status == reviewsAboutUserStatus.failure) {
-                              return LayoutBuilder(
-                                builder: (context, constraints) {
-                                  return SizedBox(
-                                    width: double.infinity,
-                                    height: Shared.height * 0.3,
-                                    child: Center(
-                                      child: CustomErrorWidget(
-                                        message: state.failureMessage,
-                                        onRetry: () {
-                                          context.read<ReviewsAboutUserBloc>().add(
-                                              GetReviewsAboutUserEvent(userId: widget.product.ownerId!),
-                                          );
-                                        },
-                                      ),
-                                    ),
+                                } else if (state.status ==
+                                    reviewsAboutUserStatus.failure) {
+                                  return LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      return SizedBox(
+                                        width: double.infinity,
+                                        height: Shared.height * 0.3,
+                                        child: Center(
+                                          child: CustomErrorWidget(
+                                            message: state.failureMessage,
+                                            onRetry: () {
+                                              context
+                                                  .read<ReviewsAboutUserBloc>()
+                                                  .add(
+                                                    GetReviewsAboutUserEvent(
+                                                      userId: widget
+                                                          .product
+                                                          .ownerId!,
+                                                    ),
+                                                  );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   );
-                                },
-                              );
-
-                            } else  {
-                              return Center(child: Text(kNoDataYet.tr()));
-                            }
-                          },
-                        ),
+                                } else {
+                                  return Center(child: Text(kNoDataYet.tr()));
+                                }
+                              },
+                            ),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-      Positioned(
-        right: Shared.width * 0.25.sp,
-        left: Shared.width * 0.25.sp,
-        top: Shared.height * 0.02.sp,
-        child: CircleAvatar(
-          radius: 70.r,
-          backgroundColor: kWhiteColor,
-          child: CircleAvatar(
-            radius: 65.r,
-            backgroundImage: widget.product.ownerPictureUrl == null
-                ? AssetImage('assets/images/virtual_user.jpg')
-                : NetworkImage(widget.product.ownerPictureUrl!),
-          ),
-        ),
-      )
+            Positioned(
+              right: Shared.width * 0.25.sp,
+              left: Shared.width * 0.25.sp,
+              top: Shared.height * 0.02.sp,
+              child: CircleAvatar(
+                radius: 70.r,
+                backgroundColor: kWhiteColor,
+                child: CircleAvatar(
+                  radius: 65.r,
+                  backgroundImage: widget.product.ownerPictureUrl == null
+                      ? AssetImage('assets/images/virtual_user.jpg')
+                      : NetworkImage(widget.product.ownerPictureUrl!),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-
-
 
   Widget _buildInfoRow(IconData icon, String title, String value) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -216,7 +266,11 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
         children: [
           Row(
             children: [
-              Icon(icon, color: isDark ? kWhiteColor : kLightPrimaryColor, size: 22),
+              Icon(
+                icon,
+                color: isDark ? kWhiteColor : kLightPrimaryColor,
+                size: 22,
+              ),
               Gap(10.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +285,10 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                   Gap(5.h),
                   Text(
                     value,
-                    style: font24PrimarySemiBold.copyWith(fontSize: 15.sp, color: isDark ? kButtonColor : kPrimaryColor),
+                    style: font24PrimarySemiBold.copyWith(
+                      fontSize: 15.sp,
+                      color: isDark ? kButtonColor : kPrimaryColor,
+                    ),
                   ),
                 ],
               ),
@@ -242,5 +299,3 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
     );
   }
 }
-
-

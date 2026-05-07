@@ -7,6 +7,7 @@ import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/login_bloc.dart';
+import 'package:ager_waffer/Features/Favorite/presentation/manager/all_favorite_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/domain/entities/category_entity.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_bloc.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/all_items_state.dart';
@@ -48,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _refreshData() async {
     context.read<AllItemsBloc>().add(GetAllItemsEvent());
+    context.read<AllFavoriteItemsBloc>().add(GetAllFavoriteItemsEvent());
 
     context.read<LoginBloc>().add(
       LoginEvent(email: widget.email, password: widget.password),
