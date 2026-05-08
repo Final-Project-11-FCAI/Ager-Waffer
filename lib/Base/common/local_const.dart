@@ -68,6 +68,13 @@ String kReportDescription = 'report_description';
 String kAttachImage = 'attach_image';
 String kReport = 'report';
 
+String kReportHarassment = 'report_harassment';
+String kReportInappropriateContent = 'report_inappropriate_content';
+String kReportSpam = 'report_spam';
+String kReportFakeAccount = 'report_fake_account';
+String kReportScam = 'report_scam';
+String kReportOther = 'report_other';
+String kReportSentSuccessfully = 'report_sent_successfully';
 String kCreateAccount = 'create_account';
 String kHaveAccount = 'have_account';
 String kLogin = 'login';

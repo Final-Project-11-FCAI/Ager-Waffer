@@ -19,7 +19,7 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import '../../../Profile/presentation/widgets/product_data_container.dart';
 
 class ReportScreen extends StatefulWidget {
-  ReportScreen({super.key, required this.product});
+  const ReportScreen({super.key, required this.product});
 
   final ProductData product;
 
@@ -31,7 +31,14 @@ class _ReportScreenState extends State<ReportScreen> {
   TextEditingController descriptionController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  List<String> productStatesOptions = [kBrandNew, kNew, kUsed, kHeavilyUsed];
+  List<String> reportReasons = [
+    kReportHarassment,
+    kReportInappropriateContent,
+    kReportSpam,
+    kReportFakeAccount,
+    kReportScam,
+    kReportOther,
+  ];
 
   String selectedReason = "";
   File? selectedImage;
@@ -90,6 +97,13 @@ class _ReportScreenState extends State<ReportScreen> {
             setState(() {
               isReportSent = true;
             });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: kGreenColor,
+                content: Text(
+                    kReportSentSuccessfully.tr()
+              ),)
+            );
           } else if (state.status == addReportStatus.failure) {
             Shared.dismissDialog(context: context);
             ScaffoldMessenger.of(context).showSnackBar(
@@ -167,8 +181,8 @@ class _ReportScreenState extends State<ReportScreen> {
                         ProductDataContainer(
                           hintText: kSelectReason.tr(),
                           isOptions: true,
-                          options: productStatesOptions,
-                          optionsLength: productStatesOptions.length,
+                          options: reportReasons,
+                          optionsLength: reportReasons.length,
                             onItemSelected: (value) {
                               setState(() {
                                 selectedReason = value.tr();

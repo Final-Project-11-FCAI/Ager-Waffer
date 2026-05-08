@@ -262,6 +262,13 @@
   "member_since": "Member since",
 
 
+  "report_harassment": "Harassment",
+  "report_inappropriate_content": "Inappropriate Content",
+  "report_spam": "Spam",
+  "report_fake_account": "Fake Account",
+  "report_scam": "Scam",
+  "report_other": "Other",
+  "report_sent_successfully": "Your report has been submitted successfully",
 
   "submit_report": "Submit report",
   "report_user": "Report user",
@@ -273,7 +280,6 @@
   "report_description": "Report description",
   "attach_image": "Attach image / screenshot",
   "report": "Report",
-
 
 
   "price_summary": "Price summary",

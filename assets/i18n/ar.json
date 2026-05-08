@@ -83,6 +83,13 @@
   "number": "عدد",
 
 
+  "report_harassment": "تحرش",
+  "report_inappropriate_content": "محتوى غير لائق",
+  "report_spam": "سبام",
+  "report_fake_account": "حساب مزيف",
+  "report_scam": "احتيال",
+  "report_other": "أخرى",
+  "report_sent_successfully": "تم إرسال بلاغك بنجاح",
 
   "submit_report": "إرسال البلاغ",
   "report_user": "الإبلاغ عن مستخدم",
