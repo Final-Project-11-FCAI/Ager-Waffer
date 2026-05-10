@@ -68,6 +68,7 @@ class ExternalLoginWidget extends StatelessWidget {
             ),
           );
         } else if (state.status == externalLoginStatus.failure) {
+          Navigator.of(context, rootNavigator: true).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.failureMessage ?? kGoogleSignInFailed.tr())),
           );
