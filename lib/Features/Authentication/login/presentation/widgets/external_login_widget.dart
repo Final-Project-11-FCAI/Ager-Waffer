@@ -1,12 +1,14 @@
 import 'package:ager_waffer/Base/Helper/app_event.dart';
 import 'package:ager_waffer/Base/common/local_const.dart';
 import 'package:ager_waffer/Base/common/shared.dart';
+import 'package:ager_waffer/Base/common/shared_preference_manger.dart';
 import 'package:ager_waffer/Base/common/theme.dart';
 import 'package:ager_waffer/Features/Authentication/login/data/external_services/auth_external_services.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_bloc.dart';
 import 'package:ager_waffer/Features/Authentication/login/presentation/manager/external_login_state.dart';
 import 'package:ager_waffer/Features/Home/presentation/manager/bottom_nav_cubit.dart';
 import 'package:ager_waffer/Features/Home/presentation/pages/home_layout_screen.dart';
+import 'package:ager_waffer/Features/Authentication/login/data/models/login_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -52,77 +54,56 @@ class ExternalLoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildButton(
-          context: context,
-          provider: 'google',
-          text: kContinueWithGoogle.tr(),
-          icon: "assets/images/Google.png",
-          onTap: () async {
-            try {
-              final result = await auth.signInWithGoogle();
+    return BlocListener<ExternalLoginBloc, ExternalLoginState>(
+      listener: (context, state) {
+        if (state.status == externalLoginStatus.success) {
+          Shared.dismissDialog(context: context);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (c) => BlocProvider(
+                create: (_) => BottomNavCubit(),
+                child: HomeLayoutScreen(),
+              ),
+            ),
+          );
+        } else if (state.status == externalLoginStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.failureMessage ?? kGoogleSignInFailed.tr())),
+          );
+        }
+      },
+      child: Column(
+        children: [
+          _buildButton(
+            context: context,
+            provider: 'google',
+            text: kContinueWithGoogle.tr(),
+            icon: "assets/images/Google.png",
+            onTap: () async {
+              try {
+                Shared.showLoadingDialog(context: context);
 
-              if (result == null) return;
+                final result = await auth.signInWithGoogle();
+                if (result == null) return;
 
-              await saveGoogleUserToFirestore(result.user);
+                await saveGoogleUserToFirestore(result.user);
 
-              context.read<ExternalLoginBloc>().add(
-                ExternalLoginEvent(
-                  provider: 'google',
-                  accessToken: result.accessToken,
-                ),
-              );
-
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => BlocProvider(
-                    create: (_) => BottomNavCubit(),
-                    child: HomeLayoutScreen(),
+                context.read<ExternalLoginBloc>().add(
+                  ExternalLoginEvent(
+                    provider: 'google',
+                    accessToken: result.accessToken,
                   ),
-                ),
-              );
-            } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(kGoogleSignInFailed.tr())),
-              );
-            }
-          },
-        ),
-        Gap(12.h),
-        _buildButton(
-          context: context,
-          provider: 'facebook',
-          text: kContinueWithFacebook.tr(),
-          icon: "assets/images/Facebook.png",
-          onTap: () async {
-            final token =
-            await auth.signInWithFacebookAndGetAccessToken();
-
-            if (token != null) {
-              context.read<ExternalLoginBloc>().add(
-                ExternalLoginEvent(
-                    provider: 'facebook', accessToken: token),
-              );
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (c) =>
-                      BlocProvider(
-                        create: (_) => BottomNavCubit(),
-                        child: HomeLayoutScreen(),
-                      ),
-                ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(kFacebookSignInFailed.tr())),
-              );
-            }
-          },
-        ),
-      ],
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(kGoogleSignInFailed.tr())),
+                );
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 
