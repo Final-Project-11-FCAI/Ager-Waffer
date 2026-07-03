@@ -67,16 +67,16 @@ class ContactOwnerContainer extends StatelessWidget {
                   product.ownerName!,
                   style: font16BlackSemiBold.copyWith(fontSize: 14.sp,color: isDark ? kWhiteColor : kBlackColor),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      '4.5',
-                      style: font20PrimaryMedium.copyWith(fontSize: 15.sp,color: isDark ? kWhiteColor : kBlackColor),
-                    ),
-                    Gap(1.w),
-                    Icon(Icons.star, size: 17.sp, color: Colors.amber),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Text(
+                //       '4.5',
+                //       style: font20PrimaryMedium.copyWith(fontSize: 15.sp,color: isDark ? kWhiteColor : kBlackColor),
+                //     ),
+                //     Gap(1.w),
+                //     Icon(Icons.star, size: 17.sp, color: Colors.amber),
+                //   ],
+                // ),
               ],
             ),
           ),

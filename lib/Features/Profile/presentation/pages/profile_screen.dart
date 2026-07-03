@@ -43,7 +43,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _user = user;
     });
-    print("?????????????????????????????????????");
   }
 
   @override
@@ -108,20 +107,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .withOpacity(0.64),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '4.5',
-                              style: font20PrimaryMedium.copyWith(
-                                  fontSize: 15.sp,
-                                  color: isDark ? kWhiteColor : kPrimaryColor
-                              ),
-                            ),
-                            Gap(3.w),
-                            Icon(Icons.star, size: 17.sp, color: Colors.amber),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       '4.5',
+                        //       style: font20PrimaryMedium.copyWith(
+                        //           fontSize: 15.sp,
+                        //           color: isDark ? kWhiteColor : kPrimaryColor
+                        //       ),
+                        //     ),
+                        //     Gap(3.w),
+                        //     Icon(Icons.star, size: 17.sp, color: Colors.amber),
+                        //   ],
+                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
